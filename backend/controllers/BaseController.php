@@ -22,10 +22,6 @@ class BaseController extends Controller {
 //        ],
     ];
     
-    public $headerUser = [
-    
-    ];
-    
     public $sideMenu = [
         [
             "class"  => "user",
@@ -139,7 +135,4 @@ class BaseController extends Controller {
         return $str;
     }
     
-    public function headerUserMenu(){
-    
-    }
 }
