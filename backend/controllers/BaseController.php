@@ -13,7 +13,18 @@ use yii\web\Controller;
 
 class BaseController extends Controller {
     
-    public $header = [];
+    public $header = [
+//        [
+//            "class"  => "user",
+//            "title"  => "用户管理",
+//            "access" => "",
+//            "href"   => "",
+//        ],
+    ];
+    
+    public $headerUser = [
+    
+    ];
     
     public $sideMenu = [
         [
@@ -55,6 +66,7 @@ class BaseController extends Controller {
         ]
     ];
     
+    public $headerMenuTitle;
     public $sideMenuTitle;
     public $sideMenuItem;
     
@@ -70,7 +82,7 @@ class BaseController extends Controller {
         if(empty($this->sideMenuItem))
             $this->sideMenuItem = Yii::$app->controller->action->id;
         $str = '<ul class="layui-nav layui-nav-tree"  lay-filter="side">';
-        foreach ($this->sideMenu as $menu) {
+        foreach (Yii::$app->controller->sideMenu as $menu) {
             if (isset($menu['access']) && !empty($menu['access']) && !eval("return ".$access . $menu['access'].";"))
                 continue;
             $show = $this->sideMenuTitle != $menu['class'] && (!isset($menu['items']) || empty($menu['items']) || (isset($menu['show']) && !$menu['show'])) ? false : true;
@@ -99,5 +111,35 @@ class BaseController extends Controller {
         $str .= '</ul>';
         
         return $str;
+    }
+    
+    public function headerMenu(){
+        if(empty($this->header))
+            return "";
+        
+        $access = 99;//用户权限 TODO
+        
+        if(empty($this->headerMenuTitle))
+            $this->headerMenuTitle = Yii::$app->module;
+        
+        $str = '<ul class="layui-nav layui-layout-left">';
+        $tmp = '';
+        foreach ($this->header as $menu){
+            if (isset($menu['access']) && !empty($menu['access']) && !eval("return ".$access . $menu['access'].";"))
+                continue;
+            $is_light = $this->headerMenuTitle == $menu['class'] ? true : false;
+            if(!isset($menu['href']) || empty($menu['href']))
+                $menu['href'] = "javascript:;";
+            $tmp .= '<li class="layui-nav-item' . ($is_light ? ' layui-this' : '') . '"><a href="' . $menu['href'] . '">' . $menu['title'] . '</a></li>';
+        }
+        if(empty($tmp))
+            return "";
+        $str .= $tmp;
+        $str .= '</ul>';
+        return $str;
+    }
+    
+    public function headerUserMenu(){
+    
     }
 }

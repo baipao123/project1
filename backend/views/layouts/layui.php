@@ -23,6 +23,7 @@ use yii\helpers\Html;
   <div class="layui-header">
     <div class="layui-logo">layui 后台</div>
     <!-- 头部区域（可配合layui已有的水平导航） -->
+    <?php echo Yii::$app->controller->headerMenu(); ?>
     <!--
     <ul class="layui-nav layui-layout-left">
       <li class="layui-nav-item"><a href="">控制台</a></li>
