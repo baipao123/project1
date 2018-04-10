@@ -70,6 +70,8 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+        Yii::$app->layout= "@backend/views/layouts/layui.php";
+        
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
