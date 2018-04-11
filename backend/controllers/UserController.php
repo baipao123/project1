@@ -32,7 +32,6 @@ class UserController extends BaseController
             else{
                 $admin->password = $admin->setPassword($newPwd);
                 $admin->save();
-                Yii::warning($admin->errors);
                 Yii::$app->session->setFlash("success","修改密码成功");
             }
         }
