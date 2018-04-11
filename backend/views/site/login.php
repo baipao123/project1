@@ -1,35 +1,76 @@
 <?php
-
-/* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \common\models\LoginForm */
-
+/* @var $this \yii\web\View */
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
-
-$this->title = 'Login';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>Please fill out the following fields to login:</p>
-
-    <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
-
-                <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
-
-                <?= $form->field($model, 'password')->passwordInput() ?>
-
-                <?= $form->field($model, 'rememberMe')->checkbox() ?>
-
-                <div class="form-group">
-                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <?= Html::csrfMetaTags() ?>
+    <title><?= Html::encode($this->title) ?></title>
+    <link rel="stylesheet" type="text/css" href="/plugin/layui/css/layui.css"/>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/plugin/layui/layui.all.js"></script>
+    <style>
+        html,body{height:100%;}
+        .login-box{position: absolute;left: 50%;top:50%;transform: translate(-50%,-50%);}
+        .login{background-color:rgba(255,255,255,0.5);padding:20px;}
+        .login-title{text-align: center;margin-bottom:20px}
+        button.login-btn{position: absolute;right: 0;}
+    </style>
+</head>
+<body class="layui-bg-black">
+    <div class="layui-row">
+        <div class="login-box layui-col-xs10 layui-col-sm6 layui-col-md4 layui-col-lg4">
+            <div class="login">
+                <h2 class="login-title">后台系统登录</h2>
+                <div class="login-warp">
+                    <form class="layui-form" method="post">
+                        <div class="layui-form-item">
+                            <input type="text" name="username" required lay-verify="required" placeholder="用户名" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-form-item">
+                            <input type="password" name="password" required lay-verify="required" placeholder="密码" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-form-item m-login-btn">
+                            <div class="layui-row">
+                                <div class="layui-col-xs8">
+                                    <input type="checkbox" name="remember" title="记住密码">
+                                </div>
+                                <div class="layui-col-xs4">
+                                    <button class="layui-btn layui-btn-normal login-btn" lay-submit lay-filter="login">登录</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-
-            <?php ActiveForm::end(); ?>
+            </div>
+            <p class="copyright">Copyright 2015-2016 by XIAODU</p>
         </div>
     </div>
-</div>
+    <script>
+        //JavaScript代码区域
+        layui.use('element', function(){
+            var element = layui.element;
+            element.init();
+        });
+
+        layui.use(['form', 'layedit', 'laydate'], function () {
+            var form = layui.form,
+                layer = layui.layer;
+            form.render();
+            //自定义验证规则
+            form.verify({
+                title: function (value) {
+                    if (value.length < 5) {
+                        return '标题至少得5个字符啊';
+                    }
+                },
+                password: [/(.+){6,12}$/, '密码必须6到12位'],
+            });
+        });
+    </script>
+</body>
+</html>
