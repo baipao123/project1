@@ -12,6 +12,16 @@ use Yii;
 use yii\web\Controller;
 
 class BaseController extends Controller {
+
+    public function beforeAction($action) {
+        if (in_array($action->id, Yii::$app->controller->basicActions))
+            Yii::$app->layout = "@backend/views/layouts/layui_basic.php";
+        else
+            Yii::$app->layout = "@backend/views/layouts/layui.php";
+        return parent::beforeAction($action);
+    }
+
+    public $basicActions = [];
     
     public $header = [
 //        [
@@ -65,11 +75,6 @@ class BaseController extends Controller {
     public $headerMenuTitle;
     public $sideMenuTitle;
     public $sideMenuItem;
-    
-    public function beforeAction($action) {
-        Yii::$app->layout= "@backend/views/layouts/layui.php";
-        return parent::beforeAction($action);
-    }
     
     public function sideMenu() {
         $access = Yii::$app->user->getIdentity() ? Yii::$app->user->getIdentity()->access : 1;

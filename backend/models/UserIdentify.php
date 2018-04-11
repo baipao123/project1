@@ -11,8 +11,6 @@ use Yii;
 
 class UserIdentify extends \common\models\Admin implements \yii\web\IdentityInterface
 {
-    const STATUS_DELETED = 0;
-    const STATUS_ACTIVE = 10;
 
     public function getId() {
         return $this->id;
@@ -71,13 +69,5 @@ class UserIdentify extends \common\models\Admin implements \yii\web\IdentityInte
     public function generateAuthKey()
     {
         $this->auth_key = Yii::$app->security->generateRandomString();
-    }
-
-    public function checkPassword($password) {
-        return $this->setPassword($password) === $this->password;
-    }
-
-    public function setPassword($password) {
-        return crypt($password, substr(md5($password), 6));
     }
 }

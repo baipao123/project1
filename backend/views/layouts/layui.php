@@ -15,6 +15,7 @@ use yii\helpers\Html;
     <link rel="stylesheet" type="text/css" href="/plugin/layui/css/layui.hc.css"/>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="/plugin/layui/layui.all.js"></script>
+    <?php $this->head() ?>
 </head>
 <body class="layui-layout-body">
 <?php $this->beginBody() ?>
@@ -33,7 +34,7 @@ use yii\helpers\Html;
                     <?= Yii::$app->user->identity->username ?>
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="javascript:;"><i class="layui-icon">&#xe60c;</i> 基本资料</a></dd>
+                    <dd><a href="javascript:;" onclick="changePass();"><i class="layui-icon">&#xe60c;</i> 修改密码</a></dd>
                     <dd><a href="javascript:;"><i class="layui-icon">&#xe620;</i> 安全设置</a></dd>
                     <dd><a href="javascript:;" onclick="logOut();"><i class="my-icon">&#xe63a;</i> 安全退出</a></dd>
                 </dl>
@@ -71,6 +72,17 @@ use yii\helpers\Html;
     function logOut() {
         layui.layer.confirm("确认退出吗？", function () {
             window.location.href = "/site/logout";
+        });
+    }
+    function changePass(){
+        layui.layer.open({
+            type: 2,
+            title: '重置密码',
+            shadeClose: true,
+            shade: 0.6,
+//            maxmin: true, //开启最大化最小化按钮
+            area: ['324px'],
+            content: '/user/reset-pass'
         });
     }
 </script>

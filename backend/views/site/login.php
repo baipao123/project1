@@ -30,10 +30,10 @@ use yii\helpers\Html;
                     <div class="login-warp">
                         <form class="layui-form" method="post">
                             <div class="layui-form-item">
-                                <input type="text" name="username" lay-verify="required" placeholder="用户名" autocomplete="off" class="layui-input" value="<?= $username ?>">
+                                <input type="text" name="username" lay-verify="username" placeholder="用户名" autocomplete="off" class="layui-input" value="<?= $username ?>">
                             </div>
                             <div class="layui-form-item">
-                                <input type="password" name="password" lay-verify="required" placeholder="密码" autocomplete="off" class="layui-input">
+                                <input type="password" name="password" lay-verify="password" placeholder="密码" autocomplete="off" class="layui-input">
                             </div>
                             <div class="layui-form-item m-login-btn">
                                 <div class="layui-row">
@@ -74,10 +74,10 @@ use yii\helpers\Html;
             <?php endif;?>
             //自定义验证规则
             form.verify({
-                title: function (value) {
+                username: function (value) {
                     if (value.length < 5) {
                         console.log(123);
-                        return '标题至少得5个字符啊';
+                        return '用户名至少得5个字符';
                     }
                 },
                 password: [/(.+){6,12}$/, '密码必须6到12位'],

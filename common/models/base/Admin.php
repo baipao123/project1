@@ -31,10 +31,9 @@ class Admin extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['status'], 'required'],
             [['created_at'], 'integer'],
             [['username', 'password', 'auth_key'], 'string', 'max' => 255],
-            [['access', 'status'], 'string', 'max' => 1],
+            [['access', 'status'], 'integer'],
         ];
     }
 
