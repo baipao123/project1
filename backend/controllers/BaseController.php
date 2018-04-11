@@ -72,7 +72,7 @@ class BaseController extends Controller {
     }
     
     public function sideMenu() {
-        $access = Yii::$app->user ? Yii::$app->user->access : 1;
+        $access = Yii::$app->user->getIdentity() ? Yii::$app->user->getIdentity()->access : 1;
         if(empty($this->sideMenuTitle))
             $this->sideMenuTitle = Yii::$app->controller->id;
         if(empty($this->sideMenuItem))
@@ -112,7 +112,7 @@ class BaseController extends Controller {
     public function headerMenu(){
         if(empty($this->header))
             return "";
-        $access = Yii::$app->user ? Yii::$app->user->access : 1;
+        $access = Yii::$app->user->getIdentity() ? Yii::$app->user->getIdentity()->access : 1;
         if(empty($this->headerMenuTitle))
             $this->headerMenuTitle = Yii::$app->module;
         

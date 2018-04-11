@@ -10,6 +10,8 @@ use yii\filters\AccessControl;
  */
 class SiteController extends BaseController
 {
+    public $enableCsrfValidation = false;
+
     /**
      * {@inheritdoc}
      */
@@ -70,7 +72,6 @@ class SiteController extends BaseController
      */
     public function actionLogin(){
         if (!Yii::$app->user->isGuest) {
-            Yii::warning(123);
             return $this->goBack();
         }
         $error = "";

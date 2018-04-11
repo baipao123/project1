@@ -9,13 +9,17 @@ namespace backend\models;
 
 use Yii;
 
-class UserIdentify extends \common\models\Admin implements yii\web\IdentityInterface
+class UserIdentify extends \common\models\Admin implements \yii\web\IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
 
     public function getId() {
         return $this->id;
+    }
+
+    public function getAccess(){
+        return $this->access;
     }
 
     /**
