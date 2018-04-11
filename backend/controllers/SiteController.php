@@ -69,21 +69,28 @@ class SiteController extends BaseController
      */
     public function actionLogin($url = "")
     {
-        
         if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+            return empty($url) ? $this->goHome() : $this->redirect($url);
         }
-
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        } else {
-            $model->password = '';
-
-            return $this->renderPartial('login', [
-                'model' => $model,
-            ]);
+        $error = "123123";
+        $username = "";
+        if (Yii::$app->request->isPost) {
+            $username = Yii::$app->request->post("username", "");
+            $identify = \backend\models\UserIdentify::findByUsername($username);
+            if (!$identify)
+                $error = "用户名不存在";
+            else if ($identify->checkPassword(Yii::$app->request->post("password", ""))) {
+                if (Yii::$app->user->login($identify, Yii::$app->request->post("remember", 0) > 0 ? 3600 * 24 * 30 : 3600))
+                    return empty($url) ? $this->goHome() : $this->redirect($url);
+                else
+                    $error = "登陆失败";
+            } else
+                $error = "密码错误";
         }
+        return $this->renderPartial('login', [
+            "username" => $username,
+            "error"    => $error,
+        ]);
     }
 
     /**

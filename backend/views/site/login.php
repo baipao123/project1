@@ -30,7 +30,7 @@ use yii\helpers\Html;
                     <div class="login-warp">
                         <form class="layui-form" method="post">
                             <div class="layui-form-item">
-                                <input type="text" name="username" lay-verify="required" placeholder="用户名" autocomplete="off" class="layui-input">
+                                <input type="text" name="username" lay-verify="required" placeholder="用户名" autocomplete="off" class="layui-input" value="<?= $username ?>">
                             </div>
                             <div class="layui-form-item">
                                 <input type="password" name="password" lay-verify="required" placeholder="密码" autocomplete="off" class="layui-input">
@@ -63,6 +63,15 @@ use yii\helpers\Html;
             var form = layui.form,
                 layer = layui.layer;
             form.render();
+            <?php if(!empty($error)):?>
+            layer.alert("<?= $error ?>",{
+                icon:2,
+                btn:false,
+                time:1500,
+                title:false,
+                closeBtn:0
+            });
+            <?php endif;?>
             //自定义验证规则
             form.verify({
                 title: function (value) {
