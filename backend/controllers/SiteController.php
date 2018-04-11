@@ -4,7 +4,6 @@ namespace backend\controllers;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use common\models\LoginForm;
 
 /**
  * Site controller
@@ -25,9 +24,9 @@ class SiteController extends BaseController
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
-                        'allow' => true,
-                        'roles' => ['@'],
+                        'actions' => ['logout', 'index', 'list'],
+                        'allow'   => true,
+                        'roles'   => ['@'],
                     ],
                 ],
             ],
@@ -57,22 +56,24 @@ class SiteController extends BaseController
      *
      * @return string
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
+        return $this->render('index');
+    }
+
+    public function actionList(){
         return $this->render('index');
     }
 
     /**
      * Login action.
-     * @param string $url
      * @return string
      */
-    public function actionLogin($url = "")
-    {
+    public function actionLogin(){
         if (!Yii::$app->user->isGuest) {
-            return empty($url) ? $this->goHome() : $this->redirect($url);
+            Yii::warning(123);
+            return $this->goBack();
         }
-        $error = "123123";
+        $error = "";
         $username = "";
         if (Yii::$app->request->isPost) {
             $username = Yii::$app->request->post("username", "");
@@ -81,7 +82,7 @@ class SiteController extends BaseController
                 $error = "用户名不存在";
             else if ($identify->checkPassword(Yii::$app->request->post("password", ""))) {
                 if (Yii::$app->user->login($identify, Yii::$app->request->post("remember", 0) > 0 ? 3600 * 24 * 30 : 3600))
-                    return empty($url) ? $this->goHome() : $this->redirect($url);
+                    return $this->goBack();
                 else
                     $error = "登陆失败";
             } else
@@ -98,10 +99,8 @@ class SiteController extends BaseController
      *
      * @return string
      */
-    public function actionLogout()
-    {
+    public function actionLogout() {
         Yii::$app->user->logout();
-
-        return $this->goHome();
+        return $this->redirect("/site/login");
     }
 }
