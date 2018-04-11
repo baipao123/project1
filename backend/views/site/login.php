@@ -21,33 +21,35 @@ use yii\helpers\Html;
         button.login-btn{position: absolute;right: 0;}
     </style>
 </head>
-<body class="layui-bg-black">
-    <div class="layui-row">
-        <div class="login-box layui-col-xs10 layui-col-sm6 layui-col-md4 layui-col-lg4">
-            <div class="login">
-                <h2 class="login-title">后台系统登录</h2>
-                <div class="login-warp">
-                    <form class="layui-form" method="post">
-                        <div class="layui-form-item">
-                            <input type="text" name="username" required lay-verify="required" placeholder="用户名" autocomplete="off" class="layui-input">
-                        </div>
-                        <div class="layui-form-item">
-                            <input type="password" name="password" required lay-verify="required" placeholder="密码" autocomplete="off" class="layui-input">
-                        </div>
-                        <div class="layui-form-item m-login-btn">
-                            <div class="layui-row">
-                                <div class="layui-col-xs8">
-                                    <input type="checkbox" name="remember" title="记住密码">
-                                </div>
-                                <div class="layui-col-xs4">
-                                    <button class="layui-btn layui-btn-normal login-btn" lay-submit lay-filter="login">登录</button>
+<body>
+    <div class="layui-bg-black" style="height: 100%">
+        <div class="layui-row">
+            <div class="login-box layui-col-xs10 layui-col-sm6 layui-col-md4 layui-col-lg4">
+                <div class="login">
+                    <h2 class="login-title">后台系统登录</h2>
+                    <div class="login-warp">
+                        <form class="layui-form" method="post">
+                            <div class="layui-form-item">
+                                <input type="text" name="username" lay-verify="required" placeholder="用户名" autocomplete="off" class="layui-input">
+                            </div>
+                            <div class="layui-form-item">
+                                <input type="password" name="password" lay-verify="required" placeholder="密码" autocomplete="off" class="layui-input">
+                            </div>
+                            <div class="layui-form-item m-login-btn">
+                                <div class="layui-row">
+                                    <div class="layui-col-xs8">
+                                        <input type="checkbox" name="remember" title="记住密码">
+                                    </div>
+                                    <div class="layui-col-xs4">
+                                        <button class="layui-btn layui-btn-normal login-btn" lay-submit lay-filter="login">登录</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
+                <p class="copyright">Copyright 2015-2016 by XIAODU</p>
             </div>
-            <p class="copyright">Copyright 2015-2016 by XIAODU</p>
         </div>
     </div>
     <script>
@@ -65,6 +67,7 @@ use yii\helpers\Html;
             form.verify({
                 title: function (value) {
                     if (value.length < 5) {
+                        console.log(123);
                         return '标题至少得5个字符啊';
                     }
                 },
