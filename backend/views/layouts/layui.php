@@ -63,11 +63,20 @@ use yii\helpers\Html;
     </div>
 </div>
 <script>
-    //JavaScript代码区域
-    layui.use('element', function () {
-        var element = layui.element;
-        element.init();
+    $(document).ready(function(){
+        //JavaScript代码区域
+        layui.use('element', function () {
+            var element = layui.element;
+            element.init();
+        });
+
+        layui.use(['form', 'layedit', 'laydate'], function () {
+            var form = layui.form;
+            form.render();
+        });
     });
+
+    var globalLayer = layui.layer;
 
     function logOut() {
         layui.layer.confirm("确认退出吗？", function () {
@@ -82,9 +91,32 @@ use yii\helpers\Html;
             shade: 0.6,
 //            maxmin: true, //开启最大化最小化按钮
             area: ['324px'],
-            content: '/user/reset-pass'
+            content: '/admin/reset-pass'
         });
     }
+
+    function layerConfirmUrl(url,text){
+        if(text == undefined || text == '')
+            return layerOpenIFrame(url);
+        globalLayer.confirm(text,function(){
+            layerOpenIFrame(url);
+        });
+    }
+
+    function layerOpenIFrame(url, title, width) {
+        var default_width = '380px';
+        if (title == "" || title == undefined)
+            default_width = '235px';
+        width = width == undefined ? default_width : width;
+        globalLayer.open({
+            type: 2,
+            title: title,
+            shadeClose: false,
+            area: width,
+            content: url
+        });
+    }
+
 </script>
 <?php $this->endBody() ?>
 </body>

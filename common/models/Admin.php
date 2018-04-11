@@ -12,6 +12,7 @@ namespace common\models;
 class Admin extends \common\models\base\Admin
 {
     const STATUS_DELETED = 0;
+    const STATUS_DISABLE = 1;
     const STATUS_ACTIVE = 10;
 
     public function checkPassword($password) {
