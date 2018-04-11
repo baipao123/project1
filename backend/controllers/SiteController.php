@@ -23,7 +23,8 @@ class SiteController extends BaseController
                 'rules' => [
                     [
                         'actions' => ['login', 'error'],
-                        'allow' => true,
+                        'allow'   => true,
+                        'roles'   => ['?', '@']
                     ],
                     [
                         'actions' => ['logout', 'index', 'list'],
@@ -35,7 +36,7 @@ class SiteController extends BaseController
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+                    'logout' => ['get'],
                 ],
             ],
         ];

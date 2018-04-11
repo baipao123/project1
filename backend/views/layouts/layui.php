@@ -25,15 +25,19 @@ use yii\helpers\Html;
         <?php echo Yii::$app->controller->headerMenu(); ?>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
+                <?php if(Yii::$app->user->isGuest):?>
+                <a href="/site/login"><i class="layui-icon">&#xe612;</i></a>
+                <?php else:?>
                 <a href="javascript:;">
                     <!-- <img src="http://t.cn/RCzsdCq" class="layui-nav-img"> -->
-                    贤心
+                    <?= Yii::$app->user->identity->username ?>
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="javascript:;"><i class="layui-icon">&#xe60c;</i> 基本资料</a></dd>
                     <dd><a href="javascript:;"><i class="layui-icon">&#xe620;</i> 安全设置</a></dd>
-                    <dd><a href="javascript:;"><i class="my-icon">&#xe63a;</i> 安全退出</a></dd>
+                    <dd><a href="javascript:;" onclick="logOut();"><i class="my-icon">&#xe63a;</i> 安全退出</a></dd>
                 </dl>
+                <?php endif;?>
             </li>
         </ul>
     </div>
@@ -65,7 +69,7 @@ use yii\helpers\Html;
     });
 
     function logOut() {
-        layui.confirm("确认退出吗？", function () {
+        layui.layer.confirm("确认退出吗？", function () {
             window.location.href = "/site/logout";
         });
     }
