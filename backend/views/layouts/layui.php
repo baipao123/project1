@@ -1,8 +1,5 @@
 <?php
-
 /* @var $this \yii\web\View */
-/* @var $content string */
-
 use yii\helpers\Html;
 ?>
 
@@ -22,23 +19,8 @@ use yii\helpers\Html;
 <div class="layui-layout layui-layout-admin">
   <div class="layui-header">
     <div class="layui-logo">layui 后台</div>
-    <!-- 头部区域（可配合layui已有的水平导航） -->
+    <!-- 头部区域 -->
     <?php echo Yii::$app->controller->headerMenu(); ?>
-    <!--
-    <ul class="layui-nav layui-layout-left">
-      <li class="layui-nav-item"><a href="">控制台</a></li>
-      <li class="layui-nav-item"><a href="">商品管理</a></li>
-      <li class="layui-nav-item"><a href="">用户</a></li>
-      <li class="layui-nav-item">
-        <a href="javascript:;">其它系统</a>
-        <dl class="layui-nav-child">
-          <dd><a href="">邮件管理</a></dd>
-          <dd><a href="">消息管理</a></dd>
-          <dd><a href="">授权管理</a></dd>
-        </dl>
-      </li>
-    </ul>
-    -->
     <ul class="layui-nav layui-layout-right">
       <li class="layui-nav-item">
         <a href="javascript:;">
@@ -46,9 +28,9 @@ use yii\helpers\Html;
           贤心
         </a>
         <dl class="layui-nav-child">
-          <dd><a href="">基本资料</a></dd>
-          <dd><a href="">安全设置</a></dd>
-          <dd><a href="">退了</a></dd>
+          <dd><a href="javascript:;">基本资料</a></dd>
+          <dd><a href="javascript:;">安全设置</a></dd>
+          <dd><a href="javascript:;">退了</a></dd>
         </dl>
       </li>
     </ul>
@@ -56,7 +38,7 @@ use yii\helpers\Html;
 
   <div class="layui-side layui-bg-black">
     <div class="layui-side-scroll">
-      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+      <!-- 左侧导航区域 -->
       <?php echo Yii::$app->controller->sideMenu(); ?>
     </div>
   </div>
@@ -71,7 +53,6 @@ use yii\helpers\Html;
     © layui.com - 底部固定区域
   </div>
 </div>
-<script src="../src/layui.js"></script>
 <script>
 //JavaScript代码区域
 layui.use('element', function(){
