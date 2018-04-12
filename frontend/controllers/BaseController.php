@@ -1,7 +1,6 @@
 <?php
 namespace frontend\controllers;
 
-use common\models\User;
 use common\tools\Tool;
 use frontend\models\UserIdentify;
 use Yii;
