@@ -7,7 +7,7 @@ use frontend\models\UserIdentify;
 use Yii;
 use yii\web\Controller;
 
-class SiteController extends Controller
+class BaseController extends Controller
 {
     public function beforeAction($action) {
         if ($action->id !== "program-login") {
