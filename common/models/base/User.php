@@ -7,8 +7,8 @@ use Yii;
 /**
  * This is the model class for table "user".
  *
- * @property string $id
- * @property string $invite_uid
+ * @property int $id
+ * @property int $type
  * @property string $openId
  * @property string $unionId
  * @property string $session_key
@@ -20,9 +20,11 @@ use Yii;
  * @property string $province
  * @property string $country
  * @property int $status
- * @property string $cash
+ * @property int $cash
  * @property string $auth_key
- * @property string $created_at
+ * @property string $realname
+ * @property int $created_at
+ * @property int $real_at
  */
 class User extends \yii\db\ActiveRecord
 {
@@ -40,9 +42,9 @@ class User extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['invite_uid', 'cash', 'created_at'], 'integer'],
-            [['openId', 'unionId', 'session_key', 'phone', 'nickname', 'avatar', 'city', 'province', 'country', 'auth_key'], 'string', 'max' => 255],
-            [['gender', 'status'], 'string', 'max' => 1],
+            [['cash', 'created_at', 'real_at'], 'integer'],
+            [['type', 'gender', 'status'], 'string', 'max' => 1],
+            [['openId', 'unionId', 'session_key', 'phone', 'nickname', 'avatar', 'city', 'province', 'country', 'auth_key', 'realname'], 'string', 'max' => 255],
             [['openId'], 'unique'],
         ];
     }
@@ -54,7 +56,7 @@ class User extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'invite_uid' => 'Invite Uid',
+            'type' => 'Type',
             'openId' => 'Open ID',
             'unionId' => 'Union ID',
             'session_key' => 'Session Key',
@@ -68,7 +70,9 @@ class User extends \yii\db\ActiveRecord
             'status' => 'Status',
             'cash' => 'Cash',
             'auth_key' => 'Auth Key',
+            'realname' => 'Realname',
             'created_at' => 'Created At',
+            'real_at' => 'Real At',
         ];
     }
 }

@@ -6,6 +6,9 @@ use Yii;
 
 class User extends \common\models\base\User
 {
+    const TYPE_USER = 1;
+    const TYPE_COMPANY = 2;
+
 
     /**
      * @param string $code

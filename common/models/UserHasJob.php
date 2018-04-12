@@ -18,6 +18,6 @@ class UserHasJob extends \common\models\base\UserHasJob
     const END = 10;
 
     public static function isOn($uid, $jid) {
-        return self::find()->where(["uid"=>$uid,"jid"=>$jid,"status"=>self::ON])->exists();
+        return self::find()->where(["uid" => $uid, "jid" => $jid, "status" => self::ON])->exists();
     }
 }

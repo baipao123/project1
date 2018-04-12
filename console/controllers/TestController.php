@@ -8,6 +8,7 @@
 
 namespace console\controllers;
 
+use common\tools\Tool;
 use common\tools\WxProgram;
 use Yii;
 use yii\console\Controller;
@@ -15,7 +16,7 @@ use yii\console\Controller;
 class TestController extends Controller
 {
 
-    public function actionTest(){
+    public function actionDecrypt(){
         $appid = 'wx4f4bc4dec97d474b';
         $sessionKey = 'tiihtNczf5v6AKRyjwEUhQ==';
 
@@ -42,5 +43,9 @@ class TestController extends Controller
         $data = [];
         WxProgram::decryptData($encryptedData,$iv,$sessionKey,$data);
         echo $data;
+    }
+
+    public function actionIndex(){
+
     }
 }
