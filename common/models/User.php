@@ -23,4 +23,20 @@ class User extends \common\models\base\User
         $user->save();
         return $user;
     }
+
+    public function verifyUserInfo($rawData, $signature) {
+        $sign = sha1($rawData . $this->session_key);
+        if ($sign === $signature) {
+            $userInfo = json_decode($rawData, true);
+            $this->avatar = $userInfo['avatarUrl'];
+            $this->nickname = $userInfo['nickName'];
+            $this->gender = $userInfo['gender'];
+            $this->city = $userInfo['city'];
+            $this->province = $userInfo['province'];
+            $this->country = $userInfo['country'];
+            $this->save();
+            return true;
+        }
+        return false;
+    }
 }

@@ -14,7 +14,11 @@ use Yii;
  * @property string $session_key
  * @property string $phone
  * @property string $nickname
+ * @property int $gender
  * @property string $avatar
+ * @property string $city
+ * @property string $province
+ * @property string $country
  * @property int $status
  * @property string $cash
  * @property string $auth_key
@@ -37,8 +41,8 @@ class User extends \yii\db\ActiveRecord
     {
         return [
             [['invite_uid', 'cash', 'created_at'], 'integer'],
-            [['openId', 'unionId', 'session_key', 'phone', 'nickname', 'avatar', 'auth_key'], 'string', 'max' => 255],
-            [['status'], 'string', 'max' => 1],
+            [['openId', 'unionId', 'session_key', 'phone', 'nickname', 'avatar', 'city', 'province', 'country', 'auth_key'], 'string', 'max' => 255],
+            [['gender', 'status'], 'string', 'max' => 1],
             [['openId'], 'unique'],
         ];
     }
@@ -56,7 +60,11 @@ class User extends \yii\db\ActiveRecord
             'session_key' => 'Session Key',
             'phone' => 'Phone',
             'nickname' => 'Nickname',
+            'gender' => 'Gender',
             'avatar' => 'Avatar',
+            'city' => 'City',
+            'province' => 'Province',
+            'country' => 'Country',
             'status' => 'Status',
             'cash' => 'Cash',
             'auth_key' => 'Auth Key',
