@@ -13,12 +13,12 @@ class User extends \common\models\base\User
      */
     public static function findUserByProgramCode($code) {
         $data = WxProgram::decryptUserCode($code);
-        if (!$data || !isset($data['openId']) || empty($data['openId']))
+        if (!$data || !isset($data['openid']) || empty($data['openid']))
             return null;
-        $user = static::findOne(["openId" => $data['openId']]);
+        $user = static::findOne(["openid" => $data['openid']]);
         $user or $user = new static;
         $user->openId = $data['openId'];
-        $user->unionId = isset($data['unionId']) ? $data['unionId'] : "";
+        $user->unionId = isset($data['unionid']) ? $data['unionid'] : "";
         $user->session_key = isset($data['session_key']) ? $data['session_key'] : "";
         $user->save();
         return $user;

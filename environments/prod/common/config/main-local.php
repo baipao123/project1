@@ -12,5 +12,21 @@ return [
             'class' => 'yii\swiftmailer\Mailer',
             'viewPath' => '@common/mail',
         ],
+        'cache'  => [
+            'class'     => '\yii\caching\MemCache',
+            "keyPrefix" => "DK-",
+            "servers"   => [
+                [
+                    'host' => '127.0.0.1',
+                    'port' => 11211,
+                ],
+            ],
+        ],
+        'redis' => [
+            'class'    => 'yii\redis\Connection',
+            'hostname' => '127.0.0.1',
+            'port'     => 6379,
+            'database' => 1,
+        ],
     ],
 ];

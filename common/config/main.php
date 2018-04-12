@@ -15,5 +15,17 @@ return [
             'rules' => [
             ],
         ],
+        'log' => [
+            'traceLevel' => YII_DEBUG ? 3 : 0,
+            'targets' => [
+                [
+                    'class'      => 'yii\log\FileTarget',
+                    'levels'     => ['info','error'],
+                    'logVars'    => [],
+                    'categories' => ['wx'],
+                    'logFile'    => '@runtime/logs/wx.log',
+                ],
+            ],
+        ],
     ],
 ];

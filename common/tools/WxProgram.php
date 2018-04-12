@@ -10,7 +10,7 @@ namespace common\tools;
 
 use Yii;
 
-class WxProgram
+class WxProgram extends Wx
 {
     const OK = 0;
     const IllegalAesKey = -41001;
@@ -34,12 +34,10 @@ class WxProgram
             "js_code"    => $code,
             "grant_type" => "authorization_code"
         ];
-
-        return [
-            "openId"      => "",
-            "session_key" => "",
-            "unionId"     => ""
-        ];
+        
+        $response = self::http($url,$params);
+        
+        return json_decode($response,true);
     }
 
     public static function decryptData($encryptedData, $iv, $sessionKey, &$data) {
