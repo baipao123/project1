@@ -9,10 +9,10 @@ use yii\web\Controller;
 class BaseController extends Controller
 {
     public function beforeAction($action) {
-        if ($action->id !== "program-login") {
-            echo Tool::reJson(null, "请先登录", Tool::NEED_LOGIN);
-            return false;
-        }
+//        if ($action->id !== "program-login") {
+//            echo Tool::reJson(null, "请先登录", Tool::NEED_LOGIN);
+//            return false;
+//        }
         return parent::beforeAction($action);
     }
 
