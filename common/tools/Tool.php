@@ -23,11 +23,4 @@ class Tool
         ]);
     }
 
-    public static function isRealName($str) {
-        return (bool)preg_match('/^([\x80-\xff]){2,7}$/', $str);
-    }
-
-    public static function isMobile($mobile) {
-        return (bool)preg_match('/1[1-9]([0-9]){9}/', $mobile);
-    }
 }

@@ -5,24 +5,27 @@ namespace common\models\base;
 use Yii;
 
 /**
- * This is the model class for table "user_has_job".
+ * This is the model class for table "user_job_daily".
  *
  * @property int $id
- * @property int $jid
  * @property int $uid
- * @property string $auth_key
+ * @property int $jid
+ * @property int $uJid
+ * @property int $num
+ * @property string $msg
+ * @property int $date
  * @property int $status
- * @property string $content
  * @property int $created_at
+ * @property int $updated_at
  */
-class UserHasJob extends \yii\db\ActiveRecord
+class UserJobDaily extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'user_has_job';
+        return 'user_job_daily';
     }
 
     /**
@@ -31,10 +34,9 @@ class UserHasJob extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['jid', 'uid', 'created_at'], 'integer'],
-            [['content'], 'required'],
-            [['content'], 'string'],
-            [['auth_key'], 'string', 'max' => 255],
+            [['uid', 'jid', 'uJid', 'num', 'date', 'created_at', 'updated_at'], 'integer'],
+            [['msg'], 'required'],
+            [['msg'], 'string', 'max' => 2000],
             [['status'], 'string', 'max' => 1],
         ];
     }
@@ -46,12 +48,15 @@ class UserHasJob extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'jid' => 'Jid',
             'uid' => 'Uid',
-            'auth_key' => 'Auth Key',
+            'jid' => 'Jid',
+            'uJid' => 'U Jid',
+            'num' => 'Num',
+            'msg' => 'Msg',
+            'date' => 'Date',
             'status' => 'Status',
-            'content' => 'Content',
             'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
         ];
     }
 }

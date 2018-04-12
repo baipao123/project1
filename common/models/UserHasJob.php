@@ -13,8 +13,7 @@ class UserHasJob extends \common\models\base\UserHasJob
 {
     const APPLY = 0;
     const ON = 1;
-    const VERIFY = 2;
-    const REFUSE = 3;
+    const REFUSE = 9;
     const END = 10;
 
     public static function isOn($uid, $jid) {
