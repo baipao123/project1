@@ -22,7 +22,6 @@ class SiteController extends Controller
         if (!Yii::$app->user->isGuest) {
             return Tool::reJson(1);
         }
-
         $code = Yii::$app->request->post("code");
         $user = UserIdentify::findUserByProgramCode($code);
         if ($user) {
@@ -37,6 +36,7 @@ class SiteController extends Controller
         return Tool::reJson(1);
     }
 
+    //小程序 录入用户的基本信息
     public function actionProgramUser() {
         $openId = Yii::$app->request->post("openId");
         $user = Yii::$app->user->identity;
