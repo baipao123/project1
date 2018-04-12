@@ -6,7 +6,7 @@
  * Time: 下午6:42
  */
 
-namespace frontend\controllers;
+namespace frontend\modules\part\controllers;
 
 use common\models\User;
 use common\tools\Tool;
@@ -32,6 +32,10 @@ class UserController extends \frontend\controllers\BaseController
     public function actionJoinCompany(){
         if($this->getUser()->type == User::TYPE_USER)
             return Tool::reJson(null,"您是个人用户",Tool::FAIL);
+    }
+
+    public function actionEdit(){
+       echo 1;
     }
 
 }

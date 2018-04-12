@@ -63,4 +63,8 @@ class BaseController extends Controller
             return Tool::reJson(1);
         return Tool::reJson(null, "用户信息不匹配失败", Tool::FAIL);
     }
+
+    public function actionE(){
+        echo 1;
+    }
 }
