@@ -26,7 +26,7 @@ class WxProgram
         return Yii::$app->params['appSecret'];
     }
 
-    public static function getOpenId($code) {
+    public static function decryptUserCode($code) {
         $url = "https://api.weixin.qq.com/sns/jscode2session";
         $params = [
             "appid"      => self::getAppId(),
@@ -37,7 +37,8 @@ class WxProgram
 
         return [
             "openId"      => "",
-            "session_key" => ""
+            "session_key" => "",
+            "unionId"     => ""
         ];
     }
 
