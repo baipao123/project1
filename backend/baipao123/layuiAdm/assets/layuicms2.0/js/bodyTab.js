@@ -4,7 +4,7 @@
 	@Tittle: bodyTab
 	@Description: 点击对应按钮添加新窗口
 */
-var liIndex,curNav,delMenu;
+
 layui.define(["element","jquery"],function(exports){
 	var element = layui.element,
 		$ = layui.$,
@@ -120,7 +120,7 @@ layui.define(["element","jquery"],function(exports){
     };
 
 	//右侧内容tab操作
-	var tabIdIndex = 0;
+    var tabIdIndex = 0, liIndex, curNav, delMenu;
 	Tab.prototype.tabAdd = function(_this){
 		var that = this;
 		if(_this.attr("target") === "_blank"){
@@ -228,7 +228,6 @@ layui.define(["element","jquery"],function(exports){
             bodyTab.setSessionStorage("menu", menu);
         }
 		element.tabDelete("bodyTab",$(this).parent("li").attr("lay-id")).init();
-		bodyTab.tabMove();
 	})
 
 	//刷新当前
@@ -273,7 +272,7 @@ layui.define(["element","jquery"],function(exports){
 			layer.msg("没有可以关闭的窗口了@_@");
 		}
 		//渲染顶部窗口
-		tab.tabMove();
+		// tab.tabMove();
 	})
 	//关闭全部
 	$(".closePageAll").on("click",function(){
@@ -290,7 +289,7 @@ layui.define(["element","jquery"],function(exports){
 			layer.msg("没有可以关闭的窗口了@_@");
 		}
 		//渲染顶部窗口
-		tab.tabMove();
+		// tab.tabMove();
 	})
 
 	var bodyTab = new Tab();
