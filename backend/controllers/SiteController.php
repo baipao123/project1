@@ -1,6 +1,7 @@
 <?php
 namespace backend\controllers;
 
+use backend\baipao123\layuiAdm\layouts\actions\IndexAction;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -51,6 +52,10 @@ class SiteController extends BaseController
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
+            'index' => [
+                'class' => IndexAction::className(),
+                'homeTitle' => "黄琛的后台"
+            ]
         ]);
     }
 
