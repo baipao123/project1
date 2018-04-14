@@ -8,10 +8,20 @@
 
 namespace backend\controllers;
 
+use backend\baipao123\qiniu\src\QiNiuTokenAction;
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 
 class BaseController extends Controller {
+
+    public function actions() {
+        return ArrayHelper::merge(parent::actions(), [
+            'qiniu-token' => [
+                'class' => QiNiuTokenAction::className(),
+            ],
+        ]);
+    }
 
     public function beforeAction($action) {
         if (in_array($action->id, Yii::$app->controller->basicActions))

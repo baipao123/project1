@@ -4,6 +4,7 @@ namespace backend\controllers;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 
 /**
  * Site controller
@@ -15,43 +16,42 @@ class SiteController extends BaseController
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['login', 'error'],
-                        'allow'   => true,
-                        'roles'   => ['?', '@']
-                    ],
-                    [
-                        'actions' => ['logout', 'index', 'list'],
-                        'allow'   => true,
-                        'roles'   => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['get'],
-                ],
-            ],
-        ];
-    }
+//    public function behaviors()
+//    {
+//        return [
+//            'access' => [
+//                'class' => AccessControl::className(),
+//                'rules' => [
+//                    [
+//                        'actions' => ['login', 'error'],
+//                        'allow'   => true,
+//                        'roles'   => ['?', '@']
+//                    ],
+//                    [
+//                        'actions' => ['logout', 'index', 'list'],
+//                        'allow'   => true,
+//                        'roles'   => ['@'],
+//                    ],
+//                ],
+//            ],
+//            'verbs' => [
+//                'class' => VerbFilter::className(),
+//                'actions' => [
+//                    'logout' => ['get'],
+//                ],
+//            ],
+//        ];
+//    }
 
     /**
      * {@inheritdoc}
      */
-    public function actions()
-    {
-        return [
+    public function actions() {
+        return ArrayHelper::merge(parent::actions(), [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
-        ];
+        ]);
     }
 
     /**
