@@ -1,19 +1,8 @@
-        <style>
-            .bp-qiniu-uploader{position: relative;z-index:99;}
-            .bp-qiniu-uploader>input[type=file]{position: absolute;left: 0;top: 0;width: 100%;height: 100%;}
-        </style>
         <div class="layui-btn bp-qiniu-uploader bp-qiniu-uploader-<?= $id ?>">
             <i class="layui-icon">&#xe67c;</i>上传图片
         </div>
-
         <script>
             $(document).ready(function () {
-                if(typeof <?=$callBack?> !== 'function'){
-                    function <?=$callBack?>(info) {
-                        console.log(info);
-                    }
-                }
-
                 layui.use('upload', function () {
                     var upload = layui.upload;
                     upload.render({
@@ -37,7 +26,12 @@
                                 error: function (res) {
                                     console.log(res);
                                 },
-                                complete:<?=$callBack?>
+                                complete:function(info){
+                                    if(typeof <?=$callBack?> === "function"){
+                                        <?=$callBack?>(info);
+                                    }else
+                                        console.log(info);
+                                }
                             };
                             $.each(files, function (i, file) {
                                 var observable = qiniu.upload(file, null, token, putExtra, config);
