@@ -7,8 +7,9 @@
                     var upload = layui.upload;
                     upload.render({
                         elem: '.bp-qiniu-uploader-<?= $id ?>', //绑定元素
-                        multiple:<?= $isMulti ? "true" : "false" ?>,
+                        multiple: <?= $isMulti ? "true" : "false" ?>,
                         auto: false,
+                        acceptMime: <?=$mineTypes?>,
                         choose: function (obj) {
                             var files = obj.pushFile();
                             var token = Bp123GetUpToken("<?=$tokenUrl?>");

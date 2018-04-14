@@ -6,7 +6,7 @@
  * Time: 下午7:20
  */
 
-namespace backend\baipao123\qiniu\src;
+namespace backend\baipao123\layuiAdm\qiniu\src;
 
 use Yii;
 use yii\web\View;

@@ -8,7 +8,7 @@
 
 namespace backend\controllers;
 
-use backend\baipao123\qiniu\src\QiNiuTokenAction;
+use backend\baipao123\layuiAdm\qiniu\src\QiNiuTokenAction;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;

@@ -1,5 +1,5 @@
 <?php
-    use backend\baipao123\qiniu\src\QiNiuUploader;
+    use backend\baipao123\layuiAdm\qiniu\src\QiNiuUploader;
     QiNiuUploader::begin();
     QiNiuUploader::end();
 ?>
