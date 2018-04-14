@@ -11,7 +11,7 @@ use yii\helpers\Html;
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
-    <link rel="icon" href="／favicon.ico">
+    <link rel="icon" href="/favicon.ico">
     <?php $this->head() ?>
 </head>
 <body class="main_body">
@@ -58,7 +58,7 @@ use yii\helpers\Html;
                     <a href="javascript:;"><i class="seraph icon-lock"></i><cite>锁屏</cite></a>
                 </li>
                 <li class="layui-nav-item" id="userInfo">
-                    <a href="javascript:;"><img src="images/face.jpg" class="layui-nav-img userAvatar" width="35" height="35"><cite class="adminName">驊驊龔頾</cite></a>
+                    <a href="javascript:;"><img src="#" class="layui-nav-img userAvatar" width="35" height="35"><cite class="adminName">驊驊龔頾</cite></a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;" data-url="page/user/userInfo.html"><i class="seraph icon-ziliao" data-icon="icon-ziliao"></i><cite>个人资料</cite></a></dd>
                         <dd><a href="javascript:;" data-url="page/user/changePwd.html"><i class="seraph icon-xiugai" data-icon="icon-xiugai"></i><cite>修改密码</cite></a></dd>
@@ -74,17 +74,8 @@ use yii\helpers\Html;
     <!-- 左侧导航 -->
     <div class="layui-side layui-bg-black">
         <div class="user-photo">
-            <a class="img" title="我的头像" ><img src="images/face.jpg" class="userAvatar"></a>
+            <a class="img" title="我的头像" ><img src="#" class="userAvatar"></a>
             <p>你好！<span class="userName">驊驊龔頾</span>, 欢迎登录</p>
-        </div>
-        <!-- 搜索 -->
-        <div class="layui-form component">
-            <select name="search" id="search" lay-search lay-filter="searchPage">
-                <option value="">搜索页面或功能</option>
-                <option value="1">layer</option>
-                <option value="2">form</option>
-            </select>
-            <i class="layui-icon">&#xe615;</i>
         </div>
         <div class="navBar layui-side-scroll" id="navBar">
             <ul class="layui-nav layui-nav-tree">
@@ -119,7 +110,7 @@ use yii\helpers\Html;
     </div>
     <!-- 底部 -->
     <div class="layui-footer footer">
-        <p><span>copyright @2018 驊驊龔頾</span>　　<a onclick="donation()" class="layui-btn layui-btn-danger layui-btn-sm">捐赠作者</a></p>
+        <p><span>copyright @2018 驊驊龔頾</span></p>
     </div>
 </div>
 
@@ -127,6 +118,78 @@ use yii\helpers\Html;
 <div class="site-tree-mobile"><i class="layui-icon">&#xe602;</i></div>
 <div class="site-mobile-shade"></div>
 
+
+<script>
+    $(document).ready(function () {
+        layui.extend({
+            bodyTab: '{/}<?=$assetUrl?>/layuicms2.0/js/bodyTab'
+        });
+
+        layui.use(["bodyTab","element","layer"],function(){
+            layui.element.init();
+            var layer = layui.layer;
+            var tab = layui.bodyTab({
+                openTabNum : "10",  //最大可打开窗口数量
+                url : "/site/menu" //获取菜单json地址
+            });
+
+            function getData(module) {
+                $.ajax({
+                    type: "get",
+                    url: tab.tabConfig.url,
+                    data: {module: module},
+                    success: function (res) {
+                        tab.render(res);
+                    }
+                });
+            }
+
+            //隐藏左侧导航
+            $(".hideMenu").click(function(){
+                if($(".topLevelMenus li.layui-this a").data("url")){
+                    layer.msg("此栏目状态下左侧菜单不可展开");  //主要为了避免左侧显示的内容与顶部菜单不匹配
+                    return false;
+                }
+                $(".layui-layout-admin").toggleClass("showMenu");
+            })
+
+            getData("");
+
+            //手机设备的简单适配
+            $('.site-tree-mobile').on('click', function(){
+                $('body').addClass('site-mobile');
+            });
+            $('.site-mobile-shade').on('click', function(){
+                $('body').removeClass('site-mobile');
+            });
+
+            // 添加新窗口
+            $(document).on("click",".layui-nav .layui-nav-item a:not('.mobileTopLevelMenus .layui-nav-item a')",function(){
+                //如果不存在子级
+                if ($(this).siblings().length === 0) {
+                    addTab($(this));
+                    $('body').removeClass('site-mobile');  //移动端点击菜单关闭菜单层
+                }
+                $(this).parent("li").siblings().removeClass("layui-nav-itemed");
+            })
+            //清除缓存
+            $(".clearCache").click(function(){
+                window.sessionStorage.clear();
+                window.localStorage.clear();
+                var index = layer.msg('清除缓存中，请稍候',{icon: 16,time:false,shade:0.8});
+                setTimeout(function(){
+                    layer.close(index);
+                    layer.msg("缓存清除成功！");
+                },1000);
+            })
+
+            //打开新窗口
+            function addTab(_this){
+                tab.tabAdd(_this);
+            }
+        });
+    });
+</script>
 
 <?php $this->endBody() ?>
 </body>

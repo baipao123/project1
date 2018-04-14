@@ -30,9 +30,9 @@ class IndexAction extends Action
         "/layuicms2.0/css/public.css",
         "/jQuery.3.3.1.min.js",
         "/layui/layui.all.js",
-        "/layuicms2.0/js/bodyTab.js",
+//        "/layuicms2.0/js/bodyTab.js",
         "/layuicms2.0/js/cache.js",
-        "/layuicms2.0/js/index.js",
+//        "/layuicms2.0/js/index.js",
     ];
 
     public function init() {
@@ -56,6 +56,7 @@ class IndexAction extends Action
 
         return Yii::$app->controller->renderFile(dirname(__FILE__) ."/../views/index.php", [
             "user"    => $this->user,
+            "assetUrl"=> $this->asseturl,
         ]);
     }
 }
