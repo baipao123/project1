@@ -183,7 +183,7 @@ layui.define(["element","jquery"],function(exports){
             element.tabChange(tabFilter, that.getLayId(url)).init();
         } else {
             tabIdIndex++;
-            var titleHtml = that.generateIconIHtml();
+            var titleHtml = that.generateIconIHtml(icon);
             titleHtml += '<cite>' + title + '</cite>';
             titleHtml += '<i class="layui-icon layui-unselect layui-tab-close" data-url="' + url.replace('"', '') + '" data-id="' + tabIdIndex + '">&#x1006;</i>';
             element.tabAdd(tabFilter, {
