@@ -27,9 +27,18 @@ $assetUrl = \Yii::$app->assetManager->publish(dirname(__FILE__) . '/../../assets
     </div>
 </div>
 <script>
-    //有无parent
     var globalLayer;
     $(document).ready(function(){
+        //有无parent  是不是在iFrame中
+        if (window.frames.length === parent.frames.length) {
+            var cur = {
+                title: $(document).title,
+                url: window.location.href
+            }
+            window.sessionStorage.setItem("bp-curmenu", JSON.stringify(cur));
+            window.location.href = "/";
+        }
+
         layui.use(['element','form', 'layer'], function () {
             var form = layui.form,
                 element = layui.element;
