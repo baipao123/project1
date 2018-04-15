@@ -1,7 +1,6 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: huangchen
- * Date: 2018/4/14
- * Time: 下午2:27
- */
+<div class="noFind">
+    <div class="page500">
+        <i class="seraph icon-liulanqi"></i>
+        <p>稍稍离开一会儿</p>
+    </div>
+</div>

@@ -20,7 +20,7 @@ class MenuAction extends ApiAction
 		{
 			"title": "文章列表",
 			"icon": "icon-text",
-			"href": "http://www.baidu.com",
+			"href": "/site/error",
 			"spread": false
 		},
 		{
@@ -38,7 +38,7 @@ class MenuAction extends ApiAction
 				{
 					"title": "404页面",
 					"icon": "&#xe61c;",
-					"href": "#3",
+					"href": "/site/error",
 					"spread": false
 				},
 				{

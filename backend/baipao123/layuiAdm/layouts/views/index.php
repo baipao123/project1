@@ -80,8 +80,8 @@ use yii\helpers\Html;
     <!-- 右侧内容 -->
     <div class="layui-body layui-form">
         <div class="layui-tab mag0" lay-filter="bodyTab" id="top_tabs_box">
+            <!-- 上方的tab li -->
             <ul class="layui-tab-title top_tab" id="top_tabs">
-                <li class="layui-this" lay-id=""><i class="layui-icon">&#xe68e;</i> <cite>后台首页</cite></li>
             </ul>
             <ul class="layui-nav closeBox">
                 <li class="layui-nav-item">
@@ -93,10 +93,8 @@ use yii\helpers\Html;
                     </dl>
                 </li>
             </ul>
+            <!-- 下方的tab iFrame -->
             <div class="layui-tab-content clildFrame">
-                <div class="layui-tab-item layui-show">
-                    <iframe class="child-iFrame" src="#"></iframe>
-                </div>
             </div>
         </div>
     </div>

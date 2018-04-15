@@ -1,8 +1,7 @@
 <?php
 namespace backend\controllers;
 
-use backend\baipao123\layuiAdm\layouts\actions\IndexAction;
-use backend\baipao123\layuiAdm\layouts\actions\MenuAction;
+use backend\baipao123\layuiAdm\layouts\Init;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -49,19 +48,7 @@ class SiteController extends BaseController
      * {@inheritdoc}
      */
     public function actions() {
-        return ArrayHelper::merge(parent::actions(), [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
-            ],
-            'index' => [
-                'class'     => IndexAction::className(),
-                'homeTitle' => "黄琛的后台"
-            ],
-            'menu'  => [
-                'class'  => MenuAction::className(),
-                'module' => Yii::$app->controller->module
-            ],
-        ]);
+        return ArrayHelper::merge(parent::actions(), Init::SiteActions("黄琛的后台"));
     }
 
     /**

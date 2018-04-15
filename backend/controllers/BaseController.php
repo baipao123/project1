@@ -8,6 +8,7 @@
 
 namespace backend\controllers;
 
+use backend\baipao123\layuiAdm\layouts\Init;
 use backend\baipao123\layuiAdm\qiniu\src\QiNiuTokenAction;
 use Yii;
 use yii\helpers\ArrayHelper;
@@ -24,10 +25,11 @@ class BaseController extends Controller {
     }
 
     public function beforeAction($action) {
-        if (in_array($action->id, Yii::$app->controller->basicActions))
-            Yii::$app->layout = "@backend/views/layouts/layui_basic.php";
-        else
-            Yii::$app->layout = "@backend/views/layouts/layui.php";
+        Init::Layout();
+//        if (in_array($action->id, Yii::$app->controller->basicActions))
+//            Yii::$app->layout = "@backend/views/layouts/layui_basic.php";
+//        else
+//            Yii::$app->layout = "@backend/views/layouts/layui.php";
         return parent::beforeAction($action);
     }
 
