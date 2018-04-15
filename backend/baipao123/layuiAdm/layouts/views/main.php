@@ -28,6 +28,38 @@ $assetUrl = \Yii::$app->assetManager->publish(dirname(__FILE__) . '/../../assets
 </div>
 <script>
     //有无parent
+    var globalLayer;
+    $(document).ready(function(){
+        layui.use(['element','form', 'layer'], function () {
+            var form = layui.form,
+                element = layui.element;
+            globalLayer = layui.layer;
+            element.init();
+            form.render();
+        });
+    });
+
+    function layerConfirmUrl(url, text, _target) {
+        if (text === undefined || text === '')
+            return layerOpenIFrame(url);
+        globalLayer.confirm(text, function () {
+            if (_target === undefined || !_target)
+                layerOpenIFrame(url);
+            else
+                window.location.href = url;
+        });
+    }
+
+    function layerOpenIFrame(url, title, width) {
+        width = width === undefined || width === "" ? ((title === "" || title === undefined) ? '235px' : '380px' ) : width;
+        globalLayer.open({
+            type: 2,
+            title: title,
+            shadeClose: false,
+            area: width,
+            content: url
+        });
+    }
 </script>
 <?php $this->endBody() ?>
 </body>

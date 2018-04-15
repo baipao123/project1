@@ -31,8 +31,11 @@ class Init
         ];
     }
 
-    public static function Layout() {
-        Yii::$app->controller->layout = "@backend/baipao123/layuiAdm/layouts/views/main.php";
+    public static function Layout($action) {
+        if (in_array($action->id, Yii::$app->controller->basicActions))
+            Yii::$app->controller->layout = "@backend/baipao123/layuiAdm/layouts/views/basic.php";
+        else
+            Yii::$app->controller->layout = "@backend/baipao123/layuiAdm/layouts/views/main.php";
     }
 
 }

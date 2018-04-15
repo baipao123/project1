@@ -79,7 +79,7 @@ use yii\helpers\Html;
     </div>
     <!-- 右侧内容 -->
     <div class="layui-body layui-form">
-        <div class="layui-tab mag0" lay-filter="bodyTab" id="top_tabs_box">
+        <div class="layui-tab mag0 layui-row" lay-filter="bodyTab" id="top_tabs_box">
             <!-- 上方的tab li -->
             <ul class="layui-tab-title top_tab" id="top_tabs">
             </ul>

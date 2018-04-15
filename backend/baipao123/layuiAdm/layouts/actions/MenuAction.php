@@ -20,7 +20,7 @@ class MenuAction extends ApiAction
 		{
 			"title": "文章列表",
 			"icon": "icon-text",
-			"href": "/site/error",
+			"href": "/site/error-jj",
 			"spread": false
 		},
 		{
@@ -30,23 +30,16 @@ class MenuAction extends ApiAction
 			"spread": false
 		},
 		{
-			"title": "其他页面",
+			"title": "账户管理",
 			"icon": "&#xe630;",
 			"href": "",
 			"spread": true,
 			"children": [
 				{
-					"title": "404页面",
+					"title": "账户列表",
 					"icon": "&#xe61c;",
-					"href": "/site/error",
+					"href": "/admin/list",
 					"spread": false
-				},
-				{
-					"title": "登录",
-					"icon": "&#xe609;",
-					"href": "#3",
-					"spread": false,
-					"target": "_blank"
 				}
 			]
 		}

@@ -20,7 +20,7 @@ class ErrorExceptionAction extends ErrorAction
     public function run() {
 //        echo 404;exit;
         $controller = Yii::$app->controller;
-        if ($this->findException()->getCode() == 404)
+        if ($this->findException()->getMessage() == "Page not found.")
             return $controller->renderContent($controller->renderFile(__DIR__ . "/views/404.php"));
         else
             return $controller->renderContent($controller->renderFile(__DIR__ . "/views/500.php"));

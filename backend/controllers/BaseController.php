@@ -25,7 +25,7 @@ class BaseController extends Controller {
     }
 
     public function beforeAction($action) {
-        Init::Layout();
+        Init::Layout($action);
 //        if (in_array($action->id, Yii::$app->controller->basicActions))
 //            Yii::$app->layout = "@backend/views/layouts/layui_basic.php";
 //        else

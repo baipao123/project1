@@ -102,7 +102,7 @@ layui.define(["element","jquery"],function(exports){
 	Tab.prototype.renderHome = function (home) {
         var that = this,
             homeLi = $(".layui-tab-title.top_tab li").eq(0),
-            titleHtml = that.generateIconIHtml(home.icon) + '<cite>' + home.title + '</cite>';
+            titleHtml = that.generateIconIHtml(home.icon) + '<cite>' + home.title + '</cite><i data-url="' + home.href + '"></i>';
         //添加home，还是替换home
         if (homeLi.length === 0) {
             element.tabAdd(that.tabConfig.tabFilter, {
@@ -139,7 +139,7 @@ layui.define(["element","jquery"],function(exports){
     Tab.prototype.getLayId = function (url) {
         var layId = 0;
         $(".layui-tab-title.top_tab li").each(function (i) {
-            if ($(this).find("i.layui-tab-close").attr("data-url") === url)
+            if ($(this).find("i").eq(-1).attr("data-url") === url)
                 layId = $(this).attr("lay-id");
         });
         return layId;
@@ -150,10 +150,9 @@ layui.define(["element","jquery"],function(exports){
     Tab.prototype.getTabIndex = function (url) {
         var index = 0;
         $(".layui-tab-title.top_tab li").each(function (i) {
-            if ($(this).find("i.layui-tab-close").attr("data-url") === url)
+            if ($(this).find("i").eq(-1).attr("data-url") === url)
                 index = i;
         });
-        console.log(index);
         return index;
     };
 
