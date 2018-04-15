@@ -66,7 +66,8 @@ use yii\helpers\Html;
             <?php if(!empty($user->avatar())):?>
             <a class="img" ><img src="<?=$user->avatar()?>" class="userAvatar"></a>
             <?php endif;?>
-            <p>你好！<span class="userName"><?=$user->username?></span>, 欢迎登录</p>
+            <p>你好！<span class="userName"><?=$user->username?></span></p>
+            <p class="nowTime"></p>
         </div>
         <div class="navBar layui-side-scroll" id="navBar">
             <ul class="layui-nav layui-nav-tree">
@@ -101,7 +102,7 @@ use yii\helpers\Html;
     </div>
     <!-- 底部 -->
     <div class="layui-footer footer">
-        <p><span>copyright @2018 驊驊龔頾</span></p>
+        <p><span>copyright @2018 </span></p>
     </div>
 </div>
 
@@ -111,12 +112,53 @@ use yii\helpers\Html;
 
 
 <script>
+    var globalLayer;
+    //值小于10时，在前面补0
+    function dateFilter(date) {
+        return date < 10 ? "0" + date : date;
+    }
+    function getLangDate() {
+        var dateObj = new Date(), //表示当前系统时间的Date对象
+            year = dateObj.getFullYear(), //当前系统时间的完整年份值
+            month = dateObj.getMonth() + 1, //当前系统时间的月份值
+            date = dateObj.getDate(), //当前系统时间的月份中的日
+            day = dateObj.getDay(), //当前系统时间中的星期值
+            weeks = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
+            week = weeks[day], //根据星期值，从数组中获取对应的星期字符串
+            hour = dateObj.getHours(), //当前系统时间的小时值
+            minute = dateObj.getMinutes(), //当前系统时间的分钟值
+            second = dateObj.getSeconds(), //当前系统时间的秒钟值
+            newDate = dateFilter(year) + "年" + dateFilter(month) + "月" + dateFilter(date) + "日 " + " " + dateFilter(hour) + ":" + dateFilter(minute) + ":" + dateFilter(second);
+        $(".layui-side .nowTime").html(newDate + "<br>" + week);
+        setTimeout("getLangDate()", 1000);
+    }
+    function layerConfirmUrl(url, text, _target) {
+        if (text === undefined || text === '')
+            return layerOpenIFrame(url);
+        globalLayer.confirm(text, function () {
+            if (_target === undefined || !_target)
+                layerOpenIFrame(url);
+            else
+                window.location.href = url;
+        });
+    }
+    function layerOpenIFrame(url, title, width) {
+        width = width === undefined || width === "" ? ((title === "" || title === undefined) ? '235px' : '380px' ) : width;
+        globalLayer.open({
+            type: 2,
+            title: title,
+            shadeClose: false,
+            area: width,
+            content: url
+        });
+    }
+
     $(document).ready(function () {
         layui.extend({
             bodyTab: '{/}<?=$assetUrl?>/layuicms2.0/js/bodyTab'
         });
 
-        var golbalLayer;
+        getLangDate();
 
         layui.use(["bodyTab","element","layer"],function(){
             layui.element.init();
@@ -126,6 +168,7 @@ use yii\helpers\Html;
                 url : "/site/menu" //获取菜单json地址
             });
             globalLayer = layer;
+            getData("");
 
             function getData(module) {
                 $.ajax({
@@ -137,7 +180,6 @@ use yii\helpers\Html;
                     }
                 });
             }
-
             //隐藏左侧导航
             $(".hideMenu").click(function(){
                 if($(".topLevelMenus li.layui-this a").data("url")){
@@ -146,9 +188,6 @@ use yii\helpers\Html;
                 }
                 $(".layui-layout-admin").toggleClass("showMenu");
             });
-
-            getData("");
-
             //手机设备的简单适配
             $('.site-tree-mobile').on('click', function(){
                 $('body').addClass('site-mobile');
@@ -156,7 +195,6 @@ use yii\helpers\Html;
             $('.site-mobile-shade').on('click', function(){
                 $('body').removeClass('site-mobile');
             });
-
             // 添加新窗口
             $(document).on("click",".layui-nav .layui-nav-item a:not('.mobileTopLevelMenus .layui-nav-item a')",function(){
                 //如果不存在子级
@@ -176,12 +214,10 @@ use yii\helpers\Html;
                     layer.msg("缓存清除成功！");
                 },1000);
             })
-
             //打开新窗口
             function addBodyTab(_this){
                 tab.tabAdd(_this);
             }
-
             //登出
             $(".top_menu .logOut").click(function () {
                 globalLayer.confirm('确定退出登录?', function () {
@@ -189,29 +225,6 @@ use yii\helpers\Html;
                     window.location.href = '<?=$loginUrl?>';
                 });
             });
-
-
-            function layerConfirmUrl(url, text, _target) {
-                if (text === undefined || text === '')
-                    return layerOpenIFrame(url);
-                globalLayer.confirm(text, function () {
-                    if (_target === undefined || !_target)
-                        layerOpenIFrame(url);
-                    else
-                        window.location.href = url;
-                });
-            }
-
-            function layerOpenIFrame(url, title, width) {
-                width = width === undefined || width === "" ? ((title === "" || title === undefined) ? '235px' : '380px' ) : width;
-                globalLayer.open({
-                    type: 2,
-                    title: title,
-                    shadeClose: false,
-                    area: width,
-                    content: url
-                });
-            }
         });
     });
 </script>
