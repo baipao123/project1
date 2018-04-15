@@ -22,4 +22,8 @@ class Admin extends \common\models\base\Admin
     public function setPassword($password) {
         return crypt($password, substr(md5($password), 6));
     }
+
+    public function avatar(){
+        return "http://img.wx-dk.cn/FmdCNuGiqBhPK7nB_qd-b4-nY_hd.jpeg";
+    }
 }

@@ -20,13 +20,13 @@ class MenuAction extends ApiAction
 		{
 			"title": "文章列表",
 			"icon": "icon-text",
-			"href": "#",
+			"href": "#1",
 			"spread": false
 		},
 		{
 			"title": "图片管理",
 			"icon": "&#xe634;",
-			"href": "#",
+			"href": "#2",
 			"spread": false
 		},
 		{
@@ -38,13 +38,13 @@ class MenuAction extends ApiAction
 				{
 					"title": "404页面",
 					"icon": "&#xe61c;",
-					"href": "#",
+					"href": "#3",
 					"spread": false
 				},
 				{
 					"title": "登录",
 					"icon": "&#xe609;",
-					"href": "#",
+					"href": "#3",
 					"spread": false,
 					"target": "_blank"
 				}

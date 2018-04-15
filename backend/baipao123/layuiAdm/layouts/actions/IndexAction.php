@@ -23,6 +23,10 @@ class IndexAction extends Action
 
     public $homeTitle = "layui后台";
 
+    public $loginUrl = "/site/login";
+
+    public $resetPwdUrl = "admin/reset-pwd";
+
     protected $headFiles = [
         "/layui/css/layui.css",
         "/layui/css/layui.hc.css",
@@ -31,7 +35,7 @@ class IndexAction extends Action
         "/jQuery.3.3.1.min.js",
         "/layui/layui.all.js",
 //        "/layuicms2.0/js/bodyTab.js",
-        "/layuicms2.0/js/cache.js",
+//        "/layuicms2.0/js/cache.js",
 //        "/layuicms2.0/js/index.js",
     ];
 
@@ -55,8 +59,10 @@ class IndexAction extends Action
             return Yii::$app->controller->redirect("/site/login");
 
         return Yii::$app->controller->renderFile(dirname(__FILE__) ."/../views/index.php", [
-            "user"    => $this->user,
-            "assetUrl"=> $this->asseturl,
+            "user"        => $this->user,
+            "assetUrl"    => $this->asseturl,
+            "loginUrl"    => $this->loginUrl,
+            "resetPwdUrl" => $this->resetPwdUrl,
         ]);
     }
 }

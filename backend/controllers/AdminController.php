@@ -52,7 +52,7 @@ class AdminController extends BaseController
         return $this->render("../layouts/basic");
     }
 
-    public function actionResetPass() {
+    public function actionResetPwd() {
         $admin = Admin::findOne(Yii::$app->user->id);
         if (!$admin || $admin->status != Admin::STATUS_ACTIVE) {
             Yii::$app->session->setFlash("danger", "用户不存在或已被禁用");
