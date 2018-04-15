@@ -20,7 +20,7 @@ class MenuAction extends ApiAction
 		{
 			"title": "文章列表",
 			"icon": "icon-text",
-			"href": "#1",
+			"href": "http://www.baidu.com",
 			"spread": false
 		},
 		{

@@ -93,11 +93,35 @@ layui.define(["element","jquery"],function(exports){
 		var _this = this;
 		$(".navBar ul").html(_this.navBar(data)).height($(window).height()-210);
 		//生成后台首页
-		element.init();  //初始化页面元素
+        _this.renderHome(data[0]);
+        element.init();  //初始化页面元素
 		$(window).resize(function(){
 			$(".navBar").height($(window).height()-210);
 		})
 	}
+	Tab.prototype.renderHome = function (home) {
+        var that = this,
+            homeLi = $(".layui-tab-title.top_tab li").eq(0),
+            titleHtml = that.generateIconIHtml(home.icon) + '<cite>' + home.title + '</cite>';
+        //添加home，还是替换home
+        if (homeLi.length === 0) {
+            element.tabAdd(that.tabConfig.tabFilter, {
+                title: titleHtml,
+                content: "<iframe class='child-iFrame' src='" + home.href + "' data-id='-1'></frame>",
+                id: "home"
+            });
+            //刷新进入本页 | 就是空的，重新请求了module
+            var cur = that.getCurMenu();
+            if (cur !== "" && cur.title && cur.icon && cur.href)
+                that.tabAddiFrame(cur.title, cur.icon, cur.href);
+            else
+                element.tabChange(that.tabConfig.tabFilter, "home").init();
+        } else {
+            homeLi.html(titleHtml);
+            $(".clildFrame .layui-tab-item").eq(0).find("iframe").eq(0).attr("src", home.href);
+            element.tabChange(that.tabConfig.tabFilter, "home").init();
+        }
+    }
 
 	//是否点击窗口切换刷新页面
     Tab.prototype.changeRegresh = function (index) {
@@ -148,11 +172,7 @@ layui.define(["element","jquery"],function(exports){
 
     Tab.prototype.tabAddiFrame = function (title, icon, url) {
         var openTabNum = this.tabConfig.openTabNum,
-            curmenu = {
-                "icon": icon,
-                "title": title,
-                "href": url
-            },
+            curmenu = "",
             that = this,
             tabFilter = that.tabConfig.tabFilter;
         if ($(".layui-tab-title.top_tab li").length >= openTabNum) {
@@ -161,7 +181,6 @@ layui.define(["element","jquery"],function(exports){
         }
         if (that.hasTab(url)) {
             that.changeRegresh(that.getTabIndex(url));//是否需要刷新页面
-            that.setCurMenu(curmenu);//设置当前窗口
             element.tabChange(tabFilter, that.getLayId(url)).init();
         } else {
             tabIdIndex++;
@@ -170,7 +189,7 @@ layui.define(["element","jquery"],function(exports){
             titleHtml += '<i class="layui-icon layui-unselect layui-tab-close" data-url="' + url.replace('"', '') + '" data-id="' + tabIdIndex + '">&#x1006;</i>';
             element.tabAdd(tabFilter, {
                 title: titleHtml,
-                content: "<iframe src='" + url + "' data-id='" + tabIdIndex + "'></frame>",
+                content: "<iframe class='child-iFrame' src='" + url + "' data-id='" + tabIdIndex + "'></frame>",
                 id: new Date().getTime()
             });
             //当前窗口内容
@@ -180,8 +199,8 @@ layui.define(["element","jquery"],function(exports){
                 "href": url,
                 "layId": new Date().getTime()
             };
-            that.pushCurToMenu(curmenu);
             that.setCurMenu(curmenu);
+            that.pushCurToMenu(curmenu);
             element.tabChange(tabFilter, that.getLayId(url)).init();
         }
     }

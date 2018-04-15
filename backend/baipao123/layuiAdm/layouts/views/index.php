@@ -94,7 +94,7 @@ use yii\helpers\Html;
             </ul>
             <div class="layui-tab-content clildFrame">
                 <div class="layui-tab-item layui-show">
-
+                    <iframe class="child-iFrame" src="#"></iframe>
                 </div>
             </div>
         </div>
