@@ -23,6 +23,27 @@ class SiteController extends BaseController
         ]);
     }
 
+    public function actionHome(){
+
+        $panels = [[
+            "color" => "red",
+            "title" => "0",
+            "icon"  => "icon-clock",
+            "desc"  => "账户列表",
+            "href"  => "/admin/list",
+        ],[
+            "color" => "cyan",
+            "title" => "12",
+            "icon"  => "icon-clock",
+            "desc"  => "未处理审核",
+            "href"  => "/company/verify",
+        ]];
+
+        return $this->render("index", [
+            "panels" => $panels,
+        ]);
+    }
+
     /**
      * Login action.
      * @return string

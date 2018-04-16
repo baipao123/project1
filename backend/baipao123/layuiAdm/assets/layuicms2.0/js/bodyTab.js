@@ -112,7 +112,7 @@ layui.define(["element","jquery"],function(exports){
             });
             //刷新进入本页 | 就是空的，重新请求了module
             var cur = that.getCurMenu();
-            if (cur !== "" && cur.title && cur.icon && cur.href)
+            if (cur && cur !== {} && cur.title && cur.href)
                 that.tabAddiFrame(cur.title, cur.icon, cur.href);
             else
                 element.tabChange(that.tabConfig.tabFilter, "home").init();

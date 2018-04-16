@@ -110,7 +110,7 @@ use yii\helpers\Html;
 
 
 <script>
-    var globalLayer;
+    var globalLayer,globalBodyTab;
     //值小于10时，在前面补0
     function dateFilter(date) {
         return date < 10 ? "0" + date : date;
@@ -166,6 +166,7 @@ use yii\helpers\Html;
                 url : "/site/menu" //获取菜单json地址
             });
             globalLayer = layer;
+            globalBodyTab = tab;
             getData("");
 
             function getData(module) {

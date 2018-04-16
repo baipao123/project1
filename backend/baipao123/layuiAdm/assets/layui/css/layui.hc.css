@@ -17,6 +17,14 @@
     -moz-osx-font-smoothing: grayscale
 }
 
+.my-icon-logout:before { content: "\e637"; }
+
+.my-icon-logout1:before { content: "\e63a"; }
+
+.my-icon-code:before { content: "\e842"; }
+
+.my-icon-camera:before { content: "\e86e"; }
+
 
 
 @font-face {font-family: "seraph";

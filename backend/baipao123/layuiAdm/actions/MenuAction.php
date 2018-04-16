@@ -18,26 +18,20 @@ class MenuAction extends ApiAction
     public function run() {
         echo '[
 		{
-			"title": "文章列表",
-			"icon": "icon-text",
-			"href": "/site/list",
-			"spread": false
-		},
-		{
-			"title": "图片管理",
-			"icon": "&#xe634;",
-			"href": "#2",
+			"title": "首页",
+			"icon": "&#xe68e;",
+			"href": "/site/home",
 			"spread": false
 		},
 		{
 			"title": "账户管理",
-			"icon": "&#xe630;",
+			"icon": "icon-icon10",
 			"href": "",
 			"spread": true,
 			"children": [
 				{
 					"title": "账户列表",
-					"icon": "&#xe61c;",
+					"icon": "&#xe612;",
 					"href": "/admin/list",
 					"spread": false
 				}
