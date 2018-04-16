@@ -15,34 +15,44 @@ class PagesWidget extends Widget
     /**
      * Renders the widget.
      */
-    public function run()
-    {
+    public function run() {
         $pageCount = $this->pagination->pageCount;
         $currPage = $this->pagination->page + 1;
+        $totalCount = $this->pagination->totalCount;
+        if ($totalCount <= $pageCount)
+            return "";
+        $layout = ['count', 'prev', 'page', 'next'];
+        if($totalCount > 10 * $pageCount)
+            $layout[] = 'skip';
+        $layoutStr = json_encode($layout);
         $js = <<<JS
-layui.laypage({
-    cont: 'page-{$this->getId()}',
-    pages: {$pageCount},
-    skip: true,
-    curr: {$currPage},
-    jump: function(obj, first){
-        var queryParams = {};
-        var queryString = location.search.replace('?','');
-        queryString = decodeURI(queryString);
-        if(queryString){
-            queryString.split('&').forEach(function(i){
-                var j = i.split('=');
-                queryParams[j[0]]=j[1];
+        layui.use(['laypage'], function(){
+            layui.laypage.render({
+                elem: 'page-{$this->getId()}'
+                ,count: {$totalCount}
+                ,limit: {$pageCount}
+                ,layout: {$layoutStr}
+                ,curr:{$currPage}
+                ,jump: function(obj,first){
+                    if(!first){
+                        var queryParams = {};
+                        var queryString = location.search.replace('?','');
+                        queryString = decodeURI(queryString);
+                        if(queryString){
+                            queryString.split('&').forEach(function(i){
+                                var j = i.split('=');
+                                queryParams[j[0]]=j[1];
+                            });
+                        }
+                        queryParams['page'] = obj.curr;
+                        location.href = location.pathname + '?' + $.param(queryParams) + location.hash;
+                        
+                    }
+                }
             });
-        }
-        queryParams['page'] = obj.curr;
-        if(!first){
-            location.href = location.pathname + '?' + $.param(queryParams) + location.hash;
-        }
-    }
-});
+        });
 JS;
         $this->getView()->registerJs($js);
-        echo '<div id="page-' . $this->getId() . '"></div>';
+        return '<div id="page-' . $this->getId() . '"></div>';
     }
 }

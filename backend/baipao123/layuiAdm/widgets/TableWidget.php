@@ -19,4 +19,12 @@ class TableWidget extends Widget
 
     }
 
+    public static function begin($config = []) {
+        return parent::begin($config);
+    }
+
+    public static function end() {
+        return parent::end();
+    }
+
 }

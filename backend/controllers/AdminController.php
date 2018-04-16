@@ -10,6 +10,7 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\Admin;
+use yii\data\Pagination;
 
 class AdminController extends BaseController
 {
@@ -23,12 +24,14 @@ class AdminController extends BaseController
         if (!empty($username)) {
             $query->andWhere(["like", "username", $username]);
         }
-        $admins = $query->all();
-        
+        $count = $query->count();
+        $pagination = new Pagination(["totalCount" => $count]);
+        $admins = $query->offset($pagination->getOffset())->limit($pagination->getLimit())->all();
         return $this->render("list", [
-            "status"   => $status,
-            "username" => $username,
-            "admins"   => $admins,
+            "status"     => $status,
+            "username"   => $username,
+            "admins"     => $admins,
+            "pagination" => $pagination,
         ]);
     }
     

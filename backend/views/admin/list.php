@@ -67,3 +67,5 @@
     <?php endforeach;?>
     </tbody>
 </table>
+
+<?php echo \layuiAdm\widgets\PagesWidget::widget(["pagination" => $pagination]); ?>
