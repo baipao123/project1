@@ -6,7 +6,7 @@
  * Time: 下午2:35
  */
 
-namespace backend\baipao123\layuiAdm\layouts\actions;
+namespace backend\baipao123\layuiAdm\actions;
 
 use Yii;
 use yii\base\Action;
@@ -34,15 +34,12 @@ class IndexAction extends Action
         "/layuicms2.0/css/public.css",
         "/jQuery.3.3.1.min.js",
         "/layui/layui.all.js",
-//        "/layuicms2.0/js/bodyTab.js",
-//        "/layuicms2.0/js/cache.js",
-//        "/layuicms2.0/js/index.js",
     ];
 
     public function init() {
         parent::init();
         $this->user = Yii::$app->user->getIdentity();
-        $this->asseturl = Yii::$app->assetManager->publish(dirname(__FILE__) . '/../../assets')[1];
+        $this->asseturl = Yii::$app->assetManager->publish(dirname(__FILE__) . '/../assets')[1];
         foreach ($this->headFiles as $file) {
             $exts = explode(".", $file);
             if (end($exts) == "js")
@@ -58,7 +55,7 @@ class IndexAction extends Action
         if (Yii::$app->user->isGuest)
             return Yii::$app->controller->redirect("/site/login");
 
-        return Yii::$app->controller->renderFile(dirname(__FILE__) ."/../views/index.php", [
+        return Yii::$app->controller->renderFile(dirname(__FILE__) ."/../views/layouts/index.php", [
             "user"        => $this->user,
             "assetUrl"    => $this->asseturl,
             "loginUrl"    => $this->loginUrl,

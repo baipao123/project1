@@ -6,20 +6,12 @@
  * Time: 下午7:20
  */
 
-namespace backend\baipao123\layuiAdm\qiniu\src;
+namespace backend\baipao123\layuiAdm\widgets;
 
 use Yii;
-use yii\web\View;
 
-class QiNiuUploader extends \yii\base\Widget
+class QiNiuUploaderWidget extends Widget
 {
-    protected $jsFiles = [
-        "/qiniu.min.js",
-        "/qiniu.token.js"
-    ];
-
-    protected $asseturl;
-
     public $callBack = "uploadFile";
 
     public $isMulti = true;
@@ -35,16 +27,14 @@ class QiNiuUploader extends \yii\base\Widget
     public $region = "";
 
     public function init() {
-        parent::init();
-        $this->asseturl = Yii::$app->assetManager->publish(dirname(__FILE__) . '/../assets')[1];
-
+        $this->assetFiles = [
+            "/qiniu/qiniu.min.js",
+            "/qiniu/qiniu.token.js"
+        ];
         // 华东区
         if (empty($this->region) && isset(Yii::$app->params['qiniu']) && isset(Yii::$app->params['qiniu']['region']))
             $this->region = Yii::$app->params['qiniu']['region'];
-
-        foreach ($this->jsFiles as $jsFile) {
-            Yii::$app->view->registerJsFile($this->asseturl . $jsFile, ['position' => View::POS_END]);
-        }
+        parent::init();
     }
 
     public function run() {
@@ -54,7 +44,7 @@ class QiNiuUploader extends \yii\base\Widget
             $params .= $key . ":" . json_encode($val);
         }
         $params .= "}";
-        echo $this->renderFile(dirname(__FILE__) . '/../views/uploader.php', [
+        return $this->renderFile(dirname(__FILE__) . '/../views/qiniu/uploader.php', [
             'id'       => $this->id,
             'isMulti'  => $this->isMulti,
             'callBack' => $this->callBack,

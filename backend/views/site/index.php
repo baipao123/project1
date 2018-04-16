@@ -1,7 +1,5 @@
 <?php
-    use backend\baipao123\layuiAdm\qiniu\src\QiNiuUploader;
-    QiNiuUploader::begin();
-    QiNiuUploader::end();
+    \backend\baipao123\layuiAdm\widgets\QiNiuUploaderWidget::widget();
 ?>
 <script>
     function uploadFile(info) {
