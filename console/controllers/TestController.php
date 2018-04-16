@@ -8,6 +8,7 @@
 
 namespace console\controllers;
 
+use common\models\Admin;
 use common\tools\Tool;
 use common\tools\WxProgram;
 use Yii;
@@ -46,6 +47,7 @@ class TestController extends Controller
     }
 
     public function actionIndex(){
-
+        $admin = Admin::findOne(1);
+        echo $admin->setPassword("123456");
     }
 }

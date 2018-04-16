@@ -2,6 +2,7 @@
 /* @var $this \yii\web\View */
 use yii\helpers\Html;
 ?>
+<?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,9 +11,7 @@ use yii\helpers\Html;
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
-    <link rel="stylesheet" type="text/css" href="/plugin/layui/css/layui.css"/>
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript" charset="utf-8" src="/plugin/layui/layui.all.js"></script>
+    <?php $this->head() ?>
     <style>
         html,body{height:100%;}
         .login-box{position: absolute;left: 50%;top:50%;transform: translate(-50%,-50%);}
@@ -22,6 +21,7 @@ use yii\helpers\Html;
     </style>
 </head>
 <body>
+<?php $this->beginBody() ?>
     <div class="layui-bg-black" style="height: 100%">
         <div class="layui-row">
             <div class="login-box layui-col-xs10 layui-col-sm6 layui-col-md4 layui-col-lg4">
@@ -84,5 +84,7 @@ use yii\helpers\Html;
             });
         });
     </script>
+<?php $this->endBody() ?>
 </body>
 </html>
+<?php $this->endPage() ?>

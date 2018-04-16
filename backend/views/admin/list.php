@@ -23,7 +23,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="layui-inline m-login-btn" style="position:absolute;right:20px;">
+                <div class="layui-inline">
                     <button class="layui-btn layui-btn-normal login-btn" lay-submit>搜索</button>
                 </div>
             </div>

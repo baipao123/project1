@@ -6,6 +6,7 @@ use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
+use yii\web\View;
 
 /**
  * Site controller
@@ -52,6 +53,10 @@ class SiteController extends BaseController
         if (!Yii::$app->user->isGuest) {
             return $this->goBack();
         }
+        $assetUrl = Yii::$app->assetManager->publish('@layuiAdm/assets')[1];
+        Yii::$app->view->registerCssFile($assetUrl . "/layui/css/layui.css", ["position" => View::POS_HEAD]);
+        Yii::$app->view->registerJsFile($assetUrl . "/layui/layui.all.js", ["position" => View::POS_HEAD]);
+
         $error = "";
         $username = "";
         if (Yii::$app->request->isPost) {

@@ -27,6 +27,8 @@ class IndexAction extends Action
 
     public $resetPwdUrl = "admin/reset-pwd";
 
+    public $logOutUrl = "site/logout";
+
     protected $headFiles = [
         "/layui/css/layui.css",
         "/layui/css/layui.hc.css",
@@ -60,6 +62,7 @@ class IndexAction extends Action
             "assetUrl"    => $this->asseturl,
             "loginUrl"    => $this->loginUrl,
             "resetPwdUrl" => $this->resetPwdUrl,
+            "logOutUrl"   => $this->logOutUrl,
         ]);
     }
 }

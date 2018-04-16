@@ -220,8 +220,7 @@ use yii\helpers\Html;
             //登出
             $(".top_menu .logOut").click(function () {
                 globalLayer.confirm('确定退出登录?', function () {
-
-                    window.location.href = '<?=$loginUrl?>';
+                    window.location.href = '<?= $logOutUrl ?>';
                 });
             });
         });

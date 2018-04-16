@@ -20,7 +20,7 @@ class Admin extends \common\models\base\Admin
     }
 
     public function setPassword($password) {
-        return crypt($password, substr(md5($password), 6));
+        return crypt($password, substr(md5($this->username . $password), 6));
     }
 
     public function avatar(){
