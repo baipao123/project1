@@ -6,7 +6,7 @@
  * Time: 下午7:08
  */
 
-namespace backend\baipao123\layuiAdm\actions;
+namespace baipao123\layuiAdm\actions;
 
 use Yii;
 use Qiniu\Auth;

@@ -8,8 +8,8 @@
 
 namespace backend\controllers;
 
-use backend\baipao123\layuiAdm\Init;
-use backend\baipao123\layuiAdm\actions\QiNiuTokenAction;
+use baipao123\layuiAdm\Init;
+use baipao123\layuiAdm\actions\QiNiuTokenAction;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;

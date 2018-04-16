@@ -6,12 +6,12 @@
  * Time: 下午2:22
  */
 
-namespace backend\baipao123\layuiAdm;
+namespace baipao123\layuiAdm;
 
-use backend\baipao123\layuiAdm\actions\ErrorExceptionAction;
+use baipao123\layuiAdm\actions\ErrorExceptionAction;
 use Yii;
-use backend\baipao123\layuiAdm\actions\IndexAction;
-use backend\baipao123\layuiAdm\actions\MenuAction;
+use baipao123\layuiAdm\actions\IndexAction;
+use baipao123\layuiAdm\actions\MenuAction;
 
 class Init
 {

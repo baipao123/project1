@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\baipao123\layuiAdm\widgets;
+namespace baipao123\layuiAdm\widgets;
 
 use yii\data\Pagination;
 

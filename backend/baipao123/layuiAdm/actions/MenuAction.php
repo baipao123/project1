@@ -6,7 +6,7 @@
  * Time: 下午5:27
  */
 
-namespace backend\baipao123\layuiAdm\actions;
+namespace baipao123\layuiAdm\actions;
 
 use Yii;
 

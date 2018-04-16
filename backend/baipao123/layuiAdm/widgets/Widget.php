@@ -5,7 +5,7 @@
  * @license http://www.yiiframework.com/license/
  */
 
-namespace backend\baipao123\layuiAdm\widgets;
+namespace baipao123\layuiAdm\widgets;
 
 use Yii;
 use yii\helpers\Json;
