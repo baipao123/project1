@@ -25,7 +25,7 @@ class IndexAction extends Action
 
     public $loginUrl = "/site/login";
 
-    public $resetPwdUrl = "admin/reset-pwd";
+    public $changePwdUrl = "admin/change-pwd";
 
     public $logOutUrl = "site/logout";
 
@@ -61,7 +61,7 @@ class IndexAction extends Action
             "user"        => $this->user,
             "assetUrl"    => $this->asseturl,
             "loginUrl"    => $this->loginUrl,
-            "resetPwdUrl" => $this->resetPwdUrl,
+            "changePwdUrl" => $this->changePwdUrl,
             "logOutUrl"   => $this->logOutUrl,
         ]);
     }

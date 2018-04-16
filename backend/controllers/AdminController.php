@@ -14,7 +14,9 @@ use yii\data\Pagination;
 
 class AdminController extends BaseController
 {
-    public $basicActions = ["reset-pass","status"];
+    public $enableCsrfValidation = true;
+
+    public $basicActions = ["change-pwd", "status", "create"];
     
     public function actionList($status = "", $username = "") {
         $query = Admin::find()->where(["<>", "status", Admin::STATUS_DELETED]);
@@ -34,9 +36,34 @@ class AdminController extends BaseController
             "pagination" => $pagination,
         ]);
     }
-    
-    public function actionInfo(){
-    
+
+    public function actionCreate() {
+        $admin = null;
+        if (Yii::$app->request->isPost) {
+            $pwd = Yii::$app->request->post("aPwd");
+            $name = Yii::$app->request->post("aName");
+            $admin = new Admin;
+            if (Admin::find()->where(["username" => $name])->exists())
+                Yii::$app->session->setFlash("warning", "账户名已存在");
+            else {
+                $admin->username = $name;
+                $admin->password = $admin->setPassword($pwd);
+                $admin->access = 90;
+                $admin->status = Admin::STATUS_ACTIVE;
+                $admin->created_at = time();
+                if (empty($admin->username) || mb_strlen($admin->username) < 6 || mb_strlen($admin->username) > 12)
+                    Yii::$app->session->setFlash("warning", "用户名必须是6-12位");
+                elseif (empty($pwd) || strlen($pwd) < 6 || strlen($pwd) > 12)
+                    Yii::$app->session->setFlash("warning", "密码必须是6-12位");
+                elseif ($admin->save())
+                    Yii::$app->session->setFlash("success", "添加管理员账户成功");
+                else
+                    Yii::$app->session->setFlash("warning", "添加管理员账户失败");
+            }
+        }
+        return $this->render("create", [
+            "admin" => $admin,
+        ]);
     }
     
     public function actionStatus($aid = 0,$status){
@@ -52,10 +79,10 @@ class AdminController extends BaseController
             $admin->save();
             Yii::$app->session->setFlash("success","操作成功");
         }
-        return $this->render("../layouts/basic");
+        return $this->render("../layouts/none");
     }
 
-    public function actionResetPwd() {
+    public function actionChangePwd() {
         $admin = Admin::findOne(Yii::$app->user->id);
         if (!$admin || $admin->status != Admin::STATUS_ACTIVE) {
             Yii::$app->session->setFlash("danger", "用户不存在或已被禁用");
@@ -75,7 +102,7 @@ class AdminController extends BaseController
                 Yii::$app->session->setFlash("success","修改密码成功");
             }
         }
-        return $this->render("reset-pass", [
+        return $this->render("change-pass", [
             "admin" => $admin,
         ]);
     }

@@ -18,8 +18,8 @@
                     <div class="layui-input-inline" style="width: 100px;">
                         <select name="status" lay-search="">
                             <option value="" <?= $status === "" ? "selected" : "" ?>>全部</option>
-                            <option value="0" <?= $status === 0 ? "selected" : "" ?>>禁用</option>
-                            <option value="10" <?= $status === 10 ? "selected" : "" ?>>启用</option>
+                            <option value="1" <?= $status == 1 ? "selected" : "" ?>>禁用</option>
+                            <option value="10" <?= $status == 10 ? "selected" : "" ?>>启用</option>
                         </select>
                     </div>
                 </div>
@@ -30,6 +30,8 @@
         </form>
     </div>
 </fieldset>
+
+    <button class="layui-btn layui-btn-danger" onclick="layerOpenIFrame('/admin/create','添加账户')"><i class="layui-icon">&#xe654;</i>添加账户</button>
 
 <table class="layui-table">
     <thead>

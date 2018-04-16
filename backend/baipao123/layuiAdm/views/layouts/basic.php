@@ -28,10 +28,10 @@ $assetUrl = \Yii::$app->assetManager->publish(dirname(__FILE__) . '/../../assets
             </div>
         </div>
         <script>
-            var layerIndex = parent.layer.getFrameIndex(window.name); //获取窗口索引
+            var layerIndex = parent.globalLayer.getFrameIndex(window.name); //获取窗口索引
             function layerMsg(text){
                 if (text != undefined && text != "")
-                    parent.layer.msg(text);
+                    parent.globalLayer.msg(text);
             }
             /**
              * 使用layer的alert弹窗
@@ -64,7 +64,7 @@ $assetUrl = \Yii::$app->assetManager->publish(dirname(__FILE__) . '/../../assets
                     title = "提示";
                 else if (title == "")
                     title = false;
-                parent.layer.alert(text, {
+                parent.globalLayer.alert(text, {
                     title: title,
                     icon: icon,
                     end: function (index) {
@@ -75,17 +75,18 @@ $assetUrl = \Yii::$app->assetManager->publish(dirname(__FILE__) . '/../../assets
                             parent.location.reload();
                         }
                         if(close)
-                            parent.layer.close(layerIndex);
+                            parent.globalLayer.close(layerIndex);
                     }
                 });
             }
 
             function layer_award(){
-                parent.layer.close(layerIndex);
+                parent.globalLayer.close(layerIndex);
             }
             $(document).ready(function (e) {
+                console.log(parent.globalLayer);
                 //高度自适应
-                parent.layer.iframeAuto(layerIndex);
+                parent.globalLayer.iframeAuto(layerIndex);
                 //danger、success会关闭本页面
                 // warning 需要点击确认来关闭弹窗,不关闭本页面
                 // info 使用msg，然后过几秒自动关闭

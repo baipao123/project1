@@ -53,7 +53,7 @@ use yii\helpers\Html;
                     </a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;" data-url="page/user/userInfo.html"><i class="seraph icon-ziliao" data-icon="icon-ziliao"></i><cite>个人资料</cite></a></dd>
-                        <dd><a href="javascript:;" onclick="layerOpenIFrame('<?=$resetPwdUrl?>','修改密码')"><i class="seraph icon-xiugai" data-icon="icon-xiugai"></i><cite>修改密码</cite></a></dd>
+                        <dd><a href="javascript:;" onclick="layerOpenIFrame('<?=$changePwdUrl?>','修改密码')"><i class="seraph icon-xiugai" data-icon="icon-xiugai"></i><cite>修改密码</cite></a></dd>
                         <dd><a href="javascript:;" class="logOut"><i class="seraph icon-tuichu"></i><cite>退出</cite></a></dd>
                     </dl>
                 </li>
