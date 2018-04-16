@@ -23,7 +23,9 @@ class ErrorExceptionAction extends ErrorAction
         if ($this->findException()->getMessage() == "Page not found.")
             return $controller->renderContent($controller->renderFile(__DIR__ . "/../views/error/404.php"));
         else
-            return $controller->renderContent($controller->renderFile(__DIR__ . "/../views/error/500.php"));
+            return $controller->renderContent($controller->renderFile(__DIR__ . "/../views/error/500.php", [
+                "message" => $this->findException()->getMessage()
+            ]));
 
     }
 

@@ -17,7 +17,14 @@ class AdminController extends BaseController
     public $enableCsrfValidation = true;
 
     public $basicActions = ["change-pwd", "status", "create", "reset-pwd"];
-    
+
+    public function beforeAction($action) {
+        if (Yii::$app->user->id != 1 && !in_array($action->id, ["change-pwd"])) {
+            throw new \yii\base\ErrorException("无此操作权限");
+        }
+        return parent::beforeAction($action);
+    }
+
     public function actionList($status = "", $username = "") {
         $query = Admin::find()->where(["<>", "status", Admin::STATUS_DELETED]);
         if ($status !== "") {
@@ -127,7 +134,6 @@ class AdminController extends BaseController
                 else {
                     Yii::$app->session->setFlash("warning", "密码重置失败");
                 }
-
             }
         }
         return $this->render("reset-pwd");
