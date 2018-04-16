@@ -18,7 +18,7 @@ class SiteController extends BaseController
      * {@inheritdoc}
      */
     public function actions() {
-        return ArrayHelper::merge(parent::actions(), Init::SiteActions("黄琛的后台"), [
+        return ArrayHelper::merge(parent::actions(), Init::SiteActions("需求列表"), [
 
         ]);
     }
