@@ -16,7 +16,7 @@ class AdminController extends BaseController
 {
     public $enableCsrfValidation = true;
 
-    public $basicActions = ["change-pwd", "status", "create"];
+    public $basicActions = ["change-pwd", "status", "create", "reset-pwd"];
     
     public function actionList($status = "", $username = "") {
         $query = Admin::find()->where(["<>", "status", Admin::STATUS_DELETED]);
@@ -107,7 +107,29 @@ class AdminController extends BaseController
         ]);
     }
 
-    public function actionResetUserPass() {
+    public function actionResetPwd($id) {
+        if ($id <= 1)
+            Yii::$app->session->setFlash("danger", "账户不存在");
+        else {
+            $admin = Admin::findOne($id);
+            if ($id == 1 || !$admin)
+                Yii::$app->session->setFlash("danger", "账户不存在");
+            else if (Yii::$app->request->isPost) {
+                $pwd = Yii::$app->request->post("pwd");
+                $password = $admin->setPassword($pwd);
+                if (strlen($pwd) < 6 || strlen($pwd) > 12)
+                    Yii::$app->session->setFlash("warning", "新密码必须是6-12位");
+                else if ($password == $admin->password)
+                    Yii::$app->session->setFlash("warning", "新密码不能是原密码");
+                else if (($admin->password = $password) && $admin->save()) {
+                    Yii::$app->session->setFlash("success", "密码重置成功");
+                }
+                else {
+                    Yii::$app->session->setFlash("warning", "密码重置失败");
+                }
 
+            }
+        }
+        return $this->render("reset-pwd");
     }
 }

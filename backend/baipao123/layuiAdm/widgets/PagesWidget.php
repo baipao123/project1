@@ -16,7 +16,7 @@ class PagesWidget extends Widget
      * Renders the widget.
      */
     public function run() {
-        $pageCount = $this->pagination->pageCount;
+        $pageCount = $this->pagination->pageSize;
         $currPage = $this->pagination->page + 1;
         $totalCount = $this->pagination->totalCount;
         if ($totalCount <= $pageCount)

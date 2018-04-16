@@ -64,6 +64,9 @@
             <?php else: ?>
                 <span class="layui-btn layui-btn-sm layui-btn-danger"onclick="layerConfirmUrl('/admin/status?aid=<?=$admin->id?>&status=1','确定禁用吗？')">禁用</span>
             <?php endif;?>
+            <?php if($admin->id != Yii::$app->user->id): ?>
+                <span class="layui-btn layui-btn-sm" onclick="layerConfirmUrl('/admin/reset-pwd?id=<?=$admin->id?>')">重置密码</span>
+            <?php endif;?>
             </td>
         </tr>
     <?php endforeach;?>
