@@ -20,7 +20,7 @@ class MenuAction extends ApiAction
 		{
 			"title": "文章列表",
 			"icon": "icon-text",
-			"href": "/site/error-jj",
+			"href": "/site/list",
 			"spread": false
 		},
 		{

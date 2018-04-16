@@ -44,7 +44,7 @@ class QiNiuUploaderWidget extends Widget
             $params .= $key . ":" . json_encode($val);
         }
         $params .= "}";
-        return $this->renderFile(dirname(__FILE__) . '/../views/qiniu/uploader.php', [
+        echo $this->renderFile(dirname(__FILE__) . '/../views/qiniu/uploader.php', [
             'id'       => $this->id,
             'isMulti'  => $this->isMulti,
             'callBack' => $this->callBack,

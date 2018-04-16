@@ -21,7 +21,7 @@ class PagesWidget extends Widget
         $currPage = $this->pagination->page + 1;
         $js = <<<JS
 layui.laypage({
-    cont: 'page',
+    cont: 'page-{$this->getId()}',
     pages: {$pageCount},
     skip: true,
     curr: {$currPage},
@@ -43,6 +43,6 @@ layui.laypage({
 });
 JS;
         $this->getView()->registerJs($js);
-        return '<div id="page"></div>';
+        echo '<div id="page-' . $this->getId() . '"></div>';
     }
 }
