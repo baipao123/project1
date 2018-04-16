@@ -1,7 +1,7 @@
 <?php
 namespace backend\controllers;
 
-use baipao123\layuiAdm\Init;
+use layuiAdm\Init;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;

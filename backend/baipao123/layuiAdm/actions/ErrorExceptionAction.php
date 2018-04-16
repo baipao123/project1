@@ -6,7 +6,7 @@
  * Time: 下午2:23
  */
 
-namespace baipao123\layuiAdm\actions;
+namespace layuiAdm\actions;
 
 use Yii;
 use yii\web\ErrorAction;

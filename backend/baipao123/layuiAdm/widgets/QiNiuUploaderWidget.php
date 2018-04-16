@@ -6,7 +6,7 @@
  * Time: 下午7:20
  */
 
-namespace baipao123\layuiAdm\widgets;
+namespace layuiAdm\widgets;
 
 use Yii;
 

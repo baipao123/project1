@@ -1,5 +1,5 @@
 <?php
-    \backend\baipao123\layuiAdm\widgets\QiNiuUploaderWidget::widget();
+    layuiAdm\widgets\QiNiuUploaderWidget::widget();
 ?>
 <script>
     function uploadFile(info) {
