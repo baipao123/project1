@@ -1,7 +1,7 @@
 <?php
 namespace common\models;
 
-use common\tools\WxProgram;
+use common\tools\WxApp;
 use Yii;
 
 class User extends \common\models\base\User
@@ -15,7 +15,7 @@ class User extends \common\models\base\User
      * @return static
      */
     public static function findUserByProgramCode($code) {
-        $data = WxProgram::decryptUserCode($code);
+        $data = WxApp::decryptUserCode($code);
         if (!$data || !isset($data['openid']) || empty($data['openid']))
             return null;
         $user = static::findOne(["openid" => $data['openid']]);

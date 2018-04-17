@@ -10,7 +10,7 @@ namespace console\controllers;
 
 use common\models\Admin;
 use common\tools\Tool;
-use common\tools\WxProgram;
+use common\tools\WxApp;
 use Yii;
 use yii\console\Controller;
 
@@ -42,7 +42,7 @@ class TestController extends Controller
         $iv = 'r7BXXKkLb8qrSNn05n0qiA==';
 
         $data = [];
-        WxProgram::decryptData($encryptedData,$iv,$sessionKey,$data);
+        WxApp::decryptData($encryptedData,$iv,$sessionKey,$data);
         echo $data;
     }
 

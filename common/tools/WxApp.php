@@ -10,7 +10,7 @@ namespace common\tools;
 
 use Yii;
 
-class WxProgram extends Wx
+class WxApp extends Wx
 {
     const OK = 0;
     const IllegalAesKey = -41001;
@@ -59,7 +59,7 @@ class WxProgram extends Wx
     }
 
     //发送小程序模板消息
-    public static function sendAppTpl($accessToken, $openId, $tplId, $data, $page, $formId, $keyword) {
+    public static function sendTpl($accessToken, $openId, $tplId, $data, $page, $formId, $keyword) {
         if (empty($accessToken))
             return "获取access_token失败";
         $url = "https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=" . $accessToken;
