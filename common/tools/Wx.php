@@ -70,5 +70,25 @@ class Wx {
         }
         return rtrim($url, "&");
     }
-    
+
+    public static function getAccessToken($appId, $appSecret, $refresh = false) {
+        $cacheKey = "WX-ACCESS-TOKEN:" . $appId;
+        if (!$refresh && Yii::$app->cache->exists($cacheKey))
+            return Yii::$app->cache->get($cacheKey);
+
+        $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
+        $params = [
+            "grant_type" => "client_credential",
+            "appid"      => $appId,
+            "secret"     => $appSecret
+        ];
+        $res = self::http($url, $params);
+        $response = json_decode($res, true);
+        if ($res && $response && isset($response['access_token']) && isset($response['expires_in'])) {
+            Yii::$app->cache->set($cacheKey, $response['access_token'], intval($response['expires_in']) - 200);
+            return $response['access_token'];
+        }
+        Yii::$app->cache->set($cacheKey, "", 60);//防止并发
+        return "";
+    }
 }

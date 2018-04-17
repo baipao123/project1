@@ -57,4 +57,27 @@ class WxProgram extends Wx
         $data = $result;
         return self::OK;
     }
+
+    //发送小程序模板消息
+    public static function sendAppTpl($accessToken, $openId, $tplId, $data, $page, $formId, $keyword) {
+        if (empty($accessToken))
+            return "获取access_token失败";
+        $url = "https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=" . $accessToken;
+        $tplData = [
+            "touser"           => $openId,
+            "template_id"      => $tplId,
+            "page"             => $page,
+            "form_id"          => $formId,
+            "data"             => $data,
+            "emphasis_keyword" => $keyword
+        ];
+        $res = self::http($url, [], $tplData);
+        $response = json_decode($res, true);
+        if ($res && $response && isset($response['errcode']) && $response['errcode'] == 0 && isset($response['errmsg']) && $response['errmsg'] == "ok")
+            return true;
+        elseif ($res && $response && isset($response['msg']))
+            return $response['msg'];
+        else
+            return false;
+    }
 }
