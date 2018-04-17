@@ -8,6 +8,7 @@ class User extends \common\models\base\User
 {
     const TYPE_USER = 1;
     const TYPE_COMPANY = 2;
+    const TYPE_USER_BOSS = 3;
 
 
     /**

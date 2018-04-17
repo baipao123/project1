@@ -84,21 +84,23 @@ class AliSms
     }
 
     private function fetchContent($url) {
+        Yii::info($url, "aliSms");
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_TIMEOUT, 5);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
             "x-sdk-client" => "php/2.0.0"
-        ));
-        if(substr($url, 0,5) == 'https') {
+        ]);
+        if (substr($url, 0, 5) == 'https') {
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
         }
         $rtn = curl_exec($ch);
         if ($rtn === false) {
-            Yii::info("[CURL_" . curl_errno($ch) . "]: " . curl_error($ch), "sms");
+            Yii::info("[CURL_" . curl_errno($ch) . "]: " . curl_error($ch), "aliSms");
         }
+        Yii::info($rtn, "aliSms");
         curl_close($ch);
         return $rtn;
     }

@@ -25,6 +25,13 @@ return [
                     'categories' => ['wx'],
                     'logFile'    => '@runtime/logs/wx.log',
                 ],
+                [
+                    'class'      => 'yii\log\FileTarget',
+                    'levels'     => ['info','error'],
+                    'logVars'    => [],
+                    'categories' => ['aliSms'],
+                    'logFile'    => '@runtime/logs/wx.log',
+                ],
             ],
         ],
     ],

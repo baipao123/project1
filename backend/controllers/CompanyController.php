@@ -12,7 +12,11 @@ namespace backend\controllers;
 class CompanyController extends BaseController
 {
 
-    public function actionList(){
+    public function actionVerifyList() {
+
+    }
+
+    public function actionList() {
 
     }
 

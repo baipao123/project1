@@ -19,11 +19,11 @@ class WxApp extends Wx
     const DecodeBase64Error = -41004;
 
     protected static function getAppId() {
-        return Yii::$app->params['appId'];
+        return Yii::$app->params['wxApp']['appId'];
     }
 
     protected static function getAppSecret() {
-        return Yii::$app->params['appSecret'];
+        return Yii::$app->params['wxApp']['appSecret'];
     }
 
     public static function decryptUserCode($code) {
@@ -56,6 +56,13 @@ class WxApp extends Wx
             return self::IllegalBuffer;
         $data = $result;
         return self::OK;
+    }
+
+    //获取access_token
+    public static function getAccessToken($appId = "", $appSecret = "", $refresh = false) {
+        $appId = empty($appId) ? self::getAppId() : $appId;
+        $appSecret = empty($appSecret) ? self::getAppSecret() : $appSecret;
+        return parent::getAccessToken($appId, $appSecret, $refresh);
     }
 
     //发送小程序模板消息

@@ -5,27 +5,30 @@ namespace common\models\base;
 use Yii;
 
 /**
- * This is the model class for table "company".
+ * This is the model class for table "company_record".
  *
  * @property int $id
+ * @property int $cid
+ * @property string $formId
  * @property int $uid
  * @property string $name
  * @property string $icon
- * @property string $cover
+ * @property string $attaches
  * @property string $position
  * @property string $description
  * @property string $reason
  * @property int $status
  * @property int $created_at
+ * @property int $updated_at
  */
-class Company extends \yii\db\ActiveRecord
+class CompanyRecord extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'company';
+        return 'company_record';
     }
 
     /**
@@ -34,10 +37,10 @@ class Company extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['uid', 'created_at'], 'integer'],
-            [['description'], 'required'],
-            [['description'], 'string'],
-            [['name', 'icon', 'cover', 'position', 'reason'], 'string', 'max' => 255],
+            [['cid', 'uid', 'created_at', 'updated_at'], 'integer'],
+            [['attaches', 'description'], 'required'],
+            [['attaches', 'description'], 'string'],
+            [['formId', 'name', 'icon', 'position', 'reason'], 'string', 'max' => 255],
             [['status'], 'string', 'max' => 1],
         ];
     }
@@ -49,15 +52,18 @@ class Company extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'cid' => 'Cid',
+            'formId' => 'Form ID',
             'uid' => 'Uid',
             'name' => 'Name',
             'icon' => 'Icon',
-            'cover' => 'Cover',
+            'attaches' => 'Attaches',
             'position' => 'Position',
             'description' => 'Description',
             'reason' => 'Reason',
             'status' => 'Status',
             'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
         ];
     }
 }
