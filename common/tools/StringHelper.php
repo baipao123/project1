@@ -8,8 +8,7 @@
 
 namespace common\tools;
 
-
-class String {
+Class StringHelper extends \yii\helpers\StringHelper{
     /**
      * @param int $length 随机字符串长度
      * @param int $unify 统一大小写：0：混排，1：统一小写，2：统一大写
