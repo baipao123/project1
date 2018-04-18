@@ -12,29 +12,17 @@ App({
     globalData: {
         userInfo: null,
         userType: -1,
-        domain:"https://demo.localhost.com/"
+        domain:"https://demo.wx-dk.cn/"
     },
-    login: isInfo => {
-        var _this = this;
+    login: function(isInfo){
+        let _this = this;
         wx.login({
             success: res => {
                 if (res.code) {
-                    wx.request({
-                        url: _this.globalData.domain + "base/app-login",
-                        data: {code: res.code},
-                        method: "POST",
-                        success: data => {
-                            if(data.code == 0){
-                                _this.setData({userType: data.data.userType});//异步的
-                                if (isInfo || data.data.needUserInfo)
-                                    _this.setUserInfo();
-                            }else{
-                                wx.showToast({
-                                    title: data.msg,
-                                    icon: 'none'
-                                })
-                            }
-                        }
+                    request.post("base/app-login", {code: res.code}, data => {
+                        _this.globalData.userType = data.userType;
+                        if (isInfo || data.needUserInfo)
+                            _this.setUserInfo();
                     })
                 } else {
                     console.log('登录失败：' + res.errMsg)
@@ -45,22 +33,17 @@ App({
             }
         })
     },
-    setUserInfo: ()=> {
-        var _this = this;
+    setUserInfo: function() {
+        let _this = this;
         wx.authorize({
             scope: 'scope.userInfo',
             success () {
                 wx.getUserInfo({
-                    success: res=> {
-                        _this.setData({userInfo: res.userInfo});//异步的
-                        console.log(res)
-                        wx.request({
-                            url: _this.globalData.domain + "base/app-user",
-                            data: res,
-                            method: "POST",
-                            success: data=> {
-
-                            }
+                    withCredentials: true,
+                    lang: "zh_CN",
+                    success: function (res) {
+                        request.post("base/app-user", res, function (data) {
+                            _this.globalData.userInfo = res.userInfo;
                         })
                         if (this.userInfoReadyCallback)
                             this.userInfoReadyCallback(res)

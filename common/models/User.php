@@ -19,11 +19,13 @@ class User extends \common\models\base\User
         $data = WxApp::decryptUserCode($code);
         if (!$data || !isset($data['openid']) || empty($data['openid']))
             return null;
-        $user = static::findOne(["openid" => $data['openid']]);
+        $user = static::findOne(["openId" => $data['openid']]);
         $user or $user = new static;
-        $user->openId = $data['openId'];
+        $user->openId = $data['openid'];
         $user->unionId = isset($data['unionid']) ? $data['unionid'] : "";
         $user->session_key = isset($data['session_key']) ? $data['session_key'] : "";
+        if($user->isNewRecord)
+            $user->created_at = time();
         $user->save();
         return $user;
     }

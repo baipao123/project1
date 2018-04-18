@@ -42,8 +42,7 @@ class User extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cash', 'created_at', 'real_at'], 'integer'],
-            [['type', 'gender', 'status'], 'string', 'max' => 1],
+            [['cash', 'created_at', 'real_at','type', 'gender', 'status'], 'integer'],
             [['openId', 'unionId', 'session_key', 'phone', 'nickname', 'avatar', 'city', 'province', 'country', 'auth_key', 'realname'], 'string', 'max' => 255],
             [['openId'], 'unique'],
         ];

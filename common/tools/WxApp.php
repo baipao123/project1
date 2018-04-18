@@ -36,7 +36,6 @@ class WxApp extends Wx
         ];
         
         $response = self::http($url,$params);
-        
         return json_decode($response,true);
     }
 
