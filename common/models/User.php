@@ -15,7 +15,7 @@ class User extends \common\models\base\User
      * @param string $code
      * @return static
      */
-    public static function findUserByProgramCode($code) {
+    public static function findUserByAppCode($code) {
         $data = WxApp::decryptUserCode($code);
         if (!$data || !isset($data['openid']) || empty($data['openid']))
             return null;

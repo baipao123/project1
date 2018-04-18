@@ -30,17 +30,20 @@ class BaseController extends Controller
     }
 
     //小程序登录
-    public function actionProgramLogin() {
+    public function actionAppLogin() {
         if (!Yii::$app->user->isGuest) {
             return Tool::reJson(1);
         }
         $code = $this->getPost("code");
-        $user = UserIdentify::findUserByProgramCode($code);
+        $user = UserIdentify::findUserByAppCode($code);
         if ($user) {
             Yii::$app->user->login($user, 3600 * 2);
             $user = Yii::$app->user->identity;
             /* @var $user UserIdentify*/
-            return Tool::reJson($user ? $user->type : 0);
+            return Tool::reJson([
+                "userType"     => $user ? $user->type : -1,
+                "needUserInfo" => $user && empty($user->nickname) ? true : false
+            ]);
         } else
             return Tool::reJson(null, "登录失败", Tool::FAIL);
     }
@@ -51,7 +54,7 @@ class BaseController extends Controller
     }
 
     //小程序 录入用户的基本信息
-    public function actionProgramUser() {
+    public function actionAppUser() {
         $openId = $this->getPost("openId");
         $user = Yii::$app->user->identity;
         /* @var $user UserIdentify */
