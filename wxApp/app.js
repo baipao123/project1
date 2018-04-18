@@ -25,7 +25,7 @@ App({
                         method: "POST",
                         success: data => {
                             if(data.code == 0){
-                                _this.setData({userType: data.data.userType});
+                                _this.setData({userType: data.data.userType});//异步的
                                 if (isInfo || data.data.needUserInfo)
                                     _this.setUserInfo();
                             }else{
@@ -52,7 +52,8 @@ App({
             success () {
                 wx.getUserInfo({
                     success: res=> {
-                        _this.setData({userInfo: res.userInfo})
+                        _this.setData({userInfo: res.userInfo});//异步的
+                        console.log(res)
                         wx.request({
                             url: _this.globalData.domain + "base/app-user",
                             data: res,
