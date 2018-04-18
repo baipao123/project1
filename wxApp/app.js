@@ -21,8 +21,7 @@ App({
                 if (res.code) {
                     request.post("base/app-login", {code: res.code}, data => {
                         _this.globalData.userType = data.userType;
-                        if (isInfo || data.needUserInfo)
-                            _this.setUserInfo();
+                        _this.setUserInfo(!!(isInfo || data.needUserInfo));
                     })
                 } else {
                     console.log('登录失败：' + res.errMsg)
@@ -33,7 +32,7 @@ App({
             }
         })
     },
-    setUserInfo: function() {
+    setUserInfo: function(needRequest) {
         let _this = this;
         wx.authorize({
             scope: 'scope.userInfo',
@@ -42,9 +41,15 @@ App({
                     withCredentials: true,
                     lang: "zh_CN",
                     success: function (res) {
-                        request.post("base/app-user", res, function (data) {
+                        console.log(res);
+                        if(needRequest) {
+                            request.post("base/app-user", res, function (data) {
+                                _this.globalData.userInfo = res.userInfo;
+                                // _this.setData({userInfo:res.userInfo})
+                            })
+                        }else
                             _this.globalData.userInfo = res.userInfo;
-                        })
+                        console.log(_this.globalData);
                         if (this.userInfoReadyCallback)
                             this.userInfoReadyCallback(res)
                     }
