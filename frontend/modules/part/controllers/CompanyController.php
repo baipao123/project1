@@ -8,12 +8,20 @@
 
 namespace frontend\modules\part\controllers;
 
+use common\models\Company;
 use common\models\UserHasJob;
 use common\tools\Tool;
 use Yii;
 
 class CompanyController extends \frontend\controllers\BaseController
 {
+    public function actionJoin() {
+
+    }
+
+    public function actionEditJoin() {
+
+    }
 
     public function actionVerifyUser() {
         $string = $this->getPost("code");

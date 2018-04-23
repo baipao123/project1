@@ -7,19 +7,18 @@ use Yii;
 /**
  * This is the model class for table "company_record".
  *
- * @property int $id
- * @property int $cid
+ * @property string $id
  * @property string $formId
- * @property int $uid
+ * @property string $uid
  * @property string $name
  * @property string $icon
- * @property string $attaches
+ * @property string $cover
  * @property string $position
  * @property string $description
  * @property string $reason
  * @property int $status
- * @property int $created_at
- * @property int $updated_at
+ * @property string $created_at
+ * @property string $updated_at
  */
 class CompanyRecord extends \yii\db\ActiveRecord
 {
@@ -37,10 +36,9 @@ class CompanyRecord extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cid', 'uid', 'created_at', 'updated_at'], 'integer'],
-            [['attaches', 'description'], 'required'],
-            [['attaches', 'description'], 'string'],
-            [['formId', 'name', 'icon', 'position', 'reason'], 'string', 'max' => 255],
+            [['uid', 'created_at', 'updated_at'], 'integer'],
+            [['description'], 'string'],
+            [['formId', 'name', 'icon', 'cover', 'position', 'reason'], 'string', 'max' => 255],
             [['status'], 'string', 'max' => 1],
         ];
     }
@@ -52,12 +50,11 @@ class CompanyRecord extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'cid' => 'Cid',
             'formId' => 'Form ID',
             'uid' => 'Uid',
             'name' => 'Name',
             'icon' => 'Icon',
-            'attaches' => 'Attaches',
+            'cover' => 'Cover',
             'position' => 'Position',
             'description' => 'Description',
             'reason' => 'Reason',

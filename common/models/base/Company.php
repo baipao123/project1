@@ -7,16 +7,16 @@ use Yii;
 /**
  * This is the model class for table "company".
  *
- * @property int $id
- * @property int $uid
+ * @property string $uid
+ * @property int $type
  * @property string $name
  * @property string $icon
  * @property string $cover
  * @property string $position
  * @property string $description
- * @property string $reason
  * @property int $status
- * @property int $created_at
+ * @property string $created_at
+ * @property string $updated_at
  */
 class Company extends \yii\db\ActiveRecord
 {
@@ -34,11 +34,12 @@ class Company extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['uid', 'created_at'], 'integer'],
-            [['description'], 'required'],
+            [['uid'], 'required'],
+            [['uid', 'created_at', 'updated_at'], 'integer'],
             [['description'], 'string'],
-            [['name', 'icon', 'cover', 'position', 'reason'], 'string', 'max' => 255],
-            [['status'], 'string', 'max' => 1],
+            [['type', 'status'], 'string', 'max' => 1],
+            [['name', 'icon', 'cover', 'position'], 'string', 'max' => 255],
+            [['uid'], 'unique'],
         ];
     }
 
@@ -48,16 +49,16 @@ class Company extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
             'uid' => 'Uid',
+            'type' => 'Type',
             'name' => 'Name',
             'icon' => 'Icon',
             'cover' => 'Cover',
             'position' => 'Position',
             'description' => 'Description',
-            'reason' => 'Reason',
             'status' => 'Status',
             'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
         ];
     }
 }
