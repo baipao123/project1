@@ -1,4 +1,3 @@
-@import "../weui.wxss";
 page{
     background: #f8f8f8;
     height:100%;
@@ -50,6 +49,9 @@ page{
 .right .phone {
     flex: 1;
     padding-top:6rpx;
+}
+.right .phone view{
+    height:115rpx;
 }
 
 .weui-cells{

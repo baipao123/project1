@@ -7,6 +7,10 @@
     background-color: #00aa00;
 }
 
+.page__bd{
+    padding-top:50rpx;
+}
+
 button{
     margin-top:50rpx;
 }

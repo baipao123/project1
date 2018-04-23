@@ -1,6 +1,8 @@
 <?php
 namespace common\models;
 
+use common\tools\Img;
+use common\tools\Tool;
 use common\tools\WxApp;
 use Yii;
 
@@ -44,5 +46,15 @@ class User extends \common\models\base\User
             return true;
         }
         return false;
+    }
+
+    public function info(){
+        return Tool::reJson([
+            "type"     => $this->type,
+            "username" => empty($this->realname) ? $this->nickname : $this->realname,
+            "avatar"   => Img::format($this->avatar),
+            "phone"    => $this->phone,
+            "gender"   => $this->gender,
+        ]);
     }
 }

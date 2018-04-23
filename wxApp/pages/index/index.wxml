@@ -11,13 +11,15 @@
                 <view class="placeholder contain">
                     <view class="user">
                         <view class="username">用户名</view>
-                        <navigator class="icon_sp_area" url="/pages/phone/phone">
+                        <navigator class="icon_sp_area" url="">
                             去兼职
                             <span class="myIcon icon-right" style="color:#fff;margin:0"></span>
                         </navigator>
                     </view>
                     <view class="phone" wx:if="{{true}}">
-                        <view>完善手机号</view>
+                        <navigator class="icon_sp_area" url="/pages/phone/phone">
+                            <view>完善手机号</view>
+                        </navigator>
                     </view>
                     <view class="phone" wx:else>
                         <text class="telephone">136XXXXXXXX</text>
