@@ -48,13 +48,13 @@ class User extends \common\models\base\User
         return false;
     }
 
-    public function info(){
-        return Tool::reJson([
+    public function info() {
+        return [
             "type"     => $this->type,
             "username" => empty($this->realname) ? $this->nickname : $this->realname,
             "avatar"   => Img::format($this->avatar),
             "phone"    => $this->phone,
             "gender"   => $this->gender,
-        ]);
+        ];
     }
 }

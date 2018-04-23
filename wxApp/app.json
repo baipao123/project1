@@ -1,13 +1,14 @@
 {
-  "pages":[
+  "pages": [
     "pages/index/index",
-    "pages/logs/logs",
-    "pages/phone/phone"
+    "pages/user/user",
+    "pages/chose/user",
+    "pages/chose/company"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle":"black"
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fefefe",
+    "navigationBarTitleText": "有准兼职",
+    "navigationBarTextStyle": "black"
   }
 }

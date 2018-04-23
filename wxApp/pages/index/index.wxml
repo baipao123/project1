@@ -1,74 +1,23 @@
 <view class="page">
-    <view class="page__bd page__bd_spacing">
-        <view class="weui-flex top">
-            <view class="weui-flex__item">
-                <view class="placeholder header">
-                    <image src="http://img.wx-dk.cn/FmdCNuGiqBhPK7nB_qd-b4-nY_hd.jpeg" mode="center"
-                           class="header"></image>
-                </view>
-            </view>
-            <view class="weui-flex__item right">
-                <view class="placeholder contain">
-                    <view class="user">
-                        <view class="username">用户名</view>
-                        <navigator class="icon_sp_area" url="">
-                            去兼职
-                            <span class="myIcon icon-right" style="color:#fff;margin:0"></span>
-                        </navigator>
-                    </view>
-                    <view class="phone" wx:if="{{true}}">
-                        <navigator class="icon_sp_area" url="/pages/phone/phone">
-                            <view>完善手机号</view>
-                        </navigator>
-                    </view>
-                    <view class="phone" wx:else>
-                        <text class="telephone">136XXXXXXXX</text>
-                    </view>
-                </view>
-            </view>
-        </view>
+    <view class="page__hd avatar" wx:if="{{user.avatar}}">
+        <image class="userAvatar" src="{{user.avatar}}"> </image>
     </view>
+    <view class="page__bd page__bd_spacing" wx:if="{{user.type==0}}">
+        <navigator url="/pages/chose/user">
+            <button class="weui-btn" type="primary" lang="zh_CN" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+                我要求职
+            </button>
+        </navigator>
+        <navigator url="/pages/chose/company" class="btn2">
+            <button class="weui-btn btn2" type="default" lang="zh_CN" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+                我要招聘
+            </button>
+        </navigator>
+    </view>
+    <view class="" wx:elif="{{user.type==1}}">
 
-    <scroll-view class="list">
-        <view class="weui-cells__title">常用</view>
-        <view class="weui-cells weui-cells_after-title">
-            <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                <view class="weui-cell__bd"><span class="myIcon icon-city"></span>我的城市
-                </view>
-                <view class="weui-cell__ft weui-cell__ft_in-access">请选择</view>
-            </navigator>
-            <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                <view class="weui-cell__bd"><span class="myIcon icon-job"></span>我的兼职
-                </view>
-                <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-            </navigator>
-            <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                <view class="weui-cell__bd"><span class="myIcon icon-clock"></span>打卡记录
-                </view>
-                <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-            </navigator>
-        </view>
-        <view class="weui-cells__title">关于</view>
-        <view class="weui-cells weui-cells_after-title">
-            <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                <view class="weui-cell__bd"><span class="myIcon icon-phone"></span>联系我们
-                </view>
-                <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-            </navigator>
-            <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                <view class="weui-cell__bd"><span class="myIcon icon-form"></span>用户协议
-                </view>
-                <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-            </navigator>
-            <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                <view class="weui-cell__bd"><span class="myIcon icon-help"></span>常见问题
-                </view>
-                <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-            </navigator>
-        </view>
-        <view class="weui-footer">
-            <view class="weui-footer__text">Copyright © 2008-2016 weui.io</view>
-        </view>
-    </scroll-view>
+    </view>
+    <view class="" wx:else>
+
+    </view>
 </view>
-

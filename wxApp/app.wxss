@@ -10,4 +10,15 @@
     justify-content: space-between;
     padding: 200rpx 0;
     box-sizing: border-box;
-} 
+}
+
+.page__hd.avatar{
+    text-align: center;
+    padding:50rpx 0;
+}
+
+.userAvatar{
+    border-radius:100%;
+    width:250rpx;
+    height:250rpx;
+}

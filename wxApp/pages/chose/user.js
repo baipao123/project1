@@ -8,9 +8,12 @@ Page({
         phone: '',
         phoneText: '',
         isAgree: false,
+        user:{},
     },
     onLoad: function () {
-
+        this.setData({
+            user: app.globalData.user
+        })
     },
     bindAgreeChange: function (e) {
         this.setData({
@@ -34,7 +37,13 @@ Page({
     },
     bindPhone:function (e) {
         let data = e.detail.value;
+        let that = this;
         data.formId = e.detail.formId;
-        request.post("/port/user/bind-phone")
+        request.post("/part/user/join-user",data,function(res){
+            app.globalData.user = res.user;
+            wx.navigateTo({
+                url: "/pages/user/user"
+            })
+        })
     }
 })

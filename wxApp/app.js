@@ -7,21 +7,21 @@ App({
         // var logs = wx.getStorageSync('logs') || []
         // logs.unshift(Date.now())
         // wx.setStorageSync('logs', logs)
-        this.login(false)
+        this.login()
     },
     globalData: {
-        userInfo: null,
-        userType: -1,
+        user:{},
         domain:"https://demo.wx-dk.cn/"
     },
-    login: function(isInfo){
+    login: function(){
         let _this = this;
         wx.login({
             success: res => {
                 if (res.code) {
                     request.post("base/app-login", {code: res.code}, data => {
-                        _this.globalData.userType = data.userType;
-                        _this.setUserInfo(!!(isInfo || data.needUserInfo));
+                        _this.globalData.user = data.user;
+                        if (typeof(getCurrentPages) == "function" && getCurrentPages().length > 0)
+                            getCurrentPages()[getCurrentPages().length - 1].onLoad();
                     })
                 } else {
                     console.log('登录失败：' + res.errMsg)
@@ -32,29 +32,11 @@ App({
             }
         })
     },
-    setUserInfo: function(needRequest) {
+    setUserInfo: function(res) {
         let _this = this;
-        wx.authorize({
-            scope: 'scope.userInfo',
-            success () {
-                wx.getUserInfo({
-                    withCredentials: true,
-                    lang: "zh_CN",
-                    success: function (res) {
-                        console.log(res);
-                        if(needRequest) {
-                            request.post("base/app-user", res, function (data) {
-                                _this.globalData.userInfo = res.userInfo;
-                                // _this.setData({userInfo:res.userInfo})
-                            })
-                        }else
-                            _this.globalData.userInfo = res.userInfo;
-                        console.log(_this.globalData);
-                        if (this.userInfoReadyCallback)
-                            this.userInfoReadyCallback(res)
-                    }
-                })
-            }
+        request.post("base/app-user", res, function (data) {
+            _this.globalData.user = data.user;
+            console.log(data.user);
         })
     }
 })

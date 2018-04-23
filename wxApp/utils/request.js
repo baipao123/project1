@@ -27,13 +27,14 @@ const request = (method, url, params, success, fail, complete) => {
             if (res.data.code != undefined) {
                 if (res.data.code == 0) {
                     success(res.data.data);
-                } else {
+                } else if (res.data.code == -1)
+                    getApp().login();
+                else
                     wx.showToast({
                         title: res.data.msg,
                         icon: 'none'
                     })
-                }
-            }else{
+            } else {
                 wx.showToast({
                     title: "500,服务器解析异常",
                     icon: 'none'

@@ -1,4 +1,5 @@
 <?php
+
 namespace frontend\controllers;
 
 use common\tools\Tool;
@@ -38,23 +39,13 @@ class BaseController extends Controller
 
     //小程序登录
     public function actionAppLogin() {
-//        if (!Yii::$app->user->isGuest) {
-//            $user = $this->getUser();
-//            return Tool::reJson([
-//                "userType"     => $user ? $user->type : -1,
-//                "needUserInfo" => $user && empty($user->nickname) ? true : false
-//            ]);
-//        }
         $code = $this->getPost("code");
         $user = UserIdentify::findUserByAppCode($code);
         if ($user) {
             Yii::$app->user->login($user, 3600 * 2);
             $user = Yii::$app->user->identity;
-            /* @var $user UserIdentify*/
-            return Tool::reJson([
-                "userType"     => $user ? $user->type : -1,
-                "needUserInfo" => $user && empty($user->nickname) ? true : false
-            ]);
+            /* @var $user UserIdentify */
+            return Tool::reJson(["user" => $user->info()]);
         } else
             return Tool::reJson(null, "登录失败", Tool::FAIL);
     }
@@ -71,11 +62,11 @@ class BaseController extends Controller
         $rawData = $this->getPost("rawData");
         $signature = $this->getPost("signature");
         if ($user->verifyUserInfo($rawData, $signature))
-            return Tool::reJson(1);
+            return Tool::reJson(["user" => $user->info()]);
         return Tool::reJson(null, "用户信息不匹配失败", Tool::FAIL);
     }
 
-    public function actionE(){
+    public function actionE() {
         echo 1;
     }
 }
