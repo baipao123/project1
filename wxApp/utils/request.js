@@ -26,6 +26,12 @@ const request = (method, url, params, success, fail, complete) => {
                 wx.setStorageSync('cookie', res.header['Set-Cookie']);
             if (res.data.code != undefined) {
                 if (res.data.code == 0) {
+                    if (res.data.data == 1) {
+                        wx.showToast({
+                            title: res.data.msg,
+                            icon: 'success'
+                        })
+                    }
                     success(res.data.data);
                 } else if (res.data.code == -1)
                     getApp().login();

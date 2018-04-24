@@ -26,19 +26,20 @@ class Company extends \common\models\base\Company
         $company = static::findOne($uid);
         if ($company && $isAdd)
             return "您已经是企业用户了";
+        $company or $company = new static;
         $name = ArrayHelper::getValue($data, "name", "");
         $icon = ArrayHelper::getValue($data, "icon", "");
         $cover = ArrayHelper::getValue($data, "cover", "");
         $position = ArrayHelper::getValue($data, "position", "");
         $description = ArrayHelper::getValue($data, "description", "");
         if ($company->status != self::STATUS_PASS) {
+            $company->uid = $uid;
             $company->name = $name;
             $company->icon = $icon;
             $company->cover = $cover;
             $company->position = $position;
             $company->latitude = ArrayHelper::getValue($data, "latitude", "");
             $company->longitude = ArrayHelper::getValue($data, "longitude", "");
-            $company->accuracy = ArrayHelper::getValue($data, "accuracy", "");
             $company->description = $description;
             $company->status = self::STATUS_VERIFY;
             if ($company->isNewRecord)

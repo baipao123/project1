@@ -24,8 +24,7 @@ class UserController extends \frontend\controllers\BaseController
             $data = json_decode($data, true);
             if (isset($data['phoneNumber']) && !empty($data['phoneNumber']) && isset($data['purePhoneNumber']) && !empty($data['purePhoneNumber'])) {
                 Yii::$app->redis->set("USER-WX-PHONE-" . $user->id, $data['phoneNumber']);
-                $data['purePhoneNumber'] = substr_replace($data['purePhoneNumber'], '****', 3, 4);
-                return Tool::reJson($data);
+                return Tool::reJson(["purePhoneNumber" => substr_replace($data['purePhoneNumber'], '****', 3, 4)]);
             } else
                 return Tool::reJson(null, "您未绑定手机号", Tool::FAIL);
         } else

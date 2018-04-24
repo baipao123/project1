@@ -1,6 +1,95 @@
 <view class="page">
-    <view>
-        <image src="{{icon}}"> </image>
+    <view class="page__hd avatar">
+        <image class="cover bg" bindtap="uploadCover" src="{{domain+cover}}"></image>
+        <view class="icon-view">
+            <image class="icon userAvatar" src="{{domain+icon}}" hover-stop-propagation="{{true}}"></image>
+            <span class="myIcon icon-edit" bindtap="uploadIcon"></span>
+        </view>
+        <span class="cover-icon myIcon icon-edit" bindtap="uploadCover"></span>
     </view>
-    <button bindtap="uploadIcon">123123</button>
+    <view class="page__bd page__bd_spacing" wx:if="{{type==0}}">
+        <button class="weui-btn" type="primary" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">
+            使用微信绑定的手机号
+        </button>
+        <button class="weui-btn" type="default" bindtap="useBindPhone">使用其他手机号</button>
+    </view>
+    <view wx:else>
+        <form bindsubmit="bindCompany">
+            <view class="weui-cells weui-cells_after-title">
+                <input type="text" hidden="{{true}}" name="icon" value="{{company.icon}}"/>
+                <input type="text" hidden="{{true}}" name="cover" value="{{company.cover}}"/>
+                <input type="text" hidden="{{true}}" name="latitude" value="{{company.position.latitude}}"/>
+                <input type="text" hidden="{{true}}" name="longitude" value="{{company.position.longitude}}"/>
+                <view class="weui-cell weui-cell_input">
+                    <view class="weui-cell__hd">
+                        <view class="weui-label">公司名称</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                        <input class="weui-input" placeholder="请输入公司全称" name="name" value="{{company.name}}"/>
+                    </view>
+                </view>
+                <view class="weui-cell weui-cell_input">
+                    <view class="weui-cell__hd">
+                        <view class="weui-label">联系方式</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                        <input class="weui-input" type="number" name="phone" disabled="{{type!=2}}" value="{{phone}}"
+                               placeholder="请输入联系方式"/>
+                    </view>
+                </view>
+                <view class="weui-cell weui-cell_input weui-cell_vcode" wx:if="{{type==2}}">
+                    <view class="weui-cell__hd">
+                        <view class="weui-label">验证码</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                        <input class="weui-input" type="number" placeholder="请输入验证码"/>
+                    </view>
+                    <view class="weui-cell__ft">
+                        <view class="weui-vcode-btn" bindtap="sendCode">获取验证码</view>
+                    </view>
+                </view>
+
+
+                <view class="weui-cell weui-cell_input">
+                    <map longitude="{{company.position.longitude}}" latitude="{{company.position.latitude}}"
+                         show-location="{{true}}"
+                         bindtap="chosePosition">
+                        <span style="display:{{company.position==undefined ? true : 'none'}}">点击选择公司地址</span>
+                    </map>
+                </view>
+                <view class="weui-cells__title">企业地址</view>
+                <view class="weui-cells weui-cells_after-title">
+                    <view class="weui-cell">
+                        <view class="weui-cell__bd">
+                            <textarea class="weui-textarea" name="position" value="{{company.positionStr}}" bindblur="positionSave" style="height: 3.3em" placeholder="请输入企业地址"/>
+                        </view>
+                    </view>
+                </view>
+                <view class="weui-cells__title">企业简介</view>
+                <view class="weui-cells weui-cells_after-title">
+                    <view class="weui-cell">
+                        <view class="weui-cell__bd">
+                            <textarea class="weui-textarea" name="description" value="{{company.description}}" placeholder="请输入企业简介"/>
+                        </view>
+                    </view>
+                </view>
+                <checkbox-group bindchange="bindAgreeChange">
+                    <label class="weui-agree" for="weuiAgree">
+                        <view class="weui-agree__text">
+                            <checkbox class="weui-agree__checkbox" id="weuiAgree" value="agree" checked="{{isAgree}}"/>
+                            <view class="weui-agree__checkbox-icon">
+                                <icon class="weui-agree__checkbox-icon-check" type="success_no_circle" size="9"
+                                      wx:if="{{isAgree}}"></icon>
+                            </view>
+                            阅读并同意
+                            <navigator url="" class="weui-agree__link">《相关条款》</navigator>
+                        </view>
+                    </label>
+                </checkbox-group>
+                <view class="weui-btn-area">
+                    <button class="weui-btn" type="primary" form-type="submit" disabled="{{!isAgree}}">确定</button>
+                </view>
+            </view>
+        </form>
+    </view>
 </view>

@@ -18,7 +18,9 @@
 }
 
 .userAvatar{
+    -webkit-border-radius:100%;
+    -moz-border-radius:100%;
     border-radius:100%;
-    width:250rpx;
-    height:250rpx;
+    width:150rpx;
+    height:150rpx;
 }

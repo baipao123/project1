@@ -22,7 +22,7 @@
                         <view class="weui-label">手机号</view>
                     </view>
                     <view class="weui-cell__bd">
-                        <input class="weui-input" type="phone" name="phone" disabled="{{type!=2}}" value="{{phone}}" placeholder="请输入手机号"/>
+                        <input class="weui-input" type="number" name="phone" disabled="{{type!=2}}" value="{{phone}}" placeholder="请输入手机号"/>
                     </view>
                 </view>
                 <view class="weui-cell weui-cell_input weui-cell_vcode" wx:if="{{type==2}}">
@@ -30,7 +30,7 @@
                         <view class="weui-label">验证码</view>
                     </view>
                     <view class="weui-cell__bd">
-                        <input class="weui-input" type="phone" placeholder="请输入验证码"/>
+                        <input class="weui-input" type="number" placeholder="请输入验证码"/>
                     </view>
                     <view class="weui-cell__ft">
                         <view class="weui-vcode-btn" bindtap="sendCode">获取验证码</view>

@@ -11,7 +11,7 @@ App({
     },
     globalData: {
         user:{},
-        domain:"https://demo.wx-dk.cn/"
+        qiNiuDomain:"http://img.wx-dk.cn/"
     },
     login: function(){
         let _this = this;
