@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\tools\QiNiu;
 use common\tools\Tool;
 use frontend\actions\base\ErrorAction;
 use frontend\models\UserIdentify;
@@ -19,7 +20,7 @@ class BaseController extends Controller
     }
 
     public function beforeAction($action) {
-        if (Yii::$app->user->isGuest && !in_array($action->id, ["app-login", "error"])) {
+        if (Yii::$app->user->isGuest && !in_array($action->id, ["app-login", "error", "qiniu-token"])) {
             echo Tool::reJson(null, "请先登录", Tool::NEED_LOGIN);
             return false;
         }
@@ -66,7 +67,8 @@ class BaseController extends Controller
         return Tool::reJson(null, "用户信息不匹配失败", Tool::FAIL);
     }
 
-    public function actionE() {
-        echo 1;
+    public function actionQiniuToken() {
+        $token = QiNiu::getToken();
+        return json_encode(["uptoken" => $token]);
     }
 }

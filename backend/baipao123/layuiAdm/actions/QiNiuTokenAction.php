@@ -34,7 +34,7 @@ class QiNiuTokenAction extends Action
         echo json_encode(["token" => $token]);
     }
 
-    public function getToken($time = 7200, $refresh = true) {
+    public function getToken($time = 7200, $refresh = false) {
         $cacheKey = "BaiPao123-QiNiu-Js-UpToken";
         if (!$refresh && Yii::$app->cache->exists($cacheKey))
             return Yii::$app->cache->get($cacheKey);

@@ -1,51 +1,48 @@
 // created by gpake
 (function() {
 
-var config = {
-    qiniuRegion: '',
-    qiniuImageURLPrefix: '',
+let config = {
+    qiniuRegion: 'ECN',
+    qiniuImageURLPrefix: 'http://img.wx-dk.cn',
     qiniuUploadToken: '',
-    qiniuUploadTokenURL: '',
+    qiniuUploadTokenURL: 'https://demo.wx-dk.cn:8443/base/qiniu-token',
     qiniuUploadTokenFunction: null,
-    qiniuShouldUseQiniuFileName: false
+    qiniuShouldUseQiniuFileName: true
 }
 
 module.exports = {
     init: init,
     upload: upload,
+    choseImg: choseImg,
 }
 
 // 在整个程序生命周期中，只需要 init 一次即可
 // 如果需要变更参数，再调用 init 即可
 function init(options) {
     config = {
-        qiniuRegion: '',
-        qiniuImageURLPrefix: '',
+        qiniuRegion: 'ECN',
+        qiniuImageURLPrefix: 'http://img.wx-dk.cn/',
         qiniuUploadToken: '',
-        qiniuUploadTokenURL: '',
+        qiniuUploadTokenURL: '/qiniu/token',
         qiniuUploadTokenFunction: null,
-        qiniuShouldUseQiniuFileName: false
-    };
+        qiniuShouldUseQiniuFileName: true
+    }
     updateConfigWithOptions(options);
 }
 
 function updateConfigWithOptions(options) {
-    if (options.region) {
+    if (options.region)
         config.qiniuRegion = options.region;
-    } else {
-        console.error('qiniu uploader need your bucket region');
-    }
-    if (options.uptoken) {
+    if (options.uptoken)
         config.qiniuUploadToken = options.uptoken;
-    } else if (options.uptokenURL) {
+    if (options.uptokenURL)
         config.qiniuUploadTokenURL = options.uptokenURL;
-    } else if(options.uptokenFunc) {
+    if (options.uptokenFunc)
         config.qiniuUploadTokenFunction = options.uptokenFunc;
-    }
-    if (options.domain) {
+    if (options.domain)
         config.qiniuImageURLPrefix = options.domain;
-    }
-    config.qiniuShouldUseQiniuFileName = options.shouldUseQiniuFileName
+    if (options.hasOwnProperty("shouldUseQiniuFileName"))
+        config.qiniuShouldUseQiniuFileName = options.shouldUseQiniuFileName
 }
 
 function upload(filePath, success, fail, options, progress) {
@@ -100,7 +97,7 @@ function doUpload(filePath, success, fail, options, progress) {
           let dataString = res.data
           if(res.data.hasOwnProperty('type') && res.data.type === 'Buffer'){
             dataString = String.fromCharCode.apply(null, res.data.data)
-          }          
+          }
           try {
             let dataObject = JSON.parse(dataString);
             //do something
@@ -161,6 +158,24 @@ function uploadURLFromRegionCode(code) {
         default: console.error('please make the region is with one of [ECN, SCN, NCN, NA, ASG]');
     }
     return uploadURL;
+}
+
+function choseImg(count, success) {
+    // 选择图片
+    wx.chooseImage({
+        count: count,
+        success: function (res) {
+            let index = 0;
+            for (let path of res.tempFilePaths) {
+                index++
+                upload(path, (info) => {
+                    success(info, index)
+                }, (error) => {
+                    console.log('error: ' + error)
+                });
+            }
+        }
+    })
 }
 
 })();

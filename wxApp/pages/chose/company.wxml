@@ -1,0 +1,6 @@
+<view class="page">
+    <view>
+        <image src="{{icon}}"> </image>
+    </view>
+    <button bindtap="uploadIcon">123123</button>
+</view>
