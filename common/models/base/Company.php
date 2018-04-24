@@ -13,6 +13,9 @@ use Yii;
  * @property string $icon
  * @property string $cover
  * @property string $position
+ * @property string $latitude
+ * @property string $longitude
+ * @property string $accuracy
  * @property string $description
  * @property int $status
  * @property string $created_at
@@ -38,7 +41,7 @@ class Company extends \yii\db\ActiveRecord
             [['uid', 'created_at', 'updated_at'], 'integer'],
             [['description'], 'string'],
             [['type', 'status'], 'string', 'max' => 1],
-            [['name', 'icon', 'cover', 'position'], 'string', 'max' => 255],
+            [['name', 'icon', 'cover', 'position', 'latitude', 'longitude', 'accuracy'], 'string', 'max' => 255],
             [['uid'], 'unique'],
         ];
     }
@@ -55,6 +58,9 @@ class Company extends \yii\db\ActiveRecord
             'icon' => 'Icon',
             'cover' => 'Cover',
             'position' => 'Position',
+            'latitude' => 'Latitude',
+            'longitude' => 'Longitude',
+            'accuracy' => 'Accuracy',
             'description' => 'Description',
             'status' => 'Status',
             'created_at' => 'Created At',

@@ -11,5 +11,8 @@ namespace common\models;
 
 class Job extends \common\models\base\Job
 {
+	const ON = 1;
+	const OFF = 2;
+	const DEL = 3;
 
 }

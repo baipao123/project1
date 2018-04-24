@@ -17,6 +17,54 @@ use Yii;
 
 class JobController extends \frontend\controllers\BaseController
 {
+    public function actionApply(){
+        if($this->getuser()->type != User::TYPE_USER)
+            return Tool::reJson(null,"您无权报名",Tool::FAIL);
+        $jid = $this->getPost("jid",0);
+        $job = Job::findOne($jid);
+        if(!$job || $job->status != Job::ON)
+            return Tool::reJson(null,"工作不存在",Tool::FAIL);
+        if(UserHasJob::isOn(Yii::$app->user->id,$jid))
+            return Tool::reJson(null,"您已经报名该工作了",Tool::FAIL);
+        $record = new UserHasJob;
+        $record->uid = Yii::$app->user->id;
+        $record->jid = $jid;
+        $record->status = UserHasJob::STATUS_APPLY;
+        $record->cretaed_at = time();
+        if(!$record->save()){
+            Yii::warning($record->errors,"添加UserHasJob失败");
+            return Tool::reJson(null,"报名失败",Tool::FAIL);
+        }
+        //TODO 模板消息
+        return Tool::reJson(1);
+    }
+
+    public function actionForbid(){
+        $uJid = $this->getPost("uJid",0);
+        $userJob = UserHasJob::findOne($uJid);
+        if(!$userJob || $userJob->status !=  UserHasJob::Apply)
+            return Tool::reJson(null,"工作不存在",Tool::FAIL);
+        $job = $userJob->job;
+        if(!$job || $job->status != Job::ON || $job->uid != Yii::$app->user->id)
+            return Tool::reJson(null,"工作不存在",Tool::FAIL);
+
+        $userJob->status = UserHasJob::REFUSE;
+        $userJob->content =  $this->getPost("reason","");
+        $userJob->updated_at = time();
+        if(!$userJob->save()){
+            Yii::warning($userJob->errors,"保存UserHasJob失败");
+            return Tool::reJson(null,"拒绝失败",Tool::FAIL);
+        }
+        //TODO 模板消息
+        return Tool::reJson(1);
+
+    }
+
+    public function actionCopy(){
+
+    }
+
+
     public function actionTimeUp(){
         $uJid = $this->getPost("uJid",0);
         $date = $this->getPost("date",date("Ymd"));
@@ -38,7 +86,7 @@ class JobController extends \frontend\controllers\BaseController
         $msg = $this->getPost("msg");
         $daily->msg = empty($msg) ? $daily->msg : $msg;
         $daily->save();
-
+        //TODO 模板消息
         return Tool::reJson(1);
     }
 
@@ -56,7 +104,7 @@ class JobController extends \frontend\controllers\BaseController
         $daily->status = UserJobDaily::REFUSE ;
         $daily->updated_at = time();
         $daily->save();
-
+        //TODO 模板消息
         return Tool::reJson(1);
     }
 

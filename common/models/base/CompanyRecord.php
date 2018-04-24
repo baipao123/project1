@@ -14,6 +14,9 @@ use Yii;
  * @property string $icon
  * @property string $cover
  * @property string $position
+ * @property string $latitude
+ * @property string $longitude
+ * @property string $accuracy
  * @property string $description
  * @property string $reason
  * @property int $status
@@ -38,7 +41,7 @@ class CompanyRecord extends \yii\db\ActiveRecord
         return [
             [['uid', 'created_at', 'updated_at'], 'integer'],
             [['description'], 'string'],
-            [['formId', 'name', 'icon', 'cover', 'position', 'reason'], 'string', 'max' => 255],
+            [['formId', 'name', 'icon', 'cover', 'position', 'latitude', 'longitude', 'accuracy', 'reason'], 'string', 'max' => 255],
             [['status'], 'string', 'max' => 1],
         ];
     }
@@ -56,6 +59,9 @@ class CompanyRecord extends \yii\db\ActiveRecord
             'icon' => 'Icon',
             'cover' => 'Cover',
             'position' => 'Position',
+            'latitude' => 'Latitude',
+            'longitude' => 'Longitude',
+            'accuracy' => 'Accuracy',
             'description' => 'Description',
             'reason' => 'Reason',
             'status' => 'Status',

@@ -25,7 +25,7 @@ class Company extends \common\models\base\Company
     public static function info($uid, $data, $isAdd = false) {
         $company = static::findOne($uid);
         if ($company && $isAdd)
-            return "";
+            return "您已经是企业用户了";
         $name = ArrayHelper::getValue($data, "name", "");
         $icon = ArrayHelper::getValue($data, "icon", "");
         $cover = ArrayHelper::getValue($data, "cover", "");
@@ -36,6 +36,9 @@ class Company extends \common\models\base\Company
             $company->icon = $icon;
             $company->cover = $cover;
             $company->position = $position;
+            $company->latitude = ArrayHelper::getValue($data, "latitude", "");
+            $company->longitude = ArrayHelper::getValue($data, "longitude", "");
+            $company->accuracy = ArrayHelper::getValue($data, "accuracy", "");
             $company->description = $description;
             $company->status = self::STATUS_VERIFY;
             if ($company->isNewRecord)
@@ -47,13 +50,16 @@ class Company extends \common\models\base\Company
                 return false;
             }
         }
-        $oldRecords = CompanyRecord::find()->where(["uid"=>$uid,"status"=>self::STATUS_VERIFY])->all();
+        $oldRecords = CompanyRecord::find()->where(["uid" => $uid, "status" => self::STATUS_VERIFY])->all();
         /* @var $oldRecords CompanyRecord[] */
         $record = new CompanyRecord;
         $record->name = $name;
         $record->icon = $icon;
         $record->cover = $cover;
         $record->position = $position;
+        $company->latitude = ArrayHelper::getValue($data, "latitude", "");
+        $company->longitude = ArrayHelper::getValue($data, "longitude", "");
+        $company->accuracy = ArrayHelper::getValue($data, "accuracy", "");
         $record->description = $description;
         $record->status = self::STATUS_VERIFY;
         $record->created_at = time();
@@ -67,7 +73,20 @@ class Company extends \common\models\base\Company
             $r->save();
         }
         //attach
-
+        $attaches = ArrayHelper::getValue($data, "attaches", []);
+        foreach ($attaches as $path) {
+            $attach = new Attach;
+            $attach->type = Attach::COMPANY_RECORD;
+            $attach->tid = $record->attributes['id'];
+            $attach->path = $path;
+            $attach->status = Attach::STATUS_ON;
+            $attach->created_at = time();
+            if (!$attach->save()) {
+                Yii::warning($attach->errors, "保存CompanyAttaches出错");
+                return false;
+            }
+        }
+        return true;
     }
 
 }

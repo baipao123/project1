@@ -16,12 +16,31 @@ use Yii;
 class CompanyController extends \frontend\controllers\BaseController
 {
     public function actionJoin() {
+        $res = Company::info(Yii::$app->user->id, $_POST, true);
+        if ($res == true)
+            return Tool::reJson(1);
+        return Tool::reJson(null, $res === false ? "导入数据失败，请稍后重试" : $res, Tool::FAIL);
+    }
+
+    public function actionEdit() {
+        $res = Company::info(Yii::$app->user->id, $_POST, false);
+        if ($res == true)
+            return Tool::reJson(1);
+        return Tool::reJson(null, $res === false ? "导入数据失败，请稍后重试" : $res, Tool::FAIL);
+    }
+
+    public function actionAddJob() {
 
     }
 
-    public function actionEditJoin() {
+    public function actionEditJob() {
 
     }
+
+    public function actionJobList() {
+
+    }
+
 
     public function actionVerifyUser() {
         $string = $this->getPost("code");
