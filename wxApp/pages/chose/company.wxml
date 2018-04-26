@@ -33,7 +33,7 @@
                         <view class="weui-label">联系方式</view>
                     </view>
                     <view class="weui-cell__bd">
-                        <input class="weui-input" type="number" name="phone" disabled="{{type!=2}}" value="{{phone}}"
+                        <input class="weui-input" type="number" name="phone" disabled="{{type!=2}}" value="{{user.phone}}"
                                placeholder="请输入联系方式"/>
                     </view>
                 </view>
@@ -73,6 +73,34 @@
                         </view>
                     </view>
                 </view>
+                <view class="weui-cell">
+                    <view class="weui-cell__bd">
+                        <view class="weui-uploader">
+                            <view class="weui-uploader__hd">
+                                <view class="weui-uploader__title">上传</view>
+                            </view>
+                            <view class="weui-uploader__bd">
+                                <view class="weui-uploader__files">
+                                    <block wx:for="{{images}}">
+                                        <view class="weui-uploader__file" bindtap="previewImage" bindlongpress="openDeleteImage" data-id="{{index}}">
+                                            <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
+                                        </view>
+                                        <view class="weui-uploader__file-content" wx:if="{{deleteImage}}" bindtap="deleteImage" data-id="{{index}}">
+                                            <span class="myIcon icon-delete"></span>
+                                        </view>
+                                    </block>
+                                    <block wx:for="{{imageKeys}}">
+                                        <input type="text" name="attaches[]" value="{{item}}" hidden="{{true}}"/>
+                                    </block>
+                                </view>
+                                <view class="weui-uploader__input-box" wx:if="{{images.length<3}}">
+                                    <view class="weui-uploader__input" bindtap="uploadImages"> </view>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+
                 <checkbox-group bindchange="bindAgreeChange">
                     <label class="weui-agree" for="weuiAgree">
                         <view class="weui-agree__text">
