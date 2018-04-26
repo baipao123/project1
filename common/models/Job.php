@@ -15,4 +15,7 @@ class Job extends \common\models\base\Job
 	const OFF = 2;
 	const DEL = 3;
 
+	public function format(){
+		return [];
+	}
 }

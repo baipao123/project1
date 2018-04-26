@@ -6,12 +6,18 @@ use common\tools\Tool;
 use common\tools\WxApp;
 use Yii;
 
+/**
+ * @property Company $company
+ * */
 class User extends \common\models\base\User
 {
     const TYPE_USER = 1;
     const TYPE_COMPANY = 2;
     const TYPE_USER_BOSS = 3;
 
+    public function getCompany(){
+        return $this->hasOne(Company::tableName(),["id"=>"uid"]);
+    }
 
     /**
      * @param string $code

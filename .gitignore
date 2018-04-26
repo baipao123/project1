@@ -33,3 +33,7 @@ phpunit.phar
 
 # vagrant runtime
 /.vagrant
+
+# cTags
+.tags
+.tags_sorted_by_file

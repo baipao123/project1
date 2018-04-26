@@ -38,6 +38,10 @@ class BaseController extends Controller
         return Yii::$app->user->getIdentity();
     }
 
+    public function user_id(){
+        return Yii::$app->user->id;
+    }
+
     //小程序登录
     public function actionAppLogin() {
         $code = $this->getPost("code");

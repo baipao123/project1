@@ -9,6 +9,8 @@
 namespace frontend\modules\part\controllers;
 
 use common\models\Company;
+use common\models\Job;
+use common\models\User;
 use common\models\UserHasJob;
 use common\tools\Tool;
 use Yii;
@@ -16,20 +18,29 @@ use Yii;
 class CompanyController extends \frontend\controllers\BaseController
 {
     public function actionJoin() {
-        $res = Company::info(Yii::$app->user->id, $_POST, true);
+        $res = Company::Bind(Yii::$app->user->id, $_POST, true);
         if ($res == true)
-            return Tool::reJson(1,"您的企业信息已提交审核");
+            return Tool::reJson(1, "您的企业信息已提交审核");
         return Tool::reJson(null, $res === false ? "导入数据失败，请稍后重试" : $res, Tool::FAIL);
     }
 
     public function actionEdit() {
-        $res = Company::info(Yii::$app->user->id, $_POST, false);
+        $res = Company::Bind(Yii::$app->user->id, $_POST, false);
         if ($res == true)
             return Tool::reJson(1);
         return Tool::reJson(null, $res === false ? "导入数据失败，请稍后重试" : $res, Tool::FAIL);
     }
 
     public function actionAddJob() {
+        $user = $this->getUser();
+        if (!$user || $user->type == User::TYPE_USER)
+            return Tool::reJson(null, "您无权发布招聘信息", Tool::FAIL);
+        $company = $user->company;
+        if (!$company || $company->status != Company::STATUS_PASS)
+            return Tool::reJson(null, "您的企业资料未审核通过，暂时无法发布招聘信息", Tool::FAIL);
+
+        $job = new Job;
+        $job->uid = $this->user_id();
 
     }
 
@@ -38,7 +49,26 @@ class CompanyController extends \frontend\controllers\BaseController
     }
 
     public function actionJobList() {
+        $user = $this->getUser();
+        if (!$user || $user->type == User::TYPE_USER)
+            return Tool::reJson([]);
+        $company = $user->company;
+        if (!$company || $company->status != Company::STATUS_PASS)
+            return Tool::reJson([]);
+        return Tool::reJson($company->jobs());
+    }
 
+    public function actionInfo(){
+        $user = $this->getUser();
+        if (!$user || $user->type == User::TYPE_USER)
+            return Tool::reJson([]);
+        $company = $user->company;
+        if (!$company || $company->status != Company::STATUS_PASS)
+            return Tool::reJson([]);
+        return Tool::reJson([
+            "user"=>$user->info(),
+            "company" => $company->info(),
+        ]);
     }
 
 

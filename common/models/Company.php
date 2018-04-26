@@ -8,9 +8,13 @@
 
 namespace common\models;
 
+use common\tools\Img;
 use Yii;
 use yii\helpers\ArrayHelper;
 
+/**
+ * @property CompanyRecord $record
+ * */
 class Company extends \common\models\base\Company
 {
     const STATUS_VERIFY = 0;
@@ -22,7 +26,7 @@ class Company extends \common\models\base\Company
         return $this->hasOne(CompanyRecord::tableName(), ["uid" => "uid"])->andWhere(["status" => self::STATUS_VERIFY])->orderBy("created_at desc");
     }
 
-    public static function info($uid, $data, $isAdd = false) {
+    public static function Bind($uid, $data, $isAdd = false) {
         $company = static::findOne($uid);
         if ($company && $isAdd)
             return "您已经是企业用户了";
@@ -90,4 +94,21 @@ class Company extends \common\models\base\Company
         return true;
     }
 
+    public function jobs() {
+        return [];
+    }
+
+    public function info() {
+        return [
+            "name"     => $this->name,
+            "icon"     => Img::format($this->icon),
+            "cover"    => Img::format($this->cover),
+            "status"   => $this->status,
+            "position" => [
+                "longitude" => $this->longitude,
+                "latitude"  => $this->latitude,
+                "address"   => $this->position
+            ]
+        ];
+    }
 }

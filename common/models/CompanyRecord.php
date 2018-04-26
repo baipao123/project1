@@ -10,6 +10,10 @@ namespace common\models;
 
 use Yii;
 
+/**
+ * @property Attach[] $attaches
+ * @property Company $company
+ * */
 class CompanyRecord extends \common\models\base\CompanyRecord
 {
 
