@@ -101,6 +101,7 @@ class Company extends \common\models\base\Company
     public function info() {
         return [
             "name"     => $this->name,
+            "type"     => $this->type,
             "icon"     => Img::format($this->icon),
             "cover"    => Img::format($this->cover),
             "status"   => $this->status,

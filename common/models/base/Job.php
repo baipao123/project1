@@ -7,64 +7,94 @@ use Yii;
 /**
  * This is the model class for table "job".
  *
- * @property int $id
- * @property int $uid
- * @property int $cid
+ * @property string $id
+ * @property string $uid
+ * @property string $city_id
+ * @property string $area_id
  * @property string $name
- * @property string $wages
- * @property int $prize
- * @property int $join_start
- * @property int $join_end
- * @property int $join_day
- * @property string $wages_desc
- * @property string $use_desc
- * @property string $work_desc
- * @property string $warm_desc
- * @property int $created_at
+ * @property string $prize
+ * @property int $prize_type
+ * @property string $num
+ * @property int $gender
+ * @property string $start_at
+ * @property string $end_at
+ * @property string $work_start
+ * @property string $work_end
+ * @property string $age_start
+ * @property string $age_end
+ * @property string $quiz_position
+ * @property string $quiz_longitude
+ * @property string $quiz_latitude
+ * @property string $work_position
+ * @property string $work_longitude
+ * @property string $work_latitude
+ * @property string $description
+ * @property string $require_desc
+ * @property string $extra_desc
+ * @property string $phone
+ * @property string $contact_name
+ * @property string $tips
+ * @property int $status
+ * @property string $created_at
  */
 class Job extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'job';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['uid', 'cid', 'prize', 'join_start', 'join_end', 'join_day', 'created_at'], 'integer'],
-            [['wages_desc', 'use_desc', 'work_desc', 'warm_desc'], 'required'],
-            [['wages_desc', 'use_desc', 'work_desc', 'warm_desc'], 'string'],
-            [['name', 'wages'], 'string', 'max' => 255],
+            [['id'], 'required'],
+            [['id', 'uid', 'city_id', 'area_id', 'prize', 'num', 'start_at', 'end_at', 'work_start', 'work_end', 'age_start', 'age_end', 'created_at'], 'integer'],
+            [['description', 'require_desc', 'extra_desc', 'tips'], 'string'],
+            [['name', 'quiz_position', 'quiz_longitude', 'quiz_latitude', 'work_position', 'work_longitude', 'work_latitude', 'phone', 'contact_name'], 'string', 'max' => 255],
+            [['prize_type', 'status'], 'string', 'max' => 1],
+            [['gender'], 'string', 'max' => 10],
+            [['id'], 'unique'],
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
-            'id' => 'ID',
-            'uid' => 'Uid',
-            'cid' => 'Cid',
-            'name' => 'Name',
-            'wages' => 'Wages',
-            'prize' => 'Prize',
-            'join_start' => 'Join Start',
-            'join_end' => 'Join End',
-            'join_day' => 'Join Day',
-            'wages_desc' => 'Wages Desc',
-            'use_desc' => 'Use Desc',
-            'work_desc' => 'Work Desc',
-            'warm_desc' => 'Warm Desc',
-            'created_at' => 'Created At',
+            'id'             => 'ID',
+            'uid'            => 'Uid',
+            'city_id'        => 'City ID',
+            'area_id'        => 'Area ID',
+            'name'           => 'Name',
+            'prize'          => 'Prize',
+            'prize_type'     => 'Prize Type',
+            'num'            => 'Num',
+            'gender'         => 'Gender',
+            'start_at'       => 'Start At',
+            'end_at'         => 'End At',
+            'work_start'     => 'Work Start',
+            'work_end'       => 'Work End',
+            'age_start'      => 'Age Start',
+            'age_end'        => 'Age End',
+            'quiz_position'  => 'Quiz Position',
+            'quiz_longitude' => 'Quiz Longitude',
+            'quiz_latitude'  => 'Quiz Latitude',
+            'work_position'  => 'Work Position',
+            'work_longitude' => 'Work Longitude',
+            'work_latitude'  => 'Work Latitude',
+            'description'    => 'Description',
+            'require_desc'   => 'Require Desc',
+            'extra_desc'     => 'Extra Desc',
+            'phone'          => 'Phone',
+            'contact_name'   => 'Contact Name',
+            'tips'           => 'Tips',
+            'status'         => 'Status',
+            'created_at'     => 'Created At',
         ];
     }
 }
