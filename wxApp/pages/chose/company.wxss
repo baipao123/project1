@@ -1,15 +1,19 @@
+.page{
+    padding:0;
+}
 .avatar{
     padding:0 !important;
     position: relative;
     margin-bottom:30rpx;
 }
 .avatar .cover{
-    width: 100%;
+    width: 750rpx;
     height:375rpx;
 }
 .avatar .cover-icon{
     position: absolute;
-    right:25rpx;
+    right:30rpx;
+    top:20rpx;
     font-size:50rpx;
     color:rgba(255,255,255,0.6);
 }
@@ -40,6 +44,27 @@
     -webkit-border-radius:100%;
     -moz-border-radius:100%;
     border-radius:100%;
+}
+
+.buttons{
+    padding:0 30rpx;
+}
+
+
+.radio-group{
+    display:-webkit-box;
+    display:-webkit-flex;
+    display:flex;
+}
+.radio.type{
+    -webkit-box-flex:1;
+    -webkit-flex:1;
+    flex:1;
+}
+
+.weui-cells__title{
+    color:#000;
+    font-size:18px;
 }
 
 map {

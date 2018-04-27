@@ -7,7 +7,7 @@
         </view>
         <span class="cover-icon myIcon icon-edit" bindtap="uploadCover"></span>
     </view>
-    <view class="page__bd page__bd_spacing" wx:if="{{type==0}}">
+    <view class="page__bd page__bd_spacing buttons" wx:if="{{type==0}}">
         <button class="weui-btn" type="primary" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">
             使用微信绑定的手机号
         </button>
@@ -20,12 +20,28 @@
                 <input type="text" hidden="{{true}}" name="cover" value="{{company.cover}}"/>
                 <input type="text" hidden="{{true}}" name="latitude" value="{{company.position.latitude}}"/>
                 <input type="text" hidden="{{true}}" name="longitude" value="{{company.position.longitude}}"/>
-                <view class="weui-cell weui-cell_input">
+                <view class="weui-cell">
                     <view class="weui-cell__hd">
-                        <view class="weui-label">公司名称</view>
+                        <view class="weui-label">类型</view>
                     </view>
                     <view class="weui-cell__bd">
-                        <input class="weui-input" placeholder="请输入公司全称" name="name" value="{{company.name}}"/>
+                        <radio-group class="radio-group" bindchange="typeChange">
+                            <label class="radio type">
+                                <radio value="2" checked="{{company.type!=3}}"/>企业
+                            </label>
+                            <label class="radio type">
+                                <radio value="3" checked="{{company.type==3}}"/>个人
+                            </label>
+                        </radio-group>
+                    </view>
+                </view>
+                <view class="weui-cell weui-cell_input">
+                    <view class="weui-cell__hd">
+                        <view class="weui-label" wx:if="{{company.type!=3}}">公司名称</view>
+                        <view class="weui-label" wx:else>姓名</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                        <input class="weui-input" placeholder="请输入{{company.type!=3 ? '公司名称':'真实姓名'}}" name="name" value="{{company.name}}"/>
                     </view>
                 </view>
                 <view class="weui-cell weui-cell_input">
@@ -54,52 +70,54 @@
                     <map longitude="{{company.position.longitude}}" latitude="{{company.position.latitude}}"
                          show-location="{{true}}"
                          bindtap="chosePosition">
-                        <span style="display:{{company.position==undefined ? true : 'none'}}">点击选择公司地址</span>
+                        <span style="display:{{company.position==undefined ? true : 'none'}}">点击选择{{company.type!=3 ? "公司":"个人"}}地址</span>
                     </map>
                 </view>
-                <view class="weui-cells__title">企业地址</view>
+                <view class="weui-cells__title">{{company.type!=3 ? "公司":"居住"}}地址</view>
                 <view class="weui-cells weui-cells_after-title">
                     <view class="weui-cell">
                         <view class="weui-cell__bd">
-                            <textarea class="weui-textarea" name="position" value="{{company.positionStr}}" bindblur="positionSave" style="height: 3.3em" placeholder="请输入企业地址"/>
+                            <textarea class="weui-textarea" name="position" value="{{company.positionStr}}" bindblur="positionSave" style="height: 3.3em" placeholder="请输入{{company.type!=3 ? '公司':'居住'}}地址"/>
                         </view>
                     </view>
                 </view>
-                <view class="weui-cells__title">企业简介</view>
+                <view class="weui-cells__title">{{company.type!=3 ? '公司':'个人'}}简介</view>
                 <view class="weui-cells weui-cells_after-title">
                     <view class="weui-cell">
                         <view class="weui-cell__bd">
-                            <textarea class="weui-textarea" name="description" value="{{company.description}}" placeholder="请输入企业简介"/>
+                            <textarea class="weui-textarea" name="description" value="{{company.description}}" placeholder="请输入{{company.type!=3 ? '公司':'个人'}}简介"/>
                         </view>
                     </view>
                 </view>
-                <view class="weui-cell">
-                    <view class="weui-cell__bd">
-                        <view class="weui-uploader">
-                            <view class="weui-uploader__hd">
-                                <view class="weui-uploader__title">上传</view>
-                            </view>
-                            <view class="weui-uploader__bd">
-                                <view class="weui-uploader__files">
-                                    <block wx:for="{{images}}">
-                                        <view class="weui-uploader__file" bindtap="previewImage" bindlongpress="openDeleteImage" data-id="{{index}}">
-                                            <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
-                                        </view>
-                                        <view class="weui-uploader__file-content" wx:if="{{deleteImage}}" bindtap="deleteImage" data-id="{{index}}">
-                                            <span class="myIcon icon-delete"></span>
-                                        </view>
-                                    </block>
-                                    <block wx:for="{{imageKeys}}">
-                                        <input type="text" name="attaches[]" value="{{item}}" hidden="{{true}}"/>
-                                    </block>
-                                </view>
-                                <view class="weui-uploader__input-box" wx:if="{{images.length<3}}">
-                                    <view class="weui-uploader__input" bindtap="uploadImages"> </view>
+                <view class="weui-cells__title">认证资料</view>
+                <view class="weui-cells weui-cells_after-title">
+                    <view class="weui-cell">
+                        <view class="weui-cell__bd">
+                            <view class="weui-uploader">
+                                <view class="weui-uploader__bd">
+                                    <view class="weui-uploader__files">
+                                        <block wx:for="{{images}}" wx:key="{{k}}">
+                                            <view class="weui-uploader__file" bindtap="previewImage" bindlongpress="openDeleteImage" data-id="{{index}}">
+                                                <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
+                                            </view>
+                                            <view class="weui-uploader__file-content" wx:if="{{deleteImage}}" bindtap="deleteImage" data-id="{{index}}">
+                                                <span class="myIcon icon-delete"></span>
+                                            </view>
+                                        </block>
+                                        <block wx:for="{{imageKeys}}" wx:key="{{k}}">
+                                            <input type="text" name="attaches[]" value="{{item}}" hidden="{{true}}"/>
+                                        </block>
+                                    </view>
+                                    <view class="weui-uploader__input-box" wx:if="{{images.length<3}}">
+                                        <view class="weui-uploader__input" bindtap="uploadImages"> </view>
+                                    </view>
                                 </view>
                             </view>
                         </view>
                     </view>
                 </view>
+                <view class="weui-cells__tips" wx:if="{{company.type!=3}}">企业需要上传营业执照、授权书等扫描件</view>
+                <view class="weui-cells__tips" wx:else>个人需要上传有效身份证正反面</view>
 
                 <checkbox-group bindchange="bindAgreeChange">
                     <label class="weui-agree" for="weuiAgree">
@@ -110,7 +128,7 @@
                                       wx:if="{{isAgree}}"></icon>
                             </view>
                             阅读并同意
-                            <navigator url="" class="weui-agree__link">《相关条款》</navigator>
+                            <navigator url="" class="weui-agree__link">《用户协议》</navigator>
                         </view>
                     </label>
                 </checkbox-group>

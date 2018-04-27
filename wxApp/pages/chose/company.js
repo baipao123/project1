@@ -39,6 +39,12 @@ Page({
             })
         })
     },
+    typeChange:function (e) {
+        console.log(e);
+        this.setData({
+            "company.type":e.detail.value
+        })
+    },
     chosePosition: function () {
         let that = this;
         wx.chooseLocation({

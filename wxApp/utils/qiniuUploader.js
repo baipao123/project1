@@ -3,7 +3,7 @@
 
 let config = {
     qiniuRegion: 'ECN',
-    qiniuImageURLPrefix: 'http://img.wx-dk.cn',
+    qiniuImageURLPrefix: 'http://p7tz7z3vu.bkt.clouddn.com',
     qiniuUploadToken: '',
     qiniuUploadTokenURL: 'https://demo.wx-dk.cn:8443/base/qiniu-token',
     qiniuUploadTokenFunction: null,

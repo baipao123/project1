@@ -22,6 +22,9 @@ class Company extends \common\models\base\Company
     const STATUS_FORBID = 2;
     const STATUS_IGNORE = 3;
 
+    const TYPE_COMPANY = 2;
+    const TYPE_USER_BOSS = 3;
+
     public function getRecord() {
         return $this->hasOne(CompanyRecord::tableName(), ["uid" => "uid"])->andWhere(["status" => self::STATUS_VERIFY])->orderBy("created_at desc");
     }
