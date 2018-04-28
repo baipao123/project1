@@ -23,4 +23,8 @@ class DistrictController extends BaseController
         return Tool::reJson(["cities" => District::areas($cid)]);
     }
 
+    public function actionAll($pid=1){
+    	  return Tool::reJson(["cities" => District::all($pid)]);
+    }
+
 }

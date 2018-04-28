@@ -1,0 +1,14 @@
+<view class="body">
+	<view>{{city.city}} {{area.area}}</view>
+	<picker-view value="{{value}}" bindchange="change">
+		<picker-view-column>
+			<view wx:for="{{cities}}">{{item}}</view>
+		</picker-view-column>
+		<picker-view-column>
+			<view>--全部--</view>
+			<view wx:for="{{areas}}">{{item}}</view>
+		</picker-view-column>
+	</picker-view>
+	<input type="text" name="{{cidName}}" hidden value="{{city.cid}}"/>
+	<input type="text" name="{{aidName}}" hidden value="{{area.aid}}"/>
+</view>
