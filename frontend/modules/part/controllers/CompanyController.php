@@ -18,12 +18,9 @@ use Yii;
 class CompanyController extends \frontend\controllers\BaseController
 {
     public function actionJoin() {
-        Yii::warning($_POST);
-        return Tool::reJson(null, "xxx", Tool::FAIL);
-
         $res = Company::Bind(Yii::$app->user->id, $_POST, true);
-        if ($res == true)
-            return Tool::reJson(1, "您的企业信息已提交审核");
+        if ($res === true)
+            return Tool::reJson(1, "您的信息已提交审核");
         return Tool::reJson(null, $res === false ? "导入数据失败，请稍后重试" : $res, Tool::FAIL);
     }
 

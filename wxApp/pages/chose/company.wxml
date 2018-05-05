@@ -76,7 +76,7 @@
                 </view>
 
 
-                <view class="weui-cell weui-cell_input" style="z-index:-1">
+                <view class="weui-cell weui-cell_input">
                     <map longitude="{{company.position.longitude}}" latitude="{{company.position.latitude}}"
                          show-location="{{true}}"
                          bindtap="chosePosition">

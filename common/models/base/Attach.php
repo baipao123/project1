@@ -31,9 +31,8 @@ class Attach extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['type', 'tid', 'created_at', 'updated_at'], 'integer'],
+            [['type', 'tid', 'created_at', 'updated_at','status'], 'integer'],
             [['path'], 'string', 'max' => 255],
-            [['status'], 'string', 'max' => 1],
         ];
     }
 

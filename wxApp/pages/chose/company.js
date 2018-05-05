@@ -6,9 +6,10 @@ Page({
     data: {
         user: {},
         company: {
-            aid:0,
-            cid:0,
-            cityStr:"请选择",
+            aid: 0,
+            cid: 0,
+            cityStr: "请选择",
+            positionStr: "",
         },
         type: 0,
         domain: app.globalData.qiNiuDomain,
@@ -22,14 +23,14 @@ Page({
             user: app.globalData.user
         });
     },
-    onShow:function () {
+    onShow: function () {
         let region = app.globalData.region
         console.log(region)
-        if(region.isSelect){
+        if (region.isSelect) {
             this.setData({
-                "company.cid":region.cid,
-                "company.aid":region.aid,
-                "company.cityStr":region.cityStr
+                "company.cid": region.cid,
+                "company.aid": region.aid,
+                "company.cityStr": region.cityStr
             })
             app.resetRegion()
         }
@@ -49,16 +50,17 @@ Page({
     bindCompany: function (e) {
         let data = e.detail.value;
         data.formId = e.detail.formId;
+        data.phoneType = this.data.type;
         request.post("/part/company/join", data, (res) => {
             wx.navigateTo({
                 url: "/pages/user/user"
             })
         })
     },
-    typeChange:function (e) {
+    typeChange: function (e) {
         console.log(e);
         this.setData({
-            "company.type":e.detail.value
+            "company.type": e.detail.value
         })
     },
     chosePosition: function () {
@@ -151,10 +153,10 @@ Page({
                 deleteImage: false
             })
     },
-    goSelectDistrict:function (e) {
-        let that=this
+    goSelectDistrict: function (e) {
+        let that = this
         wx.navigateTo({
-            url:"/pages/districtSelect/districtSelect?aid"+that.data.company.aid+"&cid="+that.data.company.cid
+            url: "/pages/districtSelect/districtSelect?aid" + that.data.company.aid + "&cid=" + that.data.company.cid
         })
     },
 })

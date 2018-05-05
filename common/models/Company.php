@@ -9,6 +9,7 @@
 namespace common\models;
 
 use common\tools\Img;
+use common\tools\Sms;
 use Yii;
 use yii\helpers\ArrayHelper;
 
@@ -30,23 +31,62 @@ class Company extends \common\models\base\Company
     }
 
     public static function Bind($uid, $data, $isAdd = false) {
+        $user = User::findOne($uid);
+        if ($user->type == User::TYPE_USER)
+            return "您已经是求职者了";
         $company = static::findOne($uid);
         if ($company && $isAdd)
-            return "您已经是企业用户了";
+            return "您已经是招聘者了";
         $company or $company = new static;
+        $type = ArrayHelper::getValue($data, "type", 0);
+        $cid = ArrayHelper::getValue($data, "cid", 0);
+        $aid = ArrayHelper::getValue($data, "aid", 0);
         $name = ArrayHelper::getValue($data, "name", "");
         $icon = ArrayHelper::getValue($data, "icon", "");
         $cover = ArrayHelper::getValue($data, "cover", "");
         $position = ArrayHelper::getValue($data, "position", "");
         $description = ArrayHelper::getValue($data, "description", "");
+        $latitude = ArrayHelper::getValue($data, "latitude", "");
+        $longitude = ArrayHelper::getValue($data, "longitude", "");
+        $attaches = ArrayHelper::getValue($data, "attaches", []);
+        $phoneType = ArrayHelper::getValue($data, "phoneType", 0);
+        $phone = ArrayHelper::getValue($data, "phone", "");
+        $code = ArrayHelper::getValue($data, "code", "");
+        if ($isAdd) {
+            if ($phoneType == 1) {
+                $phone = Yii::$app->redis->get("USER-WX-PHONE-" . $uid);
+                if (empty($phone))
+                    return "手机号不能为空";
+            } elseif ($phoneType == 2) {
+                if (!Sms::VerifyCode($phone, $code))
+                    return "验证码已失效";
+            } else
+                return "非法请求";
+        }
+        if (empty($type))
+            return "请选择类型";
+        $companyTypeText = $type == self::TYPE_COMPANY ? "企业" : "个人";
+        if (empty($name))
+            return "请输入{$companyTypeText}名称";
+        if (empty($cid))
+            return "请选择{$companyTypeText}默认的招聘城市";
+        if (empty($position) || empty($latitude) || empty($longitude))
+            return "请选择{$companyTypeText}所在的地址";
+        if (empty($description))
+            return "请输入{$companyTypeText}简介";
+        if ($isAdd && empty($attaches))
+            return "请上传认证资料";
         if ($company->status != self::STATUS_PASS) {
+            $company->type = $type;
+            $company->cid = $cid;
+            $company->aid = $aid;
             $company->uid = $uid;
             $company->name = $name;
             $company->icon = $icon;
             $company->cover = $cover;
             $company->position = $position;
-            $company->latitude = ArrayHelper::getValue($data, "latitude", "");
-            $company->longitude = ArrayHelper::getValue($data, "longitude", "");
+            $company->latitude = $latitude;
+            $company->longitude = $longitude;
             $company->description = $description;
             $company->status = self::STATUS_VERIFY;
             if ($company->isNewRecord)
@@ -58,15 +98,16 @@ class Company extends \common\models\base\Company
                 return false;
             }
         }
-        $oldRecords = CompanyRecord::find()->where(["uid" => $uid, "status" => self::STATUS_VERIFY])->all();
-        /* @var $oldRecords CompanyRecord[] */
         $record = new CompanyRecord;
+        $record->type = $type;
+        $record->cid = $cid;
+        $record->aid = $aid;
         $record->name = $name;
         $record->icon = $icon;
         $record->cover = $cover;
         $record->position = $position;
-        $company->latitude = ArrayHelper::getValue($data, "latitude", "");
-        $company->longitude = ArrayHelper::getValue($data, "longitude", "");
+        $record->latitude = $latitude;
+        $record->longitude = $longitude;
         $record->description = $description;
         $record->status = self::STATUS_VERIFY;
         $record->created_at = time();
@@ -74,13 +115,14 @@ class Company extends \common\models\base\Company
             Yii::warning($record->errors, "保存CompanyRecord出错");
             return false;
         }
+        $oldRecords = CompanyRecord::find()->where(["uid" => $uid, "status" => self::STATUS_VERIFY])->all();
+        /* @var $oldRecords CompanyRecord[] */
         foreach ($oldRecords as $r) {
             $r->status = self::STATUS_IGNORE;
             $r->updated_at = time();
             $r->save();
         }
         //attach
-        $attaches = ArrayHelper::getValue($data, "attaches", []);
         foreach ($attaches as $path) {
             $attach = new Attach;
             $attach->type = Attach::COMPANY_RECORD;
@@ -92,6 +134,12 @@ class Company extends \common\models\base\Company
                 Yii::warning($attach->errors, "保存CompanyAttaches出错");
                 return false;
             }
+        }
+
+        if ($isAdd) {
+            $user->type = $type;
+            $user->phone = $phone;
+            $user->save();
         }
         return true;
     }

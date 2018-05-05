@@ -7,21 +7,23 @@ use Yii;
 /**
  * This is the model class for table "company_record".
  *
- * @property string $id
+ * @property int $id
  * @property string $formId
- * @property string $uid
+ * @property int $type
+ * @property int $cid
+ * @property int $aid
+ * @property int $uid
  * @property string $name
  * @property string $icon
  * @property string $cover
  * @property string $position
  * @property string $latitude
  * @property string $longitude
- * @property string $accuracy
  * @property string $description
  * @property string $reason
  * @property int $status
- * @property string $created_at
- * @property string $updated_at
+ * @property int $created_at
+ * @property int $updated_at
  */
 class CompanyRecord extends \yii\db\ActiveRecord
 {
@@ -39,10 +41,9 @@ class CompanyRecord extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['uid', 'created_at', 'updated_at'], 'integer'],
+            [['cid', 'aid', 'uid', 'created_at', 'updated_at', 'type', 'status'], 'integer'],
             [['description'], 'string'],
-            [['formId', 'name', 'icon', 'cover', 'position', 'latitude', 'longitude', 'accuracy', 'reason'], 'string', 'max' => 255],
-            [['status'], 'string', 'max' => 1],
+            [['formId', 'name', 'icon', 'cover', 'position', 'latitude', 'longitude', 'reason'], 'string', 'max' => 255],
         ];
     }
 
@@ -54,6 +55,9 @@ class CompanyRecord extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'formId' => 'Form ID',
+            'type' => 'Type',
+            'cid' => 'Cid',
+            'aid' => 'Aid',
             'uid' => 'Uid',
             'name' => 'Name',
             'icon' => 'Icon',
@@ -61,7 +65,6 @@ class CompanyRecord extends \yii\db\ActiveRecord
             'position' => 'Position',
             'latitude' => 'Latitude',
             'longitude' => 'Longitude',
-            'accuracy' => 'Accuracy',
             'description' => 'Description',
             'reason' => 'Reason',
             'status' => 'Status',

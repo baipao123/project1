@@ -7,19 +7,20 @@ use Yii;
 /**
  * This is the model class for table "company".
  *
- * @property string $uid
+ * @property int $uid
  * @property int $type
+ * @property int $cid
+ * @property int $aid
  * @property string $name
  * @property string $icon
  * @property string $cover
  * @property string $position
  * @property string $latitude
  * @property string $longitude
- * @property string $accuracy
  * @property string $description
  * @property int $status
- * @property string $created_at
- * @property string $updated_at
+ * @property int $created_at
+ * @property int $updated_at
  */
 class Company extends \yii\db\ActiveRecord
 {
@@ -38,10 +39,9 @@ class Company extends \yii\db\ActiveRecord
     {
         return [
             [['uid'], 'required'],
-            [['uid', 'created_at', 'updated_at'], 'integer'],
+            [['uid', 'cid', 'aid', 'created_at', 'updated_at', 'type', 'status'], 'integer'],
             [['description'], 'string'],
-            [['type', 'status'], 'string', 'max' => 1],
-            [['name', 'icon', 'cover', 'position', 'latitude', 'longitude', 'accuracy'], 'string', 'max' => 255],
+            [['name', 'icon', 'cover', 'position', 'latitude', 'longitude'], 'string', 'max' => 255],
             [['uid'], 'unique'],
         ];
     }
@@ -54,13 +54,14 @@ class Company extends \yii\db\ActiveRecord
         return [
             'uid' => 'Uid',
             'type' => 'Type',
+            'cid' => 'Cid',
+            'aid' => 'Aid',
             'name' => 'Name',
             'icon' => 'Icon',
             'cover' => 'Cover',
             'position' => 'Position',
             'latitude' => 'Latitude',
             'longitude' => 'Longitude',
-            'accuracy' => 'Accuracy',
             'description' => 'Description',
             'status' => 'Status',
             'created_at' => 'Created At',
