@@ -11,7 +11,14 @@ App({
     },
     globalData: {
         user:{},
-        qiNiuDomain:"http://img.wx-dk.cn/"
+        qiNiuDomain:"http://img.wx-dk.cn/",
+        company:{},
+        region: {
+            cid: 0,
+            aid: 0,
+            cityStr: "",
+            isSelect: false
+        }
     },
     login: function(){
         let _this = this;
@@ -32,11 +39,19 @@ App({
             }
         })
     },
-    setUserInfo: function(res) {
+    setUserInfo: function (res) {
         let _this = this;
         request.post("base/app-user", res, function (data) {
             _this.globalData.user = data.user;
             console.log(data.user);
         })
+    },
+    resetRegion: function () {
+        this.globalData.region = {
+            cid: 0,
+            aid: 0,
+            cityStr: "",
+            isSelect: false
+        }
     }
 })

@@ -5,7 +5,11 @@ const qiNiu = require("./../../utils/qiniuUploader")
 Page({
     data: {
         user: {},
-        company: {},
+        company: {
+            aid:0,
+            cid:0,
+            cityStr:"请选择",
+        },
         type: 0,
         domain: app.globalData.qiNiuDomain,
         isAgree: false,
@@ -17,6 +21,18 @@ Page({
         this.setData({
             user: app.globalData.user
         });
+    },
+    onShow:function () {
+        let region = app.globalData.region
+        console.log(region)
+        if(region.isSelect){
+            this.setData({
+                "company.cid":region.cid,
+                "company.aid":region.aid,
+                "company.cityStr":region.cityStr
+            })
+            app.resetRegion()
+        }
     },
     uploadIcon: function () {
         let that = this;
@@ -130,5 +146,15 @@ Page({
             images: images,
             imageKeys: imageKeys
         })
-    }
+        if (images.length == 0)
+            that.setData({
+                deleteImage: false
+            })
+    },
+    goSelectDistrict:function (e) {
+        let that=this
+        wx.navigateTo({
+            url:"/pages/districtSelect/districtSelect?aid"+that.data.company.aid+"&cid="+that.data.company.cid
+        })
+    },
 })

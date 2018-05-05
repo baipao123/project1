@@ -3,7 +3,8 @@
     "pages/index/index",
     "pages/user/user",
     "pages/chose/user",
-    "pages/chose/company"
+    "pages/chose/company",
+    "pages/districtSelect/districtSelect"
   ],
   "window": {
     "backgroundTextStyle": "light",

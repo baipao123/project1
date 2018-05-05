@@ -25,7 +25,7 @@
                         <view class="weui-label">类型</view>
                     </view>
                     <view class="weui-cell__bd">
-                        <radio-group class="radio-group" bindchange="typeChange">
+                        <radio-group class="radio-group" name="type" bindchange="typeChange">
                             <label class="radio type">
                                 <radio value="2" checked="{{company.type!=3}}"/>企业
                             </label>
@@ -35,6 +35,16 @@
                         </radio-group>
                     </view>
                 </view>
+                <view class="weui-cell weui-cell_access" bindtap="goSelectDistrict">
+                    <view class="weui-cell__hd">
+                        <view class="weui-label">所属城市</view>
+                    </view>
+                    <view class="weui-cell__ft weui-cell__ft_in-access" style="width:100%;">{{ company.cityStr}}
+                        <input type="number" name="cid" value="{{company.cid}}" hidden="true"/>
+                        <input type="number" name="aid" value="{{company.aid}}" hidden="true"/>
+                    </view>
+                </view>
+
                 <view class="weui-cell weui-cell_input">
                     <view class="weui-cell__hd">
                         <view class="weui-label" wx:if="{{company.type!=3}}">公司名称</view>
@@ -66,7 +76,7 @@
                 </view>
 
 
-                <view class="weui-cell weui-cell_input">
+                <view class="weui-cell weui-cell_input" style="z-index:-1">
                     <map longitude="{{company.position.longitude}}" latitude="{{company.position.latitude}}"
                          show-location="{{true}}"
                          bindtap="chosePosition">
@@ -96,20 +106,24 @@
                             <view class="weui-uploader">
                                 <view class="weui-uploader__bd">
                                     <view class="weui-uploader__files">
-                                        <block wx:for="{{images}}" wx:key="{{k}}">
-                                            <view class="weui-uploader__file" bindtap="previewImage" bindlongpress="openDeleteImage" data-id="{{index}}">
+                                        <block wx:for="{{images}}" wx:key="key">
+                                            <view class="weui-uploader__file weui-uploader__file_status" wx:if="{{deleteImage}}" bindtap="deleteImage" data-id="{{index}}" hover-stop-propagation="true">
+                                                <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
+                                                <span class="myIcon icon-delete deleteImage"></span>
+                                            </view>
+                                            <view class="weui-uploader__file" bindtap="previewImage" data-id="{{index}}" wx:else>
                                                 <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
                                             </view>
-                                            <view class="weui-uploader__file-content" wx:if="{{deleteImage}}" bindtap="deleteImage" data-id="{{index}}">
-                                                <span class="myIcon icon-delete"></span>
-                                            </view>
                                         </block>
-                                        <block wx:for="{{imageKeys}}" wx:key="{{k}}">
-                                            <input type="text" name="attaches[]" value="{{item}}" hidden="{{true}}"/>
+                                        <block wx:for="{{imageKeys}}" wx:key="key">
+                                            <input type="text" name="attaches[]" value="{{item}}" hidden="true"/>
                                         </block>
                                     </view>
                                     <view class="weui-uploader__input-box" wx:if="{{images.length<3}}">
                                         <view class="weui-uploader__input" bindtap="uploadImages"> </view>
+                                    </view>
+                                    <view class="weui-uploader__input-box delete" wx:if="{{images.length>0 && !deleteImage}}">
+                                        <view class="weui-uploader__input" bindtap="openDeleteImage"> </view>
                                     </view>
                                 </view>
                             </view>

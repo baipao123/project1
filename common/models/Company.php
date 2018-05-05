@@ -67,7 +67,6 @@ class Company extends \common\models\base\Company
         $record->position = $position;
         $company->latitude = ArrayHelper::getValue($data, "latitude", "");
         $company->longitude = ArrayHelper::getValue($data, "longitude", "");
-        $company->accuracy = ArrayHelper::getValue($data, "accuracy", "");
         $record->description = $description;
         $record->status = self::STATUS_VERIFY;
         $record->created_at = time();

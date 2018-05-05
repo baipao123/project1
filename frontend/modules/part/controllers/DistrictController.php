@@ -23,8 +23,41 @@ class DistrictController extends BaseController
         return Tool::reJson(["cities" => District::areas($cid)]);
     }
 
-    public function actionAll($pid=1){
-    	  return Tool::reJson(["cities" => District::all($pid)]);
+    public function actionAll($pid = 1, $cid = 0, $aid = 0) {
+        $cities = District::all($pid);
+        $value = [0, 0];
+        if (!empty($cid) || !empty($aid)) {
+            foreach ($cities as $index => $city) {
+                if (!empty($cid)) {
+                    if ($city['cid'] == $cid) {
+                        $value[0] = $index;
+                        foreach ($city['areas'] as $i => $area) {
+                            if ($area['aid'] == $aid) {
+                                $value[1] = $i;
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                } else {
+                    foreach ($city['areas'] as $i => $area) {
+                        if ($area['aid'] == $aid) {
+                            $value = [$index, $i];
+                            $cid = $city['cid'];
+                            break;
+                        }
+                    }
+                    if ($value != [0, 0])
+                        break;
+                }
+            }
+        }
+        return Tool::reJson([
+            "cities" => District::all($pid),
+            "value" => $value,
+            "cid" => $cid,
+            "aid" => $aid,
+        ]);
     }
 
 }

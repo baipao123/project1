@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'iconfont';  /* project id 636011 */
-    src: url('//at.alicdn.com/t/font_636011_7sa8wgyrlz44e7b9.eot');
-    src: url('//at.alicdn.com/t/font_636011_7sa8wgyrlz44e7b9.eot?#iefix') format('embedded-opentype'),
-    url('//at.alicdn.com/t/font_636011_7sa8wgyrlz44e7b9.woff') format('woff'),
-    url('//at.alicdn.com/t/font_636011_7sa8wgyrlz44e7b9.ttf') format('truetype'),
-    url('//at.alicdn.com/t/font_636011_7sa8wgyrlz44e7b9.svg#iconfont') format('svg');
+    src: url('//at.alicdn.com/t/font_636011_ky24wb6n5r6q1tt9.eot');
+    src: url('//at.alicdn.com/t/font_636011_ky24wb6n5r6q1tt9.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_636011_ky24wb6n5r6q1tt9.woff') format('woff'),
+    url('//at.alicdn.com/t/font_636011_ky24wb6n5r6q1tt9.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_636011_ky24wb6n5r6q1tt9.svg#iconfont') format('svg');
 }
 
 .myIcon {
@@ -14,7 +14,6 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-
 .icon-left:before { content: "\e697"; }
 
 .icon-edit:before { content: "\e69e"; }
@@ -47,6 +46,8 @@
 
 .icon-clock:before { content: "\e6bb"; }
 
+.icon-iconfont5:before { content: "\e63a"; }
+
 .icon-phone:before { content: "\e725"; }
 
 .icon-city:before { content: "\e611"; }
@@ -61,8 +62,24 @@
 
 .icon-position:before { content: "\e624"; }
 
+.icon-delete:before { content: "\e645"; }
+
+.icon-link:before { content: "\e647"; }
+
+.icon-alarm-clock:before { content: "\e648"; }
+
+.icon-scan:before { content: "\e649"; }
+
+.icon-camera:before { content: "\e663"; }
+
+.icon-true:before { content: "\e664"; }
+
 .icon-save:before { content: "\e747"; }
 
 .icon-taps:before { content: "\e627"; }
 
 .icon-survey:before { content: "\e74e"; }
+
+.icon-add:before { content: "\e6b9"; }
+
+.icon-reduce:before { content: "\e6ba"; }

@@ -28,7 +28,7 @@ class District extends \common\models\base\District
     }
 
     public static function all($pid = 1,$isAll = true) {
-        $records = self::find()->where(['status' => self::ON])->orderBy("cid ASC")->all();
+        $records = self::find()->where(['status' => self::ON,"pid"=>$pid])->orderBy("cid ASC")->all();
         /* @var $records self[] */
         $data = [];
         foreach ($records as $district) {
@@ -38,7 +38,7 @@ class District extends \common\models\base\District
                 if($isAll)
                     $data[$district->id]['areas'][] = [
                         "aid" => 0,
-                        "area" => "--全部--"
+                        "area" => "全部"
                     ];
             } else {
                 $data[ $district->cid ]['areas'][] = [
