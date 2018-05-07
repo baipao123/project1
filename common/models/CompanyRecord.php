@@ -18,11 +18,11 @@ class CompanyRecord extends \common\models\base\CompanyRecord
 {
 
     public function getAttaches() {
-        return $this->hasMany(Attach::tableName(), ["id" => "tid"])->andWhere(["type" => Attach::COMPANY_RECORD, "status" => Attach::STATUS_ON]);
+        return $this->hasMany(Attach::className(), ["id" => "tid"])->andWhere(["type" => Attach::COMPANY_RECORD, "status" => Attach::STATUS_ON]);
     }
 
     public function getCompany() {
-        return $this->hasOne(Company::tableName(), ["uid" => "uid"]);
+        return $this->hasOne(Company::className(), ["uid" => "uid"]);
     }
 
     public function pass() {

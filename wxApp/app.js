@@ -3,16 +3,12 @@ const request = require("./utils/request.js");
 
 App({
     onLaunch: function () {
-        // 展示本地存储能力
-        // var logs = wx.getStorageSync('logs') || []
-        // logs.unshift(Date.now())
-        // wx.setStorageSync('logs', logs)
         this.login()
     },
     globalData: {
-        user:{},
-        qiNiuDomain:"http://img.wx-dk.cn/",
-        company:{},
+        user: {},
+        qiNiuDomain: "http://img.wx-dk.cn/",
+        company: {},
         region: {
             cid: 0,
             aid: 0,
@@ -20,7 +16,7 @@ App({
             isSelect: false
         }
     },
-    login: function(){
+    login: function () {
         let _this = this;
         wx.login({
             success: res => {
@@ -39,11 +35,13 @@ App({
             }
         })
     },
-    setUserInfo: function (res) {
+    setUserInfo: function (res, callBack) {
         let _this = this;
         request.post("base/app-user", res, function (data) {
             _this.globalData.user = data.user;
-            console.log(data.user);
+            if (typeof callBack == "function") {
+                callBack();
+            }
         })
     },
     resetRegion: function () {
@@ -52,6 +50,30 @@ App({
             aid: 0,
             cityStr: "",
             isSelect: false
+        }
+    },
+    isEmptyObj: function (obj) {
+        // 其他空值
+        if (!obj && obj !== 0 && obj !== '')
+            return true;
+        // 空Array
+        if (Array.prototype.isPrototypeOf(obj) && obj.length === 0)
+            return true;
+        // 空Obj
+        return Object.prototype.isPrototypeOf(obj) && Object.keys(obj).length === 0;
+    },
+    getCompanyInfo: function (callBack) {
+        let that = this
+        if (that.isEmptyObj(that.globalData.company)) {
+            request.get("/part/company/info", {}, function (data) {
+                data.company.positionStr = ""
+                that.globalData.company = data.company
+                if (typeof callBack == "function") {
+                    callBack();
+                }
+            })
+        } else if (typeof callBack == "function") {
+            callBack();
         }
     }
 })

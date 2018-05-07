@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/job/add",
     "pages/index/index",
     "pages/user/user",
     "pages/chose/user",

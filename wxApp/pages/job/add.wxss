@@ -1,0 +1,24 @@
+.body{
+    height:90%;
+}
+.radio-group{
+    display:-webkit-box;
+    display:-webkit-flex;
+    display:flex;
+}
+.radio{
+    -webkit-box-flex:1;
+    -webkit-flex:1;
+    flex:1;
+    text-align:center;
+}
+map{
+    width: 100%;
+}
+.block{
+    height: 50rpx;
+}
+.bottom-button{
+    margin-top: 1em;
+    background-color: white;
+}

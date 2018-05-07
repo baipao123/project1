@@ -1,10 +1,39 @@
-page{
-    background: #f8f8f8;
-    height:100%;
+.page{
+    padding:0;
 }
 .myIcon{
     margin-right:20rpx;
     color: #09bb07;
+}
+
+.page__bd > .tips.waiting{
+    text-align: center;
+    font-size: 30rpx;
+    background-color: #fcf8e3;
+    padding: 10rpx;
+    color: #8a6d3b;
+    border-top: 1rpx solid #faebcc;
+}
+
+
+.page__bd .tips.warn{
+    text-align: center;
+    font-size: 30rpx;
+    background-color: #f2dede;
+    padding: 10rpx;
+    color: #a94442;
+    border-top: 1rpx solid #ebccd1;
+}
+.page__bd .tips.warn .icon-right{
+    color: #a94442;
+    position: absolute;
+    top:0;
+    right:20rpx;
+    line-height:70rpx;
+}
+
+.page__bd > .tips > icon {
+    margin-right:10rpx;
 }
 
 .weui-flex__item.right{
@@ -40,6 +69,7 @@ page{
 }
 .right .user view{
     display: inline-block;
+    margin-top:10rpx;
 }
 .right .user .icon_sp_area{
     float:right;
@@ -48,10 +78,13 @@ page{
 
 .right .phone {
     flex: 1;
-    padding-top:6rpx;
 }
 .right .phone view{
     height:115rpx;
+}
+.right .phone .icon_sp_area .myIcon{
+    color: #fff;
+    padding: 0 20rpx;
 }
 
 .weui-cells{

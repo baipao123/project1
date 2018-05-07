@@ -52,11 +52,9 @@ class Job extends \yii\db\ActiveRecord
     public function rules() {
         return [
             [['id'], 'required'],
-            [['id', 'uid', 'city_id', 'area_id', 'prize', 'num', 'start_at', 'end_at', 'work_start', 'work_end', 'age_start', 'age_end', 'created_at'], 'integer'],
+            [['id', 'uid', 'city_id', 'area_id', 'prize', 'num', 'start_at', 'end_at', 'work_start', 'work_end', 'created_at','gender','prize_type', 'status'], 'integer'],
             [['description', 'require_desc', 'extra_desc', 'tips'], 'string'],
             [['name', 'quiz_position', 'quiz_longitude', 'quiz_latitude', 'work_position', 'work_longitude', 'work_latitude', 'phone', 'contact_name'], 'string', 'max' => 255],
-            [['prize_type', 'status'], 'string', 'max' => 1],
-            [['gender'], 'string', 'max' => 10],
             [['id'], 'unique'],
         ];
     }
@@ -79,8 +77,6 @@ class Job extends \yii\db\ActiveRecord
             'end_at'         => 'End At',
             'work_start'     => 'Work Start',
             'work_end'       => 'Work End',
-            'age_start'      => 'Age Start',
-            'age_end'        => 'Age End',
             'quiz_position'  => 'Quiz Position',
             'quiz_longitude' => 'Quiz Longitude',
             'quiz_latitude'  => 'Quiz Latitude',

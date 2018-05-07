@@ -15,6 +15,9 @@ use yii\helpers\ArrayHelper;
 
 /**
  * @property CompanyRecord $record
+ * @property CompanyRecord $refuseRecord
+ * @property District $city
+ * @property District $area
  * */
 class Company extends \common\models\base\Company
 {
@@ -27,7 +30,20 @@ class Company extends \common\models\base\Company
     const TYPE_USER_BOSS = 3;
 
     public function getRecord() {
-        return $this->hasOne(CompanyRecord::tableName(), ["uid" => "uid"])->andWhere(["status" => self::STATUS_VERIFY])->orderBy("created_at desc");
+        return $this->hasOne(CompanyRecord::className(), ["uid" => "uid"])->andWhere(["status" => self::STATUS_VERIFY])->orderBy("created_at desc");
+    }
+
+    public function getRefuseRecord() {
+        return $this->hasOne(CompanyRecord::className(), ["uid" => "uid"])->andWhere(["status" => self::STATUS_FORBID])->orderBy("created_at desc");
+    }
+
+
+    public function getCity() {
+        return $this->hasOne(District::className(), ["id" => "cid"]);
+    }
+
+    public function getArea() {
+        return $this->hasOne(District::className(), ["id" => "aid"]);
     }
 
     public static function Bind($uid, $data, $isAdd = false) {
@@ -148,18 +164,49 @@ class Company extends \common\models\base\Company
         return [];
     }
 
+    public function icon() {
+        return $this->icon;
+    }
+
+    public function cover() {
+        return $this->cover;
+    }
+
+    public function cityStr() {
+        $str = "";
+        if ($this->city)
+            $str = $this->city->name;
+        if ($this->area)
+            $str .= " " . $this->area->name;
+        return trim($str);
+    }
+
+    public function refuseReason() {
+        if ($this->status != self::STATUS_FORBID)
+            return "";
+        return $this->refuserecord ? $this->refuserecord->reason : "";
+    }
+
     public function info() {
+        $refuseRecord = $this->status == self::STATUS_FORBID ? $this->refuseRecord : null;
         return [
-            "name"     => $this->name,
-            "type"     => $this->type,
-            "icon"     => Img::format($this->icon),
-            "cover"    => Img::format($this->cover),
-            "status"   => $this->status,
-            "position" => [
+            "name"         => $this->name,
+            "type"         => $this->type,
+            "cid"          => $this->cid,
+            "aid"          => $this->aid,
+            "cityStr"      => $this->cityStr(),
+            "icon"         => Img::format($this->icon()),
+            "cover"        => Img::format($this->cover()),
+            "status"       => $this->status,
+            "description"  => $this->description,
+            "position"     => [
                 "longitude" => $this->longitude,
                 "latitude"  => $this->latitude,
                 "address"   => $this->position
-            ]
+            ],
+            "refuseReason" => $refuseRecord ? $refuseRecord->reason : "",
+            "refuseRid"    => $refuseRecord ? $refuseRecord->id : 0,
         ];
     }
+
 }

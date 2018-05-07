@@ -1,0 +1,246 @@
+<view class="page full">
+    <form bindsubmit="submit">
+        <scroll-view class="body" scroll-y="true" lower-threshold="50" enable-back-to-top="true" style="height:{{(windowHeight - 70)}}px">
+            <view class="weui-cells__title">基本信息</view>
+            <view class="weui-cells weui-cells_after-title">
+                <view class="weui-cell weui-cell_access">
+                    <view class="weui-cell__hd">
+                        <view class="weui-label">工作城市</view>
+                    </view>
+                    <view class="weui-cell__ft weui-cell__ft_in-access" style="width:100%;" bindtap="goSelectDistrict"
+                          data-cid="{{job.city_id || company.cid}}"
+                          data-aid="{{job.area_id != undefined ? job.area_id : company.aid}}">
+                        {{ job.cityStr || company.cityStr}}
+                        <input type="number" name="city_id" value="{{job.city_id || company.cid}}" hidden="true"/>
+                        <input type="number" name="area_id" value="{{job.area_id != undefined ? job.area_id : company.aid}}"
+                               hidden="true"/>
+                    </view>
+                </view>
+                <view class="weui-cell weui-cell_input">
+                    <view class="weui-cell__hd">
+                        <view class="weui-label">岗位名称</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                        <input class="weui-input" placeholder="请输入岗位名称" name="name" value="{{job.num}}"/>
+                    </view>
+                </view>
+                <view class="weui-cell">
+                    <view class="weui-cell__hd">
+                        <view class="weui-label">员工性别</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                        <radio-group class="radio-group" name="gender" bindchange="typeChange">
+                            <label class="radio gender">
+                                <radio value="1" checked="{{job.gender==1}}"/>男
+                            </label>
+                            <label class="radio gender">
+                                <radio value="2" checked="{{job.gender==2}}"/>女
+                            </label>
+                            <label class="radio gender">
+                                <radio value="3" checked="{{job.gender==3}}"/>不限
+                            </label>
+                        </radio-group>
+                    </view>
+                </view>
+                <view class="weui-cell weui-cell_input">
+                    <view class="weui-cell__hd">
+                        <view class="weui-label">需求人数</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                        <input type="number" class="weui-input" placeholder="" name="num" value="{{job.num}}"/>
+                    </view>
+                </view>
+                <view class="weui-cell">
+                    <view class="weui-cell__hd">
+                        <view class="weui-label">结算单位</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                        <radio-group class="radio-group" name="prize_type" bindchange="typeChange">
+                            <label class="radio">
+                                <radio value="1" checked="{{job.prize_type!=2}}"/>小时
+                            </label>
+                            <label class="radio">
+                                <radio value="2" checked="{{job.prize_type==2}}"/>天
+                            </label>
+                        </radio-group>
+                    </view>
+                </view>
+                <view class="weui-cell weui-cell_input">
+                    <view class="weui-cell__hd">
+                        <view class="weui-label">工资单价</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                        <input type="digit" class="weui-input" placeholder="" name="prize" value="{{job.prize}}"/>
+                    </view>
+                </view>
+            </view>
+            <view class="weui-cells__title">工作时间</view>
+            <view class="weui-cells weui-cells_after-title">
+                <view class="weui-cell weui-cell_input">
+                    <view class="weui-cell__hd">
+                        <view class="weui-label">开始日期</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                        <picker name="start_date" mode="date" start="{{day.start}}" end="{{day.end}}"
+                                value="{{job.start_date || day.start}}" bindchange="changeStartDate">
+                            <view class="weui-input">{{job.start_date || day.start}}</view>
+                        </picker>
+                    </view>
+                </view>
+                <view class="weui-cell weui-cell_input">
+                    <view class="weui-cell__hd">
+                        <view class="weui-label">结束日期</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                        <picker name="end_date" mode="date" start="{{day.start}}" end="{{day.end}}"
+                                value="{{job.end_date || day.start}}" bindchange="changeEndDate">
+                            <view class="weui-input">{{job.end_date || day.start}}</view>
+                        </picker>
+                    </view>
+                </view>
+                <view class="weui-cell weui-cell_input">
+                    <view class="weui-cell__hd">
+                        <view class="weui-label">工作开始时间</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                        <picker name="start_time" mode="time" start="00:00" end="24:00"
+                                value="{{job.start_time || '09:00'}}" bindchange="changeStartTime">
+                            <view class="weui-input">{{job.start_time || "09:00"}}</view>
+                        </picker>
+                    </view>
+                </view>
+                <view class="weui-cell weui-cell_input">
+                    <view class="weui-cell__hd">
+                        <view class="weui-label">工作结束时间</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                        <picker name="end_time" mode="time" start="00:00" end="24:00"
+                                value="{{job.end_time || '17:00'}}" bindchange="changeEndTime">
+                            <view class="weui-input">{{job.end_time || "17:00"}}</view>
+                        </picker>
+                    </view>
+                </view>
+            </view>
+            <view class="weui-cells__title">面试地址</view>
+            <view class="weui-cells weui-cells_after-title">
+                <view class="weui-cells weui-cells_after-title">
+                    <view class="weui-cell">
+                        <view class="weui-cell__bd">
+                            <textarea class="weui-textarea" name="quiz_position"
+                                      value="{{job.quiz.position || company.position.address}}"
+                                      bindblur="quizPositionSave" style="height: 3.3em" placeholder="请输入地址"/>
+                        </view>
+                        <input type="text" hidden="true" name="quiz_latitude"
+                               value="{{job.quiz.latitude || company.position.latitude}}"/>
+                        <input type="text" hidden="true" name="quiz_longitude"
+                               value="{{job.quiz.longitude || company.position.longitude}}"/>
+                    </view>
+                </view>
+                <view class="weui-cell weui-cell_input">
+                    <map longitude="{{job.quiz.longitude || company.position.longitude}}"
+                         latitude="{{job.quiz.latitude || company.position.latitude}}" show-location="true"
+                         bindtap="choseQuizPosition">
+                    </map>
+                </view>
+            </view>
+            <view class="weui-cells__title">工作地址</view>
+            <view class="weui-cells weui-cells_after-title">
+                <view class="weui-cell weui-cell_switch">
+                    <view class="weui-cell__bd">使用面试地址</view>
+                    <view class="weui-cell__ft">
+                        <switch checked="{{job.work.useQuiz}}" bindchange="useQuiz" name="work_position_type"/>
+                    </view>
+                </view>
+                <block wx:if="{{!job.work.useQuiz}}">
+                    <view class="weui-cells weui-cells_after-title">
+                        <view class="weui-cell">
+                            <view class="weui-cell__bd">
+                                <textarea class="weui-textarea" name="work_position"
+                                          value="{{job.work.position || company.position.address}}"
+                                          bindblur="workPositionSave" style="height: 3.3em" placeholder="请输入地址"/>
+                            </view>
+                            <input type="text" hidden="true" name="work_latitude"
+                                   value="{{job.work.latitude || company.position.latitude}}"/>
+                            <input type="text" hidden="true" name="work_longitude"
+                                   value="{{job.work.longitude || company.position.longitude}}"/>
+                        </view>
+                    </view>
+                    <view class="weui-cell weui-cell_input">
+                        <map longitude="{{job.work.longitude || company.position.longitude}}"
+                             latitude="{{job.work.latitude || company.position.latitude}}" show-location="true"
+                             bindtap="choseWorkPosition">
+                        </map>
+                    </view>
+                </block>
+            </view>
+            <view class="weui-cells__title">岗位指责</view>
+            <view class="weui-cells weui-cells_after-title">
+                <view class="weui-cell">
+                    <view class="weui-cell__bd">
+                        <textarea class="weui-textarea" name="description" value="{{job.description}}"
+                                  style="height: 3.3em"/>
+                    </view>
+                </view>
+            </view>
+            <view class="weui-cells__title">岗位要求</view>
+            <view class="weui-cells weui-cells_after-title">
+                <view class="weui-cell">
+                    <view class="weui-cell__bd">
+                        <textarea class="weui-textarea" name="require_desc" value="{{job.require_desc}}"
+                                  style="height: 3.3em"/>
+                    </view>
+                </view>
+            </view>
+            <view class="weui-cells__title">额外奖励</view>
+            <view class="weui-cells weui-cells_after-title">
+                <view class="weui-cell">
+                    <view class="weui-cell__bd">
+                        <textarea class="weui-textarea" name="extra_desc" value="{{job.extra_desc}}"
+                                  style="height: 3.3em"/>
+                    </view>
+                </view>
+            </view>
+
+            <view class="weui-cells__title">联系方式</view>
+            <view class="weui-cells weui-cells_after-title">
+                <view class="weui-cell weui-cell_switch">
+                    <view class="weui-cell__bd">使用企业联系方式</view>
+                    <view class="weui-cell__ft">
+                        <switch checked="{{job.useCompanyContact}}" bindchange="useContact" name="contact_type"/>
+                    </view>
+                </view>
+                <block wx:if="{{!job.useCompanyContact}}">
+                    <view class="weui-cell weui-cell_input">
+                        <view class="weui-cell__hd">
+                            <view class="weui-label">联系人</view>
+                        </view>
+                        <view class="weui-cell__bd">
+                            <input class="weui-input" placeholder="请输入联系人" name="contact_name"
+                                   value="{{job.contact_name || user.realname}}"/>
+                        </view>
+                    </view>
+                    <view class="weui-cell weui-cell_input">
+                        <view class="weui-cell__hd">
+                            <view class="weui-label">联系方式</view>
+                        </view>
+                        <view class="weui-cell__bd">
+                            <input class="weui-input" name="phone" value="{{job.phone || user.phone}}"/>
+                        </view>
+                    </view>
+                    <view class="weui-cell weui-cell_input">
+                        <view class="weui-cell__hd">
+                            <view class="weui-label">提示</view>
+                        </view>
+                        <view class="weui-cell__bd">
+                            <input class="weui-input" placeholder="其他说明" name="tips" value="{{job.tips}}"/>
+                        </view>
+                    </view>
+                </block>
+            </view>
+            <view class="block"> </view>
+        </scroll-view>
+        <view class="weui-btn-area bottom-button">
+            <button class="weui-btn" type="primary" form-type="submit">确定</button>
+        </view>
+    </form>
+</view>

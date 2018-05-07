@@ -1,27 +1,51 @@
 <view class="page">
     <view class="page__bd page__bd_spacing">
+        <block wx:if="{{!isUser}}">
+            <view class="tips waiting icon_sp_area" wx:if="{{company.status == 0}}">
+                <icon type="waiting" size="20" color="orange"></icon>审核中
+            </view>
+            <navigator url="/pages/chose/record" wx:elif="{{company.status == 2}}">
+                <view class="tips warn icon_sp_area" >
+                    <icon type="warn" size="20" color="red"></icon>被拒绝：{{company.refuseReason}}
+                    <span class="myIcon icon-right"></span>
+                </view>
+            </navigator>
+        </block>
+
         <view class="weui-flex top">
             <view class="weui-flex__item">
                 <view class="placeholder header">
-                    <image src="{{user.avatar}}"> </image>
+                    <block wx:if="{{isUser}}">
+                        <image src="{{user.avatar}}"> </image>
+                    </block>
+                    <block wx:else>
+                        <image src="{{app.globalData.qiNiuDomain + company.icon}}"> </image>
+                    </block>
                 </view>
             </view>
             <view class="weui-flex__item right">
                 <view class="placeholder contain">
+
                     <view class="user">
-                        <view class="username">用户名</view>
-                        <navigator class="icon_sp_area" url="">
-                            去兼职
-                            <span class="myIcon icon-right" style="color:#fff;margin:0"></span>
-                        </navigator>
+                        <block wx:if="{{isUser}}">
+                            <view class="username">{{user.username}}</view>
+                            <navigator class="icon_sp_area" url="">
+                                去兼职
+                                <span class="myIcon icon-right" style="color:#fff;margin:0"></span>
+                            </navigator>
+                        </block>
+                        <block wx:else>
+                            <view class="username">{{company.name}}</view>
+                            <navigator class="icon_sp_area" url="">
+                                发布招聘信息
+                                <span class="myIcon icon-right" style="color:#fff;margin:0"></span>
+                            </navigator>
+                        </block>
                     </view>
-                    <view class="phone" wx:if="{{true}}">
-                        <navigator class="icon_sp_area" url="/pages/phone/phone">
-                            <view>完善手机号</view>
+                    <view class="phone">
+                        <navigator class="icon_sp_area" url="/pages/user/phone">
+                            <view>{{user.phone}}<span class="myIcon icon-edit"></span></view>
                         </navigator>
-                    </view>
-                    <view class="phone" wx:else>
-                        <text class="telephone">136XXXXXXXX</text>
                     </view>
                 </view>
             </view>
@@ -36,16 +60,35 @@
                 </view>
                 <view class="weui-cell__ft weui-cell__ft_in-access">请选择</view>
             </navigator>
-            <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                <view class="weui-cell__bd"><span class="myIcon icon-job"></span>我的兼职
-                </view>
-                <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-            </navigator>
-            <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                <view class="weui-cell__bd"><span class="myIcon icon-clock"></span>打卡记录
-                </view>
-                <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-            </navigator>
+            <block wx:if="{{isUser}}">
+                <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                    <view class="weui-cell__bd"><span class="myIcon icon-job"></span>我的兼职
+                    </view>
+                    <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                </navigator>
+                <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                    <view class="weui-cell__bd"><span class="myIcon icon-clock"></span>打卡记录
+                    </view>
+                    <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                </navigator>
+            </block>
+            <block wx:else>
+                <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                    <view class="weui-cell__bd"><span class="myIcon icon-job"></span>我的招聘
+                    </view>
+                    <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                </navigator>
+                <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                    <view class="weui-cell__bd"><span class="myIcon icon-account"></span>员工列表
+                    </view>
+                    <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                </navigator>
+                <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                    <view class="weui-cell__bd"><span class="myIcon icon-scan"></span>扫码招聘
+                    </view>
+                    <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                </navigator>
+            </block>
         </view>
         <view class="weui-cells__title">关于</view>
         <view class="weui-cells weui-cells_after-title">

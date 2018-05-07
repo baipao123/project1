@@ -11,9 +11,11 @@ Page({
         });
     },
     getUserInfo: function (e) {
-        app.setUserInfo(e.detail);
-        this.setData({
-            user: app.globalData.user
-        })
+        let that = this
+        app.setUserInfo(e.detail,function () {
+            that.setData({
+                user: app.globalData.user
+            })
+        });
     }
 })

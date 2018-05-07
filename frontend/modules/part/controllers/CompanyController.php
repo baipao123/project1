@@ -26,7 +26,7 @@ class CompanyController extends \frontend\controllers\BaseController
 
     public function actionEdit() {
         $res = Company::Bind(Yii::$app->user->id, $_POST, false);
-        if ($res == true)
+        if ($res === true)
             return Tool::reJson(1);
         return Tool::reJson(null, $res === false ? "导入数据失败，请稍后重试" : $res, Tool::FAIL);
     }
@@ -39,7 +39,7 @@ class CompanyController extends \frontend\controllers\BaseController
         if (!$company || $company->status != Company::STATUS_PASS)
             return Tool::reJson(null, "您的企业资料未审核通过，暂时无法发布招聘信息", Tool::FAIL);
         $res = Job::saveJob($_POST, $this->getPost("tmp", 0) > 0);
-        if ($res == true)
+        if ($res === true)
             return Tool::reJson(1, "发布招聘信息成功");
         return Tool::reJson(null, $res === false ? "发布招聘信息失败，请稍后重试" : $res, Tool::FAIL);
     }
@@ -53,7 +53,7 @@ class CompanyController extends \frontend\controllers\BaseController
             return Tool::reJson(null, "您的企业资料未审核通过，暂时无法保存招聘信息", Tool::FAIL);
         $jid = $this->getPost("jid", 0);
         $res = Job::saveJob($_POST, $this->getPost("tmp", 0) > 0, $jid);
-        if ($res == true)
+        if ($res === true)
             return Tool::reJson(1, "修改招聘信息成功");
         return Tool::reJson(null, $res === false ? "修改招聘信息失败，请稍后重试" : $res, Tool::FAIL);
     }
@@ -109,15 +109,9 @@ class CompanyController extends \frontend\controllers\BaseController
     }
 
     public function actionInfo() {
-        $user = $this->getUser();
-        if (!$user || $user->type == User::TYPE_USER)
-            return Tool::reJson([]);
-        $company = $user->company;
-        if (!$company || $company->status != Company::STATUS_PASS)
-            return Tool::reJson([]);
+        $company = Company::findOne(["uid" => $this->user_id()]);
         return Tool::reJson([
-            "user"    => $user->info(),
-            "company" => $company->info(),
+            "company" => $company ? $company->info() : (object)[]
         ]);
     }
 

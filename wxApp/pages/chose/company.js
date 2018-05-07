@@ -19,8 +19,17 @@ Page({
         deleteImage: false,
     },
     onLoad: function () {
+        let that = this
+        if (app.globalData.company == {}) {
+            app.getCompanyInfo(function () {
+                that.setData({
+                    company: app.globalData.company
+                });
+            })
+        }
         this.setData({
-            user: app.globalData.user
+            user: app.globalData.user,
+            company: app.globalData.company
         });
     },
     onShow: function () {
@@ -58,7 +67,6 @@ Page({
         })
     },
     typeChange: function (e) {
-        console.log(e);
         this.setData({
             "company.type": e.detail.value
         })
@@ -89,10 +97,8 @@ Page({
         this.setData({type: 2});
     },
     getPhoneNumber: function (e) {
-        console.log(e.detail);
         let that = this;
         request.post("part/user/phone-decrypt", e.detail, function (response) {
-            console.log(response);
             that.setData({
                 type: 1,
                 "user.phone": response.purePhoneNumber,
@@ -132,7 +138,6 @@ Page({
         })
     },
     openDeleteImage: function (e) {
-        console.log(e);
         this.setData({
             deleteImage: true
         })

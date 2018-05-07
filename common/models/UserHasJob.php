@@ -20,11 +20,11 @@ class UserHasJob extends \common\models\base\UserHasJob
     const END = 10;
 
     public function getJob() {
-        return $this->hasOne(Job::tableName(), ["jid" => "id"]);
+        return $this->hasOne(Job::className(), ["jid" => "id"]);
     }
 
     public function getUser() {
-        return $this->hasOne(User::tableName(), ["uid" => "id"]);
+        return $this->hasOne(User::className(), ["uid" => "id"]);
     }
 
     public static function isOn($uid, $jid) {

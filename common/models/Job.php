@@ -17,7 +17,7 @@ use Yii;
 class Job extends \common\models\base\Job
 {
     public function getCompany() {
-        return $this->hasOne(Company::tableName(), ["uid" => "uid"]);
+        return $this->hasOne(Company::className(), ["uid" => "uid"]);
     }
 
     const TMP = 0;
@@ -38,18 +38,12 @@ class Job extends \common\models\base\Job
         return [];
     }
 
-    public function beforeSave($insert) {
-        if (!$insert)
-            $this->id = $this->getJobId();
-        return parent::beforeSave($insert);
-    }
-
     protected function getJobId() {
         if (!empty($this->id))
             return $this->id;
         $date = date("Ymd");
         $index = Yii::$app->redis->incr("JOB-ID-NUM-DATE:{$date}");
-        return $date . sprintf("%4d", $index);
+        return intval($date . sprintf("%4d", $index));
     }
 
     public static function saveJob($data, $saveTmp = false, $jid = 0) {
@@ -57,8 +51,10 @@ class Job extends \common\models\base\Job
             $job = self::findOne($jid);
             if (!$job || $job->uid != Yii::$app->user->id)
                 return "未找到岗位";
-        } else
+        } else {
             $job = new self;
+            $job->id  = $job->getJobId();
+        }
         $job->uid = Yii::$app->user->id;
         if (!$saveTmp && empty($data['name']))
             return "岗位名称未填写";
@@ -75,16 +71,16 @@ class Job extends \common\models\base\Job
         $job->gender = $data['gender'];
         if ($data['start_date'] > $data['end_date'])
             return "用工结束日期不能早于开始日期";
-        if (!$saveTmp && strtotime($data['end_date']) < time())
+        if (!$saveTmp && $data['end_date']< date("Y-m-d"))
             return "结束日期不能早于今天";
         $job->start_at = date("Ymd", strtotime($data['start_date']));
         $job->end_at = date("Ymd", strtotime($data['end_date']));
-        $job->work_start = date("His", strtotime($data['work_start_time']));
-        $job->work_end = date("His", strtotime($data['work_end_time']));
-        if (!$saveTmp && $data['age_start'] > $data['age_end'])
-            return "年龄区间不正确";
-        $job->age_start = $data['age_start'];
-        $job->age_end = $data['age_end'];
+        $job->work_start = date("Hi", strtotime($data['start_time']));
+        $job->work_end = date("Hi", strtotime($data['end_time']));
+//        if (!$saveTmp && $data['age_start'] > $data['age_end'])
+//            return "年龄区间不正确";
+//        $job->age_start = $data['age_start'];
+//        $job->age_end = $data['age_end'];
         if (!$saveTmp && empty($data['quiz_position']))
             return "请输入面试地址";
         if (!$saveTmp && empty($data['quiz_latitude']) || empty($data['quiz_longitude']))
