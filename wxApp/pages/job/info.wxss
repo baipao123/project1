@@ -48,3 +48,7 @@
 .bottom .right.red{
     background-color: #d9534f;
 }
+
+map{
+    width:100%;
+}

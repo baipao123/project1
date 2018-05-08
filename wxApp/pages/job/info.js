@@ -6,6 +6,7 @@ Page({
         jid: 0,
         user: {},
         // job: {},
+        company: {},
         isOwner: false,
         scrollHeight: 500,
     },
@@ -18,7 +19,8 @@ Page({
         })
         request.get("part/job/info", {id: jid}, function (data) {
             that.setData({
-                job: data.job
+                job: data.job,
+                company: data.company
             })
             if (data.job.uid == that.data.user.uid)
                 that.setData({
@@ -45,7 +47,10 @@ Page({
     toggleJobStatus: function (e) {
         let that = this
         console.log(e)
-        request.post("part/company/toggle-job", {jid: that.data.jid,status:e.currentTarget.dataset.status}, function (e) {
+        request.post("part/company/toggle-job", {
+            jid: that.data.jid,
+            status: e.currentTarget.dataset.status
+        }, function (e) {
             that.setData({
                 "job.status": that.data.job.status == 1 ? 2 : 1
             })

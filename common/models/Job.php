@@ -15,6 +15,7 @@ use Yii;
  * @property Company $company
  * @property District $city
  * @property District $area
+ * @property User $owner
  * */
 class Job extends \common\models\base\Job
 {
@@ -43,6 +44,10 @@ class Job extends \common\models\base\Job
 
     public function getArea() {
         return $this->hasOne(District::className(), ["id" => "area_id"]);
+    }
+
+    public function getOwner() {
+        return $this->hasOne(User::className(), ["id" => "uid"]);
     }
 
     public function format() {
@@ -182,12 +187,29 @@ class Job extends \common\models\base\Job
             "require_desc"      => $this->require_desc,
             "extra_desc"        => $this->extra_desc,
             "useCompanyContact" => empty($this->contact_name),
-            "concat_name"       => $this->contact_name,
-            "phone"             => $this->phone,
+            "concat_name"       => empty($this->contact_name) ? $this->owner->realname : $this->contact_name,
+            "phone"             => empty($this->phone) ? $this->owner->phone : $this->phone,
             "tips"              => $this->tips,
             "status"            => $this->status,
             "isLike"            => JobFollow::find()->where(["uid" => $uid, "jid" => $this->id])->exists(),
             "userStatus"        => $uJob ? $uJob->status : 0,
+            "userApplyNum"      => $this->getApplyNum(),
+            "userPassNum"       => $this->getPassNum(),
+            "pushAt"            => date("Y-m-d", $this->created_at),
         ];
+    }
+
+    public function getApplyNum() {
+        $jid = $this->id;
+        return Yii::$app->db->cache(function () use ($jid) {
+            return UserHasJob::find()->where(["jid" => $jid])->count();
+        }, 10);
+    }
+
+    public function getPassNum() {
+        $jid = $this->id;
+        return Yii::$app->db->cache(function () use ($jid) {
+            return UserHasJob::find()->where(["jid" => $jid, "status" => [UserHasJob::ON, UserHasJob::END]])->count();
+        }, 10);
     }
 }
