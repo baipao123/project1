@@ -13,11 +13,20 @@ use common\models\JobFollow;
 use common\models\User;
 use common\models\UserHasJob;
 use common\models\UserJobDaily;
+use common\tools\StringHelper;
 use common\tools\Tool;
 use Yii;
 
 class JobController extends \frontend\controllers\BaseController
 {
+    public function actionInfo($jid = 1) {
+//        $jid = $_GET['id'];
+        $job = Job::findOne($jid);
+        if (!$job)
+            return Tool::reJson(null, "岗位不存在", Tool::FAIL);
+        return Tool::reJson(["job" => $job->info($this->user_id())]);
+    }
+
     public function actionApply() {
         if ($this->getuser()->type != User::TYPE_USER)
             return Tool::reJson(null, "您无权报名", Tool::FAIL);
@@ -28,16 +37,18 @@ class JobController extends \frontend\controllers\BaseController
         if (UserHasJob::isOn(Yii::$app->user->id, $jid))
             return Tool::reJson(null, "您已经报名该工作了", Tool::FAIL);
         $record = new UserHasJob;
-        $record->uid = Yii::$app->user->id;
+        $record->formId = $this->getPost("formId","");
+        $record->uid = $this->user_id();
         $record->jid = $jid;
+        $record->auth_key = StringHelper::nonce(8);
         $record->status = UserHasJob::APPLY;
-        $record->cretaed_at = time();
+        $record->created_at = time();
         if (!$record->save()) {
             Yii::warning($record->errors, "添加UserHasJob失败");
             return Tool::reJson(null, "报名失败", Tool::FAIL);
         }
         //TODO 模板消息
-        return Tool::reJson(1);
+        return Tool::reJson(1,"报名成功");
     }
 
     public function actionForbid() {
@@ -110,8 +121,9 @@ class JobController extends \frontend\controllers\BaseController
 
     public function actionFollow() {
         $jid = $this->getPost("jid", 0);
-        if (JobFollow::toggle($this->user_id(), $jid))
-            return Tool::reJson(1, "成功");
+        $res = JobFollow::toggle($this->user_id(), $jid);
+        if ($res)
+            return Tool::reJson(1, $res == JobFollow::CancelFollow ? "取消关注成功" : "关注成功");
         return Tool::reJson(null, "操作失败", Tool::FAIL);
     }
 }

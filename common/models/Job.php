@@ -13,6 +13,8 @@ use Yii;
 
 /**
  * @property Company $company
+ * @property District $city
+ * @property District $area
  * */
 class Job extends \common\models\base\Job
 {
@@ -24,6 +26,7 @@ class Job extends \common\models\base\Job
     const ON = 1;
     const OFF = 2;
     const DEL = 3;
+    const EXPIRE = 4;
 
     const TYPE_HOUR = 1;
     const TYPE_DAY = 2;
@@ -31,19 +34,27 @@ class Job extends \common\models\base\Job
     const WORK_POSITION_TYPE_QUIZ = 0;
     const WORK_POSITION_TYPE_OTHER = 1;
 
-    const CONCAT_TYPE_COMPANY = 1;
-    const CONCAT_TYPE_OTHER = 2;
+    const CONCAT_TYPE_COMPANY = 0;
+    const CONCAT_TYPE_OTHER = 1;
+
+    public function getCity() {
+        return $this->hasOne(District::className(), ["id" => "city_id"]);
+    }
+
+    public function getArea() {
+        return $this->hasOne(District::className(), ["id" => "area_id"]);
+    }
 
     public function format() {
         return [];
     }
 
-    protected function getJobId() {
-        if (!empty($this->id))
-            return $this->id;
+    protected function getJobIdFromRedis() {
+        if (!empty($this->jobId))
+            return $this->jobId;
         $date = date("Ymd");
         $index = Yii::$app->redis->incr("JOB-ID-NUM-DATE:{$date}");
-        return intval($date . sprintf("%4d", $index));
+        return $date . sprintf("%04d", $index);
     }
 
     public static function saveJob($data, $saveTmp = false, $jid = 0) {
@@ -53,7 +64,7 @@ class Job extends \common\models\base\Job
                 return "未找到岗位";
         } else {
             $job = new self;
-            $job->id  = $job->getJobId();
+            $job->jobId = $job->getJobIdFromRedis();
         }
         $job->uid = Yii::$app->user->id;
         if (!$saveTmp && empty($data['name']))
@@ -71,16 +82,16 @@ class Job extends \common\models\base\Job
         $job->gender = $data['gender'];
         if ($data['start_date'] > $data['end_date'])
             return "用工结束日期不能早于开始日期";
-        if (!$saveTmp && $data['end_date']< date("Y-m-d"))
+        if (!$saveTmp && $data['end_date'] < date("Y-m-d"))
             return "结束日期不能早于今天";
         $job->start_at = date("Ymd", strtotime($data['start_date']));
         $job->end_at = date("Ymd", strtotime($data['end_date']));
         $job->work_start = date("Hi", strtotime($data['start_time']));
         $job->work_end = date("Hi", strtotime($data['end_time']));
-//        if (!$saveTmp && $data['age_start'] > $data['age_end'])
-//            return "年龄区间不正确";
-//        $job->age_start = $data['age_start'];
-//        $job->age_end = $data['age_end'];
+        //        if (!$saveTmp && $data['age_start'] > $data['age_end'])
+        //            return "年龄区间不正确";
+        //        $job->age_start = $data['age_start'];
+        //        $job->age_end = $data['age_end'];
         if (!$saveTmp && empty($data['quiz_position']))
             return "请输入面试地址";
         if (!$saveTmp && empty($data['quiz_latitude']) || empty($data['quiz_longitude']))
@@ -104,7 +115,7 @@ class Job extends \common\models\base\Job
         $job->description = $data['description'];
         $job->require_desc = $data['require_desc'];
         $job->extra_desc = $data['extra_desc'];
-        if ($data['contact_type'] == self::CONCAT_TYPE_OTHER) {
+        if ($data['contact_type']) {
             if (!$saveTmp && !StringHelper::isMobile($data['phone']))
                 return "联系方式不正确";
             $job->phone = $data['phone'];
@@ -128,14 +139,55 @@ class Job extends \common\models\base\Job
         return false;
     }
 
-    public function jobInfo() {
-        return [];
+    public function cityStr() {
+        $str = "";
+        if ($this->city)
+            $str = $this->city->name;
+        if ($this->area)
+            $str .= " " . $this->area->name;
+        return trim($str);
     }
 
-    public function info() {
+    public function info($uid = 0) {
+        $uJob = empty($uid) ? null : UserHasJob::find()->where(["uid" => $uid, "jid" => $this->id])->one();
+        /* @var $uJob UserHasJob */
         return [
-            "company" => $this->company->info(),
-            "job"     => $this->jobInfo()
+            "id"                => $this->id,
+            "jobId"             => $this->jobId,
+            "uid"               => $this->uid,
+            "city_id"           => $this->city_id,
+            "area_id"           => $this->area_id,
+            "cityStr"           => $this->CityStr(),
+            "name"              => $this->name,
+            "gender"            => $this->gender,
+            "num"               => $this->num,
+            "prize_type"        => $this->prize_type,
+            "prize"             => $this->prize,
+            "start_date"        => date("Y-m-d", strtotime($this->start_at)),
+            "end_date"          => date("Y-m-d", strtotime($this->end_at)),
+            "start_time"        => sprintf("%02d", floor($this->work_start / 100)) . ":" . sprintf("%02d", $this->work_start % 100),
+            "end_time"          => sprintf("%02d", floor($this->work_end / 100)) . ":" . sprintf("%02d", $this->work_end % 100),
+            "quiz"              => [
+                "longitude" => $this->quiz_longitude,
+                "latitude"  => $this->quiz_latitude,
+                "position"  => $this->quiz_position,
+            ],
+            "work"              => [
+                "longitude" => $this->work_longitude,
+                "latitude"  => $this->work_latitude,
+                "position"  => $this->work_position,
+                "useQuiz"   => empty($this->work_position)
+            ],
+            "description"       => $this->description,
+            "require_desc"      => $this->require_desc,
+            "extra_desc"        => $this->extra_desc,
+            "useCompanyContact" => empty($this->contact_name),
+            "concat_name"       => $this->contact_name,
+            "phone"             => $this->phone,
+            "tips"              => $this->tips,
+            "status"            => $this->status,
+            "isLike"            => JobFollow::find()->where(["uid" => $uid, "jid" => $this->id])->exists(),
+            "userStatus"        => $uJob ? $uJob->status : 0,
         ];
     }
 }

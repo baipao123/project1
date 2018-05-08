@@ -14,8 +14,8 @@ namespace common\models;
  * */
 class UserHasJob extends \common\models\base\UserHasJob
 {
-    const APPLY = 0;
-    const ON = 1;
+    const APPLY = 1;
+    const ON = 2;
     const REFUSE = 9;
     const END = 10;
 

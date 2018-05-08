@@ -57,6 +57,7 @@ class User extends \common\models\base\User
 
     public function info() {
         return [
+            "uid"      => $this->id,
             "type"     => $this->type,
             "username" => empty($this->realname) ? $this->nickname : $this->realname,
             "avatar"   => Img::format($this->avatar),

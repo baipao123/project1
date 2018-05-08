@@ -1,11 +1,12 @@
 {
   "pages": [
-    "pages/job/add",
+    "pages/job/info",
     "pages/index/index",
     "pages/user/user",
     "pages/chose/user",
     "pages/chose/company",
-    "pages/districtSelect/districtSelect"
+    "pages/districtSelect/districtSelect",
+    "pages/job/add"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -1,0 +1,50 @@
+.topTips{
+    text-align: center;
+    margin: 1px -30rpx 0px;
+}
+.topTips>view {
+    height: 29px;
+    line-height: 29px;
+    border-bottom: 1px solid #ebccd1;
+    background-color: #f2dede;
+    color: #a94442;
+}
+.bottom{
+    text-align: center;
+    margin:1px -30rpx 0px;
+    border-top: 1px solid #eee;
+}
+.bottom .text{
+    font-size: 20rpx;
+}
+.bottom .icon{
+    font-size: 40rpx;
+    color: #999;
+}
+.bottom .icon.iconLike .myIcon{
+    font-size:18px;
+}
+
+.bottom .like{
+    color: #09bb07;
+}
+.bottom .right{
+    line-height: 48px;
+    color: #fff;
+}
+.bottom .right.green{
+    background-color: #09bb07;
+    border-radius:0;
+}
+.bottom .right.grey{
+    background-color: #aaa;
+}
+.bottom .right.orange{
+    background-color: #ec971f;
+}
+.bottom .right.blue{
+    background-color: #31b0d5;
+}
+.bottom .right.red{
+    background-color: #d9534f;
+}

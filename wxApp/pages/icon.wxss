@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'iconfont';  /* project id 636011 */
-    src: url('//at.alicdn.com/t/font_636011_ky24wb6n5r6q1tt9.eot');
-    src: url('//at.alicdn.com/t/font_636011_ky24wb6n5r6q1tt9.eot?#iefix') format('embedded-opentype'),
-    url('//at.alicdn.com/t/font_636011_ky24wb6n5r6q1tt9.woff') format('woff'),
-    url('//at.alicdn.com/t/font_636011_ky24wb6n5r6q1tt9.ttf') format('truetype'),
-    url('//at.alicdn.com/t/font_636011_ky24wb6n5r6q1tt9.svg#iconfont') format('svg');
+    src: url('//at.alicdn.com/t/font_636011_qooauat8kk68byb9.eot');
+    src: url('//at.alicdn.com/t/font_636011_qooauat8kk68byb9.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_636011_qooauat8kk68byb9.woff') format('woff'),
+    url('//at.alicdn.com/t/font_636011_qooauat8kk68byb9.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_636011_qooauat8kk68byb9.svg#iconfont') format('svg');
 }
 
 .myIcon {
@@ -19,8 +19,6 @@
 .icon-edit:before { content: "\e69e"; }
 
 .icon-email:before { content: "\e69f"; }
-
-.icon-favorite:before { content: "\e6a0"; }
 
 .icon-form:before { content: "\e6a2"; }
 
@@ -62,6 +60,12 @@
 
 .icon-position:before { content: "\e624"; }
 
+.icon-shopping:before { content: "\e63f"; }
+
+.icon-shopping-add:before { content: "\e640"; }
+
+.icon-like:before { content: "\e643"; }
+
 .icon-delete:before { content: "\e645"; }
 
 .icon-link:before { content: "\e647"; }
@@ -70,9 +74,17 @@
 
 .icon-scan:before { content: "\e649"; }
 
+.icon-youhui:before { content: "\e65a"; }
+
+.icon-eye:before { content: "\e661"; }
+
 .icon-camera:before { content: "\e663"; }
 
 .icon-true:before { content: "\e664"; }
+
+.icon-msg:before { content: "\e665"; }
+
+.icon-hot:before { content: "\e66c"; }
 
 .icon-save:before { content: "\e747"; }
 
@@ -80,6 +92,20 @@
 
 .icon-survey:before { content: "\e74e"; }
 
+.icon-liked:before { content: "\e621"; }
+
 .icon-add:before { content: "\e6b9"; }
 
 .icon-reduce:before { content: "\e6ba"; }
+
+.icon-favorited:before { content: "\e62e"; }
+
+.icon-favorite:before { content: "\e626"; }
+
+.icon-map_icon:before { content: "\e6b4"; }
+
+.icon-share:before { content: "\e625"; }
+
+.icon-push-on:before { content: "\e63b"; }
+
+.icon-push-off:before { content: "\e641"; }

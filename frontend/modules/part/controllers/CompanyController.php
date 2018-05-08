@@ -93,7 +93,7 @@ class CompanyController extends \frontend\controllers\BaseController
             return Tool::reJson(null, "非法请求", Tool::FAIL);
         $job->status = $status;
         if ($job->save())
-            return Tool::reJson(1, "成功");
+            return Tool::reJson(1, $status == Job::ON ? "上架成功" : "下架成功");
         Yii::warning($job->errors, "保存Job失败");
         return Tool::reJson(null, "失败", Tool::FAIL);
     }

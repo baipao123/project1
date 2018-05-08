@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "user_has_job".
  *
  * @property int $id
+ * @property string $formId
  * @property int $jid
  * @property int $uid
  * @property string $auth_key
@@ -20,37 +21,33 @@ class UserHasJob extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'user_has_job';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['jid', 'uid', 'created_at'], 'integer'],
-            [['content'], 'required'],
+            [['jid', 'uid', 'created_at', 'status'], 'integer'],
             [['content'], 'string'],
-            [['auth_key'], 'string', 'max' => 255],
-            [['status'], 'string', 'max' => 1],
+            [['auth_key', 'formId'], 'string', 'max' => 255],
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
-            'id' => 'ID',
-            'jid' => 'Jid',
-            'uid' => 'Uid',
-            'auth_key' => 'Auth Key',
-            'status' => 'Status',
-            'content' => 'Content',
+            'id'         => 'ID',
+            'formId'     => 'FormId',
+            'jid'        => 'Jid',
+            'uid'        => 'Uid',
+            'auth_key'   => 'Auth Key',
+            'status'     => 'Status',
+            'content'    => 'Content',
             'created_at' => 'Created At',
         ];
     }

@@ -10,6 +10,7 @@ namespace console\controllers;
 
 use common\models\Admin;
 use common\models\District;
+use common\models\Job;
 use common\tools\Tool;
 use common\tools\WxApp;
 use Yii;
@@ -48,8 +49,8 @@ class TestController extends Controller
     }
 
     public function actionIndex(){
-        $admin = Admin::findOne(1);
-        echo $admin->setPassword("123456");
+        $admin = Job::find()->one();
+        echo var_export($admin->info(),true);
     }
 
     public function actionDistrict(){

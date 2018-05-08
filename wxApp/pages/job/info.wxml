@@ -1,0 +1,79 @@
+<view class="page">
+    <view class="error" wx:if="{{!job}}">
+        <text>岗位不存在</text>
+    </view>
+    <view class="info" wx:else>
+        <view class="topTips" wx:if="{{isOwner && job.status!=1}}"><view>岗位已下架</view></view>
+        <scroll-view style="height:{{scrollHeight-(isOwner && job.status!=1 ? 80 : 50)}}px;">
+
+        </scroll-view>
+        <view class="bottom">
+            <block wx:if="{{!isOwner}}">
+                <view class="weui-flex">
+                    <view class="weui-flex__item">
+                        <view class="icon">
+                            <span class="myIcon icon-share"></span>
+                        </view>
+                        <view class="text">分享</view>
+                    </view>
+                    <view class="weui-flex__item" bindtap="toggleLike">
+                        <view class="icon iconLike">
+                            <span class="myIcon {{job.isLike ? 'icon-favorited like':'icon-favorite'}}"></span>
+                        </view>
+                        <view class="text">{{job.isLike ? '已关注':'关注'}}</view>
+                    </view>
+                    <view class="weui-flex__item-2">
+                        <block wx:if="{{job.status==1}}">
+                            <block wx:if="{{job.userStatus==0}}">
+                                <form bindsubmit="sign">
+                                    <input name="jid" hidden="true" value="{{jid}}" />
+                                    <button class="right green" form-type="submit">我要报名</button>
+                                </form>
+                            </block>
+                            <block wx:elif="{{job.userStatus==1}}">
+                                <view class="right blue">已报名</view>
+                            </block>
+                            <block wx:elif="{{job.userStatus==2}}">
+                                <view class="right orange">工作中</view>
+                            </block>
+                            <block wx:elif="{{job.userStatus==10}}">
+                                <view class="right grey">已结束</view>
+                            </block>
+                            <block wx:else>
+                                <view class="right grey">已被拒绝</view>
+                            </block>
+                        </block>
+                        <block wx:elif="{{job.status==4}}">
+                            <view class="right grey">已结束</view>
+                        </block>
+                        <block wx:else>
+                            <view class="right grey">已下架</view>
+                        </block>
+                    </view>
+                </view>
+            </block>
+            <block wx:else>
+                <view class="weui-flex">
+                    <view class="weui-flex__item">
+                        <view class="icon">
+                            <span class="myIcon icon-share"></span>
+                        </view>
+                        <view class="text">分享</view>
+                    </view>
+                    <navigator  class="weui-flex__item" url="/pages/job/add?id={{jid}}">
+                        <view class="icon">
+                            <span class="myIcon icon-edit"></span>
+                        </view>
+                        <view class="text">编辑</view>
+                    </navigator>
+                    <view class="weui-flex__item" bindtap="toggleJobStatus" data-status="{{job.status == 1 ? 2 : 1}}">
+                        <view class="icon iconStatus">
+                            <span class="myIcon {{job.status == 1 ? 'icon-push-off':'icon-push-on'}}"></span>
+                        </view>
+                        <view class="text">{{job.status==1 ? '已上架':'上架'}}</view>
+                    </view>
+                </view>
+            </block>
+        </view>
+    </view>
+</view>
