@@ -58,6 +58,9 @@
 .text-xl{
     font-size: 60rpx;
 }
+.text-white{
+    color: #fff;
+}
 .text-grey{
     color: #aaa;
     font-weight:lighter;
@@ -80,4 +83,7 @@
 }
 .bg-grey{
     background-color: #eee;
+}
+.bg-green{
+    background-color: #09bb07;
 }

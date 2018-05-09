@@ -40,58 +40,6 @@ page{
     margin-right:10rpx;
 }
 
-.weui-flex__item.right{
-    -webkit-box-flex:2;
-    -webkit-flex:2;
-    flex:2;
-}
-.top{
-    height:250rpx;
-    background-color: #09bb07;
-    color: #fff;
-    font-size:26rpx;
-}
-.top .header{
-    text-align:center;
-    border-radius:150rpx;
-    margin-top:25rpx;
-}
-.top .header image{
-    width: 150rpx;
-    height:150rpx;
-    border-radius:150rpx;
-    margin-top:30rpx;
-}
-
-.right .contain{
-    display: flex;
-    flex-direction: column;
-}
-
-.right .user {
-    flex: 1;
-    border-bottom:4rpx solid white;
-    margin-top:80rpx;
-}
-.right .user view{
-    display: inline-block;
-    margin-top:10rpx;
-}
-.right .user .icon_sp_area{
-    float:right;
-    padding:0 20px;
-}
-
-.right .phone {
-    flex: 1;
-}
-.right .phone view{
-    height:115rpx;
-}
-.right .phone .icon_sp_area .myIcon{
-    color: #fff;
-    padding: 0 20rpx;
-}
 
 .weui-cells{
     line-height:1;
@@ -100,4 +48,23 @@ page{
 
 .weui-footer{
     margin-top: 50rpx;
+}
+
+.header{
+    max-width: 160rpx;
+    width: 160rpx;
+    height: 120rpx;
+    padding: 20rpx;
+    text-align: center;
+}
+.header image{
+    width: 120rpx;
+    height: 120rpx;
+    border-radius: 120rpx;
+}
+.top .right{
+    padding: 29rpx 0;
+}
+.top .right .phone{
+    border-top:1rpx solid #fff;
 }

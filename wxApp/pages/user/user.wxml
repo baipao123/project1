@@ -12,42 +12,32 @@
             </navigator>
         </block>
 
-        <view class="weui-flex top">
-            <view class="weui-flex__item">
-                <view class="placeholder header">
-                    <block wx:if="{{isUser}}">
-                        <image src="{{user.avatar}}"> </image>
-                    </block>
-                    <block wx:else>
-                        <image src="{{domain + company.icon}}"> </image>
-                    </block>
-                </view>
+        <view class="weui-flex top bg-green">
+            <view class="weui-flex__item header">
+                <block wx:if="{{isUser}}">
+                    <image src="{{user.avatar}}"></image>
+                </block>
+                <block wx:else>
+                    <image src="{{domain + company.icon}}"></image>
+                </block>
             </view>
-            <view class="weui-flex__item right">
-                <view class="placeholder contain">
-
-                    <view class="user">
-                        <block wx:if="{{isUser}}">
-                            <view class="username">{{user.username}}</view>
-                            <navigator class="icon_sp_area" url="">
-                                去兼职
-                                <span class="myIcon icon-right" style="color:#fff;margin:0"></span>
-                            </navigator>
-                        </block>
-                        <block wx:else>
-                            <view class="username">{{company.name}}</view>
-                            <navigator class="icon_sp_area" url="">
-                                发布招聘信息
-                                <span class="myIcon icon-right" style="color:#fff;margin:0"></span>
-                            </navigator>
-                        </block>
-                    </view>
-                    <view class="phone">
-                        <navigator class="icon_sp_area" url="/pages/user/phone">
-                            <view>{{user.phone}}<span class="myIcon icon-edit"></span></view>
-                        </navigator>
-                    </view>
+            <view class="weui-flex__item right text-white text-m">
+                <view class="weui-flex__item">
+                    <view class="weui-flex__item">{{isUser ? user.username : company.name}}</view>
                 </view>
+                <navigator class="weui-flex__item phone" url="/pages/user/phone">
+                    <view>{{user.phone}}
+                        <span class="myIcon icon-edit text-white"></span>
+                    </view>
+                    <navigator class="weui-flex__item" url="/pages/job/add" wx:if="{{isUser}}">
+                        去兼职
+                        <span class="myIcon icon-right" style="color:#fff;margin:0"></span>
+                    </navigator>
+                    <navigator class="weui-flex__item" url="/pages/job/add" wx:else>
+                        发布招聘信息
+                        <span class="myIcon icon-right" style="color:#fff;margin:0"></span>
+                    </navigator>
+                </navigator>
             </view>
         </view>
     </view>
