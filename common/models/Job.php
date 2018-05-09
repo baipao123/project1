@@ -62,7 +62,7 @@ class Job extends \common\models\base\Job
         return $date . sprintf("%04d", $index);
     }
 
-    public static function saveJob($data, $saveTmp = false, $jid = 0) {
+    public static function saveJob($data, $saveTmp = false, &$jid = 0) {
         if (!empty($jid)) {
             $job = self::findOne($jid);
             if (!$job || $job->uid != Yii::$app->user->id)
@@ -87,7 +87,7 @@ class Job extends \common\models\base\Job
         $job->gender = $data['gender'];
         if ($data['start_date'] > $data['end_date'])
             return "用工结束日期不能早于开始日期";
-        if (!$saveTmp && $data['end_date'] < date("Y-m-d"))
+        if (!$saveTmp && $job->isNewRecord && $data['end_date'] < date("Y-m-d"))
             return "结束日期不能早于今天";
         $job->start_at = date("Ymd", strtotime($data['start_date']));
         $job->end_at = date("Ymd", strtotime($data['end_date']));
@@ -104,7 +104,7 @@ class Job extends \common\models\base\Job
         $job->quiz_position = $data['quiz_position'];
         $job->quiz_latitude = $data['quiz_latitude'];
         $job->quiz_longitude = $data['quiz_longitude'];
-        if ($data['work_position_type'] == self::WORK_POSITION_TYPE_OTHER) {
+        if ($data['work_position_type'] == 'false') {
             if (!$saveTmp && empty($data['work_position']))
                 return "请输入工作地址";
             if (!$saveTmp && empty($data['work_latitude']) || empty($data['work_longitude']))
@@ -120,7 +120,7 @@ class Job extends \common\models\base\Job
         $job->description = $data['description'];
         $job->require_desc = $data['require_desc'];
         $job->extra_desc = $data['extra_desc'];
-        if ($data['contact_type']) {
+        if ($data['contact_type'] == 'false') {
             if (!$saveTmp && !StringHelper::isMobile($data['phone']))
                 return "联系方式不正确";
             $job->phone = $data['phone'];
@@ -138,8 +138,10 @@ class Job extends \common\models\base\Job
         } else {
             $job->status = $saveTmp ? self::TMP : $job->status;
         }
-        if ($job->save())
+        if ($job->save()) {
+            $jid = $job->attributes['id'];
             return true;
+        }
         Yii::warning($job->errors, "保存Job失败");
         return false;
     }
@@ -167,7 +169,7 @@ class Job extends \common\models\base\Job
             "gender"            => $this->gender,
             "num"               => $this->num,
             "prize_type"        => $this->prize_type,
-            "prize"             => $this->prize,
+            "prize"             => $this->prize / 100,
             "start_date"        => date("Y-m-d", strtotime($this->start_at)),
             "end_date"          => date("Y-m-d", strtotime($this->end_at)),
             "start_time"        => sprintf("%02d", floor($this->work_start / 100)) . ":" . sprintf("%02d", $this->work_start % 100),
@@ -187,7 +189,7 @@ class Job extends \common\models\base\Job
             "require_desc"      => $this->require_desc,
             "extra_desc"        => $this->extra_desc,
             "useCompanyContact" => empty($this->contact_name),
-            "concat_name"       => empty($this->contact_name) ? $this->owner->realname : $this->contact_name,
+            "contact_name"      => empty($this->contact_name) ? $this->owner->realname : $this->contact_name,
             "phone"             => empty($this->phone) ? $this->owner->phone : $this->phone,
             "tips"              => $this->tips,
             "status"            => $this->status,

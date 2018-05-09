@@ -9,6 +9,7 @@ Page({
         company: {},
         isOwner: false,
         scrollHeight: 500,
+        domain:app.globalData.qiNiuDomain
     },
     onLoad: function (options) {
         let jid = options && options.hasOwnProperty("id") ? options.id : 1,
@@ -65,6 +66,28 @@ Page({
             that.setData({
                 "job.userStatus": 1
             })
+        })
+    },
+    phoneCall: function () {
+        let that = this
+        wx.makePhoneCall({
+            phoneNumber: that.data.job.phone //仅为示例，并非真实的电话号码
+        })
+    },
+    showQuizPosition:function (e) {
+        let that = this
+        wx.openLocation({
+            latitude: parseFloat(that.data.job.quiz.latitude),
+            longitude: parseFloat(that.data.job.quiz.longitude),
+            scale: 28
+        })
+    },
+    showWorkPosition:function (e) {
+        let that = this
+        wx.openLocation({
+            latitude: parseFloat(that.data.job.work.latitude),
+            longitude: parseFloat(that.data.job.work.longitude),
+            scale: 28
         })
     },
 })

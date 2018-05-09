@@ -13,6 +13,7 @@
 }
 .page{
     padding:0 30rpx;
+    background-color: #eee;
 }
 .page.full{
     padding:0;
@@ -40,4 +41,43 @@
     -webkit-box-flex:3;
     -webkit-flex:3;
     flex:3;
+}
+
+.text{
+    font-size: 40rpx;
+}
+.text-m{
+    font-size: 30rpx;
+}
+.text-s{
+    font-size: 25rpx;
+}
+.text-l{
+    font-size: 50rpx;
+}
+.text-xl{
+    font-size: 60rpx;
+}
+.text-grey{
+    color: #aaa;
+    font-weight:lighter;
+}
+.text-green{
+    color: #09bb07;
+}
+.a-l{
+    text-align: left;
+}
+.a-r{
+    text-align: right;
+}
+.a-c{
+    text-align: center;
+}
+
+.bg-white{
+    background-color: #fff;
+}
+.bg-grey{
+    background-color: #eee;
 }

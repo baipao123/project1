@@ -16,8 +16,9 @@ Page({
         tmpWorkPosition: '',
         day: {},
         windowHeight : 500,
+        isEdit:false,
     },
-    onLoad: function () {
+    onLoad: function (options) {
         let that = this,
             date = new Date(),
             month = '0' + (date.getMonth() + 1),
@@ -42,7 +43,16 @@ Page({
                     windowHeight: res.windowHeight
                 })
             }
-        });
+        })
+        if(options && options.hasOwnProperty("id")){
+            let jid = options.id
+            request.get("/part/job/info?id="+jid,{},function (data) {
+                that.setData({
+                    job:data.job,
+                    isEdit:true,
+                })
+            })
+        }
     },
     onShow: function () {
         let region = app.globalData.region
@@ -61,7 +71,7 @@ Page({
             cid = e.target.dataset.cid,
             aid = e.target.dataset.aid
         wx.navigateTo({
-            url: "/pages/districtSelect/districtSelect?aid" + aid + "&cid=" + cid
+            url: "/pages/districtSelect/districtSelect?aid=" + aid + "&cid=" + cid
         })
     },
     choseQuizPosition: function () {
@@ -114,7 +124,7 @@ Page({
                     data.position = nowPosition
                 that.setData({
                     tmpWorkPosition: nowPosition,
-                    "job.work": data,
+                    "job.work": data.job,
                 })
             }
         })
@@ -139,10 +149,20 @@ Page({
     },
     submit:function (e) {
         let that = this,
-            data=e.detail.value;
+            data = e.detail.value,
+            url = that.data.isEdit ? "part/company/edit-job?jid="+that.data.job.id : "part/company/add-job"
         data.formId = e.detail.formId;
-        request.post("part/company/add-job",data,function(res){
 
+        request.post(url, data, function (res, response) {
+            wx.showToast({
+                icon: "success",
+                title: response.msg,
+                complete: function () {
+                    wx.navigateTo({
+                        url: "/pages/job/info?id=" + res.jid
+                    })
+                }
+            })
         })
     },
     changeStartDate: function (e) {

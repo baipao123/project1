@@ -38,23 +38,23 @@ class CompanyController extends \frontend\controllers\BaseController
         $company = $user->company;
         if (!$company || $company->status != Company::STATUS_PASS)
             return Tool::reJson(null, "您的企业资料未审核通过，暂时无法发布招聘信息", Tool::FAIL);
-        $res = Job::saveJob($_POST, $this->getPost("tmp", 0) > 0);
+        $res = Job::saveJob($_POST, $this->getPost("tmp", 0) > 0,$jid);
         if ($res === true)
-            return Tool::reJson(1, "发布招聘信息成功");
+            return Tool::reJson(["jid" => $jid], "发布招聘信息成功");
         return Tool::reJson(null, $res === false ? "发布招聘信息失败，请稍后重试" : $res, Tool::FAIL);
     }
 
-    public function actionEditJob() {
+    public function actionEditJob($jid = 0) {
         $user = $this->getUser();
         if (!$user || $user->type == User::TYPE_USER)
             return Tool::reJson(null, "您无权保存招聘信息", Tool::FAIL);
         $company = $user->company;
         if (!$company || $company->status != Company::STATUS_PASS)
             return Tool::reJson(null, "您的企业资料未审核通过，暂时无法保存招聘信息", Tool::FAIL);
-        $jid = $this->getPost("jid", 0);
+        $jid = $_GET['jid'];
         $res = Job::saveJob($_POST, $this->getPost("tmp", 0) > 0, $jid);
         if ($res === true)
-            return Tool::reJson(1, "修改招聘信息成功");
+            return Tool::reJson(["jid" => $jid], "修改招聘信息成功");
         return Tool::reJson(null, $res === false ? "修改招聘信息失败，请稍后重试" : $res, Tool::FAIL);
     }
 

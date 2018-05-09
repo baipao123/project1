@@ -1,44 +1,61 @@
-<view class="page">
+<view class="page full">
     <view class="error" wx:if="{{!job}}">
         <text>岗位不存在</text>
     </view>
     <view class="info" wx:else>
         <view class="topTips" wx:if="{{isOwner && job.status!=1}}"><view>岗位已下架</view></view>
-        <scroll-view style="height:{{scrollHeight-(isOwner && job.status!=1 ? 80 : 50)}}px;" scroll-y="true">
-            <view class="header">
+        <scroll-view style="height:{{scrollHeight-(isOwner && job.status!=1 ? 81 : 51)}}px;" scroll-y="true">
+            <view class="header bg-white">
                 <view class="name">{{job.name}}</view>
-                <view class="prize">
+                <view class="prize text text-m text-green">
                     <span class="myIcon icon-price"></span>{{job.prize}}/{{job.prize_type == 1 ? "小时":"天"}}
                 </view>
-            </view>
-            <view class="middle">
-                <view class="title">岗位详情</view>
                 <view class="weui-flex">
-                    <view class="weui-flex__item">发布时间:{{job.pushAt}}
+                    <view class="weui-flex__item text text-s text-grey a-l">发布时间:{{job.pushAt}}
                     </view>
-                    <view class="weui-flex__item">
+                    <view class="weui-flex__item text text-s text-grey a-r">
                         已报名{{job.userApplyNum}} 已录用{{job.num > 0 ? job.userPassNum+'/'+job.num : job.userPassNum}}
                     </view>
                 </view>
+            </view>
+            <view class="weui-cells__title">岗位详情</view>
+            <view class="middle bg-white text text-m">
                 <view class="weui-flex">
                     <view class="weui-flex__item">工作编码:</view>
-                    <view class="weui-flex__item-2">{{job.jobId}}</view>
+                    <view class="weui-flex__item-2 text-grey">{{job.jobId}}</view>
+                </view>
+                <view class="weui-flex">
+                    <view class="weui-flex__item">招聘人数:</view>
+                    <view class="weui-flex__item-2 text-grey">
+                        <view class="weui-flex">
+                            <view class="weui-flex__item">{{job.num > 0 ? job.num+"人" : "不限"}}</view>
+                            <view class="weui-agree__text weui-flex__item">
+                                <view class="weui-agree__checkbox-icon">
+                                    <icon class="weui-agree__checkbox-icon-check" type="success_no_circle" size="9"
+                                          wx:if="{{job.gender!=1 ? true : false}}"></icon>
+                                </view>
+                                男性
+                            </view>
+                            <view class="weui-agree__text weui-flex__item">
+                                <view class="weui-agree__checkbox-icon">
+                                    <icon class="weui-agree__checkbox-icon-check" type="success_no_circle" size="9"
+                                          wx:if="{{job.gender!=2 ? true : false}}"></icon>
+                                </view>
+                                女性
+                            </view>
+                        </view>
+                    </view>
                 </view>
                 <view class="weui-flex">
                     <view class="weui-flex__item">工作日期:</view>
-                    <view class="weui-flex__item-2">{{job.start_date == job.end_date ? job.start_date : job.start_date+'  ——  '+job.end_date}}</view>
+                    <view class="weui-flex__item-2 text-grey">{{job.start_date == job.end_date ? job.start_date : job.start_date+'  ——  '+job.end_date}}</view>
                 </view>
                 <view class="weui-flex">
                     <view class="weui-flex__item">工作时间:</view>
-                    <view class="weui-flex__item-2">{{job.start_time+'  ——  '+job.end_time}}</view>
+                    <view class="weui-flex__item-2 text-grey">{{job.start_time+'  ——  '+job.end_time}}</view>
                 </view>
                 <view class="weui-flex">
-                    <view class="weui-flex__item">工作时间:</view>
-                    <view class="weui-flex__item-2">{{job.start_time+'  ——  '+job.end_time}}</view>
-                </view>
-                <view class="weui-flex">
-                    <view class="weui-flex__item">面试{{job.work.useQuiz ? "及工作":""}}地址:</view>
-                    <view class="weui-flex__item-2">{{job.quiz.position}}<span class="myIcon icon-map_icon"></span></view>
+                    <view class="weui-flex__item">面试{{job.work.useQuiz ? "及工作":""}}地址: <text class="text-grey">{{job.quiz.position}}</text><span class="myIcon icon-map_icon text-green" bindtap="showQuizPosition"></span></view>
                 </view>
                 <view class="weui-flex">
                     <map longitude="{{job.quiz.longitude}}" latitude="{{job.quiz.latitude}}" show-location="true"  bindtap="showQuizPosition">
@@ -46,8 +63,7 @@
                 </view>
                 <block wx:if="{{!job.work.useQuiz}}">
                     <view class="weui-flex">
-                        <view class="weui-flex__item">工作地址:</view>
-                        <view class="weui-flex__item-2">{{job.work.position}}<span class="myIcon icon-map_icon"></span></view>
+                        <view class="weui-flex__item">工作地址:<text class="text-grey">{{job.work.position}}</text><span class="myIcon icon-map_icon text-green" bindtap="showWorkPosition"></span></view>
                     </view>
                     <view class="weui-flex">
                         <map longitude="{{job.work.longitude}}" latitude="{{job.work.latitude}}" show-location="true"  bindtap="showWorkPosition">
@@ -56,39 +72,36 @@
                 </block>
             </view>
             <block wx:if="{{job.description!='' || job.require_desc!='' || job.extra_desc!=''}}">
-                <view class="body">
-                    <view class="title">兼职详情</view>
-                    <block wx:if="{{job.description!=''}}">
-                        <view class="subTitle">岗位职责</view>
-                        <view class="desc">{{job.description}}</view>
-                    </block>
-                    <block wx:if="{{job.require_desc!=''}}">
-                        <view class="subTitle">岗位要求</view>
-                        <view class="desc">{{job.require_desc}}</view>
-                    </block>
-                    <block wx:if="{{job.extra_desc!=''}}">
-                        <view class="subTitle">额外奖励</view>
-                        <view class="desc">{{job.extra_desc}}</view>
-                    </block>
-                </view>
+                <block wx:if="{{job.description!=''}}">
+                    <view class="weui-cells__title">岗位职责</view>
+                    <view class="middle bg-white text text-m">{{job.description}}</view>
+                </block>
+                <block wx:if="{{job.require_desc!=''}}">
+                    <view class="weui-cells__title">岗位要求</view>
+                    <view class="middle bg-white text text-m">{{job.require_desc}}</view>
+                </block>
+                <block wx:if="{{job.extra_desc!=''}}">
+                    <view class="weui-cells__title">额外奖励</view>
+                    <view class="middle bg-white text text-m">{{job.extra_desc}}</view>
+                </block>
             </block>
-            <view class="bottom">
-                <view class="title">联系方式</view>
+            <view class="weui-cells__title">联系方式</view>
+            <view class="footer bg-white text text-m">
                 <view class="weui-flex">
-                    <view class="weui-flex__item">
-                        <image src="{{company.icon}}"></image>
+                    <view class="weui-flex__item a-c">
+                        <image src="{{domain+company.icon}}"></image>
                     </view>
                     <view class="weui-flex__item-3">
-                        <view>{{job.contact_name}}</view>
-                        <view>{{job.tips=='' ? job.phone:job.tips}}</view>
+                        <view>联系人:   {{job.contact_name}}</view>
+                        <view>{{job.tips=='' ? '联系方式:'+job.phone:job.tips}}</view>
                     </view>
-                    <view class="weui-flex__item">
-                        <span class="myIcon icon-phone"></span>
+                    <view class="weui-flex__item" bindtap="phoneCall">
+                        <span class="myIcon icon-phone text text-xl a-c text-green"></span>
                     </view>
                 </view>
             </view>
         </scroll-view>
-        <view class="bottom">
+        <view class="bottom bg-white">
             <block wx:if="{{!isOwner}}">
                 <view class="weui-flex">
                     <view class="weui-flex__item">

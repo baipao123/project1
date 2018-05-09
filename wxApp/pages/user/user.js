@@ -8,6 +8,7 @@ Page({
         user: {},
         company: {},
         isUser: false,
+        domain:app.globalData.qiNiuDomain
     },
     bindViewTap: function () {
 

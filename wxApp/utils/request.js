@@ -32,7 +32,7 @@ const request = (method, url, params, success, fail, complete) => {
                             icon: 'success'
                         })
                     }
-                    success(res.data.data);
+                    success(res.data.data, res.data);
                 } else if (res.data.code == -1)
                     getApp().login();
                 else

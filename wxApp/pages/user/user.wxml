@@ -19,7 +19,7 @@
                         <image src="{{user.avatar}}"> </image>
                     </block>
                     <block wx:else>
-                        <image src="{{app.globalData.qiNiuDomain + company.icon}}"> </image>
+                        <image src="{{domain + company.icon}}"> </image>
                     </block>
                 </view>
             </view>

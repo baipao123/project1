@@ -21,7 +21,7 @@
                         <view class="weui-label">岗位名称</view>
                     </view>
                     <view class="weui-cell__bd">
-                        <input class="weui-input" placeholder="请输入岗位名称" name="name" value="{{job.num}}"/>
+                        <input class="weui-input" placeholder="请输入岗位名称" name="name" value="{{job.name}}"/>
                     </view>
                 </view>
                 <view class="weui-cell">
@@ -151,7 +151,7 @@
                         <switch checked="{{job.work.useQuiz}}" bindchange="useQuiz" name="work_position_type"/>
                     </view>
                 </view>
-                <block wx:if="{{!job.work.useQuiz}}">
+                <view hidden="{{job.work.useQuiz}}">
                     <view class="weui-cells weui-cells_after-title">
                         <view class="weui-cell">
                             <view class="weui-cell__bd">
@@ -171,7 +171,7 @@
                              bindtap="choseWorkPosition">
                         </map>
                     </view>
-                </block>
+                </view>
             </view>
             <view class="weui-cells__title">岗位指责</view>
             <view class="weui-cells weui-cells_after-title">
@@ -209,7 +209,7 @@
                         <switch checked="{{job.useCompanyContact}}" bindchange="useContact" name="contact_type"/>
                     </view>
                 </view>
-                <block wx:if="{{!job.useCompanyContact}}">
+                <view hidden="{{job.useCompanyContact}}">
                     <view class="weui-cell weui-cell_input">
                         <view class="weui-cell__hd">
                             <view class="weui-label">联系人</view>
@@ -235,11 +235,11 @@
                             <input class="weui-input" placeholder="其他说明" name="tips" value="{{job.tips}}"/>
                         </view>
                     </view>
-                </block>
+                </view>
             </view>
             <view class="block"> </view>
         </scroll-view>
-        <view class="weui-btn-area bottom-button">
+        <view class="weui-btn-area bottom-button bg-white">
             <button class="weui-btn" type="primary" form-type="submit">确定</button>
         </view>
     </form>

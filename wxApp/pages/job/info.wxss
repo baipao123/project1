@@ -52,3 +52,16 @@
 map{
     width:100%;
 }
+
+
+.header,.middle,.footer{
+    padding:30rpx;
+}
+.footer{
+    margin-bottom:30rpx;
+}
+.footer image{
+    max-width: 80rpx;
+    max-height:80rpx;
+    border-radius:80rpx;
+}

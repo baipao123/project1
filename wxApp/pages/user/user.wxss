@@ -1,5 +1,9 @@
+page{
+    height:100%;
+}
 .page{
     padding:0;
+    min-height:100%;
 }
 .myIcon{
     margin-right:20rpx;
@@ -55,6 +59,8 @@
 .top .header image{
     width: 150rpx;
     height:150rpx;
+    border-radius:150rpx;
+    margin-top:30rpx;
 }
 
 .right .contain{

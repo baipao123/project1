@@ -1,7 +1,7 @@
 {
-  "navigationBarBackgroundColor": "#ffffff",
+  "navigationBarBackgroundColor": "#fff",
   "navigationBarTextStyle": "black",
-  "navigationBarTitleText": "标题",
-  "backgroundColor": "#eeeeee",
+  "navigationBarTitleText": "岗位详情",
+  "backgroundColor": "#eee",
   "backgroundTextStyle": "light"
 }
