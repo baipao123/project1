@@ -24,8 +24,6 @@ class DistrictController extends BaseController
     }
 
     public function actionAll($pid = 1, $cid = 0, $aid = 0) {
-        $cid = $_GET['cid'];
-        $aid = $_GET['aid'];
         $cities = District::all($pid);
         $value = [0, 0];
         if (!empty($cid) || !empty($aid)) {

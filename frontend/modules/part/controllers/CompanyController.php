@@ -51,7 +51,6 @@ class CompanyController extends \frontend\controllers\BaseController
         $company = $user->company;
         if (!$company || $company->status != Company::STATUS_PASS)
             return Tool::reJson(null, "您的企业资料未审核通过，暂时无法保存招聘信息", Tool::FAIL);
-        $jid = $_GET['jid'];
         $res = Job::saveJob($_POST, $this->getPost("tmp", 0) > 0, $jid);
         if ($res === true)
             return Tool::reJson(["jid" => $jid], "修改招聘信息成功");

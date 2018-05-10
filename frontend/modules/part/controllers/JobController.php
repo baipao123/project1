@@ -20,7 +20,6 @@ use Yii;
 class JobController extends \frontend\controllers\BaseController
 {
     public function actionInfo($jid = 1) {
-//        $jid = $_GET['id'];
         $job = Job::findOne($jid);
         if (!$job)
             return Tool::reJson(null, "岗位不存在", Tool::FAIL);

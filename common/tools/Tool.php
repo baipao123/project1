@@ -16,11 +16,11 @@ class Tool
     const FAIL = 1;
 
     public static function reJson($data = null, $text = "", $code = Tool::SUCCESS) {
-        return json_encode([
+        return [
             "code" => (int)$code,
             "msg"  => $text,
             "data" => $data,
-        ]);
+        ];
     }
 
 }

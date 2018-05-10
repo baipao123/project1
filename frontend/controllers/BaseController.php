@@ -8,7 +8,7 @@ use frontend\actions\base\ErrorAction;
 use frontend\models\UserIdentify;
 use Yii;
 use yii\helpers\ArrayHelper;
-use yii\base\Controller;
+use yii\rest\Controller;
 
 
 class BaseController extends Controller
@@ -24,6 +24,7 @@ class BaseController extends Controller
             echo Tool::reJson(null, "请先登录", Tool::NEED_LOGIN);
             return false;
         }
+        Yii::$app->response->format = 'json';
         return parent::beforeAction($action);
     }
 
