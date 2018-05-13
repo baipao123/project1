@@ -4,11 +4,12 @@ const qiNiu = require("./../../utils/qiniuUploader")
 
 Page({
     data: {
-        user: {},
-        company: {
-            aid: 0,
-            cid: 0,
+        user: {
+            area_id: 0,
+            city_id: 0,
             cityStr: "请选择",
+        },
+        company: {
             positionStr: "",
         },
         type: 0,
@@ -37,9 +38,9 @@ Page({
         console.log(region)
         if (region.isSelect) {
             this.setData({
-                "company.cid": region.cid,
-                "company.aid": region.aid,
-                "company.cityStr": region.cityStr
+                "user.city_id": region.cid,
+                "user.area_id": region.aid,
+                "user.cityStr": region.cityStr
             })
             app.resetRegion()
         }
@@ -161,7 +162,7 @@ Page({
     goSelectDistrict: function (e) {
         let that = this
         wx.navigateTo({
-            url: "/pages/districtSelect/districtSelect?aid" + that.data.company.aid + "&cid=" + that.data.company.cid
+            url: "/pages/districtSelect/districtSelect?aid" + that.data.user.area_id + "&cid=" + that.data.user.city_id
         })
     },
 })

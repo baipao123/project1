@@ -104,6 +104,11 @@ class UserController extends \frontend\controllers\BaseController
             $user->phone = $value;
             $user->save();
             return Tool::reJson(["user" => $user->info()]);
+        } else if ($name == 'city') {
+            $user->city_id = $this->getPost('cid', 0);
+            $user->area_id = $this->getPost('aid', 0);
+            $user->save();
+            return Tool::reJson(["user" => $user->info()]);
         } else {
             if ($user->type <= User::TYPE_USER || !$company = $user->company)
                 return Tool::reJson(null, "您还不是招聘者", Tool::FAIL);

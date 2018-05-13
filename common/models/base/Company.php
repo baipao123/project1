@@ -9,8 +9,6 @@ use Yii;
  *
  * @property int $uid
  * @property int $type
- * @property int $cid
- * @property int $aid
  * @property string $name
  * @property string $icon
  * @property string $cover
@@ -40,7 +38,7 @@ class Company extends \yii\db\ActiveRecord
     {
         return [
             [['uid'], 'required'],
-            [['uid', 'cid', 'aid', 'created_at', 'updated_at', 'type', 'status'], 'integer'],
+            [['uid', 'created_at', 'updated_at', 'type', 'status'], 'integer'],
             [['description','tips'], 'string'],
             [['name', 'icon', 'cover', 'position', 'latitude', 'longitude'], 'string', 'max' => 255],
             [['uid'], 'unique'],
@@ -55,8 +53,6 @@ class Company extends \yii\db\ActiveRecord
         return [
             'uid' => 'Uid',
             'type' => 'Type',
-            'cid' => 'Cid',
-            'aid' => 'Aid',
             'name' => 'Name',
             'icon' => 'Icon',
             'cover' => 'Cover',

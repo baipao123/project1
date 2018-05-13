@@ -16,8 +16,6 @@ use yii\helpers\ArrayHelper;
 /**
  * @property CompanyRecord $record
  * @property CompanyRecord $refuseRecord
- * @property District $city
- * @property District $area
  * */
 class Company extends \common\models\base\Company
 {
@@ -35,15 +33,6 @@ class Company extends \common\models\base\Company
 
     public function getRefuseRecord() {
         return $this->hasOne(CompanyRecord::className(), ["uid" => "uid"])->andWhere(["status" => self::STATUS_FORBID])->orderBy("created_at desc");
-    }
-
-
-    public function getCity() {
-        return $this->hasOne(District::className(), ["id" => "cid"]);
-    }
-
-    public function getArea() {
-        return $this->hasOne(District::className(), ["id" => "aid"]);
     }
 
     public static function Bind($uid, $data, $isAdd = false) {
@@ -94,8 +83,6 @@ class Company extends \common\models\base\Company
             return "请上传认证资料";
         if ($company->status != self::STATUS_PASS) {
             $company->type = $type;
-            $company->cid = $cid;
-            $company->aid = $aid;
             $company->uid = $uid;
             $company->name = $name;
             $company->icon = $icon;
@@ -116,8 +103,6 @@ class Company extends \common\models\base\Company
         }
         $record = new CompanyRecord;
         $record->type = $type;
-        $record->cid = $cid;
-        $record->aid = $aid;
         $record->name = $name;
         $record->icon = $icon;
         $record->cover = $cover;
@@ -153,6 +138,8 @@ class Company extends \common\models\base\Company
         }
 
         if ($isAdd) {
+            $user->city_id = $cid;
+            $user->area_id = $aid;
             $user->type = $type;
             $user->phone = $phone;
             $user->save();
@@ -172,19 +159,10 @@ class Company extends \common\models\base\Company
         return $this->cover;
     }
 
-    public function cityStr() {
-        $str = "";
-        if ($this->city)
-            $str = $this->city->name;
-        if ($this->area)
-            $str .= " " . $this->area->name;
-        return trim($str);
-    }
-
     public function refuseReason() {
         if ($this->status != self::STATUS_FORBID)
             return "";
-        return $this->refuserecord ? $this->refuserecord->reason : "";
+        return $this->refuseRecord ? $this->refuseRecord->reason : "";
     }
 
     public function info() {
@@ -192,9 +170,6 @@ class Company extends \common\models\base\Company
         return [
             "name"         => $this->name,
             "type"         => $this->type,
-            "cid"          => $this->cid,
-            "aid"          => $this->aid,
-            "cityStr"      => $this->cityStr(),
             "icon"         => Img::format($this->icon()),
             "cover"        => Img::format($this->cover()),
             "status"       => $this->status,

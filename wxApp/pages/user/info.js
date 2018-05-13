@@ -31,6 +31,33 @@ Page({
             })
         })
     },
+    onShow: function () {
+        let region = app.globalData.region,
+            that = this
+        console.log(region)
+        if (region.isSelect) {
+            this.setData({
+                "user.city_id": region.cid,
+                "user.area_id": region.aid,
+                "user.cityStr": region.cityStr
+            })
+            app.resetRegion()
+            wx.showModal({
+                title: '提示',
+                content: '修改地区为 ' + region.cityStr + ' ?',
+                success: function (res) {
+                    if (res.confirm) {
+                        let data = {
+                            cid: region.cid,
+                            aid: region.aid,
+                            name: 'city'
+                        }
+                        that.edit(data)
+                    }
+                }
+            })
+        }
+    },
     prompt: function (e) {
         let that = this,
             name = e.currentTarget.dataset.name,
@@ -142,6 +169,14 @@ Page({
                     position: data
                 })
             }
+        })
+    },
+    choseRegion: function () {
+        let that = this,
+            aid = that.data.user.area_id,
+            cid = that.data.user.city_id
+        wx.navigateTo({
+            url: "/pages/districtSelect/districtSelect?aid" + aid + "&cid=" + cid
         })
     }
 })

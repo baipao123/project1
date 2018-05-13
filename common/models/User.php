@@ -9,6 +9,8 @@ use Yii;
 
 /**
  * @property Company $company
+ * @property District $city
+ * @property District $area
  * */
 class User extends \common\models\base\User
 {
@@ -18,6 +20,14 @@ class User extends \common\models\base\User
 
     public function getCompany() {
         return $this->hasOne(Company::className(), ["uid" => "id"]);
+    }
+
+    public function getCity() {
+        return $this->hasOne(District::className(), ["id" => "city_id"]);
+    }
+
+    public function getArea() {
+        return $this->hasOne(District::className(), ["id" => "area_id"]);
     }
 
     /**
@@ -55,6 +65,19 @@ class User extends \common\models\base\User
         return false;
     }
 
+
+    public function cityStr() {
+        $str = "";
+        if ($this->city) {
+            Yii::warning($this->city);
+            $str = $this->city->name;
+        }
+        if ($this->area)
+            $str .= " " . $this->area->name;
+        return trim($str);
+    }
+
+
     public function info() {
         return [
             "uid"      => $this->id,
@@ -63,6 +86,9 @@ class User extends \common\models\base\User
             "avatar"   => Img::format($this->avatar),
             "phone"    => $this->phone(),
             "gender"   => $this->gender,
+            "city_id"  => $this->city_id,
+            "area_id"  => $this->area_id,
+            "cityStr"  => $this->cityStr()
         ];
     }
 
