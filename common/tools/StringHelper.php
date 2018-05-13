@@ -55,7 +55,7 @@ class StringHelper extends \yii\helpers\StringHelper{
     }
 
     public static function isRealName($str) {
-        return (bool)preg_match('/^([\x80-\xff]){2,7}$/', $str);
+        return (bool)preg_match('/^[\x00-\xff]{2,}$/', $str);
     }
 
     public static function isMobile($mobile) {

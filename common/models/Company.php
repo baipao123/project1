@@ -199,6 +199,7 @@ class Company extends \common\models\base\Company
             "cover"        => Img::format($this->cover()),
             "status"       => $this->status,
             "description"  => $this->description,
+            "tips"         => $this->tips,
             "position"     => [
                 "longitude" => $this->longitude,
                 "latitude"  => $this->latitude,

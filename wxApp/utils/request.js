@@ -32,14 +32,18 @@ const request = (method, url, params, success, fail, complete) => {
                             icon: 'success'
                         })
                     }
-                    success(res.data.data, res.data);
+                    if (typeof success == 'function')
+                        success(res.data.data, res.data);
                 } else if (res.data.code == -1)
                     getApp().login();
-                else
+                else {
                     wx.showToast({
                         title: res.data.msg,
                         icon: 'none'
                     })
+                    if (typeof fail == 'function')
+                        fail(res.data)
+                }
             } else {
                 wx.showToast({
                     title: "500,服务器解析异常",

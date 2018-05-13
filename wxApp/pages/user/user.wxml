@@ -12,7 +12,7 @@
             </navigator>
         </block>
 
-        <view class="weui-flex top bg-green">
+        <navigator url="/pages/user/info" class="weui-flex top bg-green">
             <view class="weui-flex__item header">
                 <block wx:if="{{isUser}}">
                     <image src="{{user.avatar}}"></image>
@@ -21,25 +21,12 @@
                     <image src="{{domain + company.icon}}"></image>
                 </block>
             </view>
-            <view class="weui-flex__item right text-white text-m">
-                <view class="weui-flex__item">
-                    <view class="weui-flex__item">{{isUser ? user.username : company.name}}</view>
-                </view>
-                <navigator class="weui-flex__item phone" url="/pages/user/phone">
-                    <view>{{user.phone}}
-                        <span class="myIcon icon-edit text-white"></span>
-                    </view>
-                    <navigator class="weui-flex__item" url="/pages/job/add" wx:if="{{isUser}}">
-                        去兼职
-                        <span class="myIcon icon-right" style="color:#fff;margin:0"></span>
-                    </navigator>
-                    <navigator class="weui-flex__item" url="/pages/job/add" wx:else>
-                        发布招聘信息
-                        <span class="myIcon icon-right" style="color:#fff;margin:0"></span>
-                    </navigator>
-                </navigator>
+            <view class="weui-flex__item right text-white text-m" style="max-width:530rpx;">
+                <view class="weui-flex__item text-line">{{isUser ? user.username : company.name}}</view>
+                <view class="weui-flex__item phone">{{user.phone}}</view>
             </view>
-        </view>
+            <view class="weui-flex__item a-c" style="max-width:60rpx;line-height:150rpx;"><span class="myIcon icon-right text-white" style="color:#fff;margin:0;"></span></view>
+        </navigator>
     </view>
 
     <scroll-view class="list">
@@ -49,6 +36,14 @@
                 <view class="weui-cell__bd"><span class="myIcon icon-city"></span>我的城市
                 </view>
                 <view class="weui-cell__ft weui-cell__ft_in-access">请选择</view>
+            </navigator>
+            <navigator class="weui-flex__item" url="/pages/job/add" wx:if="{{isUser}}">
+                去兼职
+                <span class="myIcon icon-right" style="color:#fff;margin:0"></span>
+            </navigator>
+            <navigator class="weui-flex__item" url="/pages/job/add" wx:else>
+                发布招聘信息
+                <span class="myIcon icon-right" style="color:#fff;margin:0"></span>
             </navigator>
             <block wx:if="{{isUser}}">
                 <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">

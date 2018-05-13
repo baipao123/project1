@@ -1,8 +1,8 @@
 {
   "pages": [
     "pages/user/user",
+    "pages/user/info",
     "pages/index/index",
-
     "pages/chose/user",
     "pages/chose/company",
     "pages/districtSelect/districtSelect",

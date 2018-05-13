@@ -1,0 +1,60 @@
+<view class="page full {{isPrompt ? 'isPrompt' : ''}}" style="padding-bottom:100rpx;">
+    <view hidden="{{isPrompt}}">
+        <image src="{{domain+company.cover}}" wx:if="{{isCompany}}" style="width:750rpx;height:375rpx;" bindtap="uploadCover"></image>
+        <view class="weui-cells__title">基本信息</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap="prompt" data-name="name" data-title="企业名称" wx:if="{{isCompany}}">
+                <view class="weui-cell__bd">企业名称</view>
+                <view class="weui-cell__ft weui-cell__ft_in-access text-line r">{{company.name}}</view>
+            </view>
+            <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" wx:if="{{isCompany}}" bindtap="uploadIcon">
+                <view class="weui-cell__bd">企业Logo</view>
+                <view class="weui-cell__ft weui-cell__ft_in-access"><image class="icon" src="{{domain+company.icon}}"></image></view>
+            </view>
+            <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap="prompt" data-name="realname" data-title='{{isCompany ? "联系人" : "姓名"}}'>
+                <view class="weui-cell__bd">{{isCompany ? "联系人" : "姓名"}}</view>
+                <view class="weui-cell__ft weui-cell__ft_in-access">{{user.username}}</view>
+            </view>
+            <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap="prompt" data-name="phone" data-title="联系方式">
+                <view class="weui-cell__bd">联系方式</view>
+                <view class="weui-cell__ft weui-cell__ft_in-access">{{user.phone}}</view>
+            </view>
+            <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap="prompt" data-name="description" data-title="简介" wx:if="{{isCompany}}">
+                <view class="weui-cell__bd">简介</view>
+                <view class="weui-cell__ft weui-cell__ft_in-access text-line r">{{company.description}}</view>
+            </view>
+            <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" wx:if="{{isCompany}}" bindtap="prompt" data-name="tips" data-title="招聘提示">
+                <view class="weui-cell__bd">招聘提示</view>
+                <view class="weui-cell__ft weui-cell__ft_in-access text-line r">{{company.tips}}</view>
+            </view>
+        </view>
+        <view wx:if="{{isCompany}}" bindtap="prompt" data-name="position" data-title="企业地址">
+            <view class="weui-cells__title">企业地址</view>
+            <view class="weui-cells weui-cells_after-title" style="padding-bottom:30rpx;">
+                <view class="weui-cell__bd" style="padding:15px;">{{company.position.address}}</view>
+                <map longitude="{{company.position.longitude}}" latitude="{{company.position.latitude}}" show-location="true"  bindtap="showWorkPosition" style="width:100%;">
+                </map>
+            </view>
+        </view>
+    </view>
+    <view class="main" hidden="{{!isPrompt}}">
+        <view class="contain" hover-stop-propagation="true">
+            <form bindsubmit="submitPrompt"  report-submit="true">
+                <view class="title a-c text-line">{{prompt.title}}</view>
+                <view class="body">
+                    <textarea style="height:3.3em" name="value" value="{{prompt.value}}"></textarea>
+                    <view wx:if="isPosition">
+                        <map longitude="{{position.longitude || company.position.longitude}}" latitude="{{position.latitude || company.position.latitude}}" show-location="true"  bindtap="chosePosition" style="width:100%;">
+                        </map>
+                        <input hidden="true" name="longitude" value="{{position.longitude || company.position.longitude}}" />
+                        <input hidden="true" name="latitude" value="{{position.latitude || company.position.latitude}}" />
+                    </view>
+                </view>
+                <view class="footer weui-flex">
+                    <view class="weui-flex__item a-c cancel" bindtap="cancel" hover-stop-propagation="true">取消</view>
+                    <button class="weui-flex__item a-c text-green" form-type="submit">确定</button>
+                </view>
+            </form>
+        </view>
+    </view>
+</view>

@@ -74,6 +74,6 @@ class BaseController extends Controller
 
     public function actionQiniuToken() {
         $token = QiNiu::getToken();
-        return json_encode(["uptoken" => $token]);
+        return ["uptoken" => $token];
     }
 }

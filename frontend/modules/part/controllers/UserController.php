@@ -85,4 +85,46 @@ class UserController extends \frontend\controllers\BaseController
 
     }
 
+
+    public function actionEdit() {
+        $name = $this->getPost("name", "");
+        $value = $this->getPost("value", "");
+        $user = $this->getUser();
+
+        if ($name == 'realname') {
+            Yii::warning(StringHelper::isRealName($value));
+            if (!StringHelper::isRealName($value))
+                return Tool::reJson(null, "请输入正确的姓名", Tool::FAIL);
+            $user->realname = $value;
+            $user->save();
+            return Tool::reJson(["user" => $user->info()]);
+        } else if ($name == 'phone') {
+            if (!StringHelper::isMobile($value))
+                return Tool::reJson(null, "请输入正确的手机号", Tool::FAIL);
+            $user->phone = $value;
+            $user->save();
+            return Tool::reJson(["user" => $user->info()]);
+        } else {
+            if ($user->type <= User::TYPE_USER || !$company = $user->company)
+                return Tool::reJson(null, "您还不是招聘者", Tool::FAIL);
+
+            if (in_array($name, ["name", "description", "tips", "icon", "cover"])) {
+                $company->$name = $value;
+                $company->save();
+                return Tool::reJson(["company" => $company->info()]);
+            } else if ($name == 'position') {
+                $company->position = $value;
+                $latitude = $this->getPost('latitude', '');
+                $longitude = $this->getPost('longitude', '');
+                if (!empty($latitude) && !empty($longitude)) {
+                    $company->latitude = $latitude;
+                    $company->longitude = $longitude;
+                }
+                $company->save();
+                return Tool::reJson(["company" => $company->info()]);
+            } else
+                return Tool::reJson(null, "无修改项目", Tool::FAIL);
+        }
+
+    }
 }

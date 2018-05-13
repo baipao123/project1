@@ -1,5 +1,5 @@
 <view class="page full">
-    <form bindsubmit="submit">
+    <form bindsubmit="submit" report-submit="true">
         <scroll-view class="body" scroll-y="true" lower-threshold="50" enable-back-to-top="true" style="height:{{(windowHeight - 70)}}px">
             <view class="weui-cells__title">基本信息</view>
             <view class="weui-cells weui-cells_after-title">

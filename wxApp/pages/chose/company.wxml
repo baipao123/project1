@@ -14,7 +14,7 @@
         <button class="weui-btn" type="default" bindtap="useBindPhone">使用其他手机号</button>
     </view>
     <view wx:else>
-        <form bindsubmit="bindCompany">
+        <form bindsubmit="bindCompany"  report-submit="true">
             <view class="weui-cells weui-cells_after-title">
                 <input type="text" hidden="{{true}}" name="icon" value="{{company.icon}}"/>
                 <input type="text" hidden="{{true}}" name="cover" value="{{company.cover}}"/>
