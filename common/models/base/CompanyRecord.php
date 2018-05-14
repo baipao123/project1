@@ -10,8 +10,6 @@ use Yii;
  * @property int $id
  * @property string $formId
  * @property int $type
- * @property int $cid
- * @property int $aid
  * @property int $uid
  * @property string $name
  * @property string $icon
@@ -41,7 +39,7 @@ class CompanyRecord extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cid', 'aid', 'uid', 'created_at', 'updated_at', 'type', 'status'], 'integer'],
+            [['uid', 'created_at', 'updated_at', 'type', 'status'], 'integer'],
             [['description'], 'string'],
             [['formId', 'name', 'icon', 'cover', 'position', 'latitude', 'longitude', 'reason'], 'string', 'max' => 255],
         ];
@@ -56,8 +54,6 @@ class CompanyRecord extends \yii\db\ActiveRecord
             'id' => 'ID',
             'formId' => 'Form ID',
             'type' => 'Type',
-            'cid' => 'Cid',
-            'aid' => 'Aid',
             'uid' => 'Uid',
             'name' => 'Name',
             'icon' => 'Icon',

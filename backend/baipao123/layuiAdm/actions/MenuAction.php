@@ -23,6 +23,20 @@ class MenuAction extends ApiAction
 			"href": "/site/home",
 			"spread": false
 		},
+        {
+			"title": "企业管理",
+			"icon": "icon-icon10",
+			"href": "",
+			"spread": true,
+			"children": [
+				{
+					"title": "待审核列表",
+					"icon": "&#xe612;",
+					"href": "/company/verify-list",
+					"spread": false
+				}
+			]
+		},
 		{
 			"title": "账户管理",
 			"icon": "icon-icon10",

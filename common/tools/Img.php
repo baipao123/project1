@@ -15,7 +15,7 @@ class Img
     public static function format($path, $width = 0, $height = 0, $isHost = false) {
         if (strpos($path, "http") === 0)
             return $path;
-        $src = $isHost ? Yii::$app->params['qiniu']['domain'] . ltrim($path, "/") : ltrim($path, "/");
+        $src = $isHost ? Yii::$app->params['qiniu']['domain'] . "/" . ltrim($path, "/") : ltrim($path, "/");
         if (empty($width) && empty($height))
             return $src;
         if (is_int(strpos($src, "?")))

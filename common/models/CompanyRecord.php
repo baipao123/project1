@@ -8,6 +8,7 @@
 
 namespace common\models;
 
+use common\tools\Img;
 use Yii;
 
 /**
@@ -18,7 +19,7 @@ class CompanyRecord extends \common\models\base\CompanyRecord
 {
 
     public function getAttaches() {
-        return $this->hasMany(Attach::className(), ["id" => "tid"])->andWhere(["type" => Attach::COMPANY_RECORD, "status" => Attach::STATUS_ON]);
+        return $this->hasMany(Attach::className(), ["tid" => "id"])->andWhere(["type" => Attach::COMPANY_RECORD, "status" => Attach::STATUS_ON]);
     }
 
     public function getCompany() {
@@ -26,7 +27,7 @@ class CompanyRecord extends \common\models\base\CompanyRecord
     }
 
     public function pass() {
-        if ($this->Status != Company::STATUS_VERIFY)
+        if ($this->status != Company::STATUS_VERIFY)
             return "已处理";
         $this->status = Company::STATUS_PASS;
         $this->updated_at = time();
@@ -54,7 +55,6 @@ class CompanyRecord extends \common\models\base\CompanyRecord
         if (!empty($this->latitude) && !empty($this->longitude) && !empty($this->accuracy)) {
             $company->latitude = $this->latitude;
             $company->longitude = $this->longitude;
-            $company->accuracy = $this->accuracy;
         }
         if (!empty($this->description))
             $company->description = $this->description;
@@ -66,4 +66,11 @@ class CompanyRecord extends \common\models\base\CompanyRecord
         return true;
     }
 
+    public function icon() {
+        return Img::format($this->icon, 0, 0, true);
+    }
+
+    public function cover(){
+        return Img::format($this->cover, 0, 0, true);
+    }
 }

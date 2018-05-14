@@ -8,12 +8,24 @@
 
 namespace backend\controllers;
 
+use Yii;
+use common\models\Company;
+use common\models\CompanyRecord;
+use yii\data\Pagination;
 
 class CompanyController extends BaseController
 {
+    public $basicActions = ["verify"];
 
     public function actionVerifyList() {
-
+        $query = CompanyRecord::find()->where(["status" => Company::STATUS_VERIFY]);
+        $count = $query->count();
+        $pagination = new Pagination(["totalCount" => $count]);
+        $records = $query->offset($pagination->getOffset())->limit($pagination->getLimit())->all();
+        return $this->render("verify-list", [
+            "records"    => $records,
+            "pagination" => $pagination,
+        ]);
     }
 
     public function actionList() {
@@ -22,6 +34,39 @@ class CompanyController extends BaseController
 
     public function actionStatus($id, $status) {
 
+    }
+
+    public function actionVerify($id, $type) {
+        $record = CompanyRecord::findOne($id);
+        if (!$record || $record->status != Company::STATUS_VERIFY) {
+            Yii::$app->session->setFlash("danger", "待审核记录不存在");
+            return $this->render("../layouts/none");
+        }
+        if ($type == 1) {
+            $res = $record->pass();
+            if ($res === true)
+                Yii::$app->session->setFlash("success", "已成功通过本条记录");
+            else
+                Yii::$app->session->setFlash("danger", $res === false ? "通过失败" : $res);
+            return $this->render("../layouts/none");
+        } else if ($type == 2) {
+            if (Yii::$app->request->isPost) {
+                $reason = Yii::$app->request->post("reason", "");
+                $record->status = Company::STATUS_FORBID;
+                $record->reason = $reason;
+                $record->updated_at = time();
+                $record->save();
+                $company = $record->company;
+                $company->status = Company::STATUS_FORBID;
+                $company->updated_at = time();
+                $company->save();
+                Yii::$app->session->setFlash("danger", "已成功拒绝本条记录");
+                return $this->render("../layouts/none");
+            }
+        }
+        return $this->render("verify-refuse", [
+            "record" => $record
+        ]);
     }
 
 }

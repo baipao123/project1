@@ -102,6 +102,7 @@ class Company extends \common\models\base\Company
             }
         }
         $record = new CompanyRecord;
+        $record->uid = $uid;
         $record->type = $type;
         $record->name = $name;
         $record->icon = $icon;
