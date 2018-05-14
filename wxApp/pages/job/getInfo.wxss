@@ -1,0 +1,39 @@
+.header {
+    height: 150rpx;
+    border-bottom: 1rpx solid #eee;
+    margin-bottom: 30rpx;
+}
+
+.header .image {
+    max-width: 150rpx;
+    padding: 15rpx;
+}
+
+.header .image image {
+    width: 120rpx;
+    height: 120rpx;
+    border-radius: 100%;
+}
+
+.header .title {
+    font-size: 34rpx;
+    line-height: 100rpx;
+}
+
+.header .title .desc {
+    font-size: 26rpx;
+    line-height: 30rpx;
+}
+
+.header .right {
+    max-width: 60rpx;
+    line-height: 150rpx;
+}
+
+.qrCode {
+    margin-bottom: 30rpx;
+}
+
+.qrCode .qrImg {
+    margin: 0 auto;
+}

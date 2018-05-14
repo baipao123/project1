@@ -80,9 +80,10 @@ class Job extends \common\models\base\Job
                 "userApplyNum" => $job->getApplyNum(),
                 "userPassNum"  => $job->getPassNum(),
                 "num"          => $job->num,
+                "status"       => $job->status,
                 "pushAt"       => date("Y-m-d", $job->created_at),
                 "user"         => [
-                    "isOwner" => $uid == $job->uid,
+                    "isOwner" => false,//$uid == $job->uid,
                     "isLike"  => in_array($job->id, $likedJids),
                     "status"  => $uJob ? $uJob->status : 0,
                     "uJid"    => $uJob ? $uJob->id : 0
@@ -296,4 +297,16 @@ class Job extends \common\models\base\Job
         return self::formatJobs($jobs, $uid);
     }
 
+    public function sampleInfo() {
+        return [
+            "id"     => $this->id,
+            "name"   => $this->name,
+            "status" => $this->status,
+            "tStart" => $this->workTime(1),
+            "tEnd"   => $this->workTime(2),
+            "date"   => $this->workDate(),
+            "icon"   => $this->company->icon,
+            "prize"  => $this->prizeStr()
+        ];
+    }
 }

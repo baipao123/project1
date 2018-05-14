@@ -12,7 +12,7 @@ Page({
         domain:app.globalData.qiNiuDomain
     },
     onLoad: function (options) {
-        let jid = options && options.hasOwnProperty("id") ? options.id : 1,
+        let jid = options && options.hasOwnProperty("id") ? options.id : 0,
             that = this
         that.setData({
             user: app.globalData.user,

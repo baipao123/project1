@@ -156,7 +156,7 @@ class Company extends \common\models\base\Company
                 ->offset(($page - 1) * $limit)->limit($limit)
                 ->orderBy("created_at desc");
             return $query->all();
-        }, 30);
+        }, 10);
         /* @var $jobs Job[] */
         return Job::formatJobs($jobs, $uid);
     }

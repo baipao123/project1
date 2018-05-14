@@ -1,0 +1,34 @@
+<view class="page full">
+    <navigator class="header weui-flex bg-white" url="/pages/job/info?id={{job.id}}">
+        <view class="weui-flex__item image">
+            <image src="{{domain+job.icon}}"></image>
+        </view>
+        <view class="weui-flex__item title">
+            <view class="text-line">{{job.name}}</view>
+            <view class="text-line text-grey desc">
+                <view class="weui-flex">
+                    <view class="weui-flex__item"><span class="myIcon icon-price icon-13"></span>{{job.prize}}
+                    </view>
+                    <view class="weui-flex__item a-r">{{job.date}}</view>
+                </view>
+            </view>
+        </view>
+        <view class="weui-flex__item a-c right">
+            <span class="myIcon icon-right"></span>
+        </view>
+    </navigator>
+    <view class="qrCode bg-white" wx:if="{{uJob.status==1}}">
+        <canvas class="qrImg" canvas-id="qrcode" style="width:{{canvasWidth}}px;height:{{canvasWidth}}px">
+        </canvas>
+        <view class="text-grey a-c text-m">入职时请出示二维码</view>
+    </view>
+    <view class="fail" wx:elif="{{uJob.status==9}}">
+        
+    </view>
+    <view class="clock" wx:elif="{{uJob.status==2}}">
+
+    </view>
+    <view class="record" wx:if="{{uJob.status==2 || uJob.status==10}}">
+
+    </view>
+</view>

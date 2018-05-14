@@ -20,11 +20,11 @@ class UserHasJob extends \common\models\base\UserHasJob
     const END = 10;
 
     public function getJob() {
-        return $this->hasOne(Job::className(), ["jid" => "id"]);
+        return $this->hasOne(Job::className(), ["id" => "jid"]);
     }
 
     public function getUser() {
-        return $this->hasOne(User::className(), ["uid" => "id"]);
+        return $this->hasOne(User::className(), ["id" => "uid"]);
     }
 
     public static function isOn($uid, $jid) {
@@ -57,6 +57,21 @@ class UserHasJob extends \common\models\base\UserHasJob
             "phone"  => $user->phone,
             "time"   => date("Y-m-d H:i:s", $this->created_at),
             "status" => $this->status
+        ];
+    }
+
+    public function info() {
+        return [
+            "id"       => $this->id,
+            "jid"        => $this->jid,
+            "uid"        => $this->uid,
+            "status"     => $this->status,
+            "key"        => $this->auth_key,
+            "content"    => $this->content,
+            "created_at" => date("Y-m-d H:i:s", $this->created_at),
+            "auth_at"    => date("Y-m-d H:i:s", $this->auth_at),
+            "end_at"     => date("Y-m-d H:i:s", $this->end_at),
+            "refuse_at"  => date("Y-m-d H:i:s", $this->updated_at),
         ];
     }
 }

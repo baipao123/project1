@@ -8,7 +8,8 @@
     "pages/districtSelect/districtSelect",
     "pages/job/add",
     "pages/job/info",
-    "pages/job/userList"
+    "pages/job/userList",
+    "pages/job/getInfo"
   ],
   "window": {
     "backgroundTextStyle": "light",

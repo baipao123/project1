@@ -15,40 +15,51 @@ use Yii;
  * @property int $status
  * @property string $content
  * @property int $created_at
+ * @property int $auth_at
+ * @property int $end_at
+ * @property int $updated_at
  */
 class UserHasJob extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
-    public static function tableName() {
+    public static function tableName()
+    {
         return 'user_has_job';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return [
-            [['jid', 'uid', 'created_at', 'status'], 'integer'],
+            [['jid', 'uid', 'created_at', 'auth_at', 'end_at', 'updated_at'], 'integer'],
+            [['content'], 'required'],
             [['content'], 'string'],
-            [['auth_key', 'formId'], 'string', 'max' => 255],
+            [['formId', 'auth_key'], 'string', 'max' => 255],
+            [['status'], 'string', 'max' => 1],
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return [
-            'id'         => 'ID',
-            'formId'     => 'FormId',
-            'jid'        => 'Jid',
-            'uid'        => 'Uid',
-            'auth_key'   => 'Auth Key',
-            'status'     => 'Status',
-            'content'    => 'Content',
+            'id' => 'ID',
+            'formId' => 'Form ID',
+            'jid' => 'Jid',
+            'uid' => 'Uid',
+            'auth_key' => 'Auth Key',
+            'status' => 'Status',
+            'content' => 'Content',
             'created_at' => 'Created At',
+            'auth_at' => 'Auth At',
+            'end_at' => 'End At',
+            'updated_at' => 'Updated At',
         ];
     }
 }

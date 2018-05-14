@@ -2,7 +2,7 @@
     <scroll-view>
         <view wx:for="{{jobs}}" wx:key="key">
             <view class="weui-panel weui-panel_access" style="margin-bottom:30rpx;">
-                <navigator url="/pages/job/info?id={{item.id}}" class="weui-panel__bd">
+                <navigator url="{{!item.user.isOwner && item.user.uJid>0 ? '/pages/job/getInfo?id='+item.user.uJid:'/pages/job/info?id='+item.id}}" class="weui-panel__bd">
                     <view class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
                         <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
                             <image class="weui-media-box__thumb" src="{{domain+item.company.icon}}"/>
@@ -10,7 +10,31 @@
                         <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
                             <view class="weui-media-box__title">{{item.name}}</view>
                             <view class="weui-media-box__desc" style="line-height:1.5;">
-                                <view>{{item.cityStr}}</view>
+                                <view class="weui-flex">
+                                    <view class="weui-flex__item a-l">{{item.cityStr}}</view>
+                                    <view class="weui-flex__item a-r">
+                                        <block wx:if="{{item.user.isOwner}}">
+                                            <block wx:if="{{item.status==1}}">
+                                                <text class="text-green">已上架</text>
+                                            </block>
+                                            <block wx:elif="{{item.status==2}}">
+                                                <text class="text-red">已下架</text>
+                                            </block>
+                                        </block>
+                                        <block wx:elif="{{item.user.status==1}}">
+                                            <text class="text-blue">已报名</text>
+                                        </block>
+                                        <block wx:elif="{{item.user.status==2}}">
+                                            <text class="text-green">工作中</text>
+                                        </block>
+                                        <block wx:elif="{{item.user.status==9}}">
+                                            <text class="text-red">被拒绝</text>
+                                        </block>
+                                        <block wx:elif="{{item.user.status==10}}">
+                                            <text class="text-orange">已结束</text>
+                                        </block>
+                                    </view>
+                                </view>
                                 <view class="weui-flex">
                                     <view class="weui-flex__item text-green"><span class="myIcon icon-price icon-13"></span>{{item.prize}}</view>
                                     <view class="weui-flex__item-2 a-r">

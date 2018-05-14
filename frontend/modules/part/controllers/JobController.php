@@ -140,4 +140,12 @@ class JobController extends \frontend\controllers\BaseController
             return Tool::reJson(1, $res == JobFollow::CancelFollow ? "取消关注成功" : "关注成功");
         return Tool::reJson(null, "操作失败", Tool::FAIL);
     }
+
+    public function actionMyJob($uJid = 0) {
+        $uid = $this->user_id();
+        $uJob = UserHasJob::findOne($uJid);
+        if (!$uJob || $uJob->uid != $uid)
+            return Tool::reJson(null, "未发现任务报名记录", Tool::FAIL);
+        return Tool::reJson(["job" => $uJob->job->sampleInfo(), "uJob" => $uJob->info()]);
+    }
 }
