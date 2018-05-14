@@ -36,7 +36,7 @@ class BaseController extends Controller
      * @return UserIdentify
      */
     public function getUser() {
-        return Yii::$app->user->getIdentity();
+        return Yii::$app->user->getIdentity() ? Yii::$app->user->getIdentity() : new UserIdentify();
     }
 
     public function user_id(){

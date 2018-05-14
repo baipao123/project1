@@ -147,8 +147,18 @@ class Company extends \common\models\base\Company
         return true;
     }
 
-    public function jobs() {
-        return [];
+    public function jobs($page = 1, $limit = 10) {
+        $uid = $this->uid;
+        $jobs = Yii::$app->db->cache(function () use ($uid, $page, $limit) {
+            $query = Job::find()
+                ->where(["uid" => $uid])
+                ->andWhere(["<>", "status", Job::DEL])
+                ->offset(($page - 1) * $limit)->limit($limit)
+                ->orderBy("created_at desc");
+            return $query->all();
+        }, 30);
+        /* @var $jobs Job[] */
+        return Job::formatJobs($jobs, $uid);
     }
 
     public function icon() {

@@ -10,9 +10,9 @@
                     <view class="weui-cell__ft weui-cell__ft_in-access" style="width:100%;" bindtap="goSelectDistrict"
                           data-cid="{{job.city_id || company.cid}}"
                           data-aid="{{job.area_id != undefined ? job.area_id : company.aid}}">
-                        {{ job.cityStr || company.cityStr}}
-                        <input type="number" name="city_id" value="{{job.city_id || company.cid}}" hidden="true"/>
-                        <input type="number" name="area_id" value="{{job.area_id != undefined ? job.area_id : company.aid}}"
+                        {{ job.cityStr || user.cityStr}}
+                        <input type="number" name="city_id" value="{{job.city_id || user.city_id}}" hidden="true"/>
+                        <input type="number" name="area_id" value="{{job.area_id != undefined ? job.area_id : user.area_id}}"
                                hidden="true"/>
                     </view>
                 </view>

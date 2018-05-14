@@ -69,7 +69,6 @@ class User extends \common\models\base\User
     public function cityStr() {
         $str = "";
         if ($this->city) {
-            Yii::warning($this->city);
             $str = $this->city->name;
         }
         if ($this->area)
@@ -96,5 +95,25 @@ class User extends \common\models\base\User
         if (empty($this->phone) || $full)
             return $this->phone;
         return substr_replace($this->phone, '****', 3, 4);
+    }
+
+    public function jobs($page = 1, $limit = 10) {
+        if ($this->type == 0)
+            return [];
+        if ($this->type == self::TYPE_USER) {
+            $uid = $this->id;
+            $jobs = Yii::$app->db->cache(function () use ($uid, $page, $limit) {
+                $query = UserHasJob::find()
+                    ->where(["uid" => $uid])
+//                    ->andWhere(["<>", "status", UserHasJob::REFUSE])
+                    ->offset(($page - 1) * $limit)->limit($limit)
+                    ->orderBy("created_at desc");
+                return $query->all();
+            }, 30);
+            /* @var $jobs Job[] */
+            return Job::formatJobs($jobs, $this->id);
+        }
+        $company = $this->company;
+        return $company ? $company->jobs($page, $limit) : [];
     }
 }

@@ -7,8 +7,8 @@ Page({
     data: {
         user: {},
         company: {},
-        isUser: false,
-        domain:app.globalData.qiNiuDomain
+        isCompany: false,
+        domain: app.globalData.qiNiuDomain
     },
     bindViewTap: function () {
 
@@ -17,11 +17,11 @@ Page({
         let that = this
         that.setData({
             user: app.globalData.user,
-            isUser: app.globalData.user && app.globalData.user.type <= 1
+            isCompany: app.globalData.user && app.globalData.user.type > 1
         })
         app.getCompanyInfo(function () {
             that.setData({
-                company: app.globalData.company
+                company: app.globalData.company,
             })
         })
     },

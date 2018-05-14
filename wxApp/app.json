@@ -7,7 +7,8 @@
     "pages/chose/company",
     "pages/districtSelect/districtSelect",
     "pages/job/add",
-    "pages/job/info"
+    "pages/job/info",
+    "pages/job/userList"
   ],
   "window": {
     "backgroundTextStyle": "light",

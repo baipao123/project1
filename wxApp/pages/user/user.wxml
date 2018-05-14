@@ -1,11 +1,11 @@
 <view class="page">
     <view class="page__bd page__bd_spacing">
-        <block wx:if="{{!isUser}}">
+        <block wx:if="{{isCompany}}">
             <view class="tips waiting icon_sp_area" wx:if="{{company.status == 0}}">
                 <icon type="waiting" size="20" color="orange"></icon>审核中
             </view>
             <navigator url="/pages/chose/record" wx:elif="{{company.status == 2}}">
-                <view class="tips warn icon_sp_area" >
+                <view class="tips warn icon_sp_area">
                     <icon type="warn" size="20" color="red"></icon>被拒绝：{{company.refuseReason}}
                     <span class="myIcon icon-right"></span>
                 </view>
@@ -14,7 +14,7 @@
 
         <navigator url="/pages/user/info" class="weui-flex top bg-green">
             <view class="weui-flex__item header">
-                <block wx:if="{{isUser}}">
+                <block wx:if="{{!isCompany}}">
                     <image src="{{user.avatar}}"></image>
                 </block>
                 <block wx:else>
@@ -22,35 +22,29 @@
                 </block>
             </view>
             <view class="weui-flex__item right text-white text-m" style="max-width:530rpx;">
-                <view class="weui-flex__item text-line">{{isUser ? user.username : company.name}}</view>
+                <view class="weui-flex__item text-line">{{!isCompany ? user.username : company.name}}</view>
                 <view class="weui-flex__item phone">{{user.phone}}</view>
             </view>
-            <view class="weui-flex__item a-c" style="max-width:60rpx;line-height:150rpx;"><span class="myIcon icon-right text-white" style="color:#fff;margin:0;"></span></view>
+            <view class="weui-flex__item a-c" style="max-width:60rpx;line-height:150rpx;">
+                <span class="myIcon icon-right text-white" style="color:#fff;margin:0;"></span>
+            </view>
         </navigator>
     </view>
 
     <scroll-view class="list">
         <view class="weui-cells__title">常用</view>
         <view class="weui-cells weui-cells_after-title">
-            <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                <view class="weui-cell__bd"><span class="myIcon icon-city"></span>我的城市
+            <navigator url="{{isCompany ? '/pages/job/add':''}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                <view class="weui-cell__bd"><span class="myIcon icon-city"></span>{{isCompany ? "发布招聘":"去兼职"}}
                 </view>
-                <view class="weui-cell__ft weui-cell__ft_in-access">请选择</view>
+                <view class="weui-cell__ft weui-cell__ft_in-access"></view>
             </navigator>
-            <navigator class="weui-flex__item" url="/pages/job/add" wx:if="{{isUser}}">
-                去兼职
-                <span class="myIcon icon-right" style="color:#fff;margin:0"></span>
+            <navigator url="/pages/job/userList" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                <view class="weui-cell__bd"><span class="myIcon icon-job"></span>{{isCompany ? "我的招聘":"我的兼职"}}
+                </view>
+                <view class="weui-cell__ft weui-cell__ft_in-access"></view>
             </navigator>
-            <navigator class="weui-flex__item" url="/pages/job/add" wx:else>
-                发布招聘信息
-                <span class="myIcon icon-right" style="color:#fff;margin:0"></span>
-            </navigator>
-            <block wx:if="{{isUser}}">
-                <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                    <view class="weui-cell__bd"><span class="myIcon icon-job"></span>我的兼职
-                    </view>
-                    <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-                </navigator>
+            <block wx:if="{{!isCompany}}">
                 <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
                     <view class="weui-cell__bd"><span class="myIcon icon-clock"></span>打卡记录
                     </view>
@@ -58,11 +52,6 @@
                 </navigator>
             </block>
             <block wx:else>
-                <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                    <view class="weui-cell__bd"><span class="myIcon icon-job"></span>我的招聘
-                    </view>
-                    <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-                </navigator>
                 <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
                     <view class="weui-cell__bd"><span class="myIcon icon-account"></span>员工列表
                     </view>

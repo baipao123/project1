@@ -132,4 +132,11 @@ class UserController extends \frontend\controllers\BaseController
         }
 
     }
+
+    public function actionJobs($page = 1, $limit = 10, $text = "") {
+        $user = $this->getUser();
+        if ($user->type == 0)
+            return Tool::reJson(null, "请先注册", Tool::FAIL);
+        return Tool::reJson(["list" => $user->jobs($page, $limit)]);
+    }
 }

@@ -10,6 +10,7 @@ namespace common\models;
 
 use common\tools\StringHelper;
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * @property Company $company
@@ -50,9 +51,71 @@ class Job extends \common\models\base\Job
         return $this->hasOne(User::className(), ["id" => "uid"]);
     }
 
-    public function format() {
-        return [];
+    /**
+     * @param self[] $jobs
+     * @param int $uid
+     * @return array
+     */
+    public static function formatJobs($jobs, $uid = 0) {
+        $jids = ArrayHelper::getColumn($jobs, "id");
+        $uJobs = empty($uid) ? [] : UserHasJob::find()->where(["uid" => $uid, "jid" => $jids])->all();
+        /* @var $uJobs UserHasJob[] */
+        $uJobs = ArrayHelper::index($uJobs, "id");
+        $likedJids = empty($uid) ? [] : JobFollow::find()->where(["uid" => $uid, "jid" => $jids])->select("jid")->column();
+
+        $data = [];
+        foreach ($jobs as $job) {
+            if (!$job->company)
+                continue;
+            $uJob = isset($uJobs[ $job->id ]) ? $uJobs[ $job->id ] : null;
+            $data[] = [
+                "id"           => $job->id,
+                "name"         => $job->name,
+                "company"      => $job->company->info(),
+                "prize"        => $job->prizeStr(),
+                "position"     => empty($job->work_position) ? $job->quiz_position : $job->work_position,
+                "date"         => $job->workDate(),
+                "time"         => $job->workTime(0),
+                "cityStr"      => $job->cityStr(),
+                "userApplyNum" => $job->getApplyNum(),
+                "userPassNum"  => $job->getPassNum(),
+                "num"          => $job->num,
+                "pushAt"       => date("Y-m-d", $job->created_at),
+                "user"         => [
+                    "isOwner" => $uid == $job->uid,
+                    "isLike"  => in_array($job->id, $likedJids),
+                    "status"  => $uJob ? $uJob->status : 0,
+                    "uJid"    => $uJob ? $uJob->id : 0
+                ],
+            ];
+        }
+        return $data;
     }
+
+    public function prizeStr() {
+        if (empty($this->prize))
+            return "面议";
+        $str = $this->prize / 100 . "/";
+        $str .= $this->prize_type == self::TYPE_HOUR ? "小时" : "天";
+        return $str;
+    }
+
+    public function workDate() {
+        $start = date("Y-m-d", strtotime($this->start_at));
+        $end = date("Y-m-d", strtotime($this->end_at));
+        return $start == $end ? $start : $start . " 至 " . $end;
+    }
+
+    public function workTime($type = 0) {
+        $start = $type == 2 ? "" : sprintf("%02d", floor($this->work_start / 100)) . ":" . sprintf("%02d", $this->work_start % 100);
+        if ($type == 1)
+            return $start;
+        $end = sprintf("%02d", floor($this->work_end / 100)) . ":" . sprintf("%02d", $this->work_end % 100);
+        if ($type == 2)
+            return $end;
+        return $start . " -- " . $end;
+    }
+
 
     protected function getJobIdFromRedis() {
         if (!empty($this->jobId))
@@ -172,8 +235,8 @@ class Job extends \common\models\base\Job
             "prize"             => $this->prize / 100,
             "start_date"        => date("Y-m-d", strtotime($this->start_at)),
             "end_date"          => date("Y-m-d", strtotime($this->end_at)),
-            "start_time"        => sprintf("%02d", floor($this->work_start / 100)) . ":" . sprintf("%02d", $this->work_start % 100),
-            "end_time"          => sprintf("%02d", floor($this->work_end / 100)) . ":" . sprintf("%02d", $this->work_end % 100),
+            "start_time"        => $this->workTime(1),
+            "end_time"          => $this->workTime(2),
             "quiz"              => [
                 "longitude" => $this->quiz_longitude,
                 "latitude"  => $this->quiz_latitude,
@@ -193,7 +256,7 @@ class Job extends \common\models\base\Job
             "phone"             => empty($this->phone) ? $this->owner->phone : $this->phone,
             "tips"              => $this->tips,
             "status"            => $this->status,
-            "isLike"            => JobFollow::find()->where(["uid" => $uid, "jid" => $this->id])->exists(),
+            "isLike"            => empty($uid) ? false : JobFollow::find()->where(["uid" => $uid, "jid" => $this->id])->exists(),
             "userStatus"        => $uJob ? $uJob->status : 0,
             "userApplyNum"      => $this->getApplyNum(),
             "userPassNum"       => $this->getPassNum(),
@@ -214,4 +277,23 @@ class Job extends \common\models\base\Job
             return UserHasJob::find()->where(["jid" => $jid, "status" => [UserHasJob::ON, UserHasJob::END]])->count();
         }, 10);
     }
+
+    public static function getList($uid = 0, $text = "", $cid = 0, $aid = 0, $page = 1, $limit = 10) {
+        $jobs = Yii::$app->db->cache(function () use ($text, $cid, $aid, $page, $limit) {
+            $query = self::find()
+                ->where(["status" => self::ON])
+                ->offset(($page - 1) * $limit)->limit($limit)
+                ->orderBy("created_at desc");
+            if (!empty($text))
+                $query->andWhere(["LIKE", "name", $text]);
+            if ($cid > 0)
+                $query->andWhere(["cid" => $cid]);
+            if ($aid > 0)
+                $query->andWhere(["aid" => $aid]);
+            return $query->all();
+        }, 30);
+        /* @var $jobs self[] */
+        return self::formatJobs($jobs, $uid);
+    }
+
 }

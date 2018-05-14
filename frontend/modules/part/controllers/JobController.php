@@ -36,7 +36,7 @@ class JobController extends \frontend\controllers\BaseController
         if (UserHasJob::isOn(Yii::$app->user->id, $jid))
             return Tool::reJson(null, "您已经报名该工作了", Tool::FAIL);
         $record = new UserHasJob;
-        $record->formId = $this->getPost("formId","");
+        $record->formId = $this->getPost("formId", "");
         $record->uid = $this->user_id();
         $record->jid = $jid;
         $record->auth_key = StringHelper::nonce(8);
@@ -47,7 +47,7 @@ class JobController extends \frontend\controllers\BaseController
             return Tool::reJson(null, "报名失败", Tool::FAIL);
         }
         //TODO 模板消息
-        return Tool::reJson(1,"报名成功");
+        return Tool::reJson(1, "报名成功");
     }
 
     public function actionForbid() {
@@ -69,6 +69,21 @@ class JobController extends \frontend\controllers\BaseController
         //TODO 模板消息
         return Tool::reJson(1);
 
+    }
+
+    public function actionList($cid = -1, $aid = -1, $status = Job::ON, $page = 1, $limit = 10) {
+        $user = $this->getUser();
+        // 默认与全部
+        if (empty($cid))
+            $cid = $user->city_id;
+        else
+            $cid = $cid == -1 ? 0 : $cid;
+        if (empty($aid))
+            $aid = $user->area_id;
+        else
+            $aid = $aid == -1 ? 0 : $aid;
+
+        return Tool::reJson(["jobs" => Job::getList($this->user_id(), $cid, $aid, $page, $limit)]);
     }
 
     public function actionMyList($page = 1) {

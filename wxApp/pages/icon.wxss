@@ -15,6 +15,32 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+.myIcon.icon-13{
+    font-size: 13px;
+}
+
+.myIcon.margin{
+    margin:0 10rpx;
+}
+.myIcon.margin-2{
+    margin:0 20rpx;
+}
+.myIcon.margin-l{
+    margin-left:10rpx;
+}
+.myIcon.margin-l2{
+    margin-left:20rpx;
+}
+.myIcon.margin-r{
+    margin-right:10rpx;
+}
+.myIcon.margin-r2{
+    margin-right:20rpx;
+}
+
+
+
+
 .icon-price:before { content: "\e603"; }
 
 .icon-left:before { content: "\e697"; }
