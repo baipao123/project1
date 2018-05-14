@@ -71,7 +71,7 @@ class JobController extends \frontend\controllers\BaseController
 
     }
 
-    public function actionList($cid = -1, $aid = -1, $status = Job::ON, $page = 1, $limit = 10) {
+    public function actionList($cid = -1, $aid = -1, $text = "", $page = 1, $limit = 10) {
         $user = $this->getUser();
         // 默认与全部
         if (empty($cid))
@@ -83,10 +83,11 @@ class JobController extends \frontend\controllers\BaseController
         else
             $aid = $aid == -1 ? 0 : $aid;
 
-        return Tool::reJson(["jobs" => Job::getList($this->user_id(), $cid, $aid, $page, $limit)]);
+        return Tool::reJson(["list" => (array)Job::getList($this->user_id(), $text, $cid, $aid, $page, $limit)]);
     }
 
-    public function actionTimeUp() {
+    public
+    function actionTimeUp() {
         $uJid = $this->getPost("uJid", 0);
         $date = $this->getPost("date", date("Ymd"));
         $daily = UserJobDaily::findOne(["uJid" => $uJid, "date" => $date]);
@@ -111,7 +112,8 @@ class JobController extends \frontend\controllers\BaseController
         return Tool::reJson(1);
     }
 
-    public function actionTimeRefuse() {
+    public
+    function actionTimeRefuse() {
         if ($this->getUser()->type != User::TYPE_COMPANY)
             return Tool::reJson(null, "无此操作权限", Tool::FAIL);
         $did = $this->getPost("did");
@@ -129,7 +131,8 @@ class JobController extends \frontend\controllers\BaseController
         return Tool::reJson(1);
     }
 
-    public function actionFollow() {
+    public
+    function actionFollow() {
         $jid = $this->getPost("jid", 0);
         $res = JobFollow::toggle($this->user_id(), $jid);
         if ($res)
@@ -137,7 +140,8 @@ class JobController extends \frontend\controllers\BaseController
         return Tool::reJson(null, "操作失败", Tool::FAIL);
     }
 
-    public function actionMyJob($uJid = 0) {
+    public
+    function actionMyJob($uJid = 0) {
         $uid = $this->user_id();
         $uJob = UserHasJob::findOne($uJid);
         if (!$uJob || $uJob->uid != $uid)

@@ -288,9 +288,9 @@ class Job extends \common\models\base\Job
             if (!empty($text))
                 $query->andWhere(["LIKE", "name", $text]);
             if ($cid > 0)
-                $query->andWhere(["cid" => $cid]);
+                $query->andWhere(["city_id" => $cid]);
             if ($aid > 0)
-                $query->andWhere(["aid" => $aid]);
+                $query->andWhere(["area_id" => $aid]);
             return $query->all();
         }, 30);
         /* @var $jobs self[] */
