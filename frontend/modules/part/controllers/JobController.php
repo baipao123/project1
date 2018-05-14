@@ -86,10 +86,6 @@ class JobController extends \frontend\controllers\BaseController
         return Tool::reJson(["jobs" => Job::getList($this->user_id(), $cid, $aid, $page, $limit)]);
     }
 
-    public function actionMyList($page = 1) {
-        return Tool::reJson(UserHasJob::getJobs($this->user_id(), $page));
-    }
-
     public function actionTimeUp() {
         $uJid = $this->getPost("uJid", 0);
         $date = $this->getPost("date", date("Ymd"));
@@ -146,6 +142,6 @@ class JobController extends \frontend\controllers\BaseController
         $uJob = UserHasJob::findOne($uJid);
         if (!$uJob || $uJob->uid != $uid)
             return Tool::reJson(null, "未发现任务报名记录", Tool::FAIL);
-        return Tool::reJson(["job" => $uJob->job->sampleInfo(), "uJob" => $uJob->info()]);
+        return Tool::reJson(["job" => $uJob->job->sampleInfo(), "uJob" => $uJob->info(), "clocks" => array_values($uJob->clocks())]);
     }
 }

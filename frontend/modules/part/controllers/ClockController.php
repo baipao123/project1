@@ -20,17 +20,27 @@ class ClockController extends \frontend\controllers\BaseController
     }
 
     public function actionClock() {
-        $jid = $this->getPost("jid", 0);
-        $uid = Yii::$app->user->id;
-        if (!UserHasJob::isOn($uid, $jid))
+        $uJid = $this->getPost("uJid", 0);
+        $uid = $this->user_id();
+        $uJob = UserHasJob::findOne($uJid);
+        if (!$uJob || $uJob->status != UserHasJob::ON)
             return Tool::reJson(null, "工作已结束或仍未开始", Tool::FAIL);
         $position = $this->getPost("pos", "");
-        if (empty($position))
-            return Tool::reJson(null, "请开启定位设置", Tool::FAIL);
+        //        if (empty($position))
+        //            return Tool::reJson(null, "请开启定位设置", Tool::FAIL);
+        $type = $this->getPost("type", 0);
+        $lastClock = UserClock::lastClock($uJid);
+        if ($lastClock && time() - $lastClock->created_at < 300)
+            return Tool::reJson(null, "2次打卡最少间隔5分钟", Tool::FAIL);
+
+        if (empty($type))
+            $type = $lastClock && $lastClock->type == UserClock::TYPE_START && $lastClock->created_at > strtotime(date("Y-m-d")) ? UserClock::TYPE_END : UserClock::TYPE_START;
+
         $clock = new UserClock;
-        $clock->type = Yii::$app->request->post("type", UserClock::userIsStart($uid, $jid) ? UserClock::TYPE_END : UserClock::TYPE_START);
+        $clock->type = $type;
         $clock->uid = $uid;
-        $clock->jid = $jid;
+        $clock->uJid = $uJid;
+        $clock->jid = $uJob->jid;
         $clock->position = $position;
         $clock->latitude = $this->getPost("lat", "");
         $clock->longitude = $this->getPost("long", "");
@@ -38,6 +48,6 @@ class ClockController extends \frontend\controllers\BaseController
         $clock->msg = $this->getPost("msg", "");
         $clock->created_at = time();
         $clock->save();
-        return Tool::reJson(1);
+        return Tool::reJson(["info" => $clock->info()], "打卡成功");
     }
 }

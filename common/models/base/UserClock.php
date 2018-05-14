@@ -5,18 +5,20 @@ namespace common\models\base;
 use Yii;
 
 /**
- * This is the model class for table "user_sign".
+ * This is the model class for table "user_clock".
  *
- * @property string $id
+ * @property int $id
+ * @property int $uJid
  * @property int $type
- * @property string $uid
- * @property string $jid
+ * @property int $uid
+ * @property int $jid
  * @property string $position
  * @property string $latitude
  * @property string $longitude
  * @property string $accuracy
  * @property string $msg
- * @property string $created_at
+ * @property string $formId
+ * @property int $created_at
  */
 class UserClock extends \yii\db\ActiveRecord
 {
@@ -25,7 +27,7 @@ class UserClock extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'user_sign';
+        return 'user_clock';
     }
 
     /**
@@ -34,9 +36,8 @@ class UserClock extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['uid', 'jid', 'created_at'], 'integer'],
-            [['type'], 'string', 'max' => 1],
-            [['position', 'latitude', 'longitude', 'accuracy', 'msg'], 'string', 'max' => 255],
+            [['uJid','type', 'uid', 'jid', 'created_at'], 'integer'],
+            [['position', 'latitude', 'longitude', 'accuracy', 'msg', 'formId'], 'string', 'max' => 255],
         ];
     }
 
@@ -47,6 +48,7 @@ class UserClock extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'uJid' => 'U Jid',
             'type' => 'Type',
             'uid' => 'Uid',
             'jid' => 'Jid',
@@ -55,6 +57,7 @@ class UserClock extends \yii\db\ActiveRecord
             'longitude' => 'Longitude',
             'accuracy' => 'Accuracy',
             'msg' => 'Msg',
+            'formId' => 'Form ID',
             'created_at' => 'Created At',
         ];
     }

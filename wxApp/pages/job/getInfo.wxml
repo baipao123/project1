@@ -17,18 +17,48 @@
             <span class="myIcon icon-right"></span>
         </view>
     </navigator>
-    <view class="qrCode bg-white" wx:if="{{uJob.status==1}}">
+    <view class="fail" wx:if="{{!uJob || uJob.status==9}}">
+        <view class="weui-msg a-c" wx:if="{{!isAjax}}">
+            <view class="weui-msg__icon-area">
+                <icon type="warn" size="93"></icon>
+            </view>
+            <view class="weui-msg__text-area">
+                <view class="weui-msg__title">{{uJob ? "被拒绝" : "异常页面"}}</view>
+                <view class="weui-msg__desc">{{uJob ? "你的入职请求被拒绝了" : "您还没有报名本岗位"}}</view>
+            </view>
+            <view class="weui-msg__opr-area">
+                <view class="weui-btn-area">
+                    <button class="weui-btn" type="primary" bindtap="seeIndex">查看其他兼职</button>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="qrCode bg-white" wx:elif="{{uJob.status==1}}">
         <canvas class="qrImg" canvas-id="qrcode" style="width:{{canvasWidth}}px;height:{{canvasWidth}}px">
         </canvas>
         <view class="text-grey a-c text-m">入职时请出示二维码</view>
     </view>
-    <view class="fail" wx:elif="{{uJob.status==9}}">
-
-    </view>
     <view class="clock" wx:elif="{{uJob.status==2}}">
-
+        <view class="weui-cells__title">打卡</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell text-m" wx:for="{{todayClock}}" wx:key="today">
+                <view class="weui-cell__hd">
+                    <span class="myIcon icon-clock text-green margin"></span>
+                </view>
+                <view class="weui-cell__bd">打卡时间: {{item.time}}</view>
+                <view class="weui-cell__ft">{{item.type==1 ? "上班" : "下班"}}</view>
+            </view>
+            <view class="weui-cell">
+                <view class="clock-round text-white a-c" bindtap="clock">
+                    <view class="topText text-l">打卡</view>
+                    <view class="time text-m">{{nowTime}}</view>
+                </view>
+            </view>
+        </view>
     </view>
     <view class="record" wx:if="{{uJob.status==2 || uJob.status==10}}">
+        <view wx:for="{{clocks}}" wx:key="key">
 
+        </view>
     </view>
 </view>

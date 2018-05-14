@@ -11,6 +11,7 @@ namespace common\models;
 /**
  * @property Job $job
  * @property User $user
+ * @property UserClock[] $clocks
  * */
 class UserHasJob extends \common\models\base\UserHasJob
 {
@@ -27,27 +28,8 @@ class UserHasJob extends \common\models\base\UserHasJob
         return $this->hasOne(User::className(), ["id" => "uid"]);
     }
 
-    public static function isOn($uid, $jid) {
-        return self::find()->where(["uid" => $uid, "jid" => $jid, "status" => self::ON])->exists();
-    }
-
-    public static function getJobs($uid, $page = 1, $limit = 10) {
-        $uJobs = self::find()
-            ->where(["uid" => $uid, "status" => [self::APPLY, self::ON, self::END]])
-            ->offset(($page - 1) * $limit)
-            ->limit($limit)
-            ->orderBy(["status=" . self::END . " ASC,status DESC,created_at DESC"])
-            ->all();
-        /* @var $uJobs self[] */
-        $data = [];
-        foreach ($uJobs as $uJob) {
-            $job = $uJob->job;
-            $info = $job->format();
-            $info['status'] = $uJob->status;
-            $info['time'] = date("Y-m-d H:i:s", $uJob->created_at);
-            $data[] = $info;
-        }
-        return $data;
+    public function getClocks() {
+        return $this->hasMany(UserClock::className(), ["uJid" => "id"]);
     }
 
     public function user() {
@@ -74,5 +56,15 @@ class UserHasJob extends \common\models\base\UserHasJob
             "end_at"     => date("Y-m-d H:i:s", $this->end_at),
             "refuse_at"  => date("Y-m-d H:i:s", $this->updated_at),
         ];
+    }
+
+    public function clocks() {
+        $clocks = $this->clocks;
+        $data = [];
+        foreach ($clocks as $clock) {
+            $info = $clock->info();
+            $data[ $info['date'] ][] = $info;
+        }
+        return $data;
     }
 }

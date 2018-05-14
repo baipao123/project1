@@ -11,6 +11,9 @@
     padding: 200rpx 0;
     box-sizing: border-box;
 }
+page{
+    background-color: #eee;
+}
 
 .page {
     padding: 0 30rpx;
