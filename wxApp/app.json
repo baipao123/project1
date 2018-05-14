@@ -13,6 +13,22 @@
     "pages/job/getInfo",
     "pages/job/scan"
   ],
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/home",
+        "text": "首页",
+        "selectedColor": "#09bb07",
+        "position": "top"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "text": "我的",
+        "selectedColor": "#09bb07",
+        "position": "top"
+      }
+    ]
+  },
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",

@@ -83,7 +83,7 @@ class Job extends \common\models\base\Job
                 "status"       => $job->status,
                 "pushAt"       => date("Y-m-d", $job->created_at),
                 "user"         => [
-                    "isOwner" => false,//$uid == $job->uid,
+                    "isOwner" => $uid == $job->uid,
                     "isLike"  => in_array($job->id, $likedJids),
                     "status"  => $uJob ? $uJob->status : 0,
                     "uJid"    => $uJob ? $uJob->id : 0
