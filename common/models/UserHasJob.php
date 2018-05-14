@@ -53,6 +53,7 @@ class UserHasJob extends \common\models\base\UserHasJob
     public function user() {
         $user = $this->user;
         return [
+            "job"    => $this->job->name,
             "name"   => $user->realname,
             "phone"  => $user->phone,
             "time"   => date("Y-m-d H:i:s", $this->created_at),
@@ -62,7 +63,7 @@ class UserHasJob extends \common\models\base\UserHasJob
 
     public function info() {
         return [
-            "id"       => $this->id,
+            "id"         => $this->id,
             "jid"        => $this->jid,
             "uid"        => $this->uid,
             "status"     => $this->status,

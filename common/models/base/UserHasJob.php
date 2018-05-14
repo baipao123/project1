@@ -35,11 +35,9 @@ class UserHasJob extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['jid', 'uid', 'created_at', 'auth_at', 'end_at', 'updated_at'], 'integer'],
-            [['content'], 'required'],
+            [['jid', 'uid', 'created_at', 'status', 'auth_at', 'end_at', 'updated_at'], 'integer'],
             [['content'], 'string'],
             [['formId', 'auth_key'], 'string', 'max' => 255],
-            [['status'], 'string', 'max' => 1],
         ];
     }
 

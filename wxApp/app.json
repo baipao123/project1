@@ -9,7 +9,8 @@
     "pages/job/add",
     "pages/job/info",
     "pages/job/userList",
-    "pages/job/getInfo"
+    "pages/job/getInfo",
+    "pages/job/scan"
   ],
   "window": {
     "backgroundTextStyle": "light",

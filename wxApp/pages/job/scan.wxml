@@ -1,0 +1,59 @@
+<view class="page full">
+    <view wx:if="{{!uJob && !isDecrypt}}">
+        <view class="weui-msg a-c">
+            <view class="weui-msg__icon-area">
+                <icon type="warn" size="93"></icon>
+            </view>
+            <view class="weui-msg__text-area">
+                <view class="weui-msg__title">解析失败</view>
+                <view class="weui-msg__desc">二维码已失效或不属于你的企业</view>
+            </view>
+            <view class="weui-msg__opr-area">
+                <view class="weui-btn-area">
+                    <button class="weui-btn" type="primary" bindtap="scan">重新扫码</button>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view wx:elif="{{!!uJob}}" class="page__bd">
+        <view class="weui-form-preview">
+            <view class="weui-form-preview__bd">
+                <view class="weui-form-preview__item">
+                    <view class="weui-form-preview__label">岗位名称</view>
+                    <view class="weui-form-preview__value">{{uJob.job}}</view>
+                </view>
+                <view class="weui-form-preview__item">
+                    <view class="weui-form-preview__label">应聘者</view>
+                    <view class="weui-form-preview__value">{{uJob.name}}</view>
+                </view>
+                <view class="weui-form-preview__item">
+                    <view class="weui-form-preview__label">联系方式</view>
+                    <view class="weui-form-preview__value">{{uJob.phone}}</view>
+                </view>
+                <view class="weui-form-preview__item">
+                    <view class="weui-form-preview__label">报名时间</view>
+                    <view class="weui-form-preview__value">{{uJob.time}}</view>
+                </view>
+            </view>
+            <view class="weui-form-preview__ft" wx:if="{{uJob.status==1}}">
+                <form bindsubmit="refuse" class="weui-form-preview__btn weui-form-preview__btn_default"
+                      hover-class="weui-form-preview__btn_active">
+                    <input type="text" hidden="true" name="code" value="{{text}}"/>
+                    <button class="weui-form-preview__btn weui-form-preview__btn_default" form-type="submit"
+                            hover-class="weui-form-preview__btn_active">拒绝
+                    </button>
+                </form>
+                <form bindsubmit="verify" class="weui-form-preview__btn weui-form-preview__btn_primary"
+                      hover-class="weui-form-preview__btn_active">
+                    <input type="text" hidden="true" name="code" value="{{text}}"/>
+                    <button form-type="submit" class="text-green">通过</button>
+                </form>
+            </view>
+            <view class="weui-form-preview__ft" wx:else>
+                <view class="weui-form-preview__btn weui-form-preview__btn_primary"
+                      hover-class="weui-form-preview__btn_active">{{uJob.status==9 ? "已拒绝":"已通过"}}
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

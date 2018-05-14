@@ -23,7 +23,7 @@
         <view class="text-grey a-c text-m">入职时请出示二维码</view>
     </view>
     <view class="fail" wx:elif="{{uJob.status==9}}">
-        
+
     </view>
     <view class="clock" wx:elif="{{uJob.status==2}}">
 

@@ -119,20 +119,28 @@ class CompanyController extends \frontend\controllers\BaseController
         $string = $this->getPost("code");
         list($uJid, $jid, $key, $uid) = explode(";", $string);
         $uJob = UserHasJob::findOne($uJid);
-        if (!$uJob || $uJob->auth_key != $key || $uJob->uid != $uid || $uJob->jid != $jid || $uJob->status != UserHasJob::APPLY)
+        if (!$uJob || $uJob->auth_key != $key || $uJob->uid != $uid || $uJob->jid != $jid || $uJob->status != UserHasJob::APPLY || $uJob->job->uid != $this->user_id())
             return Tool::reJson(null, "二维码不正确或已过期", Tool::FAIL);
-        $uJob->status = UserHasJob::ON;
+        if ($this->getPost("type", 0) == 1) {
+            $uJob->status = UserHasJob::ON;
+            $uJob->auth_at = time();
+            $text = "确认入职成功";
+        } else {
+            $uJob->status = UserHasJob::REFUSE;
+            $uJob->updated_at = time();
+            $text = "拒绝入职成功";
+        }
         $uJob->save();
-        return Tool::reJson(1, "确认入职成功");
+        return Tool::reJson(1, $text);
     }
 
     public function actionQrUser() {
         $string = $this->getPost("code");
         list($uJid, $jid, $key, $uid) = explode(";", $string);
         $uJob = UserHasJob::findOne($uJid);
-        if (!$uJob || $uJob->auth_key != $key || $uJob->uid != $uid || $uJob->jid != $jid)
+        if (!$uJob || $uJob->auth_key != $key || $uJob->uid != $uid || $uJob->jid != $jid || $uJob->job->uid != $this->user_id())
             return Tool::reJson(null, "二维码不正确或已过期", Tool::FAIL);
-        return Tool::reJson(["user" => $uJob->user()]);
+        return Tool::reJson(["uJob" => $uJob->user()]);
     }
 
 }
