@@ -5,7 +5,7 @@ Page({
     data: {
         uJob: null,
         text: "",
-        isDecrypt: false
+        isDecrypt: true
     },
     onLoad: function () {
         let that = this
