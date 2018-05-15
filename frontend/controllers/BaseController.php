@@ -21,7 +21,7 @@ class BaseController extends Controller
 
     public function beforeAction($action) {
         if (Yii::$app->user->isGuest && !in_array($action->id, ["app-login", "error", "qiniu-token"])) {
-            echo Tool::reJson(null, "请先登录", Tool::NEED_LOGIN);
+            echo json_encode(Tool::reJson(null, "请先登录", Tool::NEED_LOGIN));
             return false;
         }
         Yii::$app->response->format = 'json';
