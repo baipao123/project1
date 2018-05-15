@@ -4,6 +4,7 @@ const request = require("./../../utils/request.js")
 Page({
     data: {
         user: {},
+        domain:app.globalData.qiNiuDomain
     },
     onLoad: function () {
         this.setData({

@@ -1,23 +1,25 @@
-<view class="page">
-    <view class="page__hd avatar" wx:if="{{user.avatar}}">
-        <image class="userAvatar" src="{{user.avatar}}"> </image>
-    </view>
-    <view class="page__bd page__bd_spacing" wx:if="{{user.type==0}}">
-        <navigator url="/pages/chose/user">
-            <button class="weui-btn" type="primary" lang="zh_CN" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
-                我要求职
-            </button>
-        </navigator>
-        <navigator url="/pages/chose/company" class="btn2">
-            <button class="weui-btn btn2" type="default" lang="zh_CN" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
-                我要招聘
-            </button>
-        </navigator>
-    </view>
-    <view class="" wx:elif="{{user.type==1}}">
-
-    </view>
-    <view class="" wx:else>
-
+<view class="page full">
+    <image class="face block-auto" src="{{domain}}pageIndex/face.png"></image>
+    <view class="bottom">
+        <view class="top a-c text-white weui-flex">
+            <view class="line bg-white weui-flex__item"></view>
+            <view style="padding:0 20rpx;">快速注册</view>
+            <view class="line bg-white weui-flex__item"></view>
+        </view>
+        <view class="buttons weui-flex">
+            <navigator url="/pages/chose/user" class="weui-flex__item">
+                <button class="btn clear a-c text-white" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+                    <image class="icon block-auto" src="{{domain}}pageIndex/student.png"></image>
+                    <text class="block-auto">学生注册</text>
+                </button>
+            </navigator>
+            <navigator url="/pages/chose/company" class="weui-flex__item">
+                <button class="btn clear a-c text-white" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+                    <image class="icon block-auto" src="{{domain}}pageIndex/company.png"></image>
+                    <text class="block-auto">企业注册</text>
+                </button>
+            </navigator>
+        </view>
+        <view class="footer text-s text-white a-c">有准兼职，迈出职场第一步</view>
     </view>
 </view>

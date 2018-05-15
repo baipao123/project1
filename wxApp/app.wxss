@@ -127,3 +127,14 @@ page{
 .bg-green {
     background-color: #09bb07;
 }
+
+button.clear{
+    background-color:transparent;
+    margin:0;
+    padding:0;
+    display:initial;
+}
+.block-auto{
+    margin:0 auto;
+    display:block;
+}

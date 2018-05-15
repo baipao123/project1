@@ -3,7 +3,7 @@
 
 let config = {
     qiniuRegion: 'ECN',
-    qiniuImageURLPrefix: 'http://p7tz7z3vu.bkt.clouddn.com',
+    qiniuImageURLPrefix: getApp().globalData.qiNiuDomain,
     qiniuUploadToken: '',
     qiniuUploadTokenURL: 'https://dev.jiuyeli.org/base/qiniu-token',
     qiniuUploadTokenFunction: null,
@@ -101,7 +101,7 @@ function doUpload(filePath, success, fail, options, progress) {
           try {
             let dataObject = JSON.parse(dataString);
             //do something
-            let imageUrl = config.qiniuImageURLPrefix + '/' + dataObject.key;
+            let imageUrl = config.qiniuImageURLPrefix + dataObject.key;
             dataObject.imageURL = imageUrl;
             console.log(dataObject);
             if (success) {

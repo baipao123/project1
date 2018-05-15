@@ -19,9 +19,13 @@ Page({
                 cid: app.globalData.user.city_id
             }
         })
-        that.getList(1,true)
+        that.getList(1, true)
     },
     onShow: function () {
+        if (app.globalData.user != {} && app.globalData.user.type == 0)
+            wx.navigateTo({
+                url: "/pages/index/index"
+            })
         let region = app.globalData.region,
             that = this
         console.log(region)

@@ -1,3 +1,47 @@
-.btn2{
-    margin-top:50rpx;
+page {
+    height: 100%;
+}
+
+.page {
+    width: 100%;
+    height: 100%;
+    background: url(http://img.jiuyeli.org/pageIndex/back.png) repeat-y;
+    background-size: 100% auto;
+    padding-top: 100rpx !important;
+}
+
+image.face {
+    width: 600rpx;
+    height: 600rpx;
+}
+
+.bottom {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    padding: 30rpx 0;
+}
+
+.bottom .top {
+    padding: 0 30rpx;
+}
+
+.bottom .top .line {
+    height: 1rpx;
+    margin-top: 29rpx;
+}
+
+.bottom .buttons {
+    margin-top: -30rpx;
+}
+
+image.icon {
+    margin-top: 30rpx;
+    width: 75rpx;
+    height: 65rpx;
+}
+
+.footer {
+    margin-top: 30rpx;
 }

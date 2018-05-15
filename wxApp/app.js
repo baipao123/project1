@@ -7,7 +7,7 @@ App({
     },
     globalData: {
         user: {},
-        qiNiuDomain: 'http://p7tz7z3vu.bkt.clouddn.com/',
+        qiNiuDomain: 'http://img.jiuyeli.org/',
         company: {},
         region: {
             cid: 0,
