@@ -13,6 +13,8 @@ page {
 image.face {
     width: 600rpx;
     height: 600rpx;
+    top: 100rpx;
+    position: relative;
 }
 
 .bottom {

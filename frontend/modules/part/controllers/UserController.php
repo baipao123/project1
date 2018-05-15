@@ -53,6 +53,8 @@ class UserController extends \frontend\controllers\BaseController
             return Tool::reJson(null, "非法请求", Tool::FAIL);
         $user->realname = $realName;
         $user->phone = $phone;
+        $user->city_id = $this->getPost("cid", 0);
+        $user->area_id = $this->getPost("aid", 0);
         $user->real_at = time();
         $user->type = User::TYPE_USER;
         $user->save();

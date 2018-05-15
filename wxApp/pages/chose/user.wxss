@@ -1,12 +1,13 @@
-.header{
-    margin:0 -30rpx;
-    background-color: #00aa00;
+.button {
+    margin: 0 30rpx;
 }
 
-.page__bd{
-    padding-top:50rpx;
+.weui-cell__ft {
+    margin-right: -30rpx;
 }
 
-button{
-    margin-top:50rpx;
+.weui-vcode-btn {
+    border: none;
+    position: relative;
+    padding: 25rpx !important;
 }

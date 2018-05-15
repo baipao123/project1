@@ -8,13 +8,13 @@
         </view>
         <view class="buttons weui-flex">
             <navigator url="/pages/chose/user" class="weui-flex__item">
-                <button class="btn clear a-c text-white" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+                <button class="btn clear a-c text-white" lang="zh_CN" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
                     <image class="icon block-auto" src="{{domain}}pageIndex/student.png"></image>
                     <text class="block-auto">学生注册</text>
                 </button>
             </navigator>
             <navigator url="/pages/chose/company" class="weui-flex__item">
-                <button class="btn clear a-c text-white" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+                <button class="btn clear a-c text-white" lang="zh_CN" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
                     <image class="icon block-auto" src="{{domain}}pageIndex/company.png"></image>
                     <text class="block-auto">企业注册</text>
                 </button>

@@ -162,7 +162,7 @@ Page({
     goSelectDistrict: function (e) {
         let that = this
         wx.navigateTo({
-            url: "/pages/districtSelect/districtSelect?aid" + that.data.user.area_id + "&cid=" + that.data.user.city_id
+            url: "/pages/districtSelect/districtSelect?aid=" + that.data.user.area_id + "&cid=" + that.data.user.city_id
         })
     },
 })

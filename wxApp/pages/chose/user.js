@@ -32,9 +32,6 @@ Page({
             });
         })
     },
-    userBindPhone:function () {
-        this.setData({type:2});
-    },
     bindPhone:function (e) {
         let data = e.detail.value;
         let that = this;
@@ -45,5 +42,23 @@ Page({
                 url: "/pages/user/user"
             })
         })
-    }
+    },
+    onShow: function () {
+        let region = app.globalData.region
+        console.log(region)
+        if (region.isSelect) {
+            this.setData({
+                "user.city_id": region.cid,
+                "user.area_id": region.aid,
+                "user.cityStr": region.cityStr
+            })
+            app.resetRegion()
+        }
+    },
+    goSelectDistrict: function (e) {
+        let that = this
+        wx.navigateTo({
+            url: "/pages/districtSelect/districtSelect?aid=" + that.data.user.area_id + "&cid=" + that.data.user.city_id
+        })
+    },
 })

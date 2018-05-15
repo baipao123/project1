@@ -69,7 +69,7 @@ Page({
             cid = that.data.user.city_id,
             aid = that.data.user.area_id
         wx.navigateTo({
-            url: "/pages/districtSelect/districtSelect?aid" + aid + "&cid=" + cid
+            url: "/pages/districtSelect/districtSelect?aid=" + aid + "&cid=" + cid
         })
     },
     showInput: function () {
