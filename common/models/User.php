@@ -102,15 +102,18 @@ class User extends \common\models\base\User
             return [];
         if ($this->type == self::TYPE_USER) {
             $uid = $this->id;
-            $jobs = Yii::$app->db->cache(function () use ($uid, $page, $limit) {
+            $jids = Yii::$app->db->cache(function () use ($uid, $page, $limit) {
                 $query = UserHasJob::find()
                     ->where(["uid" => $uid])
-//                    ->andWhere(["<>", "status", UserHasJob::REFUSE])
+                    //                    ->andWhere(["<>", "status", UserHasJob::REFUSE])
                     ->offset(($page - 1) * $limit)->limit($limit)
+                    ->select("jid")
                     ->orderBy("created_at desc");
-                return $query->all();
+
+                return $query->column();
             }, 30);
             /* @var $jobs Job[] */
+            $jobs = Job::find()->where(["id" => $jids])->orderBy(["id" => $jids])->all();
             return Job::formatJobs($jobs, $this->id);
         }
         $company = $this->company;

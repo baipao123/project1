@@ -30,4 +30,16 @@ Page({
             })
         }
     },
+    goIndex:function (e) {
+        let that = this
+        if(that.data.isCompany){
+            wx.navigateTo({
+                url: "/pages/job/add"
+            })
+        }else{
+            wx.switchTab({
+                url: "/pages/index/home"
+            })
+        }
+    }
 })

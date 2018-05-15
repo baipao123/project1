@@ -75,5 +75,12 @@ App({
         } else if (typeof callBack == "function") {
             callBack();
         }
+    },
+    toast: function (text, icon) {
+        icon = icon == undefined ? "success" : icon
+        wx.showToast({
+            title: text,
+            icon: icon
+        })
     }
 })
