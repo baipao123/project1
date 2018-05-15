@@ -1,6 +1,11 @@
 <view class="page full">
     <view class="weui-search-bar">
-        <view class="weui-search-bar__form city text-m a-c" bindtap="selectCity"><text style="line-height:60rpx;display:inline-block;">{{user.cityStr}}<span class="myIcon icon-down"></span></text></view>
+        <view class="weui-search-bar__form city text-m a-c" bindtap="selectCity">
+            <view style="width:{{user.area_id > 0 ? 280 : 160}}rpx;display:inline-block;line-height:60rpx;">
+                {{user.cityStr}}
+                <span class="myIcon icon-down"></span>
+            </view>
+        </view>
         <view class="weui-search-bar__form">
             <view class="weui-search-bar__box" style="padding-right:0;margin-top:1px;">
                 <icon class="weui-icon-search_in-box" type="search" size="14"></icon>

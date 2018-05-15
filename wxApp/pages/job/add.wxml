@@ -1,6 +1,6 @@
 <view class="page full">
     <form bindsubmit="submit" report-submit="true">
-        <scroll-view class="body" scroll-y="true" lower-threshold="50" enable-back-to-top="true" style="height:{{(windowHeight - 70)}}px">
+        <view class="body" scroll-y="true" lower-threshold="50" enable-back-to-top="true" style="height:{{(windowHeight - 70)}}px">
             <view class="weui-cells__title">基本信息</view>
             <view class="weui-cells weui-cells_after-title">
                 <view class="weui-cell weui-cell_access">
@@ -238,8 +238,8 @@
                 </view>
             </view>
             <view class="block"> </view>
-        </scroll-view>
-        <view class="weui-btn-area bottom-button bg-white">
+        </view>
+        <view class="bottom-button bg-white">
             <button class="weui-btn" type="primary" form-type="submit">确定</button>
         </view>
     </form>

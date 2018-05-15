@@ -15,9 +15,17 @@ map{
     width: 100%;
 }
 .block{
-    height: 50rpx;
+    height: 150rpx;
 }
 .bottom-button{
-    margin-top: 1em;
-    background-color: white;
+    position: fixed;
+    height:120rpx;
+    width:100%;
+    bottom:0;
+    left:0;
+    border-top:1rpx solid #e5e5e5;
+    padding-top: 20rpx;
+}
+.bottom-button button{
+    margin:0 30rpx;
 }
