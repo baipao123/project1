@@ -24,5 +24,10 @@ Page({
                 company: app.globalData.company,
             })
         })
+        if(app.globalData.user && app.globalData.user.type == 0){
+            wx.navigateTo({
+                url: "/pages/index/index"
+            })
+        }
     },
 })

@@ -56,7 +56,7 @@ class User extends \common\models\base\User
             $this->avatar = $userInfo['avatarUrl'];
             $this->nickname = $userInfo['nickName'];
             $this->gender = $userInfo['gender'];
-            $this->city = $userInfo['city'];
+            $this->cityName = $userInfo['city'];
             $this->province = $userInfo['province'];
             $this->country = $userInfo['country'];
             $this->save();
