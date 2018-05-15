@@ -33,7 +33,7 @@ class JobController extends \frontend\controllers\BaseController
         $job = Job::findOne($jid);
         if (!$job || $job->status != Job::ON)
             return Tool::reJson(null, "工作不存在", Tool::FAIL);
-        if (UserHasJob::isOn(Yii::$app->user->id, $jid))
+        if (UserHasJob::findOne(["uid"=>Yii::$app->user->id,"jid"=> $jid]))
             return Tool::reJson(null, "您已经报名该工作了", Tool::FAIL);
         $record = new UserHasJob;
         $record->formId = $this->getPost("formId", "");
