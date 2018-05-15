@@ -13,8 +13,12 @@
 }
 .bottom{
     text-align: center;
-    margin:1px -30rpx 0px;
     border-top: 1px solid #eee;
+    position: fixed;
+    height: 120rpx;
+    bottom:0;
+    left:0;
+    width: 100%;
 }
 .bottom .text{
     font-size: 20rpx;
@@ -22,6 +26,8 @@
 .bottom .icon{
     font-size: 40rpx;
     color: #999;
+    height:80rpx;
+    line-height:80rpx;
 }
 .bottom .icon.iconLike .myIcon{
     font-size:18px;

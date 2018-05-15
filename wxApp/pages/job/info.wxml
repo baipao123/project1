@@ -4,7 +4,7 @@
     </view>
     <view class="info" wx:else>
         <view class="topTips fixed a-c" wx:if="{{isOwner && job.status!=1}}"><view>岗位已下架</view></view>
-        <view>
+        <view style="margin-bottom:150rpx;{{isOwner && job.status!=1 ? 'margin-top:60rpx':''}}">
             <view class="header bg-white">
                 <view class="name">{{job.name}}</view>
                 <view class="prize text text-m text-green">
