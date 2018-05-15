@@ -10,6 +10,7 @@ namespace common\models;
 
 use common\tools\Img;
 use common\tools\Sms;
+use common\tools\StringHelper;
 use Yii;
 use yii\helpers\ArrayHelper;
 
@@ -54,20 +55,9 @@ class Company extends \common\models\base\Company
         $latitude = ArrayHelper::getValue($data, "latitude", "");
         $longitude = ArrayHelper::getValue($data, "longitude", "");
         $attaches = ArrayHelper::getValue($data, "attaches", []);
-        $phoneType = ArrayHelper::getValue($data, "phoneType", 0);
         $phone = ArrayHelper::getValue($data, "phone", "");
-        $code = ArrayHelper::getValue($data, "code", "");
-        if ($isAdd) {
-            if ($phoneType == 1) {
-                $phone = Yii::$app->redis->get("USER-WX-PHONE-" . $uid);
-                if (empty($phone))
-                    return "手机号不能为空";
-            } elseif ($phoneType == 2) {
-                if (!Sms::VerifyCode($phone, $code))
-                    return "验证码已失效";
-            } else
-                return "非法请求";
-        }
+        if ($isAdd && !StringHelper::isMobile($phone))
+            return "请输入真实的手机号";
         if (empty($type))
             return "请选择类型";
         $companyTypeText = $type == self::TYPE_COMPANY ? "企业" : "个人";

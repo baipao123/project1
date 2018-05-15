@@ -23,8 +23,7 @@ class UserController extends \frontend\controllers\BaseController
         if (WxApp::decryptData($this->getPost("encryptedData"), $this->getPost("iv"), $user->session_key, $data) == WxApp::OK) {
             $data = json_decode($data, true);
             if (isset($data['phoneNumber']) && !empty($data['phoneNumber']) && isset($data['purePhoneNumber']) && !empty($data['purePhoneNumber'])) {
-                Yii::$app->redis->set("USER-WX-PHONE-" . $user->id, $data['phoneNumber']);
-                return Tool::reJson(["purePhoneNumber" => substr_replace($data['purePhoneNumber'], '****', 3, 4)]);
+                return Tool::reJson(["purePhoneNumber" => $data['purePhoneNumber']]);
             } else
                 return Tool::reJson(null, "您未绑定手机号", Tool::FAIL);
         } else
@@ -39,18 +38,9 @@ class UserController extends \frontend\controllers\BaseController
         $realName = $this->getPost("name");
         if (!StringHelper::isRealName($realName))
             return Tool::reJson(null, "请输入真实的姓名，2-7位汉字", Tool::FAIL);
-        $type = $this->getPost("type", 1);
-        if ($type == 1) {
-            $phone = Yii::$app->redis->get("USER-WX-PHONE-" . $user->id);
-            if (empty($phone))
-                return Tool::reJson(null, "手机号不能为空", Tool::FAIL);
-        } elseif ($type == 2) {
-            $phone = $this->getPost("phone", "");
-            $code = $this->getPost("code", "");
-            if (!Sms::VerifyCode($phone, $code))
-                return Tool::reJson(null, "验证码已失效", Tool::FAIL);
-        } else
-            return Tool::reJson(null, "非法请求", Tool::FAIL);
+        $phone = $this->getPost("phone", "");
+        if (!StringHelper::isMobile($phone))
+            return Tool::reJson(null, "请输入真实的手机号", Tool::FAIL);
         $user->realname = $realName;
         $user->phone = $phone;
         $user->city_id = $this->getPost("cid", 0);

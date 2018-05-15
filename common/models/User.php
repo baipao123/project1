@@ -79,15 +79,16 @@ class User extends \common\models\base\User
 
     public function info() {
         return [
-            "uid"      => $this->id,
-            "type"     => $this->type,
-            "username" => empty($this->realname) ? $this->nickname : $this->realname,
-            "avatar"   => Img::format($this->avatar),
-            "phone"    => $this->phone(),
-            "gender"   => $this->gender,
-            "city_id"  => $this->city_id,
-            "area_id"  => $this->area_id,
-            "cityStr"  => $this->cityStr()
+            "uid"       => $this->id,
+            "type"      => $this->type,
+            "username"  => empty($this->realname) ? $this->nickname : $this->realname,
+            "avatar"    => Img::format($this->avatar),
+            "phone"     => $this->phone(),
+            "purePhone" => $this->phone,
+            "gender"    => $this->gender,
+            "city_id"   => $this->city_id,
+            "area_id"   => $this->area_id,
+            "cityStr"   => $this->cityStr()
         ];
     }
 
