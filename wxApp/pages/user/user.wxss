@@ -40,12 +40,6 @@ page{
     margin-right:10rpx;
 }
 
-
-.weui-cells{
-    line-height:1;
-    font-size:30rpx;
-}
-
 .weui-footer{
     margin-top: 50rpx;
 }
