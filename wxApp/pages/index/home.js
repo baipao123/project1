@@ -19,7 +19,7 @@ Page({
                 cid: app.globalData.user.city_id
             }
         })
-        that.getList(1)
+        that.getList(1,true)
     },
     onShow: function () {
         let region = app.globalData.region,
