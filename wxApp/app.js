@@ -7,7 +7,7 @@ App({
     },
     globalData: {
         user: {},
-        qiNiuDomain: "http://img.wx-dk.cn/",
+        qiNiuDomain: 'http://p7tz7z3vu.bkt.clouddn.com/',
         company: {},
         region: {
             cid: 0,
