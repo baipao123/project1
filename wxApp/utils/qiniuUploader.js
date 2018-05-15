@@ -5,7 +5,7 @@ let config = {
     qiniuRegion: 'ECN',
     qiniuImageURLPrefix: 'http://p7tz7z3vu.bkt.clouddn.com',
     qiniuUploadToken: '',
-    qiniuUploadTokenURL: 'https://demo.wx-dk.cn:8443/base/qiniu-token',
+    qiniuUploadTokenURL: 'https://dev.jiuyeli.org/base/qiniu-token',
     qiniuUploadTokenFunction: null,
     qiniuShouldUseQiniuFileName: true
 }
