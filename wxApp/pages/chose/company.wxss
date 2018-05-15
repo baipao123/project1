@@ -1,3 +1,4 @@
+@import "user.wxss";
 .page{
     padding:0;
 }
@@ -92,13 +93,6 @@ span.deleteImage{
 .weui-uploader__input-box.delete:before{
     background-color:#fff
 }
-
-.weui-cell__ft {
-    margin-right: -30rpx;
-}
-
-.weui-vcode-btn {
-    border: none;
-    position: relative;
-    padding: 25rpx !important;
+.weui-cells__tips{
+    line-height: 60rpx;
 }

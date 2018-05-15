@@ -33,7 +33,7 @@ class JobController extends \frontend\controllers\BaseController
         $job = Job::findOne($jid);
         if (!$job || $job->status != Job::ON)
             return Tool::reJson(null, "工作不存在", Tool::FAIL);
-        if (UserHasJob::findOne(["uid"=>Yii::$app->user->id,"jid"=> $jid]))
+        if (UserHasJob::findOne(["uid" => Yii::$app->user->id, "jid" => $jid]))
             return Tool::reJson(null, "您已经报名该工作了", Tool::FAIL);
         $record = new UserHasJob;
         $record->formId = $this->getPost("formId", "");
@@ -74,15 +74,10 @@ class JobController extends \frontend\controllers\BaseController
     public function actionList($cid = -1, $aid = -1, $text = "", $page = 1, $limit = 10) {
         $user = $this->getUser();
         // 默认与全部
-        if (empty($cid))
+        if (empty($cid) && empty($aid)) {
             $cid = $user->city_id;
-        else
-            $cid = $cid == -1 ? 0 : $cid;
-        if (empty($aid))
             $aid = $user->area_id;
-        else
-            $aid = $aid == -1 ? 0 : $aid;
-
+        }
         return Tool::reJson(["list" => (array)Job::getList($this->user_id(), $text, $cid, $aid, $page, $limit)]);
     }
 

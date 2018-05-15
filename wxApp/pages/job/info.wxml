@@ -1,10 +1,10 @@
 <view class="page full">
     <view class="error" wx:if="{{!job}}">
-        <text>岗位不存在</text>
+
     </view>
     <view class="info" wx:else>
-        <view class="topTips" wx:if="{{isOwner && job.status!=1}}"><view>岗位已下架</view></view>
-        <scroll-view style="height:{{scrollHeight-(isOwner && job.status!=1 ? 81 : 51)}}px;" scroll-y="true">
+        <view class="topTips fixed a-c" wx:if="{{isOwner && job.status!=1}}"><view>岗位已下架</view></view>
+        <view>
             <view class="header bg-white">
                 <view class="name">{{job.name}}</view>
                 <view class="prize text text-m text-green">
@@ -100,8 +100,8 @@
                     </view>
                 </view>
             </view>
-        </scroll-view>
-        <view class="bottom bg-white">
+        </view>
+        <view class="bottom bg-white fixed">
             <block wx:if="{{!isOwner}}">
                 <view class="weui-flex">
                     <view class="weui-flex__item">

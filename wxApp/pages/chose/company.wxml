@@ -90,7 +90,9 @@
                     </view>
                 </view>
             </view>
-            <view class="weui-cells__title">认证资料</view>
+            <view class="weui-cells__title">
+                认证资料
+            </view>
             <view class="weui-cells weui-cells_after-title">
                 <view class="weui-cell">
                     <view class="weui-cell__bd">
@@ -141,7 +143,7 @@
                 </view>
             </label>
         </checkbox-group>
-        <view class="weui-btn-area">
+        <view class="button">
             <button class="weui-btn" type="primary" form-type="submit" disabled="{{!isAgree}}">确定</button>
         </view>
 
