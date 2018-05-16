@@ -93,7 +93,7 @@ Page({
         })
     },
     goUJobInfo:function(id){
-        id=id==undefined?this.data.job.uJid:id
+        id= typeof id== "object"?this.data.job.uJid:id
         wx.navigateTo({
             url:"getInfo?id="+id
         })

@@ -60,7 +60,7 @@ class Job extends \common\models\base\Job
         $jids = ArrayHelper::getColumn($jobs, "id");
         $uJobs = empty($uid) ? [] : UserHasJob::find()->where(["uid" => $uid, "jid" => $jids])->all();
         /* @var $uJobs UserHasJob[] */
-        $uJobs = ArrayHelper::index($uJobs, "id");
+        $uJobs = ArrayHelper::index($uJobs, "jid");
         $likedJids = empty($uid) ? [] : JobFollow::find()->where(["uid" => $uid, "jid" => $jids])->select("jid")->column();
 
         $data = [];
