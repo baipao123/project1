@@ -19,8 +19,8 @@ use Yii;
 
 class JobController extends \frontend\controllers\BaseController
 {
-    public function actionInfo($jid = 1) {
-        $job = Job::findOne($jid);
+    public function actionInfo($id = 1) {
+        $job = Job::findOne($id);
         if (!$job)
             return Tool::reJson(null, "岗位不存在", Tool::FAIL);
         return Tool::reJson(["job" => $job->info($this->user_id()), "company" => $job->company->info()]);
