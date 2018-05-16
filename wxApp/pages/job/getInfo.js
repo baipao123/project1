@@ -51,7 +51,7 @@ Page({
                 todayClock: todayClock
             })
             let uJob = data.uJob
-            that.drawQr(uJob.id + ';' + uJob.jid + ';' + uJob.key + ';' + uJob.id);
+            that.drawQr(uJob.id + ';' + uJob.jid + ';' + uJob.key + ';' + uJob.uid);
         }, function () {
 
         }, function () {
