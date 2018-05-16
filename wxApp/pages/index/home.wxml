@@ -21,7 +21,11 @@
         </view>
         <view class="weui-search-bar__cancel-btn text-m" hidden="{{!inputShowed}}" bindtap="hideInput" style="margin-top:5rpx;">取消</view>
     </view>
-    <scroll-view>
+    <scroll-view style="height:{{widowHeight-28}}px" scroll-y="true" scroll-top="{{scrollTop}}" lower-threshold="50" upper-threshold="0" enable-back-to-top="true" bindscrolltolower="moreList" bindscrolltoupper="refreshList">
+        <view class="weui-loadmore top-refresh" wx:if="{{refresh}}">
+            <view class="weui-loading"></view>
+            <view class="weui-loadmore__tips">刷新中</view>
+        </view>
         <view wx:for="{{jobs}}" wx:key="key">
             <view class="weui-panel weui-panel_access" style="margin-bottom:30rpx;">
                 <navigator url="{{!item.user.isOwner && item.user.uJid>0 ? '/pages/job/getInfo?id='+item.user.uJid:'/pages/job/info?id='+item.id}}" class="weui-panel__bd">
@@ -74,6 +78,13 @@
                     </view>
                 </navigator>
             </view>
+        </view>
+        <view class="weui-loadmore" wx:if="{{!empty}}">
+            <view class="weui-loading"></view>
+            <view class="weui-loadmore__tips">正在加载</view>
+        </view>
+        <view class="weui-loadmore" wx:else>
+            <view class="weui-loadmore__tips weui-loadmore__tips_in-line bg-transparent">暂无数据</view>
         </view>
     </scroll-view>
 </view>

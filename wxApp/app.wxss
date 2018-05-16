@@ -127,6 +127,9 @@ page{
 .bg-green {
     background-color: #09bb07;
 }
+.bg-transparent{
+    background-color:transparent;
+}
 
 button.clear{
     background-color:transparent;

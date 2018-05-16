@@ -27,13 +27,13 @@ Page({
         that.getList(1)
     },
     getList: function (page, refresh) {
-        this.data.loading = true
-        if (refresh)
+        if (refresh) {
             this.data.refresh = true
+            page = 1
+        }
+        this.data.loading = true
         refresh = refresh === undefined ? false : refresh
         page = page === undefined ? 1 : page
-        if(refresh)
-            page = 1
         let that = this,
             list = that.data.jobs
         request.get("/part/user/jobs?page=" + page, {}, function (data) {

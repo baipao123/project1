@@ -15,7 +15,7 @@ App({
             cityStr: "",
             isSelect: false
         },
-        systemInfo: {}
+        systemInfo: null
     },
     login: function () {
         let _this = this;
@@ -80,12 +80,14 @@ App({
     getSystemInfo: function (key, defaultValue) {
         let that = this,
             info
-        if (that.globalData.systemInfo != {})
+        if (that.globalData.systemInfo)
             info = that.globalData.systemInfo
         else {
             info = wx.getSystemInfoSync()
             that.globalData.systemInfo = info
+            console.log(info)
         }
+        console.log(info)
         if (key == undefined)
             return info
         if (info.hasOwnProperty(key))

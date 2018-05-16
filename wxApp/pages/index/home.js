@@ -9,11 +9,17 @@ Page({
         page: 1,
         searchData: {},
         inputShowed: false,
+        widowHeight: 500,
+        empty: false,
+        loading: false,
+        refresh: false,
+        scrollTop:0
     },
     onLoad: function () {
         let that = this
         that.setData({
             user: app.globalData.user,
+            widowHeight: app.getSystemInfo("widowHeight", 500),
             searchData: {
                 aid: app.globalData.user.area_id,
                 cid: app.globalData.user.city_id
@@ -42,6 +48,11 @@ Page({
         }
     },
     getList: function (page, refresh) {
+        if(refresh){
+            this.data.refresh = true
+            page = 1
+        }
+        this.data.loading = true
         let that = this,
             list = that.data.jobs,
             searchData = that.data.searchData
@@ -59,7 +70,10 @@ Page({
                     list.push(data.list[i])
             }
             that.setData({
-                jobs: list
+                jobs: list,
+                empty: data.list.length == 0,
+                loading: false,
+                refresh: false
             })
             that.data.page++
         })
@@ -94,5 +108,23 @@ Page({
         });
         this.data.searchData.text = e.detail.value
         this.getList(1, true)
-    }
+    },
+    moreList: function () {
+        if (this.data.empty || this.data.loading || this.data.refresh)
+            return true;
+        let that = this
+        that.getList(that.data.page, false)
+    },
+    refreshList: function () {
+        if (this.data.loading || this.data.refresh)
+            return true;
+        let that = this
+        that.goTop()
+        that.getList(1, true)
+    },
+    goTop: function(){
+        this.setData({
+            scrollTop:0
+        })
+    },
 })
