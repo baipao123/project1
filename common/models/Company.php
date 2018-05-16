@@ -110,6 +110,8 @@ class Company extends \common\models\base\Company
         $oldRecords = CompanyRecord::find()->where(["uid" => $uid, "status" => self::STATUS_VERIFY])->all();
         /* @var $oldRecords CompanyRecord[] */
         foreach ($oldRecords as $r) {
+            if($record->attributes['id'] == $r->id)
+                continue;
             $r->status = self::STATUS_IGNORE;
             $r->updated_at = time();
             $r->save();
