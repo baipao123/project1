@@ -63,9 +63,11 @@ Page({
             data = e.detail.value
         data.formId = e.detail.formId
         request.post("part/job/apply", data, function (res) {
+            app.toast("报名成功")
             that.setData({
                 "job.userStatus": 1
             })
+            that.goUJobInfo(res.id)
         })
     },
     phoneCall: function () {
@@ -90,4 +92,10 @@ Page({
             scale: 28
         })
     },
+    goUJobInfo:function(id){
+        id=id==undefined?this.data.job.uJid:id
+        wx.navigateTo({
+            url:"getInfo?id="+id
+        })
+    }
 })

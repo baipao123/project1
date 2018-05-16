@@ -47,7 +47,7 @@ class JobController extends \frontend\controllers\BaseController
             return Tool::reJson(null, "报名失败", Tool::FAIL);
         }
         //TODO 模板消息
-        return Tool::reJson(1, "报名成功");
+        return Tool::reJson(["id"=>$record->attributes['id']]);
     }
 
     public function actionForbid() {

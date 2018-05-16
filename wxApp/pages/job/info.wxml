@@ -125,7 +125,7 @@
                                 </form>
                             </block>
                             <block wx:elif="{{job.userStatus==1}}">
-                                <view class="right blue">已报名</view>
+                                <view class="right blue" bindtap="goUJobInfo">已报名</view>
                             </block>
                             <block wx:elif="{{job.userStatus==2}}">
                                 <view class="right orange">工作中</view>

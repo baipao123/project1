@@ -259,6 +259,7 @@ class Job extends \common\models\base\Job
             "status"            => $this->status,
             "isLike"            => empty($uid) ? false : JobFollow::find()->where(["uid" => $uid, "jid" => $this->id])->exists(),
             "userStatus"        => $uJob ? $uJob->status : 0,
+            "uJid"              => $uJob ? $uJob->id : 0,
             "userApplyNum"      => $this->getApplyNum(),
             "userPassNum"       => $this->getPassNum(),
             "pushAt"            => date("Y-m-d", $this->created_at),
