@@ -10,8 +10,7 @@ Page({
         widowHeight: 500,
         page: 1,
         empty: false,
-        loading: false,
-        refresh: false
+        loading: false
     },
     onLoad: function () {
         let that = this
@@ -27,10 +26,6 @@ Page({
         that.getList(1)
     },
     getList: function (page, refresh) {
-        if (refresh) {
-            this.data.refresh = true
-            page = 1
-        }
         this.data.loading = true
         refresh = refresh === undefined ? false : refresh
         page = page === undefined ? 1 : page
@@ -48,26 +43,16 @@ Page({
             that.setData({
                 jobs: list,
                 empty: data.list.length == 0,
-                loading: false,
-                refresh: false
+                loading: false
             })
             that.data.page++
         })
     },
     moreList: function () {
-        if (this.data.empty || this.data.loading || this.data.refresh)
+        if (this.data.empty || this.data.loading)
             return true;
         let that = this
         that.getList(that.data.page, false)
-    },
-    refreshList: function () {
-        if (this.data.empty || this.data.loading || this.data.refresh)
-            return true;
-        let that = this
-        that.getList(1, true)
-    },
-    onReachBottom:function () {
-        this.moreList()
     }
 
 })

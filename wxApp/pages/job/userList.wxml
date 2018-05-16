@@ -1,9 +1,5 @@
 <view class="page full">
-    <scroll-view style="height:{{widowHeight}}px" scroll-y="true" lower-threshold="50" upper-threshold="10" bindscrolltolower="moreList" bindscrolltoupper="refreshList">
-        <view class="weui-loadmore top-refresh" wx:if="{{refresh}}">
-            <view class="weui-loading"></view>
-            <view class="weui-loadmore__tips">刷新中</view>
-        </view>
+    <scroll-view style="height:{{widowHeight}}px" scroll-y="true" lower-threshold="50" bindscrolltolower="moreList">
         <view wx:for="{{jobs}}" wx:key="key">
             <view class="weui-panel weui-panel_access" style="margin-bottom:30rpx;">
                 <navigator url="{{!item.user.isOwner && item.user.uJid>0 ? '/pages/job/getInfo?id='+item.user.uJid:'/pages/job/info?id='+item.id}}" class="weui-panel__bd">
