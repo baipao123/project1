@@ -14,7 +14,8 @@ App({
             aid: 0,
             cityStr: "",
             isSelect: false
-        }
+        },
+        systemInfo: {}
     },
     login: function () {
         let _this = this;
@@ -75,6 +76,21 @@ App({
         } else if (typeof callBack == "function") {
             callBack();
         }
+    },
+    getSystemInfo: function (key, defaultValue) {
+        let that = this,
+            info
+        if (that.globalData.systemInfo != {})
+            info = that.globalData.systemInfo
+        else {
+            info = wx.getSystemInfoSync()
+            that.globalData.systemInfo = info
+        }
+        if (key == undefined)
+            return info
+        if (info.hasOwnProperty(key))
+            return info[key]
+        return defaultValue == undefined ? "" : defaultValue
     },
     toast: function (text, icon) {
         icon = icon == undefined ? "success" : icon

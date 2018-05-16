@@ -15,7 +15,6 @@ Page({
         tmpQuizPosition: '',
         tmpWorkPosition: '',
         day: {},
-        windowHeight : 500,
         isEdit:false,
     },
     onLoad: function (options) {
@@ -35,14 +34,6 @@ Page({
             that.setData({
                 company: app.globalData.company
             })
-        })
-        wx.getSystemInfo({
-            success: function (res) {
-                console.log(res)
-                that.setData({
-                    windowHeight: res.windowHeight
-                })
-            }
         })
         if(options && options.hasOwnProperty("id")){
             let jid = options.id

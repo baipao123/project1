@@ -8,8 +8,7 @@ Page({
         // job: {},
         company: {},
         isOwner: false,
-        scrollHeight: 500,
-        domain:app.globalData.qiNiuDomain
+        domain: app.globalData.qiNiuDomain
     },
     onLoad: function (options) {
         let jid = options && options.hasOwnProperty("id") ? options.id : 0,
@@ -28,14 +27,6 @@ Page({
                     isOwner: true
                 })
         })
-        wx.getSystemInfo({
-            success: function (res) {
-                console.log(res)
-                that.setData({
-                    scrollHeight: res.windowHeight
-                })
-            }
-        });
     },
     toggleLike: function (e) {
         let that = this
@@ -76,7 +67,7 @@ Page({
             phoneNumber: that.data.job.phone //仅为示例，并非真实的电话号码
         })
     },
-    showQuizPosition:function (e) {
+    showQuizPosition: function (e) {
         let that = this
         wx.openLocation({
             latitude: parseFloat(that.data.job.quiz.latitude),
@@ -84,7 +75,7 @@ Page({
             scale: 28
         })
     },
-    showWorkPosition:function (e) {
+    showWorkPosition: function (e) {
         let that = this
         wx.openLocation({
             latitude: parseFloat(that.data.job.work.latitude),
@@ -92,10 +83,10 @@ Page({
             scale: 28
         })
     },
-    goUJobInfo:function(id){
-        id= typeof id== "object"?this.data.job.uJid:id
+    goUJobInfo: function (id) {
+        id = typeof id == "object" ? this.data.job.uJid : id
         wx.navigateTo({
-            url:"getInfo?id="+id
+            url: "getInfo?id=" + id
         })
     }
 })
