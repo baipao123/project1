@@ -31,7 +31,7 @@
         </navigator>
     </view>
 
-    <scroll-view class="list">
+    <scroll-view class="list" lower-threshold=50 upper-threshold=10 bindscrolltolower="moreList" bindscrolltoupper="refreshList">
         <view class="weui-cells__title">常用</view>
         <view class="weui-cells weui-cells_after-title">
             <view bindtap="goIndex" class="weui-cell weui-cell_access" hover-class="weui-cell_active">

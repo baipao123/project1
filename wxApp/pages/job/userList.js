@@ -7,7 +7,10 @@ Page({
         company: {},
         domain: app.globalData.qiNiuDomain,
         jobs: [],
-        page: 1
+        page: 1,
+        empty: false,
+        loading:false,
+        refresh:false
     },
     onLoad: function () {
         let that = this
@@ -22,6 +25,9 @@ Page({
         that.getList(1)
     },
     getList: function (page, refresh) {
+        this.data.loading = true
+        if(refresh)
+            this.data.refresh = true
         refresh = refresh === undefined ? false : refresh
         page = page === undefined ? 1 : page
         let that = this,
@@ -31,8 +37,24 @@ Page({
             for (let i = 0; i < data.list.length; i++)
                 list.push(data.list[i])
             that.setData({
-                jobs: list
+                jobs: list,
+                empty: data.list.length == 0,
+                loading: false,
+                refresh: false
             })
+            that.data.page++
         })
     },
+    moreList:function(){
+        if(this.data.empty || this.data.loading || this.data.refresh)
+            return true;
+        let that=this
+        that.getList(that.data.page,false)
+    },
+    refreshList:function(){
+        if(this.data.empty || this.data.loading || this.data.refresh)
+            return true;
+        let that = this
+        that.getList(1,true)
+    }
 })

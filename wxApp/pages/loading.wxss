@@ -1,0 +1,153 @@
+/*
+<div class="Loading pushIn">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+*/
+
+.Loading{
+    width: 100rpx;
+    height: 100rpx;
+    position: relative;
+    margin: 0 auto;
+}
+.Loading.pushIn{
+    -webkit-animation: pushIn 1s ease-in normal;
+    animation: pushIn 1s ease-in normal;
+}
+.Loading.pushOut{
+    -webkit-animation: pushOut 1s ease-in normal;
+    animation: pushOut 1s ease-in normal;
+}
+.Loading span{
+    display: inline-block;
+    width: 30%;
+    height: 10%;
+    border-top-left-radius: 5%;
+    border-bottom-left-radius: 5%;
+    background: lightgrey;
+    position: absolute;
+    -webkit-animation: load 1.04s ease infinite;
+    animation: load 1.04s ease infinite;
+}
+.Loading.Loading-green span{
+     background: lightgreen;
+}
+.Loading.Loading-blue span{
+     background: lightskyblue;
+}
+@-webkit-keyframes load{
+    0%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0.2;
+    }
+}
+@keyframes load{
+    0%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0.2;
+    }
+}
+@-webkit-keyframes pushIn{
+    0%{
+        height: 0;
+        width: 0;
+    }
+    100%{
+        height: 100px;
+        width: 100px;
+    }
+}
+@keyframes pushIn{
+    0%{
+        height: 0;
+        width: 0;
+    }
+    100%{
+        height: 100px;
+        width: 100px;
+    }
+}
+@-webkit-keyframes pushOut{
+    0%{
+         height: 100px;
+        width: 100px;
+    }
+    100%{
+        height: 0;
+        width: 0;
+    }
+}
+@keyframes pushOut{
+    0%{
+         height: 100px;
+        width: 100px;
+    }
+    100%{
+        height: 0;
+        width: 0;
+    }
+}
+
+
+.Loading span:nth-child(1){
+    left: 0;
+    top: 50%;
+    margin-top:-5%;
+    -webkit-animation-delay:0.13s;
+}
+.Loading span:nth-child(2){
+    left: 10%;
+    top: 20%;
+    -webkit-transform: rotate(45deg);
+    -webkit-animation-delay:0.26s;
+}
+.Loading span:nth-child(3){
+    left: 50%;
+    top: 10%;
+    margin-left: -15%;
+    -webkit-transform: rotate(90deg);
+    -webkit-animation-delay:0.39s;
+}
+.Loading span:nth-child(4){
+    top: 20%;
+    right:10%;
+    -webkit-transform: rotate(135deg);
+    -webkit-animation-delay:0.52s;
+}
+.Loading span:nth-child(5){
+    right: 0;
+    top: 50%;
+    margin-top:-5%;
+    -webkit-transform: rotate(180deg);
+    -webkit-animation-delay:0.65s;
+}
+.Loading span:nth-child(6){
+    right: 10%;
+    bottom:20%;
+    -webkit-transform: rotate(225deg);
+    -webkit-animation-delay:0.78s;
+}
+.Loading span:nth-child(7){
+    bottom: 10%;
+    left: 50%;
+    margin-left: -15%;
+    -webkit-transform: rotate(270deg);
+    -webkit-animation-delay:0.91s;
+}
+.Loading span:nth-child(8){
+    bottom: 20%;
+    left: 10%;
+    -webkit-transform: rotate(315deg);
+    -webkit-animation-delay:1.04s;
+}
