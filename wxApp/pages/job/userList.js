@@ -7,7 +7,7 @@ Page({
         company: {},
         domain: app.globalData.qiNiuDomain,
         jobs: [],
-        widowHeight: 500,
+        windowHeight: 500,
         page: 1,
         empty: false,
         loading: false
@@ -16,11 +16,15 @@ Page({
         let that = this
         that.setData({
             user: app.globalData.user,
-            widowHeight: app.getSystemInfo("widowHeight", 500)
         })
         app.getCompanyInfo(function () {
             that.setData({
                 company: app.globalData.company
+            })
+        })
+        app.getSystemInfo(function (res) {
+            that.setData({
+                windowHeight: res.hasOwnProperty("windowHeight") ? res.windowHeight : 500
             })
         })
         that.getList(1)
@@ -31,7 +35,7 @@ Page({
         page = page === undefined ? 1 : page
         let that = this,
             list = that.data.jobs
-        request.get("/part/user/jobs?page=" + page, {}, function (data) {
+        request.get("part/user/jobs?page=" + page, {}, function (data) {
             console.log(data)
             if (refresh) {
                 list = data.list

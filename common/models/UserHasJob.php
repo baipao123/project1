@@ -67,10 +67,11 @@ class UserHasJob extends \common\models\base\UserHasJob
         $clocks = $this->clocks;
         $data = [];
         $result = $this->dailyRecords();
+        \Yii::warning($result);
         foreach ($clocks as $clock) {
             $info = $clock->info();
             $data[ $info['date'] ]['items'][] = $info;
-            if (isset($result[ $info['date'] ]) && !isset($data[ $info['date'] ]['result']) || empty($data[ $info['date'] ]['result']))
+            if (isset($result[ $info['date'] ]) && (!isset($data[ $info['date'] ]['result']) || empty($data[ $info['date'] ]['result'])))
                 $data[ $info['date'] ]['result'] = $result[ $info['date'] ];
         }
         return $data;

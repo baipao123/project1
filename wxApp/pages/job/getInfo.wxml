@@ -41,7 +41,7 @@
     <view class="clock" wx:elif="{{uJob.status==2}}">
         <view class="weui-cells__title">打卡</view>
         <view class="weui-cells weui-cells_after-title">
-            <view class="weui-cell text-m" wx:for="{{todayClock}}" wx:key="today">
+            <view class="weui-cell text-m" wx:for="{{todayClock.items}}" wx:key="today">
                 <view class="weui-cell__hd">
                     <span class="myIcon icon-clock text-green margin"></span>
                 </view>

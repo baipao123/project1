@@ -37,7 +37,7 @@ Page({
         })
         if(options && options.hasOwnProperty("id")){
             let jid = options.id
-            request.get("/part/job/info?id="+jid,{},function (data) {
+            request.get("part/job/info?id="+jid,{},function (data) {
                 that.setData({
                     job:data.job,
                     isEdit:true,
@@ -145,14 +145,10 @@ Page({
         data.formId = e.detail.formId;
 
         request.post(url, data, function (res, response) {
-            wx.showToast({
-                icon: "success",
-                title: response.msg,
-                complete: function () {
-                    wx.navigateTo({
-                        url: "/pages/job/info?id=" + res.jid
-                    })
-                }
+            app.toast(response.msg, "success", function () {
+                wx.navigateTo({
+                    url: "/pages/job/info?id=" + res.jid
+                })
             })
         })
     },

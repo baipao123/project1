@@ -1,5 +1,5 @@
 <view class="page full">
-    <scroll-view style="height:{{widowHeight}}px" scroll-y="true" lower-threshold="50" bindscrolltolower="moreList">
+    <scroll-view style="height:{{windowHeight}}px" scroll-y="true" lower-threshold="50" bindscrolltolower="moreList">
         <view wx:for="{{jobs}}" wx:key="key">
             <view class="weui-panel weui-panel_access" style="margin-bottom:30rpx;">
                 <navigator url="{{!item.user.isOwner && item.user.uJid>0 ? '/pages/job/getInfo?id='+item.user.uJid:'/pages/job/info?id='+item.id}}" class="weui-panel__bd">

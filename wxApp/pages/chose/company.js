@@ -61,7 +61,7 @@ Page({
         let data = e.detail.value;
         data.formId = e.detail.formId;
         data.phoneType = this.data.type;
-        request.post("/part/company/join", data, (res) => {
+        request.post("part/company/join", data, (res) => {
             wx.navigateTo({
                 url: "/pages/user/user"
             })

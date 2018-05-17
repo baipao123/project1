@@ -36,7 +36,7 @@ Page({
         let data = e.detail.value;
         let that = this;
         data.formId = e.detail.formId;
-        request.post("/part/user/join-user",data,function(res){
+        request.post("part/user/join-user",data,function(res){
             app.globalData.user = res.user;
             app.toast("注册成功")
             wx.switchTab({

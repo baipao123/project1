@@ -32,14 +32,14 @@
                             <view class="weui-agree__text weui-flex__item">
                                 <view class="weui-agree__checkbox-icon">
                                     <icon class="weui-agree__checkbox-icon-check" type="success_no_circle" size="9"
-                                          wx:if="{{job.gender!=1 ? true : false}}"></icon>
+                                          wx:if="{{job.gender!=2 ? true : false}}"></icon>
                                 </view>
                                 男性
                             </view>
                             <view class="weui-agree__text weui-flex__item">
                                 <view class="weui-agree__checkbox-icon">
                                     <icon class="weui-agree__checkbox-icon-check" type="success_no_circle" size="9"
-                                          wx:if="{{job.gender!=2 ? true : false}}"></icon>
+                                          wx:if="{{job.gender!=1 ? true : false}}"></icon>
                                 </view>
                                 女性
                             </view>

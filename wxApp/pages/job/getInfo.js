@@ -32,16 +32,16 @@ Page({
     },
     getUJob: function (uJid) {
         let that = this
-        request.get("/part/job/my-job?uJid=" + uJid, {}, function (data) {
+        request.get("part/job/my-job?uJid=" + uJid, {}, function (data) {
             console.log(data)
             let clocks = data.clocks,
-                todayClock = clocks.length > 0 ? clocks[clocks.length - 1] : []
+                todayClock = clocks.length > 0 ? clocks[clocks.length - 1] : {items: []}
             console.log(todayClock)
-            if (todayClock.length > 0) {
-                let tmp = todayClock[0]
+            if (todayClock.items.length > 0) {
+                let tmp = todayClock.items[0]
                 console.log(tmp)
                 if (!tmp.isToday)
-                    todayClock = []
+                    todayClock = {items: []}
             }
             that.setData({
                 job: data.job,
@@ -61,17 +61,13 @@ Page({
         })
     },
     setCanvasSize: function () {
-        try {
-            let res = wx.getSystemInfoSync(),
-                scale = 750 / 686, //不同屏幕下canvas的适配比例；设计稿是750宽
-                width = res.windowWidth / scale
-            this.setData({
-                canvasWidth: width
+        let that = this
+        app.getSystemInfo(function (res) {
+            let width = res.hasOwnProperty("windowWidth") ? res.windowWidth : 300
+            that.setData({
+                canvasWidth: width * 686 / 750
             })
-        } catch (e) {
-            // Do something when catch error
-            console.log("获取设备信息失败" + e);
-        }
+        })
     },
     drawQr: function (text) {
         let that = this
@@ -97,43 +93,29 @@ Page({
         let that = this,
             data = {
                 uJid: that.data.uJob.id
-            }
-        if (that.data.lastClock > 0) {
-            wx.showToast({
-                icon: "none",
-                title: "2次打卡最少间隔5分钟"
-            })
+            },
+            tmpClock = that.data.lastClock
+        if (tmpClock > 0) {
+            app.toast("2次打卡最少间隔5分钟", "none")
             return false
         }
         that.data.lastClock = 5
-        wx.getLocation({
-            type: "gcj02",
-            success: function (res) {
-                data.lat = res.latitude
-                data.long = res.longitude
-                data.acc = res.accuracy
-                request.post("part/clock/clock", data, function (data) {
-                    wx.showToast({
-                        icon: "success",
-                        title: "打卡成功"
-                    })
-                    let today = that.data.todayClock
-                    today.push(data.info)
-                    that.setData({
-                        todayClock: today
-                    })
-                },function () {
-                    that.data.lastClock = 0
+        app.getLocation(function (res) {
+            data.lat = res.latitude
+            data.long = res.longitude
+            data.acc = res.accuracy
+            request.post("part/clock/clock", data, function (data) {
+                app.toast("打卡成功")
+                let today = that.data.todayClock
+                today.items.push(data.info)
+                that.setData({
+                    todayClock: today
                 })
-            },
-            fail: function (res) {
-                that.data.lastClock = 0
-                wx.showToast({
-                    icon: "none",
-                    title: "请开启定位设置"
-                })
-            }
+            }, function () {
+                that.data.lastClock = tmpClock
+            })
+        }, function () {
+            that.data.lastClock = tmpClock
         })
-
     },
 })

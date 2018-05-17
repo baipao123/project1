@@ -21,7 +21,7 @@
         </view>
         <view class="weui-search-bar__cancel-btn text-m" hidden="{{!inputShowed}}" bindtap="hideInput" style="margin-top:5rpx;">取消</view>
     </view>
-    <scroll-view style="height:{{widowHeight-28}}px" scroll-y="true" lower-threshold="50" enable-back-to-top="true" bindscrolltolower="moreList">
+    <scroll-view style="height:{{windowHeight-50}}px" scroll-y="true" lower-threshold="50" enable-back-to-top="true" bindscrolltolower="moreList">
         <view wx:for="{{jobs}}" wx:key="key">
             <view class="weui-panel weui-panel_access" style="margin-bottom:30rpx;">
                 <navigator url="{{!item.user.isOwner && item.user.uJid>0 ? '/pages/job/getInfo?id='+item.user.uJid:'/pages/job/info?id='+item.id}}" class="weui-panel__bd">

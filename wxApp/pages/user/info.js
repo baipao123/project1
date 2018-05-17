@@ -139,11 +139,8 @@ Page({
     },
     edit: function (data) {
         let that = this
-        request.post("/part/user/edit", data, function (res) {
-            wx.showToast({
-                title: "修改成功",
-                icon: "success"
-            })
+        request.post("part/user/edit", data, function (res) {
+            app.toast("修改成功")
             if (res.hasOwnProperty("user")) {
                 app.globalData.user = res.user
                 that.setData({

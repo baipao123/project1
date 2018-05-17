@@ -9,7 +9,7 @@ Page({
         page: 1,
         searchData: {},
         inputShowed: false,
-        widowHeight: 500,
+        windowHeight: 500,
         empty: false,
         loading: false,
     },
@@ -17,11 +17,15 @@ Page({
         let that = this
         that.setData({
             user: app.globalData.user,
-            widowHeight: app.getSystemInfo("widowHeight", 500),
             searchData: {
                 aid: app.globalData.user.area_id,
                 cid: app.globalData.user.city_id
             }
+        })
+        app.getSystemInfo(function (res) {
+            that.setData({
+                windowHeight: res.hasOwnProperty("windowHeight") ? res.windowHeight : 500
+            })
         })
         that.getList(1, true)
     },
@@ -53,7 +57,7 @@ Page({
         refresh = refresh === undefined ? false : refresh
         page = page === undefined ? that.data.page : page
         searchData.page = page
-        request.get("/part/job/list", searchData, function (data) {
+        request.get("part/job/list", searchData, function (data) {
             console.log(data)
             if (refresh) {
                 list = data.list

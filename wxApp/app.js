@@ -66,7 +66,7 @@ App({
     getCompanyInfo: function (callBack) {
         let that = this
         if (that.isEmptyObj(that.globalData.company)) {
-            request.get("/part/company/info", {}, function (data) {
+            request.get("part/company/info", {}, function (data) {
                 data.company.positionStr = ""
                 that.globalData.company = data.company
                 if (typeof callBack == "function") {
@@ -77,28 +77,68 @@ App({
             callBack();
         }
     },
-    getSystemInfo: function (key, defaultValue) {
-        let that = this,
-            info
-        if (that.globalData.systemInfo)
-            info = that.globalData.systemInfo
-        else {
-            info = wx.getSystemInfoSync()
-            that.globalData.systemInfo = info
-            console.log(info)
+    getSystemInfo: function (callBack) {
+        let that = this
+        if (!that.globalData.systemInfo) {
+            wx.getSystemInfo({
+                success: function (res) {
+                    that.globalData.systemInfo = res
+                    if (typeof callBack == "function") {
+                        callBack(res);
+                    }
+                }
+            })
+        } else if (typeof callBack == "function") {
+            callBack(that.globalData.systemInfo);
         }
-        console.log(info)
-        if (key == undefined)
-            return info
-        if (info.hasOwnProperty(key))
-            return info[key]
-        return defaultValue == undefined ? "" : defaultValue
     },
-    toast: function (text, icon) {
+    toast: function (text, icon, callback) {
         icon = icon == undefined ? "success" : icon
         wx.showToast({
             title: text,
-            icon: icon
+            icon: icon,
+            complete: callback
+        })
+    },
+    getLocation: function (success, fail, type) {
+        let that = this
+        wx.getSetting({
+            success: function (res) {
+                let setting = res.authSetting
+                if (setting.hasOwnProperty("scope.userLocation") && setting["scope.userLocation"])
+                    that.getLocationAction(success, fail, type)
+                else {
+                    wx.authorize({
+                        scope: 'scope.userLocation',
+                        success: function (res) {
+                            console.log(res)
+                            that.getLocationAction(success, fail, type)
+                        },
+                        fail: function (res) {
+                            that.toast("请允许使用地理位置", "none")
+                            console.log(res)
+                            if (typeof fail == "function")
+                                fail()
+                        }
+                    })
+                }
+            }
+        })
+    },
+    getLocationAction: function (success, fail, type) {
+        let that = this
+        type = type == undefined ? "gcj02" : type
+        wx.getLocation({
+            type: type,
+            success: function (res) {
+                if (typeof success == "function")
+                    success(res)
+            },
+            fail: function (res) {
+                that.toast("请开启定位设置", "none")
+                if (typeof fail == "function")
+                    fail(res)
+            }
         })
     }
 })
