@@ -12,6 +12,7 @@ namespace common\models;
  * @property Job $job
  * @property User $user
  * @property UserClock[] $clocks
+ * @property UserJobDaily[] $dayHours
  * */
 class UserHasJob extends \common\models\base\UserHasJob
 {
@@ -30,6 +31,10 @@ class UserHasJob extends \common\models\base\UserHasJob
 
     public function getClocks() {
         return $this->hasMany(UserClock::className(), ["uJid" => "id"]);
+    }
+
+    public function getDayHours() {
+        return $this->hasMany(UserJobDaily::className(), ["uJid" => "id"])->orderBy("created_at desc");
     }
 
     public function user() {
@@ -61,9 +66,22 @@ class UserHasJob extends \common\models\base\UserHasJob
     public function clocks() {
         $clocks = $this->clocks;
         $data = [];
+        $result = $this->dailyRecords();
         foreach ($clocks as $clock) {
             $info = $clock->info();
-            $data[ $info['date'] ][] = $info;
+            $data[ $info['date'] ]['items'][] = $info;
+            if (isset($result[ $info['date'] ]) && !isset($data[ $info['date'] ]['result']) || empty($data[ $info['date'] ]['result']))
+                $data[ $info['date'] ]['result'] = $result[ $info['date'] ];
+        }
+        return $data;
+    }
+
+    public function dailyRecords() {
+        $records = $this->dayHours;
+        $data = [];
+        foreach ($records as $record) {
+            $info = $record->info();
+            $data[ $info['date'] ] = $info;
         }
         return $data;
     }
