@@ -116,21 +116,22 @@ class UserHasJob extends \common\models\base\UserHasJob
             } else {
                 $lastDateStart = strtotime($lastDate);
                 $tmpDateStart = strtotime($tmpDate);
+                if ($index > 0) {
+                    $dayInfo['num'] = round($todaySecond / 3600, 1);
+                    $dayInfo['date'] = substr($lastDate, 0, 4) == $thisYear ? substr($lastDate, 5) : $lastDate;
+                    $dayInfo['weekly'] = "星期" . $weekly[ date("w", $lastDateStart) ];
+                    $dailyInfo = isset($dailyData[ $lastDate ]) ? $dailyData[ $lastDate ] : [];
+                    $data[] = ArrayHelper::merge($emptyInfo, $dayInfo, $dailyInfo);
 
-                $dayInfo['num'] = round($todaySecond / 3600, 1);
-                $dayInfo['date'] = substr($lastDate, 0, 4) == $thisYear ? substr($lastDate, 5) : $lastDate;
-                $dayInfo['weekly'] = "星期" . $weekly[ date("w", $lastDateStart) ];
-                $dailyInfo = isset($dailyData[ $lastDate ]) ? $dailyData[ $lastDate ] : [];
-                $data[] = ArrayHelper::merge($emptyInfo, $dayInfo, $dailyInfo);
-
-                $dayInfo = [
-                    "items" => []
-                ];
-                $todaySecond = 0;
-                if ($index > 0 && $tmpDateStart - $lastDateStart > 24 * 3600) {
-                    $Arr = self::fillNoClockDaily($lastDateStart, $tmpDateStart, $emptyInfo, $dailyData);
-                    foreach ($Arr as $a) {
-                        $data[] = $a;
+                    $dayInfo = [
+                        "items" => []
+                    ];
+                    $todaySecond = 0;
+                    if ($tmpDateStart - $lastDateStart > 24 * 3600) {
+                        $Arr = self::fillNoClockDaily($lastDateStart, $tmpDateStart, $emptyInfo, $dailyData);
+                        foreach ($Arr as $a) {
+                            $data[] = $a;
+                        }
                     }
                 }
             }
