@@ -145,7 +145,7 @@ class UserHasJob extends \common\models\base\UserHasJob
         $dailyInfo = isset($dailyData[ $lastDate ]) ? $dailyData[ $lastDate ] : [];
         $data[] = ArrayHelper::merge($emptyInfo, $dayInfo, $dailyInfo);
         // 最后一天到今天的
-        $tmpDateStart = strtotime("+1 day");
+        $tmpDateStart = strtotime(date("Y-m-d", strtotime("+1 day")));
         if ($tmpDateStart - $lastDateStart > 24 * 3600) {
             $arr2 = self::fillNoClockDaily($lastDateStart, $tmpDateStart, $emptyInfo, $dailyData);
             foreach ($arr2 as $a) {
