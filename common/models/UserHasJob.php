@@ -124,7 +124,9 @@ class UserHasJob extends \common\models\base\UserHasJob
                     $data[] = ArrayHelper::merge($emptyInfo, $dayInfo, $dailyInfo);
 
                     $dayInfo = [
-                        "items" => []
+                        "items" => [
+                            $clock->info()
+                        ]
                     ];
                     $todaySecond = 0;
                     if ($tmpDateStart - $lastDateStart > 24 * 3600) {
@@ -133,6 +135,8 @@ class UserHasJob extends \common\models\base\UserHasJob
                             $data[] = $a;
                         }
                     }
+                } else {
+                    $dayInfo['items'][] = $clock->info();
                 }
             }
             $lastTime = $clock->created_at;
