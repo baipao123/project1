@@ -137,9 +137,20 @@ class UserHasJob extends \common\models\base\UserHasJob
             $lastTime = $clock->created_at;
             $lastDate = $tmpDate;
         }
-        $arr2 = self::fillNoClockDaily(strtotime($lastDate), strtotime("+1 day"), $emptyInfo, $dailyData);
-        foreach ($arr2 as $a) {
-            $data[] = $a;
+        // 最后一天的
+        $lastDateStart = strtotime($lastDate);
+        $dayInfo['num'] = round($todaySecond / 3600, 1);
+        $dayInfo['date'] = substr($lastDate, 0, 4) == $thisYear ? substr($lastDate, 5) : $lastDate;
+        $dayInfo['weekly'] = "星期" . $weekly[ date("w", $lastDateStart) ];
+        $dailyInfo = isset($dailyData[ $lastDate ]) ? $dailyData[ $lastDate ] : [];
+        $data[] = ArrayHelper::merge($emptyInfo, $dayInfo, $dailyInfo);
+        // 最后一天到今天的
+        $tmpDateStart = strtotime("+1 day");
+        if ($tmpDateStart - $lastDateStart > 24 * 3600) {
+            $arr2 = self::fillNoClockDaily($lastDateStart, $tmpDateStart, $emptyInfo, $dailyData);
+            foreach ($arr2 as $a) {
+                $data[] = $a;
+            }
         }
         return $data;
     }
