@@ -13,7 +13,13 @@ Page({
         canvasWidth: 300,
         isAjax: true,
         nowTime: "",
-        lastClock: 0
+        lastClock: 0,
+        navBar: {
+            activeIndex: 0,
+            sliderOffset: 0,
+            sliderLeft: 0,
+            sliderWidth: 96
+        }
     },
     onLoad: function (options) {
         let uJid = options && options.hasOwnProperty("id") ? options.id : 0,
@@ -27,6 +33,7 @@ Page({
             })
         })
         that.setCanvasSize()
+        that.setNavBarWidth()
         that.getNowTime()
         that.getUJob(uJid)
     },
@@ -73,6 +80,27 @@ Page({
         let that = this
         console.log(that.data.canvasWidth)
         qrCode.api.draw(text, "qrcode", that.data.canvasWidth, that.data.canvasWidth)
+    },
+    setNavBarWidth: function () {
+        let that = this
+        app.getSystemInfo(function (res) {
+            let width = res.hasOwnProperty("windowWidth") ? res.windowWidth : 300,
+                sliderWidth = width / 4
+            console.log(width)
+            that.setData({
+                "navBar.sliderLeft": (width / 3 - sliderWidth) / 2,
+                "navBar.sliderOffset": width / 3 * that.data.navBar.activeIndex,
+                "navBar.sliderWidth": sliderWidth
+            });
+        })
+    },
+    tabClick: function (e) {
+        console.log(e)
+
+        this.setData({
+            "navBar.sliderOffset": e.currentTarget.offsetLeft,
+            "navBar.activeIndex": e.currentTarget.id
+        });
     },
     getNowTime: function () {
         let that = this,

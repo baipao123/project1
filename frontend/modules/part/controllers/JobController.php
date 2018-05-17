@@ -47,7 +47,7 @@ class JobController extends \frontend\controllers\BaseController
             return Tool::reJson(null, "报名失败", Tool::FAIL);
         }
         //TODO 模板消息
-        return Tool::reJson(["id"=>$record->attributes['id']]);
+        return Tool::reJson(["id" => $record->attributes['id']]);
     }
 
     public function actionForbid() {
@@ -141,6 +141,6 @@ class JobController extends \frontend\controllers\BaseController
         $uJob = UserHasJob::findOne($uJid);
         if (!$uJob || $uJob->uid != $uid)
             return Tool::reJson(null, "未发现任务报名记录", Tool::FAIL);
-        return Tool::reJson(["job" => $uJob->job->sampleInfo(), "uJob" => $uJob->info(), "clocks" => array_values($uJob->clocks())]);
+        return Tool::reJson(["job" => $uJob->job->sampleInfo(), "uJob" => $uJob->info(), "clocks" => $uJob->dailyRecords()]);
     }
 }

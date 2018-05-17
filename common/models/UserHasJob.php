@@ -8,6 +8,8 @@
 
 namespace common\models;
 
+use yii\helpers\ArrayHelper;
+
 /**
  * @property Job $job
  * @property User $user
@@ -66,23 +68,94 @@ class UserHasJob extends \common\models\base\UserHasJob
     public function clocks() {
         $clocks = $this->clocks;
         $data = [];
-        $result = $this->dailyRecords();
-        \Yii::warning($result);
         foreach ($clocks as $clock) {
             $info = $clock->info();
-            $data[ $info['date'] ]['items'][] = $info;
-            if (isset($result[ $info['date'] ]) && (!isset($data[ $info['date'] ]['result']) || empty($data[ $info['date'] ]['result'])))
-                $data[ $info['date'] ]['result'] = $result[ $info['date'] ];
+            $data[ $info['date'] ][] = $info;
         }
         return $data;
     }
 
     public function dailyRecords() {
-        $records = $this->dayHours;
+        $clocks = $this->clocks;
         $data = [];
+        $weekly = ["日", "一", "二", "三", "四", "五", "六"];
+        $emptyInfo = [
+            "num"    => 0,
+            "status" => UserJobDaily::NOTHING,
+            "msg"    => "",
+            "items"  => (array)[]
+        ];
+        // 未打过卡
+        if (empty($clocks)) {
+            $info = $emptyInfo;
+            $info['date'] = date("m-d");
+            $info['weekly'] = "星期" . $weekly[ date("w") ];
+            $data[] = $info;
+            return $data;
+        }
+        $records = $this->dayHours;
+        $dailyData = [];
         foreach ($records as $record) {
             $info = $record->info();
-            $data[ $info['date'] ] = $info;
+            $dailyData[ $info['date'] ] = $info;
+        }
+        $lastTime = 0; // 上一次打卡时间
+        $lastDate = ""; // 上一次打卡的日期
+        $todaySecond = 0; // 今天的工作时长
+        $dayInfo = [
+            "items" => []
+        ];
+        $thisYear = date("Y");
+        foreach ($clocks as $clock) {
+            $tmpDate = date("Y-m-d", $clock->created_at);
+            if ($tmpDate == $lastDate) {
+                $dayInfo['items'][] = $clock->info();
+                if ($clock->type == UserClock::TYPE_END) {
+                    $todaySecond += $clock->created_at - $lastTime;
+                }
+            } else {
+                $lastDateStart = strtotime($lastDate);
+                $tmpDateStart = strtotime($tmpDate);
+
+                $dayInfo['num'] = round($todaySecond / 3600, 1);
+                $dayInfo['date'] = substr($lastDate, 0, 4) == $thisYear ? substr($lastDate, 5) : $lastDate;
+                $dayInfo['weekly'] = "星期" . $weekly[ date("w", $lastDateStart) ];
+                $dailyInfo = isset($dailyData[ $lastDate ]) ? $dailyData[ $lastDate ] : [];
+                $data[] = ArrayHelper::merge($emptyInfo, $dayInfo, $dailyInfo);
+
+                $dayInfo = [
+                    "items" => []
+                ];
+                $todaySecond = 0;
+                if ($tmpDateStart - $lastDateStart > 24 * 3600) {
+                    $Arr = self::fillNoClockDaily($lastDateStart, $tmpDateStart, $emptyInfo, $dailyData);
+                    foreach ($Arr as $a) {
+                        $data[] = $a;
+                    }
+                }
+            }
+            $lastTime = $clock->created_at;
+            $lastDate = $tmpDate;
+        }
+        $arr2 = self::fillNoClockDaily(strtotime($lastDate), strtotime("+1 day"), $emptyInfo, $dailyData);
+        foreach ($arr2 as $a) {
+            $data[] = $a;
+        }
+        return $data;
+    }
+
+    public static function fillNoClockDaily($lastStart, $thisStart, $emptyArr, $dailyData) {
+        $data = [];
+        $thisYear = date("Y");
+        $weekly = ["日", "一", "二", "三", "四", "五", "六"];
+        for ($tTime = $lastStart + 24 * 3600; $tTime < $thisStart; $tTime += 24 * 3600) {
+            $tDate = date("Y-m-d", $tTime);
+            $tmpInfo = [
+                "date"   => substr($tDate, 0, 4) == $thisYear ? substr($tDate, 5) : $tDate,
+                "weekly" => "星期" . $weekly[ date("w", $tTime) ],
+            ];
+            $dailyInfo = isset($dailyData[ $tDate ]) ? $dailyData[ $tDate ] : [];
+            $data[] = ArrayHelper::merge($emptyArr, $tmpInfo, $dailyInfo);
         }
         return $data;
     }

@@ -83,12 +83,14 @@ App({
             wx.getSystemInfo({
                 success: function (res) {
                     that.globalData.systemInfo = res
+                    console.log(res)
                     if (typeof callBack == "function") {
                         callBack(res);
                     }
                 }
             })
         } else if (typeof callBack == "function") {
+            console.log(that.globalData.systemInfo)
             callBack(that.globalData.systemInfo);
         }
     },
