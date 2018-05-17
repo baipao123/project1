@@ -106,7 +106,7 @@ class UserHasJob extends \common\models\base\UserHasJob
             "items" => []
         ];
         $thisYear = date("Y");
-        foreach ($clocks as $clock) {
+        foreach ($clocks as $index => $clock) {
             $tmpDate = date("Y-m-d", $clock->created_at);
             if ($tmpDate == $lastDate) {
                 $dayInfo['items'][] = $clock->info();
@@ -127,7 +127,7 @@ class UserHasJob extends \common\models\base\UserHasJob
                     "items" => []
                 ];
                 $todaySecond = 0;
-                if ($tmpDateStart - $lastDateStart > 24 * 3600) {
+                if ($index > 0 && $tmpDateStart - $lastDateStart > 24 * 3600) {
                     $Arr = self::fillNoClockDaily($lastDateStart, $tmpDateStart, $emptyInfo, $dailyData);
                     foreach ($Arr as $a) {
                         $data[] = $a;
