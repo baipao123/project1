@@ -85,7 +85,9 @@ class JobController extends \frontend\controllers\BaseController
     function actionTimeUp() {
         $uJid = $this->getPost("uJid", 0);
         $date = $this->getPost("date", date("Ymd"));
-        $date = date("Ymd", strtotime($date));
+        $date = str_replace("-", "", $date);
+        if ($date < 10000)
+            $date = date("Y") . $date;
         $daily = UserJobDaily::findOne(["uJid" => $uJid, "date" => $date]);
         if ($daily && $daily->status == UserJobDaily::PASS)
             return Tool::reJson(null, "当天工时已审核通过，无法修改", Tool::FAIL);
