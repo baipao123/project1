@@ -22,8 +22,8 @@ class UserJobDaily extends \common\models\base\UserJobDaily
     const TYPE_WHOLE_DAY = 2;
 
     public function dateStr() {
-        //        $format = substr($this->date, 0, 4) == date("Y") ? "m.d" : "Y.m.d";
-        return date("Y-m-d", strtotime($this->date));
+        $format = substr($this->date, 0, 4) == date("Y") ? "m-d" : "Y-m-d";
+        return date($format, strtotime($this->date));
     }
 
     public function numStr() {

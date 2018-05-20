@@ -84,16 +84,16 @@
                             <view class="weui-cell__ft weui-cell__ft_in-access weui-cell__ft_in-access-{{index==showIndex ? 'top':'bottom'}}">
                                 工时:
                                 <block wx:if="{{item.status==1}}">
-                                    <text class="text-blue">{{item.num}}小时 审核中</text>
+                                    <text class="text-blue">{{item.numStr}} 审核中</text>
                                 </block>
                                 <block wx:elif="{{item.status==2}}">
-                                    <text class="text-red">{{item.num}}小时 被拒绝</text>
+                                    <text class="text-red">{{item.numStr}} 被拒绝</text>
                                 </block>
                                 <block wx:elif="{{item.status==3}}">
-                                    <text class="text-green">{{item.num}}小时 已通过</text>
+                                    <text class="text-green">{{item.numStr}} 已通过</text>
                                 </block>
                                 <block wx:else>
-                                    <text class="text-grey-normal">{{item.num}}小时 未上报</text>
+                                    <text class="text-grey-normal">{{item.numStr}} 未上报</text>
                                 </block>
                             </view>
                         </view>
