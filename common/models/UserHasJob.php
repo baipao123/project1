@@ -101,7 +101,8 @@ class UserHasJob extends \common\models\base\UserHasJob
         $dailyData = [];
         foreach ($records as $record) {
             $info = $record->info();
-            $dailyData[ $info['date'] ] = $info;
+            $date = strlen($info['date']) > 5 ? $info['date'] : date("Y-") . $info['date'];
+            $dailyData[ $date ] = $info;
         }
         $lastTime = 0; // 上一次打卡时间
         $lastDate = ""; // 上一次打卡的日期
