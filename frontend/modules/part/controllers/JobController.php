@@ -108,9 +108,13 @@ class JobController extends \frontend\controllers\BaseController
         $daily->isNewRecord ? $daily->created_at = time() : $daily->updated_at = time();
         $msg = $this->getPost("msg");
         $daily->msg = $msg;
-        $daily->save();
-        //TODO 模板消息
-        return Tool::reJson(["info" => $daily->info()]);
+        if ($daily->save())
+            //TODO 模板消息
+            return Tool::reJson(["info" => $daily->info()]);
+        else {
+            Yii::warning($daily->errors, "UserJobDaily 保存出错");
+            return Tool::reJson(null, "工时上报失败", Tool::FAIL);
+        }
     }
 
     public
