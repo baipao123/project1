@@ -127,6 +127,8 @@ Page({
         setTimeout(this.getNowTime, (60 - second) * 1000)
     },
     clock: function () {
+        if (this.data.uJob.status != 2)
+            return false;
         let that = this,
             data = {
                 uJid: that.data.uJob.id
@@ -141,13 +143,26 @@ Page({
             data.lat = res.latitude
             data.long = res.longitude
             data.acc = res.accuracy
-            request.post("part/clock/clock", data, function (data) {
+            request.post("part/clock/clock", data, function (res) {
                 app.toast("打卡成功")
-                let today = that.data.todayClock
-                today.items.push(data.info)
+                let today = that.data.todayClock,
+                    clocks = that.data.clocks
+                today.items.push(res.info)
+                clocks[clocks.length - 1].items.push(res.info)
                 that.setData({
                     todayClock: today
                 })
+                if (res.info.type == 3 && clocks[clocks.length - 1].status == 0) {
+                    wx.showModal({
+                        title: '上报工时',
+                        content: '每天只统计一次工时，审核通过后无法修改，请确认今天的工作已经完成！',
+                        cancelText: '还有工作',
+                        confirmText: '上报工时',
+                        success: function () {
+                            that.goTimeUp(null, that.data.clocks.length - 1)
+                        }
+                    })
+                }
             }, function () {
                 that.data.lastClock = tmpClock
             })

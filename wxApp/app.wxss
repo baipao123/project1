@@ -162,6 +162,7 @@ button.low{
 .width-3-1 {
     width: 33.333333%;
 }
+
 .width-3-2 {
     width: 66.666667%;
 }
@@ -170,7 +171,12 @@ button.low{
     padding-left: 0;
     padding-right: 0;
 }
+
 .padding-0-y {
     padding-top: 0;
     padding-bottom: 0;
+}
+
+.border-none {
+    border: none;
 }

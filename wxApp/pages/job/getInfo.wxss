@@ -53,6 +53,9 @@
     border-radius:200rpx;
     line-height:185rpx;
 }
+.clock-round.bg-grey{
+    background-color: #999;
+}
 .clock-round .time{
     line-height: 50rpx;
     margin-top:-60rpx;

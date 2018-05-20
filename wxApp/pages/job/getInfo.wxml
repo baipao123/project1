@@ -39,18 +39,18 @@
         <view class="text-grey a-c text-m">入职时请出示二维码</view>
     </view>
     <block class="clock" wx:elif="{{uJob.status==2 || uJob.status==10}}">
-        <view class="weui-navbar bg-white">
+        <view class="weui-navbar bg-white border-none">
             <view id="0" class="weui-navbar__item {{navBar.activeIndex == 0 ? 'weui-bar__item_on' : ''}}"
                   bindtap="tabClick" wx:if="{{uJob.status==2}}">
                 <view class="weui-navbar__title">打卡</view>
             </view>
             <view id="1" class="weui-navbar__item {{navBar.activeIndex == 1 ? 'weui-bar__item_on' : ''}}"
                   bindtap="tabClick">
-                <view class="weui-navbar__title">打卡记录</view>
+                <view class="weui-navbar__title">每日工时</view>
             </view>
             <view id="2" class="weui-navbar__item {{navBar.activeIndex == 2 ? 'weui-bar__item_on' : ''}}"
                   bindtap="tabClick">
-                <view class="weui-navbar__title">每日工时</view>
+                <view class="weui-navbar__title">兼职总计</view>
             </view>
             <view class="weui-navbar__slider"
                   style="left: {{navBar.sliderLeft}}px; width:{{navBar.sliderWidth}}px; transform: translateX({{navBar.sliderOffset}}px); -webkit-transform: translateX({{navBar.sliderOffset}}px);"></view>
@@ -66,7 +66,7 @@
                         <view class="weui-cell__ft">{{item.type==1 ? "上班" : "下班"}}</view>
                     </view>
                     <view class="weui-cell">
-                        <view class="clock-round text-white a-c" bindtap="clock">
+                        <view class="clock-round text-white a-c {{uJob.status != 2 ? 'bg-grey' : ''}}" bindtap="clock">
                             <view class="topText text-l">打卡</view>
                             <view class="time text-m">{{nowTime}}</view>
                         </view>
@@ -97,13 +97,16 @@
                                 </block>
                             </view>
                         </view>
-                        <view class="weui-cell weui-cell_access text-m bg-grey block-auto" hidden="{{index != showIndex}}">
+                        <view class="weui-cell weui-cell_access text-m block-auto" hidden="{{index != showIndex}}">
                             <view class="text-m bg-white width-3-2 block-auto">
-                                <view class="clock-items weui-cell weui-cell_access" wx:for="{{item.items}}"
-                                      wx:for-item="clock" wx:for-index="clock-index" wx:key="key-clock-list">
-                                    <view class="weui-cell__bd">{{clock.time}}</view>
-                                    <view class="weui-cell__ft">{{clock.type==1 ? "上班" : "下班"}}</view>
-                                </view>
+                                <block wx:if="{{item.items.length>0}}">
+                                    <view class="clock-items weui-cell weui-cell_access" wx:for="{{item.items}}"
+                                          wx:for-item="clock" wx:for-index="clock-index" wx:key="key-clock-list">
+                                        <view class="weui-cell__bd">{{clock.time}}</view>
+                                        <view class="weui-cell__ft">{{clock.type==1 ? "上班" : "下班"}}</view>
+                                    </view>
+                                </block>
+                                <view class="a-c text-grey" wx:else >未打卡</view>
                             </view>
                             <view class="width-3-2 block-auto">
                                 <view class="tips a-c {{item.status}}">
@@ -126,7 +129,9 @@
                     </block>
                 </view>
             </view>
-            <view class="weui-tab__content" hidden="{{navBar.activeIndex != 2}}">选项三的内容</view>
+            <view class="weui-tab__content" hidden="{{navBar.activeIndex != 2}}">
+
+            </view>
         </view>
     </block>
 
