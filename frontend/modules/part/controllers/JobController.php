@@ -92,7 +92,7 @@ class JobController extends \frontend\controllers\BaseController
         if ($daily && $daily->status == UserJobDaily::PASS)
             return Tool::reJson(null, "当天工时已审核通过，无法修改", Tool::FAIL);
         $uJob = UserHasJob::findOne($uJid);
-        if (!$uJob || $uJob->uid != Yii::$app->user->id || $uJob->status != UserHasJob::ON)
+        if (!$uJob || $uJob->uid != Yii::$app->user->id || in_array($uJob->status, [UserHasJob::REFUSE, UserHasJob::APPLY]))
             return Tool::reJson(null, "未查到工作记录", Tool::FAIL);
 
         $type = $this->getPost("type", 0);
