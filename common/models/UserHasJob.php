@@ -84,6 +84,7 @@ class UserHasJob extends \common\models\base\UserHasJob
         $emptyInfo = [
             "type"   => 0,
             "num"    => 0,
+            "numStr" => '未工作',
             "status" => UserJobDaily::NOTHING,
             "msg"    => "",
             "items"  => (array)[]
@@ -121,6 +122,7 @@ class UserHasJob extends \common\models\base\UserHasJob
                 $tmpDateStart = strtotime($tmpDate);
                 if ($index > 0) {
                     $dayInfo['num'] = round($todaySecond / 3600, 1);
+                    $dayInfo['numStr'] = $dayInfo['num'] . "小时";
                     $dayInfo['date'] = substr($lastDate, 0, 4) == $thisYear ? substr($lastDate, 5) : $lastDate;
                     $dayInfo['weekly'] = "星期" . $weekly[ date("w", $lastDateStart) ];
                     $dailyInfo = isset($dailyData[ $lastDate ]) ? $dailyData[ $lastDate ] : [];
@@ -148,6 +150,7 @@ class UserHasJob extends \common\models\base\UserHasJob
         // 最后一天的
         $lastDateStart = strtotime($lastDate);
         $dayInfo['num'] = round($todaySecond / 3600, 1);
+        $dayInfo['numStr'] = $dayInfo['num'] . "小时";
         $dayInfo['date'] = substr($lastDate, 0, 4) == $thisYear ? substr($lastDate, 5) : $lastDate;
         $dayInfo['weekly'] = "星期" . $weekly[ date("w", $lastDateStart) ];
         $dailyInfo = isset($dailyData[ $lastDate ]) ? $dailyData[ $lastDate ] : [];

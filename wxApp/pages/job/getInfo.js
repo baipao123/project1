@@ -162,9 +162,10 @@ Page({
             showIndex: id == that.data.showIndex ? -1 : id
         })
     },
-    goTimeUp: function (e) {
+    goTimeUp: function (e, index) {
+        if (e)
+            index = e.currentTarget.dataset.index
         let that = this,
-            index = e.currentTarget.dataset.index,
             day = that.data.clocks[index]
         that.setData({
             isPrompt: true,
@@ -203,7 +204,8 @@ Page({
             clocks[index].num = res.info.num
             clocks[index].status = res.info.status
             that.setData({
-                clocks: clocks
+                clocks: clocks,
+                isPrompt: false
             })
         })
     }

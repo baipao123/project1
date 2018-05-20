@@ -26,11 +26,22 @@ class UserJobDaily extends \common\models\base\UserJobDaily
         return date("Y-m-d", strtotime($this->date));
     }
 
+    public function numStr() {
+        if ($this->type == self::TYPE_WHOLE_DAY)
+            return "一天";
+        if ($this->type == self::TYPE_HALF_DAY)
+            return "半天";
+        if ($this->type == self::TYPE_HOUR && $this->num == 0)
+            return "未工作";
+        return $this->num . "小时";
+    }
+
     public function info() {
         return [
             "date"   => $this->dateStr(),
             "type"   => $this->type,
             "num"    => $this->num,
+            "numStr" => $this->numStr(),
             "status" => $this->status,
             "msg"    => $this->msg,
         ];
