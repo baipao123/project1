@@ -11,7 +11,8 @@
     padding: 200rpx 0;
     box-sizing: border-box;
 }
-page{
+
+page {
     background-color: #eee;
 }
 
@@ -74,16 +75,19 @@ page{
 }
 
 .text-grey {
-    color: #aaa;
+    color: #999;
     font-weight: lighter;
+}
+.text-grey-normal {
+    color: #999;
 }
 
 .text-green {
-    color: #09bb07;
+    color: #1aad19;
 }
 
 .text-blue {
-    color: blue;
+    color: #4395FF;
 }
 
 .text-orange {
@@ -91,7 +95,7 @@ page{
 }
 
 .text-red {
-    color: red;
+    color: #e64340;
 }
 
 .text-purple {
@@ -127,17 +131,46 @@ page{
 .bg-green {
     background-color: #09bb07;
 }
-.bg-transparent{
-    background-color:transparent;
+
+.bg-transparent {
+    background-color: transparent;
 }
 
-button.clear{
-    background-color:transparent;
-    margin:0;
-    padding:0;
-    display:initial;
+button.clear {
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+    display: initial;
 }
-.block-auto{
-    margin:0 auto;
-    display:block;
+button.low{
+    line-height:2;
+}
+
+.block-auto {
+    margin: 0 auto;
+    display: block;
+}
+
+.width-1 {
+    width: 100%;
+}
+
+.width-2 {
+    width: 50%;
+}
+
+.width-3-1 {
+    width: 33.333333%;
+}
+.width-3-2 {
+    width: 66.666667%;
+}
+
+.padding-0-x {
+    padding-left: 0;
+    padding-right: 0;
+}
+.padding-0-y {
+    padding-top: 0;
+    padding-bottom: 0;
 }

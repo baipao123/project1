@@ -52,7 +52,8 @@
                   bindtap="tabClick">
                 <view class="weui-navbar__title">每日工时</view>
             </view>
-            <view class="weui-navbar__slider" style="left: {{navBar.sliderLeft}}px; width:{{navBar.sliderWidth}}px; transform: translateX({{navBar.sliderOffset}}px); -webkit-transform: translateX({{navBar.sliderOffset}}px);"> </view>
+            <view class="weui-navbar__slider"
+                  style="left: {{navBar.sliderLeft}}px; width:{{navBar.sliderWidth}}px; transform: translateX({{navBar.sliderOffset}}px); -webkit-transform: translateX({{navBar.sliderOffset}}px);"></view>
         </view>
         <view class="weui-tab__panel">
             <view class="weui-tab__content" hidden="{{navBar.activeIndex != 0}}">
@@ -72,8 +73,107 @@
                     </view>
                 </view>
             </view>
-            <view class="weui-tab__content" hidden="{{navBar.activeIndex != 1}}">选项二的内容</view>
+            <view class="weui-tab__content" hidden="{{navBar.activeIndex != 1}}">
+                <view class="weui-cells weui-cells_after-title">
+                    <block wx:for="{{clocks}}" wx:key="key-clock">
+                        <view class="weui-cell weui-cell_access text-m" bindtap="changeTab" data-id="{{index}}">
+                            <view class="weui-cell__bd left">
+                                <span class="myIcon icon-clock text-green margin"></span>
+                                <text>{{item.date}} {{item.weekly}} 打卡{{item.items.length}}次</text>
+                            </view>
+                            <view class="weui-cell__ft weui-cell__ft_in-access weui-cell__ft_in-access-{{index==showIndex ? 'top':'bottom'}}">
+                                工时:
+                                <block wx:if="{{item.status==1}}">
+                                    <text class="text-blue">{{item.num}}小时 审核中</text>
+                                </block>
+                                <block wx:elif="{{item.status==2}}">
+                                    <text class="text-red">{{item.num}}小时 被拒绝</text>
+                                </block>
+                                <block wx:elif="{{item.status==3}}">
+                                    <text class="text-green">{{item.num}}小时 已通过</text>
+                                </block>
+                                <block wx:else>
+                                    <text class="text-grey-normal">{{item.num}}小时 未上报</text>
+                                </block>
+                            </view>
+                        </view>
+                        <view class="weui-cell weui-cell_access text-m bg-grey block-auto" hidden="{{index != showIndex}}">
+                            <view class="text-m bg-white width-3-2 block-auto">
+                                <view class="clock-items weui-cell weui-cell_access" wx:for="{{item.items}}"
+                                      wx:for-item="clock" wx:for-index="clock-index" wx:key="key-clock-list">
+                                    <view class="weui-cell__bd">{{clock.time}}</view>
+                                    <view class="weui-cell__ft">{{clock.type==1 ? "上班" : "下班"}}</view>
+                                </view>
+                            </view>
+                            <view class="width-3-2 block-auto">
+                                <view class="tips a-c {{item.status}}">
+                                    <block wx:if="{{item.status==1}}">
+                                        <icon type="waiting" size="15"/><text class="text-blue">您上报的工时正在审核中</text>
+                                    </block>
+                                    <block wx:elif="{{item.status==2}}">
+                                        <icon type="cancel" size="15"/><text class="text-red">{{item.msg ? item.msg : '您上报的工时被拒绝了'}}</text>
+                                    </block>
+                                    <block wx:elif="{{item.status==3}}">
+                                        <icon type="success" size="15"/><text class="text-green">您上报的工时已通过</text>
+                                    </block>
+                                    <block wx:else>
+                                        <icon type="info" size="15"/><text class="text-grey">您还未上报工时</text>
+                                    </block>
+                                </view>
+                                <button class="low" type="primary" plain="true" data-index="{{index}}" bindtap="goTimeUp" wx:if="{{item.status==2 || item.status==0}}">上报工时</button>
+                            </view>
+                        </view>
+                    </block>
+                </view>
+            </view>
             <view class="weui-tab__content" hidden="{{navBar.activeIndex != 2}}">选项三的内容</view>
         </view>
     </block>
+
+    <view class="prompt-page" hidden="{{!isPrompt}}">
+        <view class="prompt-contain" hover-stop-propagation="true">
+            <form bindsubmit="submitPrompt" report-submit="true">
+                <view class="title a-c text-line">{{prompt.date}}</view>
+                <view class="body">
+                    <input type="text" name="date" value="{{prompt.date}}" hidden="true"/>
+                    <view class="weui-cells__title weui-cells_after-title padding-0-x">结算类型</view>
+                    <view class="weui-cell">
+                        <view class="weui-cell__bd">
+                            <radio-group class="radio-group" name="type" bindchange="promptTypeChange">
+                                <label class="radio gender">
+                                    <radio value="0" checked="{{prompt.type==0}}"/>小时
+                                </label>
+                                <label class="radio gender">
+                                    <radio value="1" checked="{{prompt.type==1}}"/>半天
+                                </label>
+                                <label class="radio gender">
+                                    <radio value="2" checked="{{prompt.type==2}}"/>一天
+                                </label>
+                            </radio-group>
+                        </view>
+                    </view>
+                    <block wx:if="{{prompt.type == 0}}">
+                        <view class="weui-cells__title weui-cells_after-title padding-0-x">结算时间</view>
+                        <view class="weui-cell weui-cell_input">
+                            <view class="weui-cell__bd">
+                                <input type="number" class="weui-input" placeholder="" name="num" value="{{prompt.num}}"/>
+                            </view>
+                            <view class="weui-cell__ft">
+                                小时
+                            </view>
+                        </view>
+                    </block>
+                    <view class="weui-cell">
+                        <view class="weui-cell__bd">
+                            <textarea style="height:3.3em" name="msg" value="{{prompt.msg}}" placeholder="留言"></textarea>
+                        </view>
+                    </view>
+                </view>
+                <view class="footer weui-flex">
+                    <view class="weui-flex__item a-c cancel" bindtap="cancelPrompt" hover-stop-propagation="true">取消</view>
+                    <button class="weui-flex__item a-c text-green" form-type="submit">确定</button>
+                </view>
+            </form>
+        </view>
+    </view>
 </view>

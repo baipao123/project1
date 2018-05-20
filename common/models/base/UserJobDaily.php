@@ -11,6 +11,7 @@ use Yii;
  * @property int $uid
  * @property int $jid
  * @property int $uJid
+ * @property int $type
  * @property int $num
  * @property string $msg
  * @property int $date
@@ -34,7 +35,7 @@ class UserJobDaily extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['uid', 'jid', 'uJid', 'num', 'date', 'created_at', 'updated_at'], 'integer'],
+            [['uid', 'jid', 'uJid', 'type', 'num', 'date', 'created_at', 'updated_at'], 'integer'],
             [['msg'], 'required'],
             [['msg'], 'string', 'max' => 2000],
             [['status'], 'string', 'max' => 1],
@@ -51,6 +52,7 @@ class UserJobDaily extends \yii\db\ActiveRecord
             'uid' => 'Uid',
             'jid' => 'Jid',
             'uJid' => 'U Jid',
+            'type' => 'Type',
             'num' => 'Num',
             'msg' => 'Msg',
             'date' => 'Date',

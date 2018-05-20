@@ -76,10 +76,13 @@ class UserHasJob extends \common\models\base\UserHasJob
     }
 
     public function dailyRecords() {
+        if ($this->status == self::APPLY)
+            return [];
         $clocks = $this->clocks;
         $data = [];
         $weekly = ["日", "一", "二", "三", "四", "五", "六"];
         $emptyInfo = [
+            "type"   => 0,
             "num"    => 0,
             "status" => UserJobDaily::NOTHING,
             "msg"    => "",
@@ -149,7 +152,9 @@ class UserHasJob extends \common\models\base\UserHasJob
         $dayInfo['weekly'] = "星期" . $weekly[ date("w", $lastDateStart) ];
         $dailyInfo = isset($dailyData[ $lastDate ]) ? $dailyData[ $lastDate ] : [];
         $data[] = ArrayHelper::merge($emptyInfo, $dayInfo, $dailyInfo);
-        // 最后一天到今天的
+        // 最后一天到今天的 -- 先判断是否还在上班
+        if ($this->status != self::ON)
+            return $data;
         $tmpDateStart = strtotime(date("Y-m-d", strtotime("+1 day")));
         if ($tmpDateStart - $lastDateStart > 24 * 3600) {
             $arr2 = self::fillNoClockDaily($lastDateStart, $tmpDateStart, $emptyInfo, $dailyData);

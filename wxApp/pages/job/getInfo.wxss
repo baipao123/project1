@@ -1,3 +1,4 @@
+@import "../prompt.wxss";
 .header {
     height: 150rpx;
     border-bottom: 1rpx solid #eee;
@@ -55,4 +56,15 @@
 .clock-round .time{
     line-height: 50rpx;
     margin-top:-60rpx;
+}
+.tips{
+    display: block;
+    margin: 20rpx auto;
+}
+
+.prompt-contain .weui-cell{
+    padding-left: 0;
+}
+.prompt-contain .weui-cell:before{
+    left: 0;
 }

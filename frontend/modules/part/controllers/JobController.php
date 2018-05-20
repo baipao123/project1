@@ -92,19 +92,22 @@ class JobController extends \frontend\controllers\BaseController
         if (!$uJob || $uJob->uid != Yii::$app->user->id || $uJob->status != UserHasJob::ON)
             return Tool::reJson(null, "未查到工作记录", Tool::FAIL);
 
+        $type = $this->getPost("type", 0);
+        $num = $this->getPost("num", 0);
         $daily or $daily = new UserJobDaily;
         $daily->uid = Yii::$app->user->id;
         $daily->uJid = $uJid;
         $daily->jid = $uJob->jid;
+        $daily->type = $type;
         $daily->date = $date;
-        $daily->num = $this->getPost("num", 0);
+        $daily->num = $type == 0 ? $num : 1;
         $daily->status = UserJobDaily::PROVIDE;
         $daily->isNewRecord ? $daily->created_at = time() : $daily->updated_at = time();
         $msg = $this->getPost("msg");
-        $daily->msg = empty($msg) ? $daily->msg : $msg;
+        $daily->msg = $msg;
         $daily->save();
         //TODO 模板消息
-        return Tool::reJson(1);
+        return Tool::reJson(["info" => $daily->info()]);
     }
 
     public

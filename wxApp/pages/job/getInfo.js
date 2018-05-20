@@ -19,7 +19,16 @@ Page({
             sliderOffset: 0,
             sliderLeft: 0,
             sliderWidth: 96
-        }
+        },
+        showIndex: -1,
+        isPrompt: false,
+        prompt: {
+            date: '',
+            type: 0,
+            num: '',
+            msg: '',
+            index: 0
+        },
     },
     onLoad: function (options) {
         let uJid = options && options.hasOwnProperty("id") ? options.id : 0,
@@ -146,4 +155,56 @@ Page({
             that.data.lastClock = tmpClock
         })
     },
+    changeTab: function (e) {
+        let that = this,
+            id = e.currentTarget.dataset.id
+        that.setData({
+            showIndex: id == that.data.showIndex ? -1 : id
+        })
+    },
+    goTimeUp: function (e) {
+        let that = this,
+            index = e.currentTarget.dataset.index,
+            day = that.data.clocks[index]
+        that.setData({
+            isPrompt: true,
+            prompt: {
+                date: day.date,
+                type: day.type ? day.type : 0,
+                num: day.num,
+                msg: '',
+                index: index
+            }
+        })
+    },
+    promptTypeChange: function (e) {
+        let that = this
+        console.log(e)
+        that.setData({
+            "prompt.type": e.detail.value
+        })
+    },
+    cancelPrompt: function () {
+        let that = this
+        that.setData({
+            isPrompt: false
+        })
+    },
+    submitPrompt: function (e) {
+        let that = this,
+            data = e.detail.value,
+            clocks = that.data.clocks,
+            index = that.data.prompt.index
+        data.formId = e.detail.formId
+        data.uJid = that.data.uJob.id
+        request.post("part/job/time-up", data, function (res) {
+            app.toast("上报成功")
+            clocks[index].type = res.info.type
+            clocks[index].num = res.info.num
+            clocks[index].status = res.info.status
+            that.setData({
+                clocks: clocks
+            })
+        })
+    }
 })

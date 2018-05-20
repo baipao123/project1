@@ -42,8 +42,8 @@
             </view>
         </view>
     </view>
-    <view class="main" hidden="{{!isPrompt}}">
-        <view class="contain" hover-stop-propagation="true">
+    <view class="prompt-page" hidden="{{!isPrompt}}">
+        <view class="prompt-contain" hover-stop-propagation="true">
             <form bindsubmit="submitPrompt"  report-submit="true">
                 <view class="title a-c text-line">{{prompt.title}}</view>
                 <view class="body">
