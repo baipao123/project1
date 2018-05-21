@@ -10,6 +10,7 @@ Page({
         loading: false,
         refresh: false,
         empty: false,
+        clockIndex: -1,
     },
     onLoad: function () {
         let that = this
@@ -48,5 +49,22 @@ Page({
                 empty: data.list.length == 0
             })
         })
+    },
+    seeClocks: function (e) {
+        let that = this,
+            index = e.currentTarget.dataset.id
+        that.setData({
+            clockIndex: that.data.clockIndex == index ? -1 : index
+        })
+    },
+    showMap: function (e) {
+        let that = this,
+            index = e.currentTarget.dataset.id
+    },
+    pass: function (e) {
+
+    },
+    refuse: function (e) {
+
     },
 })

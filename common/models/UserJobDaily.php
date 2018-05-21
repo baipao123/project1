@@ -80,7 +80,7 @@ class UserJobDaily extends \common\models\base\UserJobDaily
             "jid"        => $this->jid,
             "uJid"       => $this->uJid,
             "name"       => $job->name,
-            "work_start" => date("Y-m-d H:i:s", $uJob->auth_at),
+            "work_start" => date("Y-m-d", $uJob->auth_at),
             "prize"      => $job->prizeStr()
         ];
     }
