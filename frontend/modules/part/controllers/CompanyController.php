@@ -12,6 +12,7 @@ use common\models\Company;
 use common\models\Job;
 use common\models\User;
 use common\models\UserHasJob;
+use common\models\UserJobDaily;
 use common\tools\Tool;
 use Yii;
 
@@ -145,6 +146,12 @@ class CompanyController extends \frontend\controllers\BaseController
 
     public function TimeVerifyList($page = 1, $limit = 10) {
         $uid = $this->user_id();
-
+        $user = $this->getUser();
+        if (!$user || $user->type <= User::TYPE_USER)
+            return Tool::reJson(null, "无此权限", Tool::FAIL);
+        $company = Company::findOne(["uid" => $uid]);
+        if (!$company)
+            return Tool::reJson(null, "无此权限", Tool::FAIL);
+        return Tool::reJson(["list" => $company->dailyRecords(UserJobDaily::PROVIDE, $page, $limit)]);
     }
 }
