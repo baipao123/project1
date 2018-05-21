@@ -144,7 +144,7 @@ class CompanyController extends \frontend\controllers\BaseController
         return Tool::reJson(["uJob" => $uJob->user()]);
     }
 
-    public function TimeVerifyList($page = 1, $limit = 10) {
+    public function actionTimeVerifyList($page = 1, $limit = 10) {
         $uid = $this->user_id();
         $user = $this->getUser();
         if (!$user || $user->type <= User::TYPE_USER)

@@ -52,6 +52,11 @@
                 </navigator>
             </block>
             <block wx:else>
+                <navigator url="/pages/company/verify" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                    <view class="weui-cell__bd"><span class="myIcon icon-verify"></span>工时审核
+                    </view>
+                    <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                </navigator>
                 <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
                     <view class="weui-cell__bd"><span class="myIcon icon-account"></span>员工列表
                     </view>

@@ -11,7 +11,8 @@
     "pages/job/info",
     "pages/job/userList",
     "pages/job/getInfo",
-    "pages/job/scan"
+    "pages/job/scan",
+    "pages/company/verify"
   ],
   "tabBar": {
     "list": [
