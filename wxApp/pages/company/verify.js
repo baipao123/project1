@@ -9,6 +9,7 @@ Page({
         page: 1,
         loading: false,
         refresh: false,
+        empty: false,
     },
     onLoad: function () {
         let that = this
@@ -30,7 +31,7 @@ Page({
         that.data.loading = true
         if (refresh)
             that.data.refresh = true
-        request.get("part/company/verify", {page: page}, function (data) {
+        request.get("part/company/time-verify-list", {page: page}, function (data) {
             let list = that.data.list
             if (refresh) {
                 list = data.list
@@ -43,7 +44,8 @@ Page({
             that.setData({
                 list: list,
                 loading: false,
-                refresh: false
+                refresh: false,
+                empty: data.list.length == 0
             })
         })
     },

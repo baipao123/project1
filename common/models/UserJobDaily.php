@@ -8,9 +8,11 @@
 
 namespace common\models;
 
+use common\tools\Img;
 use Yii;
 
 /**
+ * @property User $user
  * @property Job $job
  * @property UserHasJob $uJob
  * @property UserClock[] $clocks
@@ -25,6 +27,10 @@ class UserJobDaily extends \common\models\base\UserJobDaily
     const TYPE_HOUR = 0;
     const TYPE_HALF_DAY = 1;
     const TYPE_WHOLE_DAY = 2;
+
+    public function getUser() {
+        return $this->hasOne(User::className(), ["id" => "uid"]);
+    }
 
     public function getJob() {
         return $this->hasOne(Job::className(), ["id" => "jid"]);
@@ -86,6 +92,19 @@ class UserJobDaily extends \common\models\base\UserJobDaily
             $data[] = $clock->info(true);
         }
         return $data;
+    }
+
+    public function user() {
+        $user = $this->user;
+        if (!$user)
+            return [];
+        return [
+            'uid'    => $this->uid,
+            'name'   => $user->realname,
+            'phone'  => $user->phone(),
+            'avatar' => Img::format($user->avatar),
+            'gender' => $user->gender
+        ];
     }
 
 

@@ -201,6 +201,7 @@ class Company extends \common\models\base\Company
         $data = [];
         foreach ($records as $record) {
             $info = [
+                "user"   => $record->user(),
                 "job"    => $record->job(),
                 "clocks" => $record->clocks(),
                 "info"   => $record->info(),
