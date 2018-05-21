@@ -9,6 +9,7 @@
 namespace console\controllers;
 
 use common\models\Admin;
+use common\models\Company;
 use common\models\District;
 use common\models\Job;
 use common\tools\Tool;
@@ -49,8 +50,8 @@ class TestController extends Controller
     }
 
     public function actionIndex(){
-        $admin = Job::find()->one();
-        echo var_export($admin->info(),true);
+      $company = Company::findOne(1);
+      echo var_export($company->dailyRecords(),true);
     }
 
     public function actionDistrict(){

@@ -110,7 +110,7 @@ class Company extends \common\models\base\Company
         $oldRecords = CompanyRecord::find()->where(["uid" => $uid, "status" => self::STATUS_VERIFY])->all();
         /* @var $oldRecords CompanyRecord[] */
         foreach ($oldRecords as $r) {
-            if($record->attributes['id'] == $r->id)
+            if ($record->attributes['id'] == $r->id)
                 continue;
             $r->status = self::STATUS_IGNORE;
             $r->updated_at = time();
@@ -186,6 +186,28 @@ class Company extends \common\models\base\Company
             "refuseReason" => $refuseRecord ? $refuseRecord->reason : "",
             "refuseRid"    => $refuseRecord ? $refuseRecord->id : 0,
         ];
+    }
+
+    public function dailyRecords($status = UserJobDaily::PROVIDE, $page = 1, $limit = 10) {
+        $records = Yii::$app->db->cache(function () use ($status, $page, $limit) {
+            $jids = Job::find()->where(["uid" => $this->uid])->andWhere(["<>", "status", Job::DEL])->select("id")->column();
+            return UserJobDaily::find()->where(["jid" => $jids, "status" => $status])
+                ->offset(($page - 1) * $limit)
+                ->limit($limit)
+                ->orderBy("created_at desc")
+                ->all();
+        }, 15);
+        /* @var $records UserJobDaily[] */
+        $data = [];
+        foreach ($records as $record) {
+            $info = [
+                "job"    => $record->job(),
+                "clocks" => $record->clocks(),
+                "info"   => $record->info(),
+            ];
+            $data[] = $info;
+        }
+        return $data;
     }
 
 }

@@ -30,16 +30,20 @@ class UserClock extends \common\models\base\UserClock
         return self::find()->where(["uJid" => $uJid])->orderBy("created_at desc")->one();
     }
 
-    public function info() {
-        return [
+    public function info($hasPosition = false) {
+        $info = [
             "id"        => $this->id,
             "type"      => $this->type,
             "timestamp" => $this->created_at,
             "date"      => date("Y-m-d", $this->created_at),
             "time"      => date("H:i:s", $this->created_at),
-            "position"  => $this->position,
             "isToday"   => date("Y-m-d", $this->created_at) == date("Y-m-d")
         ];
+        if ($hasPosition){
+            $info['longitude'] = $this->longitude;
+            $info['latitude'] = $this->latitude;
+        }
+        return $info;
     }
 
 }

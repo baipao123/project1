@@ -10,6 +10,11 @@ namespace common\models;
 
 use Yii;
 
+/**
+ * @property Job $job
+ * @property UserHasJob $uJob
+ * @property UserClock[] $clocks
+ * */
 class UserJobDaily extends \common\models\base\UserJobDaily
 {
     const NOTHING = 0;
@@ -20,6 +25,18 @@ class UserJobDaily extends \common\models\base\UserJobDaily
     const TYPE_HOUR = 0;
     const TYPE_HALF_DAY = 1;
     const TYPE_WHOLE_DAY = 2;
+
+    public function getJob() {
+        return $this->hasOne(Job::className(), ["id" => "jid"]);
+    }
+
+    public function getUJob() {
+        return $this->hasOne(UserHasJob::className(), ["id" => "uJid"]);
+    }
+
+    public function getClocks() {
+        return $this->hasMany(UserClock::className(), ["uJid" => "uJid"])->andWhere(["BETWEEN", 'created_at', strtotime($this->date), strtotime($this->date) + 24 * 3600 - 1]);
+    }
 
     public function dateStr() {
         $format = substr($this->date, 0, 4) == date("Y") ? "m-d" : "Y-m-d";
@@ -38,6 +55,7 @@ class UserJobDaily extends \common\models\base\UserJobDaily
 
     public function info() {
         return [
+            'id'     => $this->id,
             "date"   => $this->dateStr(),
             "type"   => $this->type,
             "num"    => $this->num,
@@ -46,6 +64,30 @@ class UserJobDaily extends \common\models\base\UserJobDaily
             "msg"    => $this->msg,
         ];
     }
+
+    public function job() {
+        $job = $this->job;
+        $uJob = $this->uJob;
+        if (!$job || !$uJob)
+            return [];
+        return [
+            "jid"        => $this->jid,
+            "uJid"       => $this->uJid,
+            "name"       => $job->name,
+            "work_start" => date("Y-m-d H:i:s", $uJob->auth_at),
+            "prize"      => $job->prizeStr()
+        ];
+    }
+
+    public function clocks() {
+        $clocks = $this->clocks;
+        $data = [];
+        foreach ($clocks as $clock) {
+            $data[] = $clock->info(true);
+        }
+        return $data;
+    }
+
 
     public function afterSave($insert, $changedAttributes) {
         Yii::info(json_encode($this->attributes), "job-daily");
