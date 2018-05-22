@@ -58,11 +58,22 @@ class UserHasJob extends \common\models\base\UserHasJob
             "status"     => $this->status,
             "key"        => $this->auth_key,
             "content"    => $this->content,
+            "workTime"   => $this->workTimeStr(),
             "created_at" => date("Y-m-d H:i:s", $this->created_at),
             "auth_at"    => date("Y-m-d H:i:s", $this->auth_at),
             "end_at"     => date("Y-m-d H:i:s", $this->end_at),
             "refuse_at"  => date("Y-m-d H:i:s", $this->updated_at),
         ];
+    }
+
+    public function workTimeStr() {
+        $str = "";
+        $day = $this->worktime_2 + $this->worktime_1 / 2;
+        if ($day > 0)
+            $str = $day . "天";
+        if ($this->worktime_0 > 0)
+            $str .= " " . $this->worktime_0 . "小时";
+        return trim($str);
     }
 
     public function clocks() {
@@ -181,6 +192,41 @@ class UserHasJob extends \common\models\base\UserHasJob
             ];
             $dailyInfo = isset($dailyData[ $tDate ]) ? $dailyData[ $tDate ] : [];
             $data[] = ArrayHelper::merge($emptyArr, $tmpInfo, $dailyInfo);
+        }
+        return $data;
+    }
+
+    public function todayClocks() {
+        $start = strtotime(date("Y-m-d"));
+        $end = $start + 24 * 3600 - 1;
+        $clocks = UserClock::find()->where(["uid" => $this->uid, "uJid" => $this->id])->andWhere(["BETWEEN", "created_at", $start, $end])->orderBy("created_at desc")->all();
+        /* @var $clocks UserClock[] */
+        $daily = UserJobDaily::findOne(["uJid" => $this->id, "uid" => $this->uid, "date" => date("Ymd")]);
+        $items = [];
+        $lastTime = 0;
+        $num = 0;
+        foreach ($clocks as $clock) {
+            $items[] = $clock->info();
+            if ($clock->type == UserClock::TYPE_END) {
+                $num += $clock->created_at - $lastTime;
+            }
+            $lastTime = $clock->created_at;
+        }
+        if ($daily) {
+            $data = $daily->info();
+            $data['items'] = $items;
+        } else {
+            $hour = round($num / 3600);
+            $data = [
+                'id'     => $this->id,
+                "date"   => date("Y-m-d"),
+                "type"   => UserJobDaily::TYPE_HOUR,
+                "num"    => $hour,
+                "numStr" => $hour . "小时",
+                "status" => UserJobDaily::NOTHING,
+                "msg"    => '',
+                "items"  => $items
+            ];
         }
         return $data;
     }

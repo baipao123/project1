@@ -310,4 +310,22 @@ class Job extends \common\models\base\Job
             "prize"  => $this->prizeStr()
         ];
     }
+
+    public function users($status = UserHasJob::ON, $page = 1, $limit = 10) {
+        $uJobs = Yii::$app->db->cache(function () use ($status, $page, $limit) {
+            return UserHasJob::find()->where(["jid" => $this->id, "status" => $status])
+                ->offset(($page - 1) * $limit)
+                ->limit($limit)
+                ->all();
+        }, 15);
+        /* @var $uJobs UserHasJob[] */
+        $data = [];
+        foreach ($uJobs as $job) {
+            $data[] = [
+                "user" => $job->user(),
+                "info" => $job->info()
+            ];
+        }
+        return $data;
+    }
 }

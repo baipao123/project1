@@ -50,4 +50,12 @@ class ClockController extends \frontend\controllers\BaseController
         $clock->save();
         return Tool::reJson(["info" => $clock->info()], "打卡成功");
     }
+
+    public function actionJobDaily($uJid = 0) {
+        $uid = $this->user_id();
+        $uJob = UserHasJob::findOne($uJid);
+        if (!$uJob || $uJob->uid != $uid)
+            return Tool::reJson(null, "未发现任务报名记录", Tool::FAIL);
+        return Tool::reJson(["clocks" => $uJob->dailyRecords()]);
+    }
 }

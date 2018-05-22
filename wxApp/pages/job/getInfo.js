@@ -50,21 +50,11 @@ Page({
         let that = this
         request.get("part/job/my-job?uJid=" + uJid, {}, function (data) {
             console.log(data)
-            let clocks = data.clocks,
-                todayClock = clocks.length > 0 ? clocks[clocks.length - 1] : {items: []}
-            console.log(todayClock)
-            if (todayClock.items.length > 0) {
-                let tmp = todayClock.items[0]
-                console.log(tmp)
-                if (!tmp.isToday)
-                    todayClock = {items: []}
-            }
             that.setData({
                 job: data.job,
                 uJob: data.uJob,
                 isAjax: false,
-                clocks: clocks,
-                todayClock: todayClock
+                todayClock: data.clocks
             })
             let uJob = data.uJob
             that.drawQr(uJob.id + ';' + uJob.jid + ';' + uJob.key + ';' + uJob.uid);
@@ -73,6 +63,14 @@ Page({
         }, function () {
             that.setData({
                 isAjax: false
+            })
+        })
+    },
+    getDaily: function (uJid) {
+        let that = this
+        request.get("part/clock/job-daily?uJid=" + uJid, {}, function (data) {
+            that.setData({
+                clocks: data.clocks
             })
         })
     },
@@ -104,12 +102,12 @@ Page({
         })
     },
     tabClick: function (e) {
-        console.log(e)
-
         this.setData({
             "navBar.sliderOffset": e.currentTarget.offsetLeft,
             "navBar.activeIndex": e.currentTarget.id
         });
+        if (e.currentTarget.id == 1)
+            this.getDaily(this.data.uJob.id)
     },
     getNowTime: function () {
         let that = this,

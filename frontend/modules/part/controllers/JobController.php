@@ -81,8 +81,7 @@ class JobController extends \frontend\controllers\BaseController
         return Tool::reJson(["list" => (array)Job::getList($this->user_id(), $text, $cid, $aid, $page, $limit)]);
     }
 
-    public
-    function actionTimeUp() {
+    public function actionTimeUp() {
         $uJid = $this->getPost("uJid", 0);
         $date = $this->getPost("date", date("Ymd"));
         $date = str_replace("-", "", $date);
@@ -117,8 +116,7 @@ class JobController extends \frontend\controllers\BaseController
         }
     }
 
-    public
-    function actionTimeRefuse() {
+    public function actionTimeRefuse() {
         if ($this->getUser()->type != User::TYPE_COMPANY)
             return Tool::reJson(null, "无此操作权限", Tool::FAIL);
         $did = $this->getPost("did");
@@ -136,8 +134,7 @@ class JobController extends \frontend\controllers\BaseController
         return Tool::reJson(1);
     }
 
-    public
-    function actionFollow() {
+    public function actionFollow() {
         $jid = $this->getPost("jid", 0);
         $res = JobFollow::toggle($this->user_id(), $jid);
         if ($res)
@@ -145,12 +142,23 @@ class JobController extends \frontend\controllers\BaseController
         return Tool::reJson(null, "操作失败", Tool::FAIL);
     }
 
-    public
-    function actionMyJob($uJid = 0) {
+    public function actionMyJob($uJid = 0) {
         $uid = $this->user_id();
         $uJob = UserHasJob::findOne($uJid);
         if (!$uJob || $uJob->uid != $uid)
             return Tool::reJson(null, "未发现任务报名记录", Tool::FAIL);
-        return Tool::reJson(["job" => $uJob->job->sampleInfo(), "uJob" => $uJob->info(), "clocks" => $uJob->dailyRecords()]);
+        return Tool::reJson(["job" => $uJob->job->sampleInfo(), "uJob" => $uJob->info(), "clocks" => $uJob->todayClocks()]);
+    }
+
+    public function actionUsers($id = 0, $page = 1, $limit = 10) {
+        $user = $this->getUser();
+        if ($user->type <= User::TYPE_USER)
+            return Tool::reJson(null, '无权查看岗位员工', Tool::FAIL);
+        $job = Job::findOne($id);
+        if (!$job || $job->status == Job::DEL)
+            return Tool::reJson(null, '岗位不存在或已下架', Tool::FAIL);
+        if ($job->uid != $this->user_id())
+            return Tool::reJson(null, '无权查看此岗位员工', Tool::FAIL);
+        return Tool::reJson(["users" => $job->users(UserHasJob::ON, $page, $limit)]);
     }
 }
