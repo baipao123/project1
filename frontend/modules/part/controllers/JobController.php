@@ -177,7 +177,7 @@ class JobController extends \frontend\controllers\BaseController
         return Tool::reJson(["status" => $uJob->status]);
     }
 
-    public function actionUsers($id = 0, $page = 1, $limit = 10) {
+    public function actionUsers($id = 0, $page = 1, $limit = 10, $status = UserHasJob::ON) {
         $user = $this->getUser();
         if ($user->type <= User::TYPE_USER)
             return Tool::reJson(null, '无权查看岗位员工', Tool::FAIL);
@@ -186,6 +186,6 @@ class JobController extends \frontend\controllers\BaseController
             return Tool::reJson(null, '岗位不存在或已下架', Tool::FAIL);
         if ($job->uid != $this->user_id())
             return Tool::reJson(null, '无权查看此岗位员工', Tool::FAIL);
-        return Tool::reJson(["users" => $job->users(UserHasJob::ON, $page, $limit), "job" => $job->sampleInfo()]);
+        return Tool::reJson(["users" => $job->users($status, $page, $limit), "job" => $job->sampleInfo()]);
     }
 }

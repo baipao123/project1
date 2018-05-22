@@ -38,58 +38,57 @@
     <view class="container bg-white" wx:if="{{page==1 && loading}}">
         <view class="weui-loading big block-auto"></view>
     </view>
-    <view class="container" wx:else>
-        <view wx:for="{{list}}" wx:key="key-user">
-            <view class="weui-cells" wx:if="item.info.status != 9">
-                <view class="weui-cell">
-                    <view class="weui-cell__hd head">
-                        <image class="header" src="{{item.user.avatar}}"/>
-                    </view>
-                    <view class="weui-cell__bd">
-                        <view>{{item.user.name}}</view>
-                        <view style="font-size: 13px;color: #888888;">{{item.user.phone}}</view>
-                    </view>
-                    <view class="weui-cell-ft" bindtap="phoneCall" data-index="{{index}}">
-                        <span class="myIcon icon-phone text text-xl a-c text-green"></span>
-                    </view>
+    <view class="list" wx:for="{{list}}" wx:key="key-user" >
+        <view class="weui-cells" wx:if="{{item.info.status != 9}}">
+            <view class="weui-cell">
+                <view class="weui-cell__hd head">
+                    <image class="header" src="{{item.user.avatar}}"/>
                 </view>
-            </view>
-            <view class="weui-form-preview">
-                <view class="weui-form-preview__bd">
-                    <view class="weui-form-preview__item">
-                        <view class="weui-form-preview__label">报名时间</view>
-                        <view class="weui-form-preview__value">{{item.info.created_at}}</view>
-                    </view>
+                <view class="weui-cell__bd">
+                    <view>{{item.user.name}}</view>
+                    <view style="font-size: 13px;color: #888888;">{{item.user.phone}}</view>
                 </view>
-                <block wx:if="{{item.status == 2 && item.status == 10}}">
-                    <view class="weui-form-preview__bd">
-                        <view class="weui-form-preview__item">
-                            <view class="weui-form-preview__label">入职时间</view>
-                            <view class="weui-form-preview__value">{{item.info.auth_at}}</view>
-                        </view>
-                    </view>
-                    <view class="weui-form-preview__bd">
-                        <view class="weui-form-preview__item">
-                            <view class="weui-form-preview__label">累计工时</view>
-                            <view class="weui-form-preview__value">{{item.info.workTime}}</view>
-                        </view>
-                    </view>
-                </block>
-                <view class="weui-form-preview__ft" wx:else>
-                    <form bindsubmit="refuse" class="weui-form-preview__btn weui-form-preview__btn_default"
-                          hover-class="weui-form-preview__btn_active">
-                        <input type="text" hidden="true" name="index" value="{{index}}"/>
-                        <button class="bg-white text-grey-normal" form-type="submit"
-                                hover-class="weui-form-preview__btn_active" style="line-height:50px;">拒绝
-                        </button>
-                    </form>
-                    <navigator url="/pages/job/scan" class="weui-form-preview__btn weui-form-preview__btn_primary"
-                               hover-class="weui-form-preview__btn_active">扫码入职
-                    </navigator>
+                <view class="weui-cell-ft" bindtap="phoneCall" data-index="{{index}}">
+                    <span class="myIcon icon-phone text text-xl a-c text-green"></span>
                 </view>
             </view>
         </view>
+        <view class="weui-form-preview" wx:if="{{item.info.status != 9}}">
+            <view class="weui-form-preview__bd">
+                <view class="weui-form-preview__item">
+                    <view class="weui-form-preview__label">报名时间</view>
+                    <view class="weui-form-preview__value">{{item.info.created_at}}</view>
+                </view>
+            </view>
+            <block wx:if="{{item.status == 2 && item.status == 10}}">
+                <view class="weui-form-preview__bd">
+                    <view class="weui-form-preview__item">
+                        <view class="weui-form-preview__label">入职时间</view>
+                        <view class="weui-form-preview__value">{{item.info.auth_at}}</view>
+                    </view>
+                </view>
+                <view class="weui-form-preview__bd">
+                    <view class="weui-form-preview__item">
+                        <view class="weui-form-preview__label">累计工时</view>
+                        <view class="weui-form-preview__value">{{item.info.workTime}}</view>
+                    </view>
+                </view>
+            </block>
+            <view class="weui-form-preview__ft" wx:else>
+                <form bindsubmit="refuse" class="weui-form-preview__btn weui-form-preview__btn_default"
+                      hover-class="weui-form-preview__btn_active">
+                    <input type="text" hidden="true" name="index" value="{{index}}"/>
+                    <button class="bg-white text-grey-normal" form-type="submit"
+                            hover-class="weui-form-preview__btn_active" style="line-height:50px;">拒绝
+                    </button>
+                </form>
+                <navigator url="/pages/job/scan" class="weui-form-preview__btn weui-form-preview__btn_primary"
+                           hover-class="weui-form-preview__btn_active">扫码入职
+                </navigator>
+            </view>
+        </view>
     </view>
+
     <view class="weui-loadmore" wx:if="{{!empty && !loading}}">
         <view class="weui-loadmore__tips weui-loadmore__tips_in-line bg-transparent">查看更多</view>
     </view>
@@ -99,26 +98,5 @@
     </view>
     <view class="weui-loadmore" wx:else>
         <view class="weui-loadmore__tips weui-loadmore__tips_in-line bg-transparent">暂无数据</view>
-    </view>
-    <view class="prompt-page" hidden="{{!isPrompt}}">
-        <view class="prompt-contain" hover-stop-propagation="true">
-            <form bindsubmit="submitPrompt" report-submit="true">
-                <view class="title a-c text-line">拒绝{{prompt.name}} {{prompt.date}}的工时</view>
-                <view class="body">
-                    <input type="text" name="did" value="{{prompt.did}}" hidden="true"/>
-                    <view class="weui-cell">
-                        <view class="weui-cell__bd">
-                            <textarea style="height:3.3em" name="msg" value="{{prompt.msg}}" placeholder="请输入拒绝的理由">
-                            </textarea>
-                        </view>
-                    </view>
-                </view>
-                <view class="footer weui-flex">
-                    <view class="weui-flex__item a-c cancel" bindtap="cancelPrompt" hover-stop-propagation="true">取消
-                    </view>
-                    <button class="weui-flex__item a-c text-green" form-type="submit">确定</button>
-                </view>
-            </form>
-        </view>
     </view>
 </view>

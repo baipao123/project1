@@ -1,6 +1,12 @@
 .container{
     border-top:1rpx solid #eee;
 }
+
+.list .weui-cells:first-child{
+    margin-top:0;
+}
+
+
 .head{
     position: relative;
     margin-right: 10px;

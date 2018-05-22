@@ -6,7 +6,6 @@ Page({
         list: [],
         job: {},
         jid: 0,
-        index: 0,
         page: 1,
         loading: false,
         empty: false,
@@ -52,7 +51,8 @@ Page({
         let that = this,
             page = refresh ? 1 : that.data.page,
             jid = that.data.jid,
-            index = that.data.index
+            index = that.data.index,
+            barIndex = that.data.navBar.activeIndex
         if (!refresh && that.data.loading)
             return false;
         that.data.loading = true
@@ -61,7 +61,7 @@ Page({
                 page: 1,
                 loading: true
             })
-        request.get("part/job/users", {id: jid, page: page}, function (data) {
+        request.get("part/job/users", {id: jid, page: page, status: barIndex == 0 ? 2 : 1}, function (data) {
             if (index != that.data.index)
                 return false
             let list = that.data.list
@@ -98,7 +98,7 @@ Page({
                         uJid: uJid,
                         formId: e.detail.formId,
                     }
-                    request.post("part/company/verify-user", data, function (response) {
+                    request.post("part/company/refuse-job", data, function (response) {
                         let list = that.data.list
                         list[index].info.status = 9
                         that.setData({
