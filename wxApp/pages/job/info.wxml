@@ -154,17 +154,8 @@
                         </view>
                         <view class="text">分享</view>
                     </view>
-                    <navigator  class="weui-flex__item" url="/pages/job/add?id={{jid}}">
-                        <view class="icon">
-                            <span class="myIcon icon-edit"></span>
-                        </view>
-                        <view class="text">编辑</view>
-                    </navigator>
-                    <view class="weui-flex__item" bindtap="toggleJobStatus" data-status="{{job.status == 1 ? 2 : 1}}">
-                        <view class="icon iconStatus">
-                            <span class="myIcon {{job.status == 1 ? 'icon-push-off':'icon-push-on'}}"></span>
-                        </view>
-                        <view class="text">{{job.status==1 ? '已上架':'上架'}}</view>
+                    <view class="weui-flex__item" bindtap="companyAction">
+                        <view class="right green">操作</view>
                     </view>
                 </view>
             </block>

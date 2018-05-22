@@ -120,7 +120,7 @@ class Job extends \common\models\base\Job
     }
 
 
-    protected function getJobIdFromRedis() {
+    public function getJobIdFromRedis() {
         if (!empty($this->jobId))
             return $this->jobId;
         $date = date("Ymd");

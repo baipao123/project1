@@ -36,15 +36,15 @@ Page({
             })
         })
     },
-    toggleJobStatus: function (e) {
-        let that = this
-        console.log(e)
+    toggleJobStatus: function () {
+        let that = this,
+            status = that.data.job.status == 1 ? 2 : 1
         request.post("part/company/toggle-job", {
             jid: that.data.jid,
-            status: e.currentTarget.dataset.status
+            status: status
         }, function (e) {
             that.setData({
-                "job.status": that.data.job.status == 1 ? 2 : 1
+                "job.status": status
             })
         })
     },
@@ -87,6 +87,44 @@ Page({
         id = typeof id == "object" ? this.data.job.uJid : id
         wx.navigateTo({
             url: "getInfo?id=" + id
+        })
+    },
+    companyAction: function (e) {
+        let that = this,
+            jid = that.data.jid,
+            status = that.data.job.status,
+            itemList = []
+        if (status == 1)
+            itemList = ["撤消岗位", "复制岗位", "编辑岗位", "岗位工作已结束"];
+        else
+            itemList = ["发布岗位", "复制岗位", "编辑岗位", "岗位工作已结束"];
+        wx.showActionSheet({
+            itemList: itemList,
+            success: function (res) {
+                switch (res.tapIndex) {
+                    case 0:
+                        that.toggleJobStatus()
+                        break
+                    case 1:
+                        request.post("part/company/copy-job", {jid: jid}, function (res) {
+                            app.toast("复制招聘信息成功")
+                            let jid = res.jid
+                            wx.navigateTo({
+                                url: "/pages/job/add?id=" + jid
+                            })
+                        })
+                        break
+                    case 2:
+                        wx.navigateTo({
+                            url: "/pages/job/add?id=" + jid
+                        })
+                        break
+                    case 3:
+                        break
+                    default:
+                        break
+                }
+            }
         })
     }
 })

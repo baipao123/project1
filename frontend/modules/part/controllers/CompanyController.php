@@ -71,11 +71,18 @@ class CompanyController extends \frontend\controllers\BaseController
             return "未找到原招聘信息";
         $newJob = new Job;
         $newJob->attributes = $job->attributes;
+        $newJob->id = "";
+        $newJob->jobId = $newJob->getJobIdFromRedis();
         $newJob->start_at = 0;
         $newJob->end_at = 0;
-        $newJob->status = Job::TMP;
-        $newJob->save();
-        return Tool::reJson($newJob->info(), "复制招聘信息失败");
+        $newJob->status = Job::OFF;
+        if ($newJob->save())
+            return Tool::reJson(["jid" => $newJob->attributes['id']]);
+        else {
+            Yii::warning($newJob->errors, "保存Job出错");
+            return Tool::reJson(null, "复制招聘信息失败", Tool::FAIL);
+        }
+
     }
 
     public function actionToggleJob() {
