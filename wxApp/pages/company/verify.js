@@ -3,7 +3,7 @@ const request = require("./../../utils/request.js")
 
 Page({
     data: {
-        list: {},
+        list: [],
         page: 1,
         loading: false,
         refresh: false,

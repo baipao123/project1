@@ -140,7 +140,7 @@ class Company extends \common\models\base\Company
         return true;
     }
 
-    public function jobs($page = 1, $limit = 10) {
+    public function jobs($type = 0, $page = 1, $limit = 10) {
         $uid = $this->uid;
         $jobs = Yii::$app->db->cache(function () use ($uid, $page, $limit) {
             $query = Job::find()
@@ -151,7 +151,15 @@ class Company extends \common\models\base\Company
             return $query->all();
         }, 10);
         /* @var $jobs Job[] */
-        return Job::formatJobs($jobs, $uid);
+        if ($type == 0)
+            return Job::formatJobs($jobs, $uid);
+        else {
+            $data = [];
+            foreach ($jobs as $job) {
+                $data[] = $job->sampleInfo();
+            }
+            return $data;
+        }
     }
 
     public function icon() {

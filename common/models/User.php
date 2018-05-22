@@ -119,6 +119,6 @@ class User extends \common\models\base\User
             return Job::formatJobs($jobs, $this->id);
         }
         $company = $this->company;
-        return $company ? $company->jobs($page, $limit) : [];
+        return $company ? $company->jobs(0, $page, $limit) : [];
     }
 }

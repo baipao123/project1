@@ -4,16 +4,12 @@ const request = require("./../../utils/request.js")
 Page({
     data: {
         list: [],
-        jid: 0,
         page: 1,
         loading: false,
         empty: false,
     },
-    onLoad: function (options) {
+    onLoad: function () {
         let that = this
-        that.setData({
-            jid: options && options.hasOwnProperty("jid") ? options.jid : 0
-        })
         that.getList(true)
     },
     getList: function () {
@@ -22,7 +18,7 @@ Page({
         if (that.data.loading)
             return false;
         that.data.loading = true
-        request.get("part/company/users", {page: page}, function (data) {
+        request.get("part/company/jobs", {page: page}, function (data) {
             let list = that.data.list
             for (let i = 0; i < data.list.length; i++)
                 list.push(data.list[i])

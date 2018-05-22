@@ -105,7 +105,17 @@ class CompanyController extends \frontend\controllers\BaseController
         $company = $user->company;
         if (!$company || $company->status != Company::STATUS_PASS)
             return Tool::reJson(null, "您没有招聘权限", Tool::FAIL);
-        return Tool::reJson($company->jobs($page, $limit));
+        return Tool::reJson($company->jobs(0, $page, $limit));
+    }
+
+    public function actionSimpleJobs($page = 1, $limit = 10) {
+        $user = $this->getUser();
+        if (!$user || $user->type == User::TYPE_USER)
+            return Tool::reJson(null, "您没有招聘权限", Tool::FAIL);
+        $company = $user->company;
+        if (!$company || $company->status != Company::STATUS_PASS)
+            return Tool::reJson(null, "您没有招聘权限", Tool::FAIL);
+        return Tool::reJson($company->jobs(1, $page, $limit));
     }
 
     public function actionInfo() {

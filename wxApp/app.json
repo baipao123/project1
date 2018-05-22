@@ -12,7 +12,9 @@
     "pages/job/userList",
     "pages/job/getInfo",
     "pages/job/scan",
-    "pages/company/verify"
+    "pages/company/verify",
+    "pages/company/jobs",
+    "pages/company/users"
   ],
   "tabBar": {
     "list": [
