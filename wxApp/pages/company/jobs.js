@@ -18,7 +18,7 @@ Page({
         if (that.data.loading)
             return false;
         that.data.loading = true
-        request.get("part/company/jobs", {page: page}, function (data) {
+        request.get("part/company/jobs-sample", {page: page}, function (data) {
             let list = that.data.list
             for (let i = 0; i < data.list.length; i++)
                 list.push(data.list[i])
