@@ -155,7 +155,7 @@ Page({
                         cancelText: '还有工作',
                         confirmText: '上报工时',
                         success: function () {
-                            that.goTimeUp(null, that.data.clocks.length - 1)
+                            that.goTimeUp(null, today)
                         }
                     })
                 }
@@ -173,11 +173,9 @@ Page({
             showIndex: id == that.data.showIndex ? -1 : id
         })
     },
-    goTimeUp: function (e, index) {
-        if (e)
-            index = e.currentTarget.dataset.index
+    goTimeUp: function (e, today) {
         let that = this,
-            day = that.data.clocks[index]
+            day = today ? today : that.data.clocks[e.currentTarget.dataset.index]
         that.setData({
             isPrompt: true,
             prompt: {
@@ -185,7 +183,7 @@ Page({
                 type: day.type ? day.type : 0,
                 num: day.num,
                 msg: '',
-                index: index
+                index: today ? -1 : e.currentTarget.dataset.index
             }
         })
     },
@@ -211,22 +209,27 @@ Page({
         data.uJid = that.data.uJob.id
         request.post("part/job/time-up", data, function (res) {
             app.toast("上报成功")
-            clocks[index].type = res.info.type
-            clocks[index].num = res.info.num
-            clocks[index].status = res.info.status
-            that.setData({
-                clocks: clocks,
-                isPrompt: false
-            })
+            if (index >= 0) {
+                clocks[index].type = res.info.type
+                clocks[index].num = res.info.num
+                clocks[index].status = res.info.status
+                that.setData({
+                    clocks: clocks,
+                    isPrompt: false
+                })
+            } else
+                that.setData({
+                    isPrompt: false
+                })
         })
     },
     actions: function () {
         let that = this,
-            uJid = that.data.uJid
+            uJid = that.data.uJob.id
         wx.showActionSheet({
-            itemList: ["标记为已完成"],
+            itemList: ["标记为已完成","保险购买"],
             success: function (res) {
-                switch (res.tabIndex) {
+                switch (res.tapIndex) {
                     case 0:
                         request.post("part/job/expire-user-job", {uJid: uJid}, function (res) {
                             that.setData({

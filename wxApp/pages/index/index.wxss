@@ -1,5 +1,6 @@
 page {
     height: 100%;
+    overflow: hidden;
 }
 
 .page {
@@ -53,7 +54,7 @@ image.icon {
     right: 30rpx;
     top: 50rpx;
     padding: 8rpx 25rpx;
-    background-color: rgba(160, 160, 160, .4);
+    background-color: rgba(0, 0, 0, .4);
     color: #fff;
     border-radius: 20rpx;
 }
