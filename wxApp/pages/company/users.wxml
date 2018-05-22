@@ -1,3 +1,40 @@
 <view class="page full">
+    <view class="weui-loadmore" hidden="{{!refresh}}">
+        <view class="weui-loading"></view>
+        <view class="weui-loadmore__tips">正在刷新</view>
+    </view>
+    <view class="list">
 
+    </view>
+    <view class="weui-loadmore" wx:if="{{!empty && !loading}}">
+        <view class="weui-loadmore__tips weui-loadmore__tips_in-line bg-transparent">查看更多</view>
+    </view>
+    <view class="weui-loadmore" wx:if="{{loading}}">
+        <view class="weui-loading"></view>
+        <view class="weui-loadmore__tips">加载中</view>
+    </view>
+    <view class="weui-loadmore" wx:else>
+        <view class="weui-loadmore__tips weui-loadmore__tips_in-line bg-transparent">暂无数据</view>
+    </view>
+    <view class="prompt-page" hidden="{{!isPrompt}}">
+        <view class="prompt-contain" hover-stop-propagation="true">
+            <form bindsubmit="submitPrompt" report-submit="true">
+                <view class="title a-c text-line">拒绝{{prompt.name}} {{prompt.date}}的工时</view>
+                <view class="body">
+                    <input type="text" name="did" value="{{prompt.did}}" hidden="true"/>
+                    <view class="weui-cell">
+                        <view class="weui-cell__bd">
+                            <textarea style="height:3.3em" name="msg" value="{{prompt.msg}}"  placeholder="请输入拒绝的理由">
+                            </textarea>
+                        </view>
+                    </view>
+                </view>
+                <view class="footer weui-flex">
+                    <view class="weui-flex__item a-c cancel" bindtap="cancelPrompt" hover-stop-propagation="true">取消
+                    </view>
+                    <button class="weui-flex__item a-c text-green" form-type="submit">确定</button>
+                </view>
+            </form>
+        </view>
+    </view>
 </view>
