@@ -2,7 +2,7 @@
     border-top:1rpx solid #eee;
 }
 
-.list .weui-cells:first-child{
+.list .item:first-child .weui-cells{
     margin-top:0;
 }
 

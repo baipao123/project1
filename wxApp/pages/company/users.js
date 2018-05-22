@@ -108,5 +108,13 @@ Page({
                 }
             }
         })
+    },
+    phoneCall: function (e) {
+        let that = this,
+            index = e.currentTarget.dataset.index,
+            phone = that.data.list[index].user.phone
+        wx.makePhoneCall({
+            phoneNumber: phone
+        })
     }
 })
