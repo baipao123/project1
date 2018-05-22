@@ -186,6 +186,6 @@ class JobController extends \frontend\controllers\BaseController
             return Tool::reJson(null, '岗位不存在或已下架', Tool::FAIL);
         if ($job->uid != $this->user_id())
             return Tool::reJson(null, '无权查看此岗位员工', Tool::FAIL);
-        return Tool::reJson(["users" => $job->users(UserHasJob::ON, $page, $limit)]);
+        return Tool::reJson(["users" => $job->users(UserHasJob::ON, $page, $limit), "job" => $job->sampleInfo()]);
     }
 }

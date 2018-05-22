@@ -18,16 +18,18 @@ Page({
     },
     getList: function () {
         let that = this,
-            page = that.data.page
+            page = that.data.page,
+            jid = that.data.jid
         if (that.data.loading)
             return false;
         that.data.loading = true
-        request.get("part/company/users", {page: page}, function (data) {
+        request.get("part/job/users", {id: jid, page: page}, function (data) {
             let list = that.data.list
             for (let i = 0; i < data.list.length; i++)
                 list.push(data.list[i])
             that.data.page++
             that.setData({
+                job: data.job,
                 list: list,
                 loading: false,
                 empty: data.list.length == 0
