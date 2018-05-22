@@ -8,6 +8,7 @@
 
 namespace common\models;
 
+use common\tools\Img;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -43,6 +44,7 @@ class UserHasJob extends \common\models\base\UserHasJob
         $user = $this->user;
         return [
             "job"    => $this->job->name,
+            "avatar" => Img::format($user->avatar),
             "name"   => $user->realname,
             "phone"  => $user->phone,
             "time"   => date("Y-m-d H:i:s", $this->created_at),

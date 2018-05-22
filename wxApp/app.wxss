@@ -2,16 +2,6 @@
 @import "pages/weui.wxss";
 @import "pages/icon.wxss";
 
-.container {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    padding: 200rpx 0;
-    box-sizing: border-box;
-}
-
 page {
     background-color: #eee;
 }
@@ -151,6 +141,16 @@ button.low{
     display: block;
 }
 
+.block-auto-20 {
+    margin: 20rpx auto;
+    display: block;
+}
+
+.block-auto-40 {
+    margin: 40rpx auto;
+    display: block;
+}
+
 .width-1 {
     width: 100%;
 }
@@ -179,4 +179,9 @@ button.low{
 
 .border-none {
     border: none;
+}
+
+.weui-loading.big{
+    width: 300rpx;
+    height: 300rpx;
 }

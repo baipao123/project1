@@ -1,0 +1,9 @@
+.container{
+    border-top:1rpx solid #eee;
+}
+
+.header{
+    width: 120rpx;
+    height: 120rpx;
+    border-radius: 120rpx;
+}
