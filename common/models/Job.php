@@ -102,8 +102,10 @@ class Job extends \common\models\base\Job
     }
 
     public function workDate() {
-        $start = date("Y-m-d", strtotime($this->start_at));
-        $end = date("Y-m-d", strtotime($this->end_at));
+        $year = date("Y");
+        $format = date("Y", strtotime($this->start_at)) == $year && date("Y", strtotime($this->start_at)) == $end ? "m-d" : "Y-m-d";
+        $start = date($format, strtotime($this->start_at));
+        $end = date($format, strtotime($this->end_at));
         return $start == $end ? $start : $start . " 至 " . $end;
     }
 

@@ -10,7 +10,7 @@
                                 <view class="weui-flex__item a-l text-green"><span class="myIcon icon-price text-green"></span>
                                     {{item.prize}}
                                 </view>
-                                <view class="weui-flex__item a-r">{{item.date}}</view>
+                                <view class="weui-flex__item_2 a-r">{{item.date}}</view>
                                 <view class="weui-cell__ft_in-access"></view>
                             </view>
                         </view>
