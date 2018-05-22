@@ -130,7 +130,8 @@ class UserController extends \frontend\controllers\BaseController
     public function actionUserStatus() {
         $data = [
             "verifyNum" => 0,
-            "uJid"      => -1
+            "uJid"      => -1,
+            "lastJid"   => -1,
         ];
         $user = $this->getUser();
         $uid = $this->user_id();
@@ -142,6 +143,9 @@ class UserController extends \frontend\controllers\BaseController
                 $data['uJid'] = count($uJids) > 1 ? 0 : $uJids[0];
         } else {
             $data['verifyNum'] = UserJobDaily::find()->where(["cid" => $uid, "status" => UserJobDaily::PROVIDE])->count();
+            $jids = Job::find()->where(["uid" => $uid])->select("id")->limit(2)->column();
+            if (!empty($jids))
+                $data['lastJid'] = count($jids) == 1 ? $jids[0] : 0;
         }
         return Tool::reJson($data);
     }

@@ -10,14 +10,16 @@ Page({
         isCompany: false,
         domain: app.globalData.qiNiuDomain,
         verifyNum: 0,
-        uJid: -1
+        uJid: -1,
+        lastJid: -1,
     },
     onShow: function () {
         let that = this
-        request.get("part/user/index", {}, function (res) {
+        request.get("part/user/user-status", {}, function (res) {
             that.setData({
                 verifyNum: res.verifyNum,
-                jobNum: res.jobNum
+                jobNum: res.jobNum,
+                lastJid: res.lastJid
             })
         })
     },
@@ -59,6 +61,18 @@ Page({
         } else {
             wx.navigateTo({
                 url: uJid == 0 ? "/pages/job/userList?status=1" : "/pages/job/getInfo?id=" + uJid
+            })
+        }
+    },
+    goUsers: function (e) {
+        let that = this,
+            jid = that.data.lastJid
+        if (jid == -1) {
+            app.toast("您还没有发布招聘岗位", "none")
+            return false
+        } else {
+            wx.navigateTo({
+                url: jid == 0 ? "/pages/company/jobs" : "/pages/company/users?jid=" + jid
             })
         }
     }
