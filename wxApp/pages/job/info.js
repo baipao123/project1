@@ -120,6 +120,11 @@ Page({
                         })
                         break
                     case 3:
+                        request.post("part/job/expire-job", {jid: jid}, function (res) {
+                            that.setData({
+                                "job.status": 4
+                            })
+                        })
                         break
                     default:
                         break

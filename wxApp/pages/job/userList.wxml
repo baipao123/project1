@@ -20,6 +20,9 @@
                                             <block wx:elif="{{item.status==2}}">
                                                 <text class="text-red">已下架</text>
                                             </block>
+                                            <block wx:elif="{{item.status==4}}">
+                                                <text class="text-blue">已结束</text>
+                                            </block>
                                         </block>
                                         <block wx:elif="{{item.user.status==1}}">
                                             <text class="text-blue">已报名</text>
