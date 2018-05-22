@@ -116,6 +116,23 @@ class JobController extends \frontend\controllers\BaseController
         }
     }
 
+    public function actionTimePass() {
+        if ($this->getUser()->type != User::TYPE_COMPANY)
+            return Tool::reJson(null, "无此操作权限", Tool::FAIL);
+        $did = $this->getPost("did");
+        $daily = UserJobDaily::findOne($did);
+        if (!$daily || $daily->status != UserJobDaily::PROVIDE)
+            return Tool::reJson(null, "无需处理", Tool::FAIL);
+        $job = Job::findOne($daily->jid);
+        if (!$job || $job->uid != Yii::$app->user->id)
+            return Tool::reJson(null, "无需处理", Tool::FAIL);
+        $daily->status = UserJobDaily::PASS;
+        $daily->updated_at = time();
+        $daily->msg = '';
+        $daily->save();
+        return Tool::reJson(1,"已通过工时");
+    }
+
     public function actionTimeRefuse() {
         if ($this->getUser()->type != User::TYPE_COMPANY)
             return Tool::reJson(null, "无此操作权限", Tool::FAIL);
@@ -129,9 +146,10 @@ class JobController extends \frontend\controllers\BaseController
 
         $daily->status = UserJobDaily::REFUSE;
         $daily->updated_at = time();
+        $daily->msg = $this->getPost("msg", '');
         $daily->save();
         //TODO 模板消息
-        return Tool::reJson(1);
+        return Tool::reJson(1,"已拒绝工时");
     }
 
     public function actionFollow() {
@@ -148,6 +166,14 @@ class JobController extends \frontend\controllers\BaseController
         if (!$uJob || $uJob->uid != $uid)
             return Tool::reJson(null, "未发现任务报名记录", Tool::FAIL);
         return Tool::reJson(["job" => $uJob->job->sampleInfo(), "uJob" => $uJob->info(), "clocks" => $uJob->todayClocks()]);
+    }
+
+    public function actionStatus() {
+        $uJid = $this->getPost("uJid", 0);
+        $uJob = UserHasJob::findOne($uJid);
+        if (!$uJob || $uJob->uid != $this->user_id())
+            return Tool::reJson(null, "未发现任务报名记录", Tool::FAIL);
+        return Tool::reJson(["status" => $uJob->status]);
     }
 
     public function actionUsers($id = 0, $page = 1, $limit = 10) {
