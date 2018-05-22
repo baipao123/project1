@@ -199,8 +199,20 @@ class JobController extends \frontend\controllers\BaseController
             return Tool::reJson(null, '岗位不存在或已下架', Tool::FAIL);
         $job->status = Job::EXPIRE;
         $job->save();
-        
         return Tool::reJson(1, "操作成功");
+    }
 
+    public function actionExpireUserJob() {
+        $uJid = $this->getPost("uJid", 0);
+        $user = $this->getUser();
+        if ($user->type != User::TYPE_USER)
+            return Tool::reJson(null, '无权操作此工作岗位', Tool::FAIL);
+        $uJob = UserHasJob::findOne($uJid);
+        if (!$uJob || $uJob->status != UserHasJob::ON || $uJob->uid != $this->user_id())
+            return Tool::reJson(null, '无权操作或已经操作过了', Tool::FAIL);
+        $uJob->status = UserHasJob::END;
+        $uJob->updated_at = time();
+        $uJob->save();
+        return Tool::reJson(1, "操作成功");
     }
 }

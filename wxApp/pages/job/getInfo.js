@@ -92,11 +92,11 @@ Page({
         let that = this
         app.getSystemInfo(function (res) {
             let width = res.hasOwnProperty("windowWidth") ? res.windowWidth : 300,
-                sliderWidth = width / 4
+                sliderWidth = width / 3
             console.log(width)
             that.setData({
-                "navBar.sliderLeft": (width / 3 - sliderWidth) / 2,
-                "navBar.sliderOffset": width / 3 * that.data.navBar.activeIndex,
+                "navBar.sliderLeft": (width / 2 - sliderWidth) / 2,
+                "navBar.sliderOffset": width / 2 * that.data.navBar.activeIndex,
                 "navBar.sliderWidth": sliderWidth
             });
         })
@@ -220,6 +220,20 @@ Page({
                 clocks: clocks,
                 isPrompt: false
             })
+        })
+    },
+    actions:function () {
+        let that = this
+        wx.showActionSheet({
+            itemList:["标记为已完成"],
+            success:function (res) {
+                switch (res.tabIndex){
+                    case 0:
+                        break
+                    default:
+                        break
+                }
+            }
         })
     }
 })

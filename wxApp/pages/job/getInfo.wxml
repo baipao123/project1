@@ -48,10 +48,6 @@
                   bindtap="tabClick">
                 <view class="weui-navbar__title">每日工时</view>
             </view>
-            <view id="2" class="weui-navbar__item {{navBar.activeIndex == 2 ? 'weui-bar__item_on' : ''}}"
-                  bindtap="tabClick">
-                <view class="weui-navbar__title">兼职总计</view>
-            </view>
             <view class="weui-navbar__slider"
                   style="left: {{navBar.sliderLeft}}px; width:{{navBar.sliderWidth}}px; transform: translateX({{navBar.sliderOffset}}px); -webkit-transform: translateX({{navBar.sliderOffset}}px);"></view>
         </view>
@@ -129,9 +125,10 @@
                     </block>
                 </view>
             </view>
-            <view class="weui-tab__content" hidden="{{navBar.activeIndex != 2}}">
+        </view>
 
-            </view>
+        <view class="bottom-btn bg-white">
+            <button class="weui-btn" type="primary" bindtap="actions">操作</button>
         </view>
     </block>
 

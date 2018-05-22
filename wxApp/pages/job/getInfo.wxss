@@ -71,3 +71,14 @@
 .prompt-contain .weui-cell:before{
     left: 0;
 }
+
+.bottom-btn{
+    position: fixed;
+    left:0;
+    bottom: 0;
+    padding: 10rpx 0;
+    width:100%;
+}
+.bottom-btn button{
+    margin:0 30rpx;
+}
