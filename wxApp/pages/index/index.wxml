@@ -1,24 +1,25 @@
 <view class="page full">
+    <view class="fix text-m" bindtap="go" wx:if="{{user.type>0}}">点击跳过 {{sec}}s</view>
     <image class="face block-auto" src="{{domain}}pageIndex/face.png"></image>
     <view class="bottom">
-        <view class="top a-c text-white weui-flex">
+        <view class="top a-c text-white weui-flex" wx:if="{{user.type==0}}">
             <view class="line bg-white weui-flex__item"></view>
             <view style="padding:0 20rpx;">快速注册</view>
             <view class="line bg-white weui-flex__item"></view>
         </view>
-        <view class="buttons weui-flex">
-            <navigator url="/pages/chose/user" class="weui-flex__item">
+        <view class="buttons weui-flex" wx:if="{{user.type==0}}">
+            <view url="/pages/chose/user" class="weui-flex__item" bindtap="go" data-type="1">
                 <button class="btn clear a-c text-white" withCredentials="true" lang="zh_CN" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
                     <image class="icon block-auto" src="{{domain}}pageIndex/student.png"></image>
                     <text class="block-auto">学生注册</text>
                 </button>
-            </navigator>
-            <navigator url="/pages/chose/company" class="weui-flex__item">
+            </view>
+            <view url="/pages/chose/company" class="weui-flex__item" bindtap="go" data-type="2">
                 <button class="btn clear a-c text-white" withCredentials="true" lang="zh_CN" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
                     <image class="icon block-auto" src="{{domain}}pageIndex/company.png"></image>
                     <text class="block-auto">企业注册</text>
                 </button>
-            </navigator>
+            </view>
         </view>
         <view class="footer text-s text-white a-c">有准兼职，迈出职场第一步</view>
     </view>

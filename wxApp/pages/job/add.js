@@ -15,7 +15,7 @@ Page({
         tmpQuizPosition: '',
         tmpWorkPosition: '',
         day: {},
-        isEdit:false,
+        isEdit: false,
     },
     onLoad: function (options) {
         let that = this,
@@ -35,12 +35,12 @@ Page({
                 company: app.globalData.company
             })
         })
-        if(options && options.hasOwnProperty("id")){
+        if (options && options.hasOwnProperty("id")) {
             let jid = options.id
-            request.get("part/job/info?id="+jid,{},function (data) {
+            request.get("part/job/info?id=" + jid, {}, function (data) {
                 that.setData({
-                    job:data.job,
-                    isEdit:true,
+                    job: data.job,
+                    isEdit: true,
                 })
             })
         }
@@ -133,20 +133,20 @@ Page({
             "job.work.position": e.detail.value
         })
     },
-    useQuiz:function (e) {
+    useQuiz: function (e) {
         this.setData({
-            "job.work.useQuiz":e.detail.value
+            "job.work.useQuiz": e.detail.value
         })
     },
-    submit:function (e) {
+    submit: function (e) {
         let that = this,
             data = e.detail.value,
-            url = that.data.isEdit ? "part/company/edit-job?jid="+that.data.job.id : "part/company/add-job"
+            url = that.data.isEdit ? "part/company/edit-job?jid=" + that.data.job.id : "part/company/add-job"
         data.formId = e.detail.formId;
 
         request.post(url, data, function (res, response) {
             app.toast(response.msg, "success", function () {
-                wx.navigateTo({
+                wx.reLaunch({
                     url: "/pages/job/info?id=" + res.jid
                 })
             })
@@ -180,9 +180,9 @@ Page({
             "job.end_time": value
         })
     },
-    useContact:function (e) {
+    useContact: function (e) {
         this.setData({
-            "job.useCompanyContact":e.detail.value
+            "job.useCompanyContact": e.detail.value
         })
     }
 })

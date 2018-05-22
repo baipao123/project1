@@ -47,3 +47,13 @@ image.icon {
 .footer {
     margin-top: 30rpx;
 }
+
+.fix{
+    position: absolute;
+    right: 30rpx;
+    top: 50rpx;
+    padding: 8rpx 25rpx;
+    background-color: rgba(160, 160, 160, .4);
+    color: #fff;
+    border-radius: 20rpx;
+}

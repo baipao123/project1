@@ -99,7 +99,7 @@ Page({
             }
         })
     },
-    refuse: function (e) {
+    submitPrompt: function (e) {
         let that = this,
             data = e.detail.value,
             index = that.data.prompt.index
@@ -126,6 +126,11 @@ Page({
                 date: item.info.date,
                 name: item.user.name
             }
+        })
+    },
+    cancelPrompt: function () {
+        this.setData({
+            isPrompt: false
         })
     },
     onReachBottom: function (e) {
