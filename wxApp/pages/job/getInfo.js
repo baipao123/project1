@@ -143,14 +143,12 @@ Page({
             data.acc = res.accuracy
             request.post("part/clock/clock", data, function (res) {
                 app.toast("打卡成功")
-                let today = that.data.todayClock,
-                    clocks = that.data.clocks
+                let today = that.data.todayClock
                 today.items.push(res.info)
-                clocks[clocks.length - 1].items.push(res.info)
                 that.setData({
                     todayClock: today
                 })
-                if (res.info.type == 3 && clocks[clocks.length - 1].status == 0) {
+                if (res.info.type == 3 && (that.data.todayClock.status == 0 || that.data.todayClock.status == 2 )) {
                     wx.showModal({
                         title: '上报工时',
                         content: '每天只统计一次工时，审核通过后无法修改，请确认今天的工作已经完成！',
@@ -222,13 +220,19 @@ Page({
             })
         })
     },
-    actions:function () {
-        let that = this
+    actions: function () {
+        let that = this,
+            uJid = that.data.uJid
         wx.showActionSheet({
-            itemList:["标记为已完成"],
-            success:function (res) {
-                switch (res.tabIndex){
+            itemList: ["标记为已完成"],
+            success: function (res) {
+                switch (res.tabIndex) {
                     case 0:
+                        request.post("part/job/expire-user-job", {uJid: uJid}, function (res) {
+                            that.setData({
+                                "uJob.status": 10
+                            })
+                        })
                         break
                     default:
                         break

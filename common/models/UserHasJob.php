@@ -201,7 +201,7 @@ class UserHasJob extends \common\models\base\UserHasJob
     public function todayClocks() {
         $start = strtotime(date("Y-m-d"));
         $end = $start + 24 * 3600 - 1;
-        $clocks = UserClock::find()->where(["uid" => $this->uid, "uJid" => $this->id])->andWhere(["BETWEEN", "created_at", $start, $end])->orderBy("created_at desc")->all();
+        $clocks = UserClock::find()->where(["uid" => $this->uid, "uJid" => $this->id])->andWhere(["BETWEEN", "created_at", $start, $end])->orderBy("created_at asc")->all();
         /* @var $clocks UserClock[] */
         $daily = UserJobDaily::findOne(["uJid" => $this->id, "uid" => $this->uid, "date" => date("Ymd")]);
         $items = [];
