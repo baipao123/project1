@@ -74,8 +74,8 @@ class CompanyController extends \frontend\controllers\BaseController
         $newJob->id = "";
         $newJob->jobId = "";
         $newJob->jobId = $newJob->getJobIdFromRedis();
-        $newJob->start_at = 0;
-        $newJob->end_at = 0;
+        $newJob->start_at = date("Ymd");
+        $newJob->end_at = date("Ymd");
         $newJob->status = Job::OFF;
         if ($newJob->save())
             return Tool::reJson(["jid" => $newJob->attributes['id']]);
