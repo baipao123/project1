@@ -84,4 +84,29 @@ Page({
         let that = this
         that.getList(false)
     },
+    refuse: function (e) {
+        let that = this,
+            index = e.detail.value.index,
+            uJid = that.data.list[index].info.id,
+            name = that.data.list[index].user.name
+        wx.showModal({
+            title: "拒绝招聘？",
+            content: "确定拒绝招聘用户 " + name + " ？拒绝之后无法恢复，用户也无法重新报名！",
+            success: function (res) {
+                if (res.confirm) {
+                    let data = {
+                        uJid: uJid,
+                        formId: e.detail.formId,
+                    }
+                    request.post("part/company/verify-user", data, function (response) {
+                        let list = that.data.list
+                        list[index].info.status = 9
+                        that.setData({
+                            list: list
+                        })
+                    })
+                }
+            }
+        })
+    }
 })

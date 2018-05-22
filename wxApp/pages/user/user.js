@@ -18,7 +18,7 @@ Page({
         request.get("part/user/user-status", {}, function (res) {
             that.setData({
                 verifyNum: res.verifyNum,
-                jobNum: res.jobNum,
+                uJid: res.uJid,
                 lastJid: res.lastJid
             })
         })

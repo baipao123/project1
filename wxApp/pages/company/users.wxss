@@ -1,9 +1,18 @@
 .container{
     border-top:1rpx solid #eee;
 }
-
+.head{
+    position: relative;
+    margin-right: 10px;
+    height: 50px;
+}
 .header{
-    width: 120rpx;
-    height: 120rpx;
-    border-radius: 120rpx;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+}
+
+.weui-form-preview:before {
+    /*height: 0;*/
+    display: none;
 }

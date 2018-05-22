@@ -115,7 +115,7 @@ class CompanyController extends \frontend\controllers\BaseController
         $company = $user->company;
         if (!$company || $company->status != Company::STATUS_PASS)
             return Tool::reJson(null, "您没有招聘权限", Tool::FAIL);
-        return Tool::reJson(["list"=>$company->jobs(1, $page, $limit)]);
+        return Tool::reJson(["list" => $company->jobs(1, $page, $limit)]);
     }
 
     public function actionInfo() {
@@ -141,6 +141,24 @@ class CompanyController extends \frontend\controllers\BaseController
             $uJob->updated_at = time();
             $text = "拒绝入职成功";
         }
+        $uJob->save();
+        return Tool::reJson(1, $text);
+    }
+
+    public function actionRefuseJob() {
+        $user = $this->getUser();
+        if (!$user || $user->type == User::TYPE_USER)
+            return Tool::reJson(null, "您没有招聘权限", Tool::FAIL);
+        $company = $user->company;
+        if (!$company || $company->status != Company::STATUS_PASS)
+            return Tool::reJson(null, "您没有招聘权限", Tool::FAIL);
+        $uJid = $this->getPost("uJid", 0);
+        $uJob = UserHasJob::findOne($uJid);
+        if (!$uJob || $uJob->job->uid != $this->user_id())
+            return Tool::reJson(null, "未找到入职申请", Tool::FAIL);
+        $uJob->status = UserHasJob::REFUSE;
+        $uJob->updated_at = time();
+        $text = "拒绝入职成功";
         $uJob->save();
         return Tool::reJson(1, $text);
     }
