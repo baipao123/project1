@@ -8,7 +8,10 @@
 
 namespace frontend\modules\part\controllers;
 
+use common\models\Job;
 use common\models\User;
+use common\models\UserHasJob;
+use common\models\UserJobDaily;
 use common\tools\Sms;
 use common\tools\StringHelper;
 use common\tools\Tool;
@@ -117,10 +120,29 @@ class UserController extends \frontend\controllers\BaseController
 
     }
 
-    public function actionJobs($page = 1, $limit = 10, $text = "") {
+    public function actionJobs($page = 1, $limit = 10, $status = 0) {
         $user = $this->getUser();
         if ($user->type == 0)
             return Tool::reJson(null, "请先注册", Tool::FAIL);
-        return Tool::reJson(["list" => $user->jobs($page, $limit)]);
+        return Tool::reJson(["list" => $user->jobs($status, $page, $limit)]);
+    }
+
+    public function actionUserStatus() {
+        $data = [
+            "verifyNum" => 0,
+            "uJid"      => -1
+        ];
+        $user = $this->getUser();
+        $uid = $this->user_id();
+        if ($user->type == 0)
+            return Tool::reJson($data);
+        if ($user->type == User::TYPE_USER) {
+            $uJids = UserHasJob::find()->where(["uid" => $uid, "status" => UserHasJob::ON])->select("id")->limit(2)->column();
+            if (!empty($uJids))
+                $data['uJid'] = count($uJids) > 1 ? 0 : $uJids[0];
+        } else {
+            $data['verifyNum'] = UserJobDaily::find()->where(["cid" => $uid, "status" => UserJobDaily::PROVIDE])->count();
+        }
+        return Tool::reJson($data);
     }
 }

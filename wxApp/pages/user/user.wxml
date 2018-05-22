@@ -45,8 +45,8 @@
                 <view class="weui-cell__ft weui-cell__ft_in-access"></view>
             </navigator>
             <block wx:if="{{!isCompany}}">
-                <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                    <view class="weui-cell__bd"><span class="myIcon icon-clock"></span>打卡记录
+                <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap="goClock">
+                    <view class="weui-cell__bd"><span class="myIcon icon-clock"></span>打卡上班
                     </view>
                     <view class="weui-cell__ft weui-cell__ft_in-access"></view>
                 </navigator>
@@ -55,7 +55,9 @@
                 <navigator url="/pages/company/verify" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
                     <view class="weui-cell__bd"><span class="myIcon icon-verify"></span>工时审核
                     </view>
-                    <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                    <view class="weui-cell__ft weui-cell__ft_in-access">
+                        <view class="weui-badge" style="margin-left: 5px;margin-right: 5px;" wx:if="{{verifyNum>0}}">{{verifyNum}}</view>
+                    </view>
                 </navigator>
                 <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
                     <view class="weui-cell__bd"><span class="myIcon icon-account"></span>员工列表

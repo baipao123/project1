@@ -190,8 +190,7 @@ class Company extends \common\models\base\Company
 
     public function dailyRecords($status = UserJobDaily::PROVIDE, $page = 1, $limit = 10) {
         $records = Yii::$app->db->cache(function () use ($status, $page, $limit) {
-            $jids = Job::find()->where(["uid" => $this->uid])->andWhere(["<>", "status", Job::DEL])->select("id")->column();
-            return UserJobDaily::find()->where(["jid" => $jids, "status" => $status])
+            return UserJobDaily::find()->where(["cid" => $this->uid, "status" => $status])
                 ->offset(($page - 1) * $limit)
                 ->limit($limit)
                 ->orderBy("created_at desc")

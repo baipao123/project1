@@ -100,6 +100,7 @@ class JobController extends \frontend\controllers\BaseController
         $daily->uid = Yii::$app->user->id;
         $daily->uJid = $uJid;
         $daily->jid = $uJob->jid;
+        $daily->cid = $uJob->job->uid;
         $daily->type = $type;
         $daily->date = $date;
         $daily->num = $type == 0 ? $num : 1;
@@ -130,7 +131,7 @@ class JobController extends \frontend\controllers\BaseController
         $daily->updated_at = time();
         $daily->msg = '';
         $daily->save();
-        return Tool::reJson(1,"已通过工时");
+        return Tool::reJson(1, "已通过工时");
     }
 
     public function actionTimeRefuse() {
@@ -149,7 +150,7 @@ class JobController extends \frontend\controllers\BaseController
         $daily->msg = $this->getPost("msg", '');
         $daily->save();
         //TODO 模板消息
-        return Tool::reJson(1,"已拒绝工时");
+        return Tool::reJson(1, "已拒绝工时");
     }
 
     public function actionFollow() {

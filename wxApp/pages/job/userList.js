@@ -3,6 +3,7 @@ const request = require("./../../utils/request.js")
 
 Page({
     data: {
+        status: 0,
         user: {},
         company: {},
         domain: app.globalData.qiNiuDomain,
@@ -12,10 +13,11 @@ Page({
         empty: false,
         loading: false
     },
-    onLoad: function () {
+    onLoad: function (options) {
         let that = this
         that.setData({
             user: app.globalData.user,
+            status: options && options.hasOwnProperty("status") ? options.status : 0
         })
         app.getCompanyInfo(function () {
             that.setData({
@@ -35,7 +37,7 @@ Page({
         page = page === undefined ? 1 : page
         let that = this,
             list = that.data.jobs
-        request.get("part/user/jobs?page=" + page, {}, function (data) {
+        request.get("part/user/jobs?page=" + page + "&status=" + that.data.status, {}, function (data) {
             console.log(data)
             if (refresh) {
                 list = data.list

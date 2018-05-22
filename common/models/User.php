@@ -98,19 +98,20 @@ class User extends \common\models\base\User
         return substr_replace($this->phone, '****', 3, 4);
     }
 
-    public function jobs($page = 1, $limit = 10) {
+    public function jobs($status = Job::ON, $page = 1, $limit = 10) {
         if ($this->type == 0)
             return [];
         if ($this->type == self::TYPE_USER) {
             $uid = $this->id;
-            $jids = Yii::$app->db->cache(function () use ($uid, $page, $limit) {
+            $jids = Yii::$app->db->cache(function () use ($status, $uid, $page, $limit) {
                 $query = UserHasJob::find()
                     ->where(["uid" => $uid])
                     //                    ->andWhere(["<>", "status", UserHasJob::REFUSE])
                     ->offset(($page - 1) * $limit)->limit($limit)
                     ->select("jid")
                     ->orderBy("created_at desc");
-
+                if ($status > 0)
+                    $query->andWhere(["status" => $status]);
                 return $query->column();
             }, 30);
             /* @var $jobs Job[] */
