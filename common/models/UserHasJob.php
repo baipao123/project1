@@ -76,6 +76,8 @@ class UserHasJob extends \common\models\base\UserHasJob
             $str = $day . "天";
         if ($this->worktime_0 > 0)
             $str .= " " . $this->worktime_0 . "小时";
+        if ($this->worktime_3 > 0)
+            $str .= " " . $this->worktime_3 . "单";
         return trim($str);
     }
 

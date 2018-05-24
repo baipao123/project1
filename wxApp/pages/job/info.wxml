@@ -3,7 +3,12 @@
 
     </view>
     <view class="info" wx:else>
-        <view class="topTips fixed a-c" wx:if="{{isOwner && job.status!=1}}"><view>岗位已下架</view></view>
+        <view class="topTips fixed a-c" wx:if="{{isOwner && job.status!=1}}">
+            <view wx:if="{{job.status==2}}">岗位未发布</view>
+            <view wx:if="{{job.status==3}}">岗位已删除</view>
+            <view wx:if="{{job.status==4}}">岗位已结束</view>
+            <view wx:if="{{job.status==4}}">岗位已招满</view>
+        </view>
         <view style="margin-bottom:150rpx;{{isOwner && job.status!=1 ? 'margin-top:60rpx':''}}">
             <view class="header bg-white">
                 <view class="name">{{job.name}}</view>
