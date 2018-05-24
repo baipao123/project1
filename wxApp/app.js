@@ -102,29 +102,31 @@ App({
             complete: callback
         })
     },
+    confirm: function (content, success, fail, title, confirmText, cancelText) {
+        wx.showModal({
+            title: title == undefined ? "提示" : title,
+            content: content,
+            success: res => {
+                if (res.confirm) {
+                    if (typeof success == "function")
+                        success()
+                } else if (res.cancel) {
+                    if (typeof fail == "function")
+                        fail()
+                }
+            },
+            confirmText: confirmText == undefined ? "确定" : confirmText,
+            cancelText: cancelText == undefined ? "取消" : cancelText,
+        })
+    },
     getLocation: function (success, fail, type) {
         let that = this
-        wx.getSetting({
-            success: function (res) {
-                let setting = res.authSetting
-                if (setting.hasOwnProperty("scope.userLocation") && setting["scope.userLocation"])
-                    that.getLocationAction(success, fail, type)
-                else {
-                    wx.authorize({
-                        scope: 'scope.userLocation',
-                        success: function (res) {
-                            console.log(res)
-                            that.getLocationAction(success, fail, type)
-                        },
-                        fail: function (res) {
-                            that.toast("请允许使用地理位置", "none")
-                            console.log(res)
-                            if (typeof fail == "function")
-                                fail()
-                        }
-                    })
-                }
-            }
+        that.authorize("scope.userLocation", function () {
+            that.getLocationAction(success, fail, type)
+        }, function () {
+            that.toast("请允许使用地理位置", "none")
+            if (typeof fail == "function")
+                fail()
         })
     },
     getLocationAction: function (success, fail, type) {
@@ -141,6 +143,28 @@ App({
                 if (typeof fail == "function")
                     fail(res)
             }
+        })
+    },
+    authorize: function (scopeName, success, fail) {
+        wx.getSetting({
+            success: (res) => {
+                let setting = res.authSetting
+                if (setting.hasOwnProperty(scopeName) && setting[scopeName]) {
+                    if (typeof success == "function")
+                        success()
+                } else {
+                    wx.authorize({
+                        scope: scopeName,
+                        success: success,
+                        fail: fail
+                    })
+                }
+            }
+        })
+    },
+    setTitle: (title) => {
+        wx.setNavigationBarTitle({
+            title: title
         })
     }
 })

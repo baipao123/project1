@@ -15,10 +15,10 @@
                                     <view class="weui-flex__item a-r">
                                         <block wx:if="{{item.user.isOwner}}">
                                             <block wx:if="{{item.status==1}}">
-                                                <text class="text-green">已上架</text>
+                                                <text class="text-green">已发布</text>
                                             </block>
                                             <block wx:elif="{{item.status==2}}">
-                                                <text class="text-red">已下架</text>
+                                                <text class="text-red">未发布</text>
                                             </block>
                                             <block wx:elif="{{item.status==4}}">
                                                 <text class="text-blue">已结束</text>
@@ -27,7 +27,10 @@
                                         <block wx:elif="{{item.user.status==1}}">
                                             <text class="text-blue">已报名</text>
                                         </block>
-                                        <block wx:elif="{{item.user.status==2}}">
+                                        <block wx:elif="{{item.user.status==1}}">
+                                            <text class="text-green">已入职</text>
+                                        </block>
+                                        <block wx:elif="{{item.user.status==3}}">
                                             <text class="text-green">工作中</text>
                                         </block>
                                         <block wx:elif="{{item.user.status==9}}">
@@ -35,6 +38,9 @@
                                         </block>
                                         <block wx:elif="{{item.user.status==10}}">
                                             <text class="text-orange">已结束</text>
+                                        </block>
+                                        <block wx:if="{{item.status==5}}">
+                                            <text class="text-blue">已招满</text>
                                         </block>
                                     </view>
                                 </view>

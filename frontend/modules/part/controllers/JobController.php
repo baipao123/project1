@@ -82,6 +82,10 @@ class JobController extends \frontend\controllers\BaseController
     }
 
     public function actionTimeUp() {
+        $type = $this->getPost("type", 0);
+        $num = $this->getPost("num", 0);
+        if ($type == 0 && intval($num) != $num)
+            return Tool::reJson(null, "工时应为整数", Tool::FAIL);
         $uJid = $this->getPost("uJid", 0);
         $date = $this->getPost("date", date("Ymd"));
         $date = str_replace("-", "", $date);
@@ -93,9 +97,6 @@ class JobController extends \frontend\controllers\BaseController
         $uJob = UserHasJob::findOne($uJid);
         if (!$uJob || $uJob->uid != Yii::$app->user->id || in_array($uJob->status, [UserHasJob::REFUSE, UserHasJob::APPLY]))
             return Tool::reJson(null, "未查到工作记录", Tool::FAIL);
-
-        $type = $this->getPost("type", 0);
-        $num = $this->getPost("num", 0);
         $daily or $daily = new UserJobDaily;
         $daily->uid = Yii::$app->user->id;
         $daily->uJid = $uJid;
@@ -183,7 +184,7 @@ class JobController extends \frontend\controllers\BaseController
             return Tool::reJson(null, '无权查看岗位员工', Tool::FAIL);
         $job = Job::findOne($id);
         if (!$job || $job->status == Job::DEL)
-            return Tool::reJson(null, '岗位不存在或已下架', Tool::FAIL);
+            return Tool::reJson(null, '岗位不存在或未发布', Tool::FAIL);
         if ($job->uid != $this->user_id())
             return Tool::reJson(null, '无权查看此岗位员工', Tool::FAIL);
         return Tool::reJson(["users" => $job->users($status, $page, $limit), "job" => $job->sampleInfo()]);
@@ -196,9 +197,10 @@ class JobController extends \frontend\controllers\BaseController
             return Tool::reJson(null, '无权操作岗位', Tool::FAIL);
         $job = Job::findOne($jid);
         if (!$job || $job->status == Job::DEL)
-            return Tool::reJson(null, '岗位不存在或已下架', Tool::FAIL);
-        $job->status = Job::EXPIRE;
+            return Tool::reJson(null, '岗位不存在或已删除', Tool::FAIL);
+        $job->status = Job::END;
         $job->save();
+        UserHasJob::updateAll(["jid" => $jid, "status" => [UserHasJob::WORKING, UserHasJob::ON]], ["status" => UserHasJob::END, "updated_at" => time()]);
         return Tool::reJson(1, "操作成功");
     }
 

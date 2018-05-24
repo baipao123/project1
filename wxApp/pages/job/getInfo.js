@@ -207,11 +207,12 @@ Page({
             index = that.data.prompt.index
         data.formId = e.detail.formId
         data.uJid = that.data.uJob.id
+        console.log(e)
         request.post("part/job/time-up", data, function (res) {
             app.toast("上报成功")
             if (index >= 0) {
                 clocks[index].type = res.info.type
-                clocks[index].num = res.info.num
+                clocks[index].num = res.info.numdd
                 clocks[index].status = res.info.status
                 that.setData({
                     clocks: clocks,

@@ -48,13 +48,13 @@ Page({
     uploadIcon: function () {
         let that = this;
         qiNiu.choseImg(1, function (info) {
-            that.setData({icon: info.key});
+            that.setData({"company.icon": info.key});
         });
     },
     uploadCover: function () {
         let that = this;
         qiNiu.choseImg(1, function (info) {
-            that.setData({cover: info.key});
+            that.setData({"company.cover": info.key});
         });
     },
     bindCompany: function (e) {

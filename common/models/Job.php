@@ -28,7 +28,8 @@ class Job extends \common\models\base\Job
     const ON = 1;
     const OFF = 2;
     const DEL = 3;
-    const EXPIRE = 4;
+    const END = 4;
+    const FULL = 5;
 
     const TYPE_HOUR = 1;
     const TYPE_DAY = 2;
@@ -200,7 +201,7 @@ class Job extends \common\models\base\Job
         $job->tips = $data['tips'];
         if ($job->isNewRecord) {
             $job->created_at = time();
-            $job->status = $saveTmp ? self::TMP : self::OFF;
+            $job->status = $saveTmp ? self::TMP : self::ON;
         } else {
             $job->status = $saveTmp ? self::TMP : $job->status;
         }

@@ -36,6 +36,7 @@
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "有准兼职",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#eee"
   }
 }

@@ -26,7 +26,7 @@ const request = (method, url, params, success, fail, complete) => {
                 wx.setStorageSync('cookie', res.header['Set-Cookie']);
             if (res.data.code != undefined) {
                 if (res.data.code == 0) {
-                    if (res.data.data == 1) {
+                    if (res.data.hasOwnProperty("msg") && res.data.msg != '') {
                         wx.showToast({
                             title: res.data.msg,
                             icon: 'success'

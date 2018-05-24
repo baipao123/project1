@@ -41,7 +41,7 @@
     <block class="clock" wx:elif="{{uJob.status==2 || uJob.status==10}}">
         <view class="weui-navbar bg-white border-none">
             <view id="0" class="weui-navbar__item {{navBar.activeIndex == 0 ? 'weui-bar__item_on' : ''}}"
-                  bindtap="tabClick" wx:if="{{uJob.status==2}}">
+                  bindtap="tabClick" wx:if="{{uJob.status==2 || uJob.status==10}}">
                 <view class="weui-navbar__title">打卡</view>
             </view>
             <view id="1" class="weui-navbar__item {{navBar.activeIndex == 1 ? 'weui-bar__item_on' : ''}}"

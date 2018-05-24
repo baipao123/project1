@@ -149,11 +149,6 @@ Page({
                 wx.redirectTo({
                     url: "/pages/job/info?id=" + res.jid
                 })
-                if (that.data.isEdit || that.data.job.status != 2)
-                    wx.showModal({
-                        title: "提示",
-                        content: "岗位为撤消状态，预览成功后，可在操作中发布"
-                    })
             })
         })
     },

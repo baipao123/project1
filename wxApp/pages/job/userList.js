@@ -19,6 +19,7 @@ Page({
             user: app.globalData.user,
             status: options && options.hasOwnProperty("status") ? options.status : 0
         })
+        app.setTitle(app.globalData.user.type && app.globalData.user.type > 1 ? "我的招聘" : "我的兼职")
         app.getCompanyInfo(function () {
             that.setData({
                 company: app.globalData.company

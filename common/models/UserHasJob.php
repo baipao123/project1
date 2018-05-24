@@ -21,6 +21,7 @@ class UserHasJob extends \common\models\base\UserHasJob
 {
     const APPLY = 1;
     const ON = 2;
+    const WORKING = 3;
     const REFUSE = 9;
     const END = 10;
 

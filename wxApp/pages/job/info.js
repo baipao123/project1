@@ -36,9 +36,9 @@ Page({
             })
         })
     },
-    toggleJobStatus: function () {
+    toggleJobStatus: function (status) {
         let that = this,
-            status = that.data.job.status == 1 ? 2 : 1
+            status = status == undefined ? (that.data.job.status == 1 ? 2 : 1) : status
         request.post("part/company/toggle-job", {
             jid: that.data.jid,
             status: status
@@ -95,15 +95,15 @@ Page({
             status = that.data.job.status,
             itemList = []
         if (status == 1)
-            itemList = ["撤消岗位", "复制岗位", "编辑岗位", "岗位工作已结束"];
+            itemList = ["设为未发布", "复制岗位", "删除岗位", "编辑岗位", "设为已招满", "岗位工作已结束"];
         else
-            itemList = ["发布岗位", "复制岗位", "编辑岗位", "岗位工作已结束"];
+            itemList = ["发布岗位", "复制岗位", "删除岗位", "编辑岗位", "发布并设为已招满", "岗位工作已结束"];
         wx.showActionSheet({
             itemList: itemList,
             success: function (res) {
                 switch (res.tapIndex) {
                     case 0:
-                        that.toggleJobStatus()
+                        that.toggleJobStatus(that.data.job.status == 1 ? 2 : 1)
                         break
                     case 1:
                         request.post("part/company/copy-job", {jid: jid}, function (res) {
@@ -115,14 +115,26 @@ Page({
                         })
                         break
                     case 2:
+                        app.confirm("确定删除岗位", function () {
+                            that.toggleJobStatus(3)
+                        })
+                        break
+                    case 3:
                         wx.navigateTo({
                             url: "/pages/job/add?id=" + jid
                         })
                         break
-                    case 3:
-                        request.post("part/job/expire-job", {jid: jid}, function (res) {
-                            that.setData({
-                                "job.status": 4
+                    case 4:
+                        app.confirm("确定设置为已招满？设置后将统一拒绝所有的报名者，并且岗位将不可报名", function () {
+                            that.toggleJobStatus(5)
+                        })
+                        break
+                    case 5:
+                        app.confirm("确定设置为已结束？结束后所有在职者将不能打卡", function () {
+                            request.post("part/job/expire-job", {jid: jid}, function (res) {
+                                that.setData({
+                                    "job.status": 4
+                                })
                             })
                         })
                         break

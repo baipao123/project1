@@ -92,16 +92,28 @@ class CompanyController extends \frontend\controllers\BaseController
         if (!$job || $job->uid != Yii::$app->user->id || $job->status == Job::DEL)
             return Tool::reJson(null, "未找到原招聘信息", Tool::FAIL);
         if ($job->status == Job::TMP)
-            return Tool::reJson(null, "草稿状态不能上架", Tool::FAIL);
+            return Tool::reJson(null, "草稿状态不能发布", Tool::FAIL);
         $company = $job->company;
         if (!$company || $company->status != Company::STATUS_PASS)
             return Tool::reJson(null, "您的企业资料未审核通过，暂时无法操作招聘信息", Tool::FAIL);
         $status = $this->getPost("status", 0);
-        if (!in_array($status, [Job::OFF, Job::ON]))
+        if (!in_array($status, [Job::OFF, Job::ON, Job::FULL, Job::DEL]))
             return Tool::reJson(null, "非法请求", Tool::FAIL);
+        if ($status == Job::DEL && UserHasJob::find()->where(["jid" => $jid])->exists())
+            return Tool::reJson(null, "本岗位已有人报名，无法删除", Tool::FAIL);
+        $statusText = [
+            Job::OFF  => "已设为未发布",
+            Job::ON   => "发布成功",
+            Job::FULL => "设为已招满成功",
+            Job::DEL  => "删除成功"
+        ];
         $job->status = $status;
-        if ($job->save())
-            return Tool::reJson(1, $status == Job::ON ? "上架成功" : "下架成功");
+        if ($job->save()) {
+            if ($status == Job::FULL) {
+                UserHasJob::updateAll(["jid" => $jid, "status" => UserHasJob::APPLY], ["status" => UserHasJob::REFUSE, "updated_at" => time()]);
+            }
+            return Tool::reJson(1, $statusText[ $status ]);
+        }
         Yii::warning($job->errors, "保存Job失败");
         return Tool::reJson(null, "失败", Tool::FAIL);
     }

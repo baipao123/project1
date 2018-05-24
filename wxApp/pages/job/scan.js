@@ -60,22 +60,26 @@ Page({
     },
     scan: function () {
         let that = this
-        wx.scanCode({
-            onlyFromCamera: true,
-            scanType: ["qrCode"],
-            success: function (res) {
-                let text = res.result
-                that.setData({
-                    text: text,
-                    isDecrypt: true
-                })
-                that.getInfo(text)
-            },
-            fail: function (res) {
-                that.setData({
-                    isDecrypt: false
-                })
-            }
+        app.authorize("scope.camera", function () {
+            wx.scanCode({
+                onlyFromCamera: true,
+                scanType: ["qrCode"],
+                success: function (res) {
+                    let text = res.result
+                    that.setData({
+                        text: text,
+                        isDecrypt: true
+                    })
+                    that.getInfo(text)
+                },
+                fail: function (res) {
+                    that.setData({
+                        isDecrypt: false
+                    })
+                }
+            })
+        }, function () {
+            app.toast("请开启相机权限")
         })
     }
 })
