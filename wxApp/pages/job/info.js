@@ -37,8 +37,8 @@ Page({
         })
     },
     toggleJobStatus: function (status) {
-        let that = this,
-            status = status == undefined ? (that.data.job.status == 1 ? 2 : 1) : status
+        let that = this
+        status = status == undefined ? (that.data.job.status == 1 ? 2 : 1) : status
         request.post("part/company/toggle-job", {
             jid: that.data.jid,
             status: status

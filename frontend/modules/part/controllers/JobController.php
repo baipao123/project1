@@ -84,7 +84,7 @@ class JobController extends \frontend\controllers\BaseController
     public function actionTimeUp() {
         $type = $this->getPost("type", 0);
         $num = $this->getPost("num", 0);
-        if ($type == 0 && intval($num) != $num)
+        if (in_array($type, [UserJobDaily::TYPE_HOUR, UserJobDaily::TYPE_COUNT]) && intval($num) != $num)
             return Tool::reJson(null, "工时应为整数", Tool::FAIL);
         $uJid = $this->getPost("uJid", 0);
         $date = $this->getPost("date", date("Ymd"));
@@ -104,7 +104,7 @@ class JobController extends \frontend\controllers\BaseController
         $daily->cid = $uJob->job->uid;
         $daily->type = $type;
         $daily->date = $date;
-        $daily->num = $type == 0 ? $num : 1;
+        $daily->num = in_array($type, [UserJobDaily::TYPE_HOUR, UserJobDaily::TYPE_COUNT]) ? $num : 1;
         $daily->status = UserJobDaily::PROVIDE;
         $daily->isNewRecord ? $daily->created_at = time() : $daily->updated_at = time();
         $msg = $this->getPost("msg");
@@ -132,6 +132,16 @@ class JobController extends \frontend\controllers\BaseController
         $daily->updated_at = time();
         $daily->msg = '';
         $daily->save();
+        $uJob = $daily->uJob;
+        if ($daily->type == 0)
+            $uJob->worktime_0 += $daily->num;
+        elseif ($daily->type == 1)
+            $uJob->worktime_1 += 1;
+        elseif ($daily->type == 2)
+            $uJob->worktime_2 += 1;
+        elseif ($daily->type == 3)
+            $uJob->worktime_3 += $daily->num;
+
         return Tool::reJson(1, "已通过工时");
     }
 

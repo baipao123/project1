@@ -20,6 +20,7 @@ use Yii;
  * @property int $worktime_0
  * @property int $worktime_1
  * @property int $worktime_2
+ * @property int $worktime_3
  * @property int $updated_at
  */
 class UserHasJob extends \yii\db\ActiveRecord
@@ -38,7 +39,7 @@ class UserHasJob extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['jid', 'uid', 'status', 'created_at', 'auth_at', 'end_at', 'worktime_0', 'worktime_1', 'worktime_2', 'updated_at'], 'integer'],
+            [['jid', 'uid', 'status', 'created_at', 'auth_at', 'end_at', 'worktime_0', 'worktime_1', 'worktime_2', 'worktime_2', 'updated_at'], 'integer'],
             [['content'], 'string'],
             [['formId', 'auth_key'], 'string', 'max' => 255],
         ];
@@ -63,6 +64,7 @@ class UserHasJob extends \yii\db\ActiveRecord
             'worktime_0' => 'Worktime 0',
             'worktime_1' => 'Worktime 1',
             'worktime_2' => 'Worktime 2',
+            'worktime_3' => 'Worktime 3',
             'updated_at' => 'Updated At',
         ];
     }

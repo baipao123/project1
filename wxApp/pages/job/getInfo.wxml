@@ -151,10 +151,13 @@
                                 <label class="radio gender">
                                     <radio value="2" checked="{{prompt.type==2}}"/>一天
                                 </label>
+                                <label class="radio gender">
+                                    <radio value="3" checked="{{prompt.type==3}}"/>单
+                                </label>
                             </radio-group>
                         </view>
                     </view>
-                    <block wx:if="{{prompt.type == 0}}">
+                    <block wx:if="{{prompt.type == 0 || prompt.type == 3}}">
                         <view class="weui-cells__title weui-cells_after-title padding-0-x">结算时间</view>
                         <view class="weui-cell weui-cell_input">
                             <view class="weui-cell__bd">

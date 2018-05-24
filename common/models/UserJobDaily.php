@@ -27,6 +27,7 @@ class UserJobDaily extends \common\models\base\UserJobDaily
     const TYPE_HOUR = 0;
     const TYPE_HALF_DAY = 1;
     const TYPE_WHOLE_DAY = 2;
+    const TYPE_COUNT = 3;
 
     public function getUser() {
         return $this->hasOne(User::className(), ["id" => "uid"]);
@@ -50,6 +51,8 @@ class UserJobDaily extends \common\models\base\UserJobDaily
     }
 
     public function numStr() {
+        if ($this->type == self::TYPE_COUNT)
+            return $this->num . "单";
         if ($this->type == self::TYPE_WHOLE_DAY)
             return "一天";
         if ($this->type == self::TYPE_HALF_DAY)
