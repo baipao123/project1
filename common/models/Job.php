@@ -71,6 +71,7 @@ class Job extends \common\models\base\Job
             $uJob = isset($uJobs[ $job->id ]) ? $uJobs[ $job->id ] : null;
             $data[] = [
                 "id"           => $job->id,
+                "jobNo"        => $job->jobNo,
                 "name"         => $job->name,
                 "company"      => $job->company->info(),
                 "prize"        => $job->prizeStr(),

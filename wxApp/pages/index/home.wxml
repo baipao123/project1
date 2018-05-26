@@ -68,6 +68,7 @@
                     </view>
                     <view class="weui-media-box__bd weui-media-box__bd_in-appmsg" style="padding:0 15px 15px 15px">
                         <view class="weui-media-box__desc" style="line-height:1.5;">
+                            <view><span class="myIcon icon-No icon-13 margin-r2"></span><text>{{item.jobNo}}</text></view>
                             <view><span class="myIcon icon-map_icon icon-13 margin-r2"></span><text>{{item.position}}</text></view>
                             <view><span class="myIcon icon-clock icon-13 margin-r2"></span><text space="ensp">{{item.date}} {{item.time}}</text></view>
                         </view>
