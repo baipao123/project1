@@ -166,7 +166,7 @@ class Company extends \common\models\base\Company
     }
 
     public function icon() {
-        return $this->icon;
+        return empty($this->icon) ? "youzhun.jpeg" : $this->icon;
     }
 
     public function cover() {
