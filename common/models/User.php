@@ -109,7 +109,10 @@ class User extends \common\models\base\User
                     //                    ->andWhere(["<>", "status", UserHasJob::REFUSE])
                     ->offset(($page - 1) * $limit)->limit($limit)
                     ->select("jid")
-                    ->orderBy("created_at desc");
+                    ->orderBy([
+                        "status"     => [UserHasJob::WORKING, UserHasJob::ON, UserHasJob::APPLY, UserHasJob::END, UserHasJob::REFUSE],
+                        "created_at" => SORT_DESC
+                    ]);
                 if ($status > 0)
                     $query->andWhere(["status" => $status]);
                 return $query->column();
