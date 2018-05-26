@@ -121,9 +121,9 @@ class Job extends \common\models\base\Job
     }
 
 
-    public function getJobIdFromRedis() {
-        if (!empty($this->jobId))
-            return $this->jobId;
+    public function getJobNoFromRedis() {
+        if (!empty($this->jobNo))
+            return $this->jobNo;
         $date = date("Ymd");
         $index = Yii::$app->redis->incr("JOB-ID-NUM-DATE:{$date}");
         return $date . sprintf("%04d", $index);
@@ -136,7 +136,7 @@ class Job extends \common\models\base\Job
                 return "未找到岗位";
         } else {
             $job = new self;
-            $job->jobId = $job->getJobIdFromRedis();
+            $job->jobNo = $job->getJobNoFromRedis();
         }
         $job->uid = Yii::$app->user->id;
         if (!$saveTmp && empty($data['name']))
@@ -227,7 +227,7 @@ class Job extends \common\models\base\Job
         /* @var $uJob UserHasJob */
         return [
             "id"                => $this->id,
-            "jobId"             => $this->jobId,
+            "jobNo"             => $this->jobNo,
             "uid"               => $this->uid,
             "city_id"           => $this->city_id,
             "area_id"           => $this->area_id,
@@ -303,14 +303,16 @@ class Job extends \common\models\base\Job
 
     public function sampleInfo() {
         return [
-            "id"     => $this->id,
-            "name"   => $this->name,
-            "status" => $this->status,
-            "tStart" => $this->workTime(1),
-            "tEnd"   => $this->workTime(2),
-            "date"   => $this->workDate(),
-            "icon"   => $this->company->icon,
-            "prize"  => $this->prizeStr()
+            "id"         => $this->id,
+            "jobNo"      => $this->jobNo,
+            "name"       => $this->name,
+            "status"     => $this->status,
+            "tStart"     => $this->workTime(1),
+            "tEnd"       => $this->workTime(2),
+            "date"       => $this->workDate(),
+            "icon"       => $this->company->icon,
+            "prize"      => $this->prizeStr(),
+            "follow_num" => $this->follow_num
         ];
     }
 

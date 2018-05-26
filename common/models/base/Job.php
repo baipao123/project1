@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "job".
  *
  * @property string $id
- * @property string $jobId
+ * @property string $jobNo
  * @property string $uid
  * @property string $city_id
  * @property string $area_id
@@ -34,6 +34,7 @@ use Yii;
  * @property string $contact_name
  * @property string $tips
  * @property int $status
+ * @property int $follow_num
  * @property string $created_at
  */
 class Job extends \yii\db\ActiveRecord
@@ -50,8 +51,8 @@ class Job extends \yii\db\ActiveRecord
      */
     public function rules() {
         return [
-            [['id', 'uid', 'city_id', 'area_id', 'prize', 'num', 'start_at', 'end_at', 'work_start', 'work_end', 'created_at', 'gender', 'prize_type', 'status'], 'integer'],
-            [['jobId', 'description', 'require_desc', 'extra_desc', 'tips'], 'string'],
+            [['id', 'uid', 'city_id', 'area_id', 'prize', 'num', 'start_at', 'end_at', 'work_start', 'work_end', 'created_at', 'gender', 'prize_type', 'status', 'follow_num'], 'integer'],
+            [['jobNo', 'description', 'require_desc', 'extra_desc', 'tips'], 'string'],
             [['name', 'quiz_position', 'quiz_longitude', 'quiz_latitude', 'work_position', 'work_longitude', 'work_latitude', 'phone', 'contact_name'], 'string', 'max' => 255],
             [['jobId'], 'unique'],
         ];
@@ -63,7 +64,7 @@ class Job extends \yii\db\ActiveRecord
     public function attributeLabels() {
         return [
             'id'             => 'ID',
-            'jobId'          => 'JobId',
+            'jobNO'          => 'JobNo',
             'uid'            => 'Uid',
             'city_id'        => 'City ID',
             'area_id'        => 'Area ID',
@@ -89,6 +90,7 @@ class Job extends \yii\db\ActiveRecord
             'contact_name'   => 'Contact Name',
             'tips'           => 'Tips',
             'status'         => 'Status',
+            'follow_num'     => 'Follow Num',
             'created_at'     => 'Created At',
         ];
     }

@@ -27,7 +27,7 @@
             <view class="middle bg-white text text-m">
                 <view class="weui-flex">
                     <view class="weui-flex__item">工作编码:</view>
-                    <view class="weui-flex__item-2 text-grey">{{job.jobId}}</view>
+                    <view class="weui-flex__item-2 text-grey">{{job.jobNo}}</view>
                 </view>
                 <view class="weui-flex">
                     <view class="weui-flex__item">招聘人数:</view>
