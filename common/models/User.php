@@ -124,4 +124,20 @@ class User extends \common\models\base\User
         $company = $this->company;
         return $company ? $company->jobs(0, $page, $limit) : [];
     }
+
+    public function followJobs($page = 1, $limit = 10) {
+        if ($this->type != self::TYPE_USER)
+            return [];
+        $uid = $this->id;
+        $jids = Yii::$app->db->cache(function () use ($uid, $page, $limit) {
+            return JobFollow::find()
+                ->where(["uid" => $uid])
+                ->offset(($page - 1) * $limit)->limit($limit)
+                ->select("jid")
+                ->orderBy("created_at desc")
+                ->column();
+        }, 15);
+        $jobs = Job::find()->where(["id" => $jids])->andWhere(["NOT IN", "status", [Job::OFF, Job::DEL]])->orderBy(["id" => $jids])->all();
+        return Job::formatJobs($jobs, $this->id);
+    }
 }

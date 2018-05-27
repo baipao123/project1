@@ -127,6 +127,13 @@ class UserController extends \frontend\controllers\BaseController
         return Tool::reJson(["list" => $user->jobs($status, $page, $limit)]);
     }
 
+    public function actionFollowJobs($page = 1, $limit = 10) {
+        $user = $this->getUser();
+        if ($user->type == 0)
+            return Tool::reJson(null, "请先注册", Tool::FAIL);
+        return Tool::reJson(["list" => $user->followJobs($page, $limit)]);
+    }
+
     public function actionUserStatus() {
         $data = [
             "verifyNum" => 0,
