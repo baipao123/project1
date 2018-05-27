@@ -1,4 +1,12 @@
 <view class="page full">
+    <swiper class="slider" indicator-dots="true" autoplay="true" interval="{{interval}}" duration="{{duration}}" wx:if="{{slider.length>0}}">
+        <block wx:for="{{slider}}" wx:key="key-slider">
+            <swiper-item>
+                <image src="{{domain+item.cover}}" class="slide-image"/>
+                <view class="title" wx:if="{{item.title}}">{{item.title}}</view>
+            </swiper-item>
+        </block>
+    </swiper>
     <view class="weui-search-bar">
         <view class="weui-search-bar__form city text-m a-c" bindtap="selectCity">
             <view style="width:{{user.area_id > 0 ? 280 : 160}}rpx;display:inline-block;line-height:60rpx;">

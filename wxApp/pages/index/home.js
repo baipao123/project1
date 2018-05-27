@@ -6,6 +6,7 @@ Page({
         user: {},
         domain: app.globalData.qiNiuDomain,
         jobs: [],
+        slider: [],
         page: 1,
         searchData: {},
         inputShowed: false,
@@ -119,5 +120,13 @@ Page({
         if (that.data.refresh)
             return true
         that.getList(1, true)
+    },
+    getSlider: function () {
+        let that = this
+        request.get("part/slider/index", {}, function (res) {
+            that.setData({
+                slider: res.list
+            })
+        })
     }
 })

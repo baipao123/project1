@@ -53,7 +53,6 @@ Page({
             })
     },
     preventDefault:function (e) {
-        app.toast("ssss")
         e.preventDefault()
     }
 })
