@@ -8,14 +8,13 @@ page {
     height: 100%;
     background: url(http://img.jiuyeli.org/pageIndex/back.png?imageslim) repeat-y;
     background-size: 100% auto;
-    padding-top: 100rpx !important;
     overflow: hidden;
 }
 
 image.face {
     width: 600rpx;
     height: 600rpx;
-    top: 100rpx;
+    top: 200rpx;
     position: relative;
 }
 

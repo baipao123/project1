@@ -5,14 +5,16 @@ Page({
     data: {
         user: {},
         domain: app.globalData.qiNiuDomain,
-        sec: 555,
+        sec: 10,
     },
     onLoad: function () {
         this.setData({
             user: app.globalData.user
         })
-        this.desc()
         wx.hideShareMenu()
+    },
+    onShow: function () {
+        this.desc()
     },
     getUserInfo: function (e) {
         let that = this
@@ -52,7 +54,8 @@ Page({
                 url: "/pages/chose/user"
             })
     },
-    preventDefault:function (e) {
-        e.preventDefault()
+    preventDefault: function (e, event) {
+        e.currentTarget.preventDefault()
+        console.log(e)
     }
 })

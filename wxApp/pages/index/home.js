@@ -7,6 +7,7 @@ Page({
         domain: app.globalData.qiNiuDomain,
         jobs: [],
         slider: [],
+        windowWidth: 375,
         page: 1,
         searchData: {},
         inputShowed: false,
@@ -22,6 +23,11 @@ Page({
                 aid: app.globalData.user.area_id,
                 cid: app.globalData.user.city_id
             }
+        })
+        app.getSystemInfo(function (res) {
+            that.setData({
+                windowWidth: res.hasOwnProperty("windowWidth") ? res.windowWidth : 375
+            })
         })
         that.getList(1, true)
         that.getSlider()

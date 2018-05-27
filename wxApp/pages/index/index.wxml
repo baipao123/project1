@@ -1,5 +1,5 @@
 <view class="page full" bind:touchstart="preventDefault">
-    <view class="fix text-m" bindtap="go" wx:if="{{user.type>0}}">点击跳过 {{sec}}s</view>
+    <view class="fix text-m" catchtap="go" wx:if="{{user.type>0}}">点击跳过 {{sec}}s</view>
     <image class="face block-auto" src="{{domain}}pageIndex/face.png"></image>
     <view class="bottom">
         <view class="top a-c text-white weui-flex" wx:if="{{user.type==0}}">
@@ -7,7 +7,7 @@
             <view style="padding:0 20rpx;">快速注册</view>
             <view class="line bg-white weui-flex__item"></view>
         </view>
-        <view class="buttons weui-flex" wx:if="{{user.type==0}}">
+        <view class="buttons weui-flex" >
             <view url="/pages/chose/user" class="weui-flex__item" bindtap="go" data-type="1">
                 <button class="btn clear a-c text-white" withCredentials="true" lang="zh_CN" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
                     <image class="icon block-auto" src="{{domain}}pageIndex/student.png"></image>
