@@ -38,7 +38,7 @@ class Slider extends \common\models\base\Slider
     }
 
     public function format($mustOn = false) {
-        if ($this->status == self::STATUS_ON && $this->end_at <= time()) {
+        if ($this->status == self::STATUS_ON && $this->end_at > 0 && $this->end_at <= time()) {
             $this->status = self::STATUS_EXPIRE;
             $this->save();
             if ($mustOn)

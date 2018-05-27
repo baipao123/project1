@@ -24,6 +24,7 @@ Page({
             }
         })
         that.getList(1, true)
+        that.getSlider()
     },
     onShow: function () {
         if (app.globalData.user != {} && app.globalData.user.type == 0)

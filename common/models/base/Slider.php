@@ -13,6 +13,7 @@ use Yii;
  * @property int $tid
  * @property string $cover
  * @property string $link
+ * @property int sort
  * @property int $status
  * @property int $start_at
  * @property int $end_at
@@ -36,7 +37,7 @@ class Slider extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['tid', 'type', 'status', 'start_at', 'end_at', 'created_at', 'aid', 'updated_at'], 'integer'],
+            [['tid', 'type', 'sort', 'status', 'start_at', 'end_at', 'created_at', 'aid', 'updated_at'], 'integer'],
             [['title', 'cover', 'link'], 'string', 'max' => 255],
         ];
     }
@@ -53,6 +54,7 @@ class Slider extends \yii\db\ActiveRecord
             'tid' => 'Tid',
             'cover' => 'Cover',
             'link' => 'Link',
+            'sort' => 'Sort',
             'status' => 'Status',
             'start_at' => 'Start At',
             'end_at' => 'End At',
