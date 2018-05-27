@@ -66,6 +66,7 @@ $assetUrl = \Yii::$app->assetManager->publish(dirname(__FILE__) . '/../../assets
             title: title,
             shadeClose: false,
             area: width,
+            maxmin: true,
             content: url
         });
     }

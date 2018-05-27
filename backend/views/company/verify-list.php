@@ -22,10 +22,10 @@
         <tr>
             <td><?= $record->id ?></td>
             <td><?= $record->name ?></td>
-            <td class="img1"><img class="img" src="<?= $record->icon() ?>"/></td>
-            <td class="img2"><img class="img" src="<?= $record->cover() ?>"/></td>
+            <td class="icon-<?= $record->id ?>"><img class="img" src="<?= $record->icon() ?>"/></td>
+            <td class="cover-<?= $record->id ?>"><img class="img" src="<?= $record->cover() ?>"/></td>
             <td><?= $record->description ?></td>
-            <td class="img3">
+            <td class="attaches-<?= $record->id ?>">
                 <?php foreach ($record->attaches as $attach): ?>
                     <img src="<?= $attach->cover() ?>" class="img">
                 <?php endforeach; ?>

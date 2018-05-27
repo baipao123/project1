@@ -54,7 +54,18 @@ class Slider extends \common\models\base\Slider
         ];
     }
 
-    public function cover() {
-        return Img::format($this->cover, 750, 375);
+    public function cover($host = false) {
+        return Img::format($this->cover, 750, 375, $host);
     }
+
+    public function timeStr() {
+        if ($this->start_at == 0 && $this->end_at == 0)
+            return "永久有效";
+        $start = $this->start_at > 0 ? date("Y-m-d H:i:s", $this->start_at) : "";
+        $end = $this->end_at > 0 ? date("Y-m-d H:i:s", $this->end_at) : "永久";
+        if (empty($start))
+            return $end . " 前";
+        return $start . "<br>" . $end;
+    }
+
 }

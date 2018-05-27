@@ -24,6 +24,20 @@ class MenuAction extends ApiAction
 			"spread": false
 		},
         {
+			"title": "轮播管理",
+			"icon": "icon-icon10",
+			"href": "",
+			"spread": true,
+			"children": [
+				{
+					"title": "轮播列表",
+					"icon": "&#xe612;",
+					"href": "/slider/list",
+					"spread": false
+				}
+			]
+		},
+        {
 			"title": "企业管理",
 			"icon": "icon-icon10",
 			"href": "",

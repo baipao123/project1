@@ -19,7 +19,7 @@ $assetUrl = \Yii::$app->assetManager->publish(dirname(__FILE__) . '/../../assets
         <script type="text/javascript" charset="utf-8" src="<?= $assetUrl ?>/layui/layui.all.js"></script>
         <?php $this->head() ?>
     </head>
-    <body class="layui-layout-body">
+    <body class="">
     <?php $this->beginBody() ?>
     <div class="container" style="padding-top: 30px; padding-bottom: 30px;">
         <div class="layui-row">

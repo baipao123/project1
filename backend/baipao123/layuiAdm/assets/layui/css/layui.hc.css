@@ -116,3 +116,8 @@
 ::selection { background: #ff5722; color: #fff; }
 .layui-red{ color:#f00 !important; font-weight:bold;}
 .layui-blue{ color:#01AAED !important;}
+
+
+.align-l{text-align: left;}
+.align-r{text-align: right;}
+.align-c{text-align: center;}
