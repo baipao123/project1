@@ -8,10 +8,10 @@ Page({
         company: {},
         domain: app.globalData.qiNiuDomain,
         jobs: [],
-        windowHeight: 500,
         page: 1,
         empty: false,
-        loading: false
+        loading: false,
+        refresh: false
     },
     onLoad: function (options) {
         let that = this
@@ -25,21 +25,19 @@ Page({
                 company: app.globalData.company
             })
         })
-        app.getSystemInfo(function (res) {
-            that.setData({
-                windowHeight: res.hasOwnProperty("windowHeight") ? res.windowHeight : 500
-            })
-        })
-        that.getList(1)
+        that.getList(1, true)
     },
     getList: function (page, refresh) {
-        this.data.loading = true
-        refresh = refresh === undefined ? false : refresh
-        page = page === undefined ? 1 : page
         let that = this,
             list = that.data.jobs
+        refresh = refresh === undefined ? false : refresh
+        page = page === undefined ? 1 : page
+        that.data.loading = true
+        that.data.refresh = !!refresh
         request.get("part/user/jobs?page=" + page + "&status=" + that.data.status, {}, function (data) {
             console.log(data)
+            if (!refresh && that.data.refresh)
+                return false
             if (refresh) {
                 list = data.list
                 that.data.page = 1
@@ -50,16 +48,25 @@ Page({
             that.setData({
                 jobs: list,
                 empty: data.list.length == 0,
-                loading: false
+                loading: false,
+                refresh: false,
             })
             that.data.page++
+            if (refresh)
+                wx.stopPullDownRefresh()
+
         })
     },
-    moreList: function () {
+    onReachBottom: function () {
         if (this.data.empty || this.data.loading)
             return true;
         let that = this
         that.getList(that.data.page, false)
+    },
+    onPullDownRefresh: function () {
+        let that = this
+        if (that.data.refresh)
+            return true
+        that.getList(1, true)
     }
-
 })

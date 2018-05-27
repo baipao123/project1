@@ -6,9 +6,10 @@ page {
 .page {
     width: 100%;
     height: 100%;
-    background: url(http://img.jiuyeli.org/pageIndex/back.png) repeat-y;
+    background: url(http://img.jiuyeli.org/pageIndex/back.png?imageslim) repeat-y;
     background-size: 100% auto;
     padding-top: 100rpx !important;
+    overflow: hidden;
 }
 
 image.face {

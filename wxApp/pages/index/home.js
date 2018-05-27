@@ -9,9 +9,9 @@ Page({
         page: 1,
         searchData: {},
         inputShowed: false,
-        windowHeight: 500,
         empty: false,
         loading: false,
+        refresh: false
     },
     onLoad: function () {
         let that = this
@@ -21,11 +21,6 @@ Page({
                 aid: app.globalData.user.area_id,
                 cid: app.globalData.user.city_id
             }
-        })
-        app.getSystemInfo(function (res) {
-            that.setData({
-                windowHeight: res.hasOwnProperty("windowHeight") ? res.windowHeight : 500
-            })
         })
         that.getList(1, true)
     },
@@ -56,9 +51,13 @@ Page({
             searchData = that.data.searchData
         refresh = refresh === undefined ? false : refresh
         page = page === undefined ? that.data.page : page
+        that.data.loading = true
+        that.data.refresh = !!refresh
         searchData.page = page
         request.get("part/job/list", searchData, function (data) {
             console.log(data)
+            if (!refresh && that.data.refresh)
+                return false
             if (refresh) {
                 list = data.list
                 that.data.page = 1
@@ -71,8 +70,11 @@ Page({
                 jobs: list,
                 empty: data.list.length == 0,
                 loading: false,
+                refresh: false
             })
             that.data.page++
+            if (refresh)
+                wx.stopPullDownRefresh()
         })
     },
     selectCity: function (e) {
@@ -106,10 +108,16 @@ Page({
         this.data.searchData.text = e.detail.value
         this.getList(1, true)
     },
-    moreList: function () {
+    onReachBottom: function () {
         if (this.data.empty || this.data.loading)
             return true;
         let that = this
         that.getList(that.data.page, false)
+    },
+    onPullDownRefresh: function () {
+        let that = this
+        if (that.data.refresh)
+            return true
+        that.getList(1, true)
     }
 })

@@ -5,7 +5,7 @@ Page({
     data: {
         user: {},
         domain: app.globalData.qiNiuDomain,
-        sec: 5,
+        sec: 555,
     },
     onLoad: function () {
         this.setData({
@@ -52,4 +52,8 @@ Page({
                 url: "/pages/chose/user"
             })
     },
+    preventDefault:function (e) {
+        app.toast("ssss")
+        e.preventDefault()
+    }
 })
