@@ -14,7 +14,8 @@
     "pages/job/scan",
     "pages/company/verify",
     "pages/company/jobs",
-    "pages/company/users"
+    "pages/company/users",
+    "pages/common/webView"
   ],
   "tabBar": {
     "list": [

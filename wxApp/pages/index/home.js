@@ -121,6 +121,7 @@ Page({
         if (that.data.refresh)
             return true
         that.getList(1, true)
+        that.getSlider()
     },
     getSlider: function () {
         let that = this
@@ -129,5 +130,31 @@ Page({
                 slider: res.list
             })
         })
+    },
+    sliderTap: function (e) {
+        let that = this,
+            index = e.currentTarget.dataset.index,
+            slider = that.data.slider[index]
+        switch (slider.type) {
+            case 0:
+                break;
+            case 1:
+                wx.navigateTo({
+                    url: "/pages/job/info?id=" + slider.tid
+                })
+                break;
+            case 2:
+                wx.navigateTo({
+                    url: slider.link
+                })
+                break;
+            case 3:
+                wx.navigateTo({
+                    url: "/pages/common/webView?url=" + slider.link
+                })
+                break;
+            default:
+                break;
+        }
     }
 })

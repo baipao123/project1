@@ -1,7 +1,7 @@
 <view class="page full">
-    <swiper class="slider" indicator-dots="true" autoplay="true" interval="{{interval}}" duration="{{duration}}" wx:if="{{slider.length>0}}">
+    <swiper class="slider" indicator-dots="true" autoplay="true" wx:if="{{slider.length>0}}">
         <block wx:for="{{slider}}" wx:key="key-slider">
-            <swiper-item>
+            <swiper-item bindtap="sliderTap" data-index="{{index}}">
                 <image src="{{domain+item.cover}}" class="slide-image"/>
                 <view class="title" wx:if="{{item.title}}">{{item.title}}</view>
             </swiper-item>
