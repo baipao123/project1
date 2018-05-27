@@ -15,13 +15,14 @@ Page({
         refresh: false
     },
     onLoad: function (options) {
-        let that = this
+        let that = this,
+            isFollow = !!(options && options.hasOwnProperty("isFollow") && options.isFollow == 1)
         that.setData({
             user: app.globalData.user,
             status: options && options.hasOwnProperty("status") ? options.status : 0,
-            isFollow: !!(options && options.hasOwnProperty("isFollow") && options.isFollow == 1)
+            isFollow: isFollow
         })
-        app.setTitle(app.globalData.user.type && app.globalData.user.type > 1 ? "我的招聘" : "我的兼职")
+        app.setTitle(isFollow ? "我的关注" : (app.globalData.user.type && app.globalData.user.type > 1 ? "我的招聘" : "我的兼职"))
         app.getCompanyInfo(function () {
             that.setData({
                 company: app.globalData.company
