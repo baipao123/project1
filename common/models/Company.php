@@ -15,6 +15,8 @@ use Yii;
 use yii\helpers\ArrayHelper;
 
 /**
+ * @property User $user
+ * @property CompanyRecord $lastRecord
  * @property CompanyRecord $record
  * @property CompanyRecord $refuseRecord
  * */
@@ -27,6 +29,14 @@ class Company extends \common\models\base\Company
 
     const TYPE_COMPANY = 2;
     const TYPE_USER_BOSS = 3;
+
+    public function getUser(){
+        return $this->hasOne(User::className(), ["id" => "uid"]);
+    }
+
+    public function getLastRecord(){
+        return $this->hasOne(CompanyRecord::className(), ["uid" => "uid"])->orderBy("created_at desc");
+    }
 
     public function getRecord() {
         return $this->hasOne(CompanyRecord::className(), ["uid" => "uid"])->andWhere(["status" => self::STATUS_VERIFY])->orderBy("created_at desc");

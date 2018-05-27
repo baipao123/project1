@@ -12,6 +12,8 @@
         <th>Logo</th>
         <th>封面</th>
         <th>简介</th>
+        <th>地址</th>
+        <th>联系方式</th>
         <th>审核文件</th>
         <th>操作</th>
     </tr>
@@ -25,6 +27,8 @@
             <td class="icon-<?= $record->id ?>"><img class="img" src="<?= $record->icon() ?>"/></td>
             <td class="cover-<?= $record->id ?>"><img class="img" src="<?= $record->cover() ?>"/></td>
             <td><?= $record->description ?></td>
+            <td><?= $record->position ?></td>
+            <td><?= $record->user->realname?> <br> <?= $record->user->phone?></td>
             <td class="attaches-<?= $record->id ?>">
                 <?php foreach ($record->attaches as $attach): ?>
                     <img src="<?= $attach->cover() ?>" class="img">
@@ -43,7 +47,7 @@
 
 <script>
     $(".img").click(function (e) {
-        var classTxt = $(this).parent().eq(0).attr("class");
+        let classTxt = $(this).parent().eq(0).attr("class");
         globalLayer.photos({
             photos: "." + classTxt
         })

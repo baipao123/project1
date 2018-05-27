@@ -28,7 +28,10 @@ class SliderController extends BaseController
         }
         $count = $query->count();
         $pagination = new Pagination(["totalCount" => $count]);
-        $records = $query->offset($pagination->getOffset())->limit($pagination->getLimit())->all();
+        $records = $query->offset($pagination->getOffset())->limit($pagination->getLimit())->orderBy([
+            "status"     => [Slider::STATUS_ON, Slider::STATUS_EXPIRE, Slider::STATUS_OFF],
+            "created_at" => SORT_DESC
+        ])->all();
         return $this->render("list", [
             "records"    => $records,
             "pagination" => $pagination,

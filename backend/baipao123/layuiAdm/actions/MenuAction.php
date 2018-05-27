@@ -43,6 +43,12 @@ class MenuAction extends ApiAction
 			"href": "",
 			"spread": true,
 			"children": [
+                {
+					"title": "企业列表",
+					"icon": "&#xe612;",
+					"href": "/company/list",
+					"spread": false
+				},
 				{
 					"title": "待审核列表",
 					"icon": "&#xe612;",

@@ -28,8 +28,20 @@ class CompanyController extends BaseController
         ]);
     }
 
-    public function actionList() {
-
+    public function actionList($name = "", $status = 0) {
+        $query = Company::find()->where(["<>", "status", Company::STATUS_VERIFY]);
+        if (!empty($name))
+            $query->andWhere(["like", "name", $name]);
+        if ($status > 0)
+            $query->andWhere(["status" => $status]);
+        $count = $query->count();
+        $pagination = new Pagination(["totalCount" => $count]);
+        $records = $query->offset($pagination->getOffset())->limit($pagination->getLimit())->all();
+        return $this->render("list", [
+            "name"       => $name,
+            "records"    => $records,
+            "pagination" => $pagination,
+        ]);
     }
 
     public function actionStatus($id, $status) {

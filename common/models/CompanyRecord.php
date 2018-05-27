@@ -12,11 +12,15 @@ use common\tools\Img;
 use Yii;
 
 /**
+ * @property User $user
  * @property Attach[] $attaches
  * @property Company $company
  * */
 class CompanyRecord extends \common\models\base\CompanyRecord
 {
+    public function getUser(){
+        return $this->hasOne(User::className(), ["id" => "uid"]);
+    }
 
     public function getAttaches() {
         return $this->hasMany(Attach::className(), ["tid" => "id"])->andWhere(["type" => Attach::COMPANY_RECORD, "status" => Attach::STATUS_ON]);
