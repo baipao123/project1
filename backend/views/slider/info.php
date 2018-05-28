@@ -53,7 +53,7 @@ use common\models\Slider;
     <div class="layui-form-item job <?= $slider->type != Slider::TYPE_JOB ? "hide" : "" ?>">
         <div class="layui-form-mid">岗位ID</div>
         <input type="number" name="tid" lay-filter="title" placeholder="岗位ID" autocomplete="off" class="layui-input"
-               value="<?= $slider->tid ?>">
+               value="<?= intval($slider->tid) ?>">
         <div class="layui-form-mid layui-word-aux">前往岗位列表查看</div>
     </div>
 
