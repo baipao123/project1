@@ -54,9 +54,9 @@ class SliderController extends BaseController
             $slider->title = $_POST['title'];
             $slider->cover = $_POST['cover'];
             $slider->type = $_POST['type'];
-            $slider->tid = $_POST['tid'];
+            $slider->tid = intval($_POST['tid']);
             $slider->link = $_POST['link'];
-            $slider->sort = $_POST['sort'];
+            $slider->sort = intval($_POST['sort']);
             $slider->status = $_POST['status'];
             $slider->start_at = empty($_POST['start_date']) ? time() : strtotime($_POST['start_date']);
             $end_at = strtotime($_POST['end_date']);
