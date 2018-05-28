@@ -23,6 +23,7 @@ class JobController extends \frontend\controllers\BaseController
         $job = Job::findOne($id);
         if (!$job)
             return Tool::reJson(null, "岗位不存在", Tool::FAIL);
+        $job->addViewNum();
         return Tool::reJson(["job" => $job->info($this->user_id()), "company" => $job->company->info()]);
     }
 

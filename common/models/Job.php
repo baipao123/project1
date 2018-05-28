@@ -90,6 +90,8 @@ class Job extends \common\models\base\Job
                     "status"  => $uJob ? $uJob->status : 0,
                     "uJid"    => $uJob ? $uJob->id : 0
                 ],
+                "view_num"     => $job->view_num,
+                "follow_num"   => $job->follow_num,
             ];
         }
         return $data;
@@ -333,5 +335,9 @@ class Job extends \common\models\base\Job
             ];
         }
         return $data;
+    }
+
+    public function addViewNum() {
+        return Yii::$app->db->createCommand("UPDATE `job` SET `view_num`=`view_num`+1;")->execute();
     }
 }

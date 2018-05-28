@@ -34,6 +34,7 @@ use Yii;
  * @property string $contact_name
  * @property string $tips
  * @property int $status
+ * @property int $view_num
  * @property int $follow_num
  * @property string $created_at
  */
@@ -51,7 +52,7 @@ class Job extends \yii\db\ActiveRecord
      */
     public function rules() {
         return [
-            [['id', 'uid', 'city_id', 'area_id', 'prize', 'num', 'start_at', 'end_at', 'work_start', 'work_end', 'created_at', 'gender', 'prize_type', 'status', 'follow_num'], 'integer'],
+            [['id', 'uid', 'city_id', 'area_id', 'prize', 'num', 'start_at', 'end_at', 'work_start', 'work_end', 'created_at', 'gender', 'prize_type', 'status', 'view_num', 'follow_num'], 'integer'],
             [['jobNo', 'description', 'require_desc', 'extra_desc', 'tips'], 'string'],
             [['name', 'quiz_position', 'quiz_longitude', 'quiz_latitude', 'work_position', 'work_longitude', 'work_latitude', 'phone', 'contact_name'], 'string', 'max' => 255],
             [['jobNo'], 'unique'],
@@ -90,6 +91,7 @@ class Job extends \yii\db\ActiveRecord
             'contact_name'   => 'Contact Name',
             'tips'           => 'Tips',
             'status'         => 'Status',
+            'view_num'       => 'View Num',
             'follow_num'     => 'Follow Num',
             'created_at'     => 'Created At',
         ];
