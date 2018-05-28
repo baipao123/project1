@@ -126,6 +126,7 @@
                 </view>
             </view>
         </view>
+        <view style="height:150rpx;"></view>
 
         <view class="bottom-btn bg-white">
             <button class="weui-btn" type="primary" bindtap="actions">操作</button>
