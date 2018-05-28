@@ -88,7 +88,8 @@ class Job extends \common\models\base\Job
                     "isOwner" => $uid == $job->uid,
                     "isLike"  => in_array($job->id, $likedJids),
                     "status"  => $uJob ? $uJob->status : 0,
-                    "uJid"    => $uJob ? $uJob->id : 0
+                    "uJid"    => $uJob ? $uJob->id : 0,
+                    "workStr" => $uJob ? $uJob->workTimeStr() : "",
                 ],
                 "view_num"     => $job->view_num,
                 "follow_num"   => $job->follow_num,

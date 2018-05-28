@@ -36,6 +36,9 @@ Page({
             list = that.data.jobs
         refresh = refresh === undefined ? false : refresh
         page = page === undefined ? 1 : page
+        that.setData({
+            loading:true
+        })
         that.data.loading = true
         that.data.refresh = !!refresh
         url = that.data.isFollow ? "part/user/follow-jobs" : "part/user/jobs"

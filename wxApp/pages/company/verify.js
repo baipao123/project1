@@ -25,9 +25,10 @@ Page({
     getList: function (refresh) {
         let that = this,
             page = refresh ? 1 : that.data.page
-        if (that.data.loading || that.data.refresh)
-            return false;
         that.data.loading = true
+        that.setData({
+            loading:true
+        })
         if (refresh)
             that.data.refresh = true
         request.get("part/company/time-verify-list", {page: page}, function (data) {
@@ -38,14 +39,16 @@ Page({
             } else {
                 for (let i = 0; i < data.list.length; i++)
                     list.push(data.list[i])
-                that.data.page++
             }
+            that.data.page++
             that.setData({
                 list: list,
                 loading: false,
                 refresh: false,
                 empty: data.list.length == 0
             })
+            if (refresh)
+                wx.stopPullDownRefresh()
         })
     },
     seeClocks: function (e) {
@@ -135,10 +138,14 @@ Page({
         })
     },
     onReachBottom: function (e) {
+        if (this.data.empty || this.data.loading)
+            return true;
         let that = this
         that.getList(false)
     },
     onPullDownRefresh: function (e) {
+        if (this.data.refresh)
+            return true;
         let that = this
         that.getList(true)
     }

@@ -15,10 +15,6 @@
         <!--<view class="weui-tab__content" hidden="{{navBar.activeIndex != 0}}">-->
         <!--</view>-->
     <!--</view>-->
-    <view class="weui-loadmore" hidden="{{!refresh}}">
-        <view class="weui-loading"></view>
-        <view class="weui-loadmore__tips">正在刷新</view>
-    </view>
     <view class="weui-panel weui-panel_access" style="margin-bottom:30rpx;" wx:for="{{list}}" wx:key="key-list">
         <view class="weui-panel__bd">
             <view class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
@@ -72,15 +68,15 @@
                     </view>
                 </view>
                 <view class="weui-form-preview__ft" wx:if="{{item.info.status==1}}">
-                    <form bindsubmit="goPrompt" class="weui-form-preview__btn weui-form-preview__btn_default"
+                    <form bindsubmit="goPrompt" class="weui-form-preview__btn weui-form-preview__btn_default form-cancel"
                           hover-class="weui-form-preview__btn_active">
                         <input type="text" hidden="true" name="index" value="{{index}}"/>
-                        <button class="bg-white text-grey-normal"  form-type="submit" hover-class="weui-form-preview__btn_active">拒绝</button>
+                        <button class="bg-white text-grey-normal clear cancel"  form-type="submit" hover-class="weui-form-preview__btn_active">拒绝</button>
                     </form>
                     <form bindsubmit="pass" class="weui-form-preview__btn weui-form-preview__btn_primary"
                           hover-class="weui-form-preview__btn_active">
                         <input type="text" hidden="true" name="index" value="{{index}}"/>
-                        <button form-type="submit" class="text-green bg-white" hover-class="weui-form-preview__btn_active"  data-id="{{index}}">通过</button>
+                        <button form-type="submit" class="text-green bg-white clear pass" hover-class="weui-form-preview__btn_active"  data-id="{{index}}">通过</button>
                     </form>
                 </view>
                 <view class="weui-form-preview__ft" wx:else>
@@ -106,12 +102,8 @@
                 <view class="title a-c text-line">拒绝{{prompt.name}} {{prompt.date}}的工时</view>
                 <view class="body">
                     <input type="text" name="did" value="{{prompt.did}}" hidden="true"/>
-                    <view class="weui-cell">
-                        <view class="weui-cell__bd">
-                            <textarea style="height:3.3em" name="msg" value="{{prompt.msg}}"  placeholder="请输入拒绝的理由">
-                            </textarea>
-                        </view>
-                    </view>
+                    <textarea style="height:3.3em;width:100%;" name="msg" value="{{prompt.msg}}" placeholder="请输入拒绝的理由">
+                    </textarea>
                 </view>
                 <view class="footer weui-flex">
                     <view class="weui-flex__item a-c cancel" bindtap="cancelPrompt" hover-stop-propagation="true">取消

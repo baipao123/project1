@@ -71,6 +71,10 @@
                             <text>{{item.view_num}}浏览量</text>
                             <text class="f-r">{{item.follow_num}}人关注</text>
                         </view>
+                        <view wx:if="{{item.user.workStr != ''}}">
+                            <span class="myIcon icon-clock icon-13 margin-r2"></span>
+                            <text class="text-green" space="ensp">工时: {{item.user.workStr}}</text>
+                        </view>
                     </view>
                 </view>
             </navigator>

@@ -53,12 +53,14 @@ Page({
         }
     },
     getList: function (page, refresh) {
-        this.data.loading = true
         let that = this,
             list = that.data.jobs,
             searchData = that.data.searchData
         refresh = refresh === undefined ? false : refresh
         page = page === undefined ? that.data.page : page
+        that.setData({
+            loading:true
+        })
         that.data.loading = true
         that.data.refresh = !!refresh
         searchData.page = page
