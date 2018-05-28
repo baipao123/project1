@@ -35,6 +35,7 @@
         <th>地址</th>
         <th>联系方式</th>
         <th>审核文件</th>
+        <th>操作</th>
     </tr>
     </thead>
     <tbody>
@@ -52,6 +53,8 @@
                 <?php foreach ($record->lastRecord->attaches as $attach): ?>
                     <img src="<?= $attach->cover() ?>" class="img">
                 <?php endforeach; ?>
+            </td>
+            <td>
             </td>
         </tr>
     <?php endforeach; ?>

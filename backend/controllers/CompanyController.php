@@ -8,6 +8,7 @@
 
 namespace backend\controllers;
 
+use backend\tools\Tool;
 use Yii;
 use common\models\Company;
 use common\models\CompanyRecord;
@@ -81,4 +82,9 @@ class CompanyController extends BaseController
         ]);
     }
 
+    public function actionQuery($name = "") {
+        return \common\tools\Tool::reJson([
+            "company" => Company::find()->where(["LIKE", "name", $name])->select(["id,name"])->asArray()->all()
+        ]);
+    }
 }
