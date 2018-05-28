@@ -107,14 +107,14 @@
             </view>
         </view>
         <view class="bottom bg-white fixed">
-            <block wx:if="{{!isOwner}}">
-                <view class="weui-flex">
-                    <button class="weui-flex__item clear"  open-type="share">
-                        <view class="icon">
-                            <span class="myIcon icon-share"></span>
-                        </view>
-                        <view class="text">分享</view>
-                    </button>
+            <view class="weui-flex">
+                <button class="weui-flex__item clear" open-type="share">
+                    <view class="icon" style="font-size:34rpx;">
+                        <span class="myIcon icon-share"></span>
+                    </view>
+                    <view class="text" style="line-height:30rpx">分享</view>
+                </button>
+                <block wx:if="{{!isOwner}}">
                     <view class="weui-flex__item" bindtap="toggleLike">
                         <view class="icon iconLike">
                             <span class="myIcon {{job.isLike ? 'icon-favorited like':'icon-favorite'}}"></span>
@@ -125,7 +125,7 @@
                         <block wx:if="{{job.status==1}}">
                             <block wx:if="{{job.userStatus==0}}">
                                 <form bindsubmit="sign">
-                                    <input name="jid" hidden="true" value="{{jid}}" />
+                                    <input name="jid" hidden="true" value="{{jid}}"/>
                                     <button class="right green" form-type="submit">我要报名</button>
                                 </form>
                             </block>
@@ -149,21 +149,14 @@
                             <view class="right grey">已下架</view>
                         </block>
                     </view>
-                </view>
-            </block>
-            <block wx:else>
-                <view class="weui-flex">
-                    <view class="weui-flex__item">
-                        <view class="icon">
-                            <span class="myIcon icon-share"></span>
-                        </view>
-                        <view class="text">分享</view>
-                    </view>
+
+                </block>
+                <block wx:else>
                     <view class="weui-flex__item" bindtap="companyAction">
                         <view class="right green">操作</view>
                     </view>
-                </view>
-            </block>
+                </block>
+            </view>
         </view>
     </view>
 </view>

@@ -64,11 +64,10 @@
                                     </block>
                                 </view>
                             </view>
-                            <view class="weui-flex">
-                                <view class="weui-flex__item text-green"><span class="myIcon icon-price icon-13"></span>{{item.prize}}</view>
-                                <view class="weui-flex__item-2 a-r">
-                                    <text space="ensp">已报名 {{item.userApplyNum}}   已录用 {{item.userPassNum}}{{item.num>0 ? "/"+item.num : ""}}</text>
-                                </view>
+                            <view>
+                                <span class="myIcon icon-price icon-13 text-green"></span>
+                                <text class="text-green">{{item.prize}}</text>
+                                <text class="f-r" space="ensp">已报名 {{item.userApplyNum}} 已录用 {{item.userPassNum}}{{item.num>0 ? "/"+item.num : ""}}</text>
                             </view>
                         </view>
                     </view>
@@ -78,6 +77,10 @@
                         <view><span class="myIcon icon-No icon-13 margin-r2"></span><text space="ensp">岗位编号: {{item.jobNo}}</text></view>
                         <view><span class="myIcon icon-map_icon icon-13 margin-r2"></span><text>{{item.position}}</text></view>
                         <view><span class="myIcon icon-clock icon-13 margin-r2"></span><text space="ensp">{{item.date}} {{item.time}}</text></view>
+                        <view style="margin-top:20rpx;" wx:if="{{item.user.isOwner}}">
+                            <text>{{item.view_num}}浏览量</text>
+                            <text class="f-r">{{item.follow_num}}人关注</text>
+                        </view>
                     </view>
                 </view>
             </navigator>

@@ -98,6 +98,14 @@ page {
     text-overflow: ellipsis;
 }
 
+.f-l{
+    float: left;
+}
+
+.f-r{
+    float: right;
+}
+
 .a-l {
     text-align: left;
 }

@@ -338,6 +338,6 @@ class Job extends \common\models\base\Job
     }
 
     public function addViewNum() {
-        return Yii::$app->db->createCommand("UPDATE `job` SET `view_num`=`view_num`+1;")->execute();
+        return Yii::$app->db->createCommand("UPDATE `job` SET `view_num`=`view_num`+1 WHERE `id`=:id;", [":id" => $this->id])->execute();
     }
 }
