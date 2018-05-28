@@ -32,6 +32,7 @@ Page({
             user: app.globalData.user,
             company: app.globalData.company
         });
+        wx.hideShareMenu()
     },
     onShow: function () {
         let region = app.globalData.region

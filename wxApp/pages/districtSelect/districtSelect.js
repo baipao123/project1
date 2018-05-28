@@ -27,6 +27,7 @@ Page({
                 value: data.value
             })
         })
+        wx.hideShareMenu()
     },
     change: function (e) {
         let val = e.detail.value,

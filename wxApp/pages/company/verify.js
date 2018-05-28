@@ -20,6 +20,7 @@ Page({
     onLoad: function () {
         let that = this
         that.getList(true)
+        wx.hideShareMenu()
     },
     getList: function (refresh) {
         let that = this,

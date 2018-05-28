@@ -11,5 +11,6 @@ Page({
                 link: url
             })
         }
+        wx.hideShareMenu()
     }
 })

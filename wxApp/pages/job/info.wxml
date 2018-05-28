@@ -109,12 +109,12 @@
         <view class="bottom bg-white fixed">
             <block wx:if="{{!isOwner}}">
                 <view class="weui-flex">
-                    <view class="weui-flex__item">
+                    <button class="weui-flex__item clear"  open-type="share">
                         <view class="icon">
                             <span class="myIcon icon-share"></span>
                         </view>
                         <view class="text">分享</view>
-                    </view>
+                    </button>
                     <view class="weui-flex__item" bindtap="toggleLike">
                         <view class="icon iconLike">
                             <span class="myIcon {{job.isLike ? 'icon-favorited like':'icon-favorite'}}"></span>

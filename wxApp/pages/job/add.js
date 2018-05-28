@@ -56,6 +56,7 @@ Page({
             console.log(region)
             app.resetRegion()
         }
+        wx.hideShareMenu()
     },
     goSelectDistrict: function (e) {
         let that = this,

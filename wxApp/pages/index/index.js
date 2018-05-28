@@ -53,9 +53,5 @@ Page({
             wx.navigateTo({
                 url: "/pages/chose/user"
             })
-    },
-    preventDefault: function (e, event) {
-        e.currentTarget.preventDefault()
-        console.log(e)
     }
 })

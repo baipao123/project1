@@ -143,5 +143,11 @@ Page({
                 }
             }
         })
+    },
+    onShareAppMessage: function () {
+        return {
+            title: this.data.job.name,
+            path: "/pages/job/info?id=" + this.data.jid
+        }
     }
 })

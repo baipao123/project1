@@ -1,4 +1,4 @@
-<view class="page full" bind:touchstart="preventDefault">
+<view class="page full">
     <view class="fix text-m" catchtap="go" wx:if="{{user.type>0}}">点击跳过 {{sec}}s</view>
     <image class="face block-auto" src="{{domain}}pageIndex/face.png"></image>
     <view class="bottom">

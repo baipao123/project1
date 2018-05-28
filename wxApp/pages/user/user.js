@@ -39,6 +39,7 @@ Page({
                 url: "/pages/index/index"
             })
         }
+        wx.hideShareMenu()
     },
     goIndex: function (e) {
         let that = this

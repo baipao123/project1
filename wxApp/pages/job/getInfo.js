@@ -45,6 +45,7 @@ Page({
         that.setNavBarWidth()
         that.getNowTime()
         that.getUJob(uJid)
+        wx.hideShareMenu()
     },
     getUJob: function (uJid) {
         let that = this

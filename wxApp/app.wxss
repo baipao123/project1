@@ -132,6 +132,10 @@ button.clear {
     padding: 0;
     display: initial;
 }
+
+button.clear::after {
+    border: none;
+}
 button.low{
     line-height:2;
 }

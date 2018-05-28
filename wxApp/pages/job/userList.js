@@ -29,6 +29,7 @@ Page({
             })
         })
         that.getList(1, true)
+        wx.hideShareMenu()
     },
     getList: function (page, refresh) {
         let that = this, url,

@@ -72,6 +72,10 @@
                             <span class="myIcon icon-clock icon-13 margin-r2"></span>
                             <text space="ensp">{{item.date}} {{item.time}}</text>
                         </view>
+                        <view class="weui-flex">
+                            <text class="weui-flex__item a-l">{{item.view_num}}浏览量</text>
+                            <text class="weui-flex__item a-r">{{item.follow_num}}人关注</text>
+                        </view>
                     </view>
                 </view>
             </navigator>

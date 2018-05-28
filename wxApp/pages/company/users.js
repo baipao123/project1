@@ -24,6 +24,7 @@ Page({
         })
         that.setNavBarWidth()
         that.getList(true)
+        wx.hideShareMenu()
     },
     setNavBarWidth: function () {
         let that = this,

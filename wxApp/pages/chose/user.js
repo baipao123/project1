@@ -14,6 +14,7 @@ Page({
         this.setData({
             user: app.globalData.user
         })
+        wx.hideShareMenu()
     },
     bindAgreeChange: function (e) {
         this.setData({

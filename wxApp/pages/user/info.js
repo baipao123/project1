@@ -57,6 +57,7 @@ Page({
                 }
             })
         }
+        wx.hideShareMenu()
     },
     prompt: function (e) {
         let that = this,

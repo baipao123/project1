@@ -10,6 +10,7 @@ Page({
     onLoad: function () {
         let that = this
         that.scan()
+        wx.hideShareMenu()
     },
     getInfo: function (text) {
         let that = this
