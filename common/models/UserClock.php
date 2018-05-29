@@ -10,11 +10,23 @@ namespace common\models;
 
 use Yii;
 
+/**
+ * @property User $user
+ * @property Job $job
+ * */
 class UserClock extends \common\models\base\UserClock
 {
     const TYPE_START = 1;
     const TYPE_POSITION = 2;// 中途定位
     const TYPE_END = 3;
+
+    public function getUser() {
+        return $this->hasOne(User::className(), ["id" => "uid"]);
+    }
+
+    public function getJob(){
+        return $this->hasOne(Job::className(), ["id" => "jid"]);
+    }
 
     public static function record($uid, $jid, $date = "") {
         $start_at = empty($date) ? strtotime(date("Y-m-d")) : strtotime(date("Y-m-d", strtotime($date)));

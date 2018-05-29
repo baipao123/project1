@@ -149,6 +149,11 @@ use yii\helpers\Html;
         });
     }
 
+    function globalOpenIFrame(url, title, icon) {
+        globalBodyTab.tabAddiFrame(title, icon, url)
+    }
+
+
     $(document).ready(function () {
         layui.extend({
             bodyTab: '{/}<?=$assetUrl?>/layuicms2.0/js/bodyTab'

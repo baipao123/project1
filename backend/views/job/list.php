@@ -1,3 +1,6 @@
+<?php
+    use layuiAdm\tools\Url;
+?>
 <style>
     img.img{
         max-width:60px;
@@ -60,7 +63,8 @@
                 已招聘: <?= $job->getPassNum() . "/" . $job->num ?><br>
             </td>
             <td>
-
+                <span class="layui-btn layui-btn-sm layui-btn-normal"
+                      onclick="globalOpenIFrame('<?= Url::createLink("user/job-list", ["jid" => $job->id]) ?>','员工列表')">员工列表</span>
             </td>
         </tr>
     <?php endforeach; ?>

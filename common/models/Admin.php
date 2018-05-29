@@ -9,6 +9,8 @@
 namespace common\models;
 
 
+use common\tools\Img;
+
 class Admin extends \common\models\base\Admin
 {
     const STATUS_DELETED = 0;
@@ -24,6 +26,6 @@ class Admin extends \common\models\base\Admin
     }
 
     public function avatar() {
-        return "http://img.wx-dk.cn/FmdCNuGiqBhPK7nB_qd-b4-nY_hd.jpeg";
+        return Img::format("youzhun.jpeg", 100, 100, true);
     }
 }

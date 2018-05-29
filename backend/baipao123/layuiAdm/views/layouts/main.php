@@ -70,6 +70,11 @@ $assetUrl = \Yii::$app->assetManager->publish(dirname(__FILE__) . '/../../assets
             content: url
         });
     }
+
+    function globalOpenIFrame(url, title, icon) {
+        window.parent.globalBodyTab.tabAddiFrame(title, icon, url)
+    }
+
 </script>
 <?php $this->endBody() ?>
 </body>

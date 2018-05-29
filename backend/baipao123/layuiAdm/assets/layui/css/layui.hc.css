@@ -121,3 +121,9 @@
 .align-l{text-align: left;}
 .align-r{text-align: right;}
 .align-c{text-align: center;}
+
+a.clear{
+    color: -webkit-link !important;
+    cursor: pointer;
+    text-decoration: underline !important;
+}
