@@ -99,7 +99,7 @@ Page({
             })
             return false
         }
-        if (!company || company.status != 1) {
+        if (user.type != 1 && (!company || company.status != 1)) {
             app.toast("您还没有正式成为招聘者", "none")
             return false
         }
