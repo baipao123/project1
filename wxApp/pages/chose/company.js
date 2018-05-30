@@ -63,7 +63,7 @@ Page({
         data.formId = e.detail.formId;
         data.phoneType = this.data.type;
         request.post("part/company/join", data, (res) => {
-            wx.navigateTo({
+            wx.switchTab({
                 url: "/pages/user/user"
             })
         })
@@ -81,7 +81,7 @@ Page({
                     obj = {
                         "company.position": data
                     };
-                if (company.positionStr == "" || (company.position != undefined && company.positionStr == company.position.address))
+                if (!company.hasOwnProperty("positionStr") || company.positionStr == "" || (company.position != undefined && company.positionStr == company.position.address))
                     obj = {
                         "company.position": data,
                         "company.positionStr": data.address,
@@ -162,6 +162,7 @@ Page({
     },
     goSelectDistrict: function (e) {
         let that = this
+        console.log(that.data.user)
         wx.navigateTo({
             url: "/pages/districtSelect/districtSelect?aid=" + that.data.user.area_id + "&cid=" + that.data.user.city_id
         })
