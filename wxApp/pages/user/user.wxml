@@ -4,7 +4,7 @@
             <view class="tips waiting icon_sp_area" wx:if="{{company.status == 0}}">
                 <icon type="waiting" size="20" color="orange"></icon>审核中
             </view>
-            <navigator url="/pages/chose/record" wx:elif="{{company.status == 2}}">
+            <navigator url="/pages/chose/company?isEdit=1" wx:elif="{{company.status == 2}}">
                 <view class="tips warn icon_sp_area">
                     <icon type="warn" size="20" color="red"></icon>被拒绝：{{company.refuseReason}}
                     <span class="myIcon icon-right"></span>

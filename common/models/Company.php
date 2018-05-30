@@ -58,33 +58,37 @@ class Company extends \common\models\base\Company
         $cid = ArrayHelper::getValue($data, "cid", 0);
         $aid = ArrayHelper::getValue($data, "aid", 0);
         $name = ArrayHelper::getValue($data, "name", "");
+        $realName = ArrayHelper::getValue($data, "realName", "");
         $icon = ArrayHelper::getValue($data, "icon", "");
         $cover = ArrayHelper::getValue($data, "cover", "");
         $position = ArrayHelper::getValue($data, "position", "");
         $description = ArrayHelper::getValue($data, "description", "");
         $latitude = ArrayHelper::getValue($data, "latitude", "");
         $longitude = ArrayHelper::getValue($data, "longitude", "");
-        $attaches = ArrayHelper::getValue($data, "attaches", []);
+        $attaches = ArrayHelper::getValue($data, "attaches", "");
         $phone = ArrayHelper::getValue($data, "phone", "");
         if ($isAdd && !StringHelper::isMobile($phone))
             return "请输入真实的手机号";
         if (empty($type))
             return "请选择类型";
         $companyTypeText = $type == self::TYPE_COMPANY ? "企业" : "个人";
-        if (empty($name))
+        if (empty($name) && $type == self::TYPE_COMPANY)
             return "请输入{$companyTypeText}名称";
+        if (!StringHelper::isRealName($realName))
+            return "联系人必须是真实的姓名";
         if (empty($cid))
             return "请选择{$companyTypeText}默认的招聘城市";
         if (empty($position) || empty($latitude) || empty($longitude))
             return "请选择{$companyTypeText}所在的地址";
         if (empty($description))
             return "请输入{$companyTypeText}简介";
-        if ($isAdd && empty($attaches))
+        $attaches = json_decode($attaches,true);
+        if (empty($attaches))
             return "请上传认证资料";
         if ($company->status != self::STATUS_PASS) {
             $company->type = $type;
             $company->uid = $uid;
-            $company->name = $name;
+            $company->name = $type == self::TYPE_COMPANY ? $name : $realName;
             $company->icon = $icon;
             $company->cover = $cover;
             $company->position = $position;
@@ -144,6 +148,7 @@ class Company extends \common\models\base\Company
         $user->city_id = $cid;
         $user->area_id = $aid;
         $user->type = $type;
+        $user->realname = $realName;
         $user->phone = $phone;
         $user->save();
 //        }

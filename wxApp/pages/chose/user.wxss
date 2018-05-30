@@ -2,9 +2,9 @@
     margin: 0 30rpx;
 }
 
-.weui-cell__ft {
-    margin-right: -30rpx;
-}
+/*.weui-cell__ft {*/
+    /*margin-right: -30rpx;*/
+/*}*/
 
 .weui-vcode-btn {
     border: none;

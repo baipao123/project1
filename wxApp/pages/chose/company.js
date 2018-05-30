@@ -17,20 +17,24 @@ Page({
         isAgree: false,
         images: [],
         imageKeys: [],
+        imagekeysJson: "[]",
         deleteImage: false,
     },
-    onLoad: function () {
+    onLoad: function (options) {
         let that = this
-        if (app.globalData.company == {}) {
-            app.getCompanyInfo(function () {
-                that.setData({
-                    company: app.globalData.company
-                });
-            })
-        }
-        this.setData({
+        app.getCompanyInfo(function () {
+            let company = app.globalData.company
+            that.setData({
+                company: company
+            });
+            if (company && company.status == 1) {
+                app.toast("您已经是企业了")
+                wx.navigateBack()
+                return false
+            }
+        })
+        that.setData({
             user: app.globalData.user,
-            company: app.globalData.company
         });
         wx.hideShareMenu()
     },
@@ -59,10 +63,15 @@ Page({
         });
     },
     bindCompany: function (e) {
-        let data = e.detail.value;
+        let data = e.detail.value,
+            that = this,
+            url = that.data.company ? "part/company/edit" : "part/company/join"
         data.formId = e.detail.formId;
         data.phoneType = this.data.type;
-        request.post("part/company/join", data, (res) => {
+        console.log(data)
+        request.post(url, data, (res) => {
+            app.globalData.company.status = 0
+            app.globalData.company.refuseReason = ''
             wx.switchTab({
                 url: "/pages/user/user"
             })
@@ -126,7 +135,8 @@ Page({
             imageKeys.push(info.key);
             that.setData({
                 images: images,
-                imageKeys: imageKeys
+                imageKeys: imageKeys,
+                imagekeysJson: JSON.stringify(imageKeys)
             })
         });
     },
@@ -153,7 +163,8 @@ Page({
         imageKeys.splice(index, 1);
         that.setData({
             images: images,
-            imageKeys: imageKeys
+            imageKeys: imageKeys,
+            imagekeysJson: JSON.stringify(imageKeys)
         })
         if (images.length == 0)
             that.setData({

@@ -22,9 +22,6 @@ Page({
                 lastJid: res.lastJid
             })
         })
-    },
-    onLoad: function () {
-        let that = this
         that.setData({
             user: app.globalData.user,
             isCompany: app.globalData.user && app.globalData.user.type > 1
@@ -33,6 +30,13 @@ Page({
             that.setData({
                 company: app.globalData.company,
             })
+        })
+    },
+    onLoad: function () {
+        let that = this
+        that.setData({
+            user: app.globalData.user,
+            isCompany: app.globalData.user && app.globalData.user.type > 1
         })
         if (app.globalData.user && app.globalData.user.type == 0) {
             wx.navigateTo({
