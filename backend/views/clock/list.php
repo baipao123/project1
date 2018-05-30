@@ -65,9 +65,8 @@
 <table class="layui-table">
     <thead>
     <tr>
-        <th>用户ID</th>
-        <th>用户名</th>
-        <th>岗位名称</th>
+        <th>用户名(ID)</th>
+        <th>岗位名称(ID)</th>
         <th>打卡时间</th>
         <th>打卡类型</th>
         <th>操作</th>
@@ -77,15 +76,14 @@
     <?php /* @var $records \common\models\UserClock[] */ ?>
     <?php foreach ($records as $clock): ?>
         <tr>
-            <td><?= $clock->uid ?></td>
-            <td><a class="layui-table-link clear" href="<?= Url::selfLink(["uid" => $clock->uid]) ?>"><?= $clock->user->realname ?></a></td>
-            <td><a class="layui-table-link clear" href="<?= Url::selfLink(["jid" => $clock->jid]) ?>"><?= $clock->job->name ?></a></td>
+            <td><a class="layui-table-link clear" href="<?= Url::selfLink(["uid" => $clock->uid]) ?>"><?= $clock->user->realname . '(' . $clock->uid . ')' ?></a></td>
+            <td><a class="layui-table-link clear" href="<?= Url::selfLink(["jid" => $clock->jid]) ?>"><?= $clock->job->name  . '(' . $clock->jid . ')'?></a></td>
             <td><?= date("Y-m-d H:i:s", $clock->created_at) ?></td>
             <td>
                 <?php if ($clock->type == \common\models\UserClock::TYPE_START): ?>
-                    <span class="layui-btn layui-btn-sm layui-btn">上班</span>
+                    <span class="layui-badge layui-bg-green">上班</span>
                 <?php elseif ($clock->type == \common\models\UserClock::TYPE_END): ?>
-                    <span class="layui-btn layui-btn-sm layui-btn-warm">下班</span>
+                    <span class="layui-badge layui-bg-orange">下班</span>
                 <?php endif; ?>
             </td>
             <td>

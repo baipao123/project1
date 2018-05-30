@@ -140,13 +140,13 @@ class Company extends \common\models\base\Company
             }
         }
 
-        if ($isAdd) {
-            $user->city_id = $cid;
-            $user->area_id = $aid;
-            $user->type = $type;
-            $user->phone = $phone;
-            $user->save();
-        }
+//        if ($isAdd) {
+        $user->city_id = $cid;
+        $user->area_id = $aid;
+        $user->type = $type;
+        $user->phone = $phone;
+        $user->save();
+//        }
         return true;
     }
 

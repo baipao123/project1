@@ -142,6 +142,8 @@ class JobController extends \frontend\controllers\BaseController
             $uJob->worktime_2 += 1;
         elseif ($daily->type == 3)
             $uJob->worktime_3 += $daily->num;
+        if (!$uJob->save())
+            Yii::warning($uJob->errors, "保存UserHasJob失败");
 
         return Tool::reJson(1, "已通过工时");
     }

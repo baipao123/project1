@@ -1,5 +1,7 @@
 <?php
 use layuiAdm\tools\Url;
+use common\models\UserJobDaily;
+
 ?>
 
 <style>
@@ -65,44 +67,37 @@ use layuiAdm\tools\Url;
 <table class="layui-table">
     <thead>
     <tr>
-        <th>ID</th>
         <th>用户名(ID)</th>
         <th>岗位名称(ID)</th>
-        <th>报名时间</th>
-        <th>入职时间</th>
+        <th>用工日期</th>
+        <th>当天工时</th>
         <th>当前状态</th>
-        <th>已有工时</th>
         <th>操作</th>
     </tr>
     </thead>
     <tbody>
-    <?php /* @var $records \common\models\UserHasJob[] */ ?>
+    <?php /* @var $records \common\models\UserJobDaily[] */ ?>
     <?php foreach ($records as $uJob): ?>
+        <?php $date = $uJob->dateStr(true) ?>
         <tr>
-            <td><?= $uJob->id ?></td>
-            <td><a class="layui-table-link clear" href="<?= Url::selfLink(["uid" => $uJob->uid]) ?>"><?= $uJob->user->realname . '(' . $uJob->uid . ')' ?></a></td>
-            <td><a class="layui-table-link clear" href="<?= Url::selfLink(["jid" => $uJob->jid]) ?>"><?= $uJob->job->name . '(' . $uJob->jid . ')'?></a></td>
-            <td><?= date("Y-m-d H:i:s", $uJob->created_at) ?></td>
-            <td><?= $uJob->auth_at > 0 ? date("Y-m-d H:i:s", $uJob->auth_at) : "" ?></td>
+            <td><a class="layui-table-link clear"
+                   href="<?= Url::selfLink(["uid" => $uJob->uid]) ?>"><?= $uJob->user->realname . '(' . $uJob->uid . ')' ?></a></td>
+            <td><a class="layui-table-link clear"
+                   href="<?= Url::selfLink(["jid" => $uJob->jid]) ?>"><?= $uJob->job->name . '(' . $uJob->job->id . ')' ?></a></td>
+            <td><?= $date ?></td>
+            <td><?= $uJob->numStr() ?></td>
             <td>
-                <?php if ($uJob->status == \common\models\UserHasJob::ON): ?>
-                    <span class="layui-badge layui-bg-green">已入职</span>
-                <?php elseif ($uJob->status == \common\models\UserHasJob::APPLY): ?>
-                    <span class="layui-badge layui-bg-blue">已报名</span>
-                <?php elseif ($uJob->status == \common\models\UserHasJob::WORKING): ?>
-                    <span class="layui-badge">工作中</span>
-                <?php elseif ($uJob->status == \common\models\UserHasJob::END): ?>
-                    <span class="layui-badge layui-bg-orange">已结束</span>
-                <?php elseif ($uJob->status == \common\models\UserHasJob::REFUSE): ?>
+                <?php if ($uJob->status == UserJobDaily::PROVIDE): ?>
+                    <span class="layui-badge layui-bg-orange">待审核</span>
+                <?php elseif ($uJob->status == UserJobDaily::PASS): ?>
+                    <span class="layui-badge layui-bg-green">已通过</span>
+                <?php elseif ($uJob->status == UserJobDaily::REFUSE): ?>
                     <span class="layui-badge layui-bg-grey">被拒绝</span>
                 <?php endif; ?>
             </td>
-            <td><?= $uJob->workTimeStr() ?></td>
             <td>
                 <span class="layui-btn layui-btn-sm layui-btn-normal"
-                                      onclick="globalOpenIFrame('<?= Url::createLink("user/daily-list", ["uid" => $uJob->uid, "jid" => $uJob->jid]) ?>','工时记录')">工时记录</span>
-                <span class="layui-btn layui-btn-sm layui-btn-normal"
-                      onclick="globalOpenIFrame('<?= Url::createLink("clock/list", ["uid" => $uJob->uid, "jid" => $uJob->jid]) ?>','打卡记录')">打卡记录</span>
+                      onclick="globalOpenIFrame('<?= Url::createLink("clock/list", ["uid" => $uJob->uid, "jid" => $uJob->jid, "start_date" => $date, "end_date" => $date]) ?>','打卡记录')">当天打卡记录</span>
             </td>
         </tr>
     <?php endforeach; ?>

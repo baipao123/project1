@@ -45,8 +45,8 @@ class UserJobDaily extends \common\models\base\UserJobDaily
         return $this->hasMany(UserClock::className(), ["uJid" => "uJid"])->andWhere(["BETWEEN", 'created_at', strtotime($this->date), strtotime($this->date) + 24 * 3600 - 1]);
     }
 
-    public function dateStr() {
-        $format = substr($this->date, 0, 4) == date("Y") ? "m-d" : "Y-m-d";
+    public function dateStr($full = false) {
+        $format = !$full && substr($this->date, 0, 4) == date("Y") ? "m-d" : "Y-m-d";
         return date($format, strtotime($this->date));
     }
 

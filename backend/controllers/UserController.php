@@ -11,6 +11,7 @@ namespace backend\controllers;
 use common\models\District;
 use common\models\User;
 use common\models\UserHasJob;
+use common\models\UserJobDaily;
 use Yii;
 use yii\data\Pagination;
 
@@ -86,8 +87,37 @@ class UserController extends BaseController
         ]);
     }
 
-    public function actionDailyList($uid = 0, $jid = 0, $start_date = "", $end_date = "") {
-
+    public function actionDailyList($status = 0, $uid = 0, $jid = 0, $start_date = "", $end_date = "") {
+        $query = UserJobDaily::find();
+        if ($uid > 0)
+            $query->andWhere(["uid" => $uid]);
+        if ($jid > 0)
+            $query->andWhere(["jid" => $jid]);
+        if (!empty($start_date) || !empty($end_date)) {
+            $start_at = empty($start_date) ? 0 : str_replace("-", "", $start_date);
+            $end_at = empty($end_date) ? date("Ymd") : str_replace("-", "", $end_date);
+            $query->andWhere(["BETWEEN", "created_at", $start_at, $end_at]);
+        }
+        if ($status > 0)
+            $query->andWhere(["status" => $status]);
+        $count = $query->count();
+        $pagination = new Pagination(["totalCount" => $count]);
+        $pagination->setPageSize(20);
+        $records = $query->offset($pagination->getOffset())
+            ->limit($pagination->getLimit())
+            ->orderBy([
+                "created_at" => SORT_DESC
+            ])
+            ->all();
+        return $this->render("daily-list", [
+            "records"    => $records,
+            "pagination" => $pagination,
+            "uid"        => $uid,
+            "jid"        => $jid,
+            "start_date" => $start_date,
+            "end_date"   => $end_date,
+            "status"     => $status
+        ]);
     }
 
 }
