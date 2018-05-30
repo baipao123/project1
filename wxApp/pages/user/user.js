@@ -47,6 +47,8 @@ Page({
     },
     goIndex: function (e) {
         let that = this
+        if (!that.check())
+            return false
         if (that.data.isCompany) {
             wx.navigateTo({
                 url: "/pages/job/add"
@@ -60,6 +62,8 @@ Page({
     goClock: function (e) {
         let that = this,
             uJid = that.data.uJid
+        if(!that.check())
+            return false
         if (uJid == -1) {
             app.toast("您还没有工作，无需打卡", "none")
             return false
@@ -72,6 +76,8 @@ Page({
     goUsers: function (e) {
         let that = this,
             jid = that.data.lastJid
+        if (!that.check())
+            return false
         if (jid == -1) {
             app.toast("您还没有发布招聘岗位", "none")
             return false
@@ -80,5 +86,27 @@ Page({
                 url: jid == 0 ? "/pages/company/jobs" : "/pages/company/users?jid=" + jid
             })
         }
+    },
+    check: function (e) {
+        let that = this,
+            user = that.data.user,
+            company = that.data.company,
+            url = e ? e.currentTarget.dataset.url : ""
+        if(user && user.type==0){
+            app.toast("请先注册", "none")
+            wx.navigateTo({
+                url: "/pages/index/index"
+            })
+            return false
+        }
+        if (!company || company.status != 1) {
+            app.toast("您还没有正式成为招聘者", "none")
+            return false
+        }
+        if (e && url)
+            wx.navigateTo({
+                url: url
+            })
+        return true
     }
 })
