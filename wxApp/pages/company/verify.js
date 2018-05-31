@@ -88,7 +88,7 @@ Page({
             }
         wx.showModal({
             title: '确认通过?',
-            content: '一经通过无法修改，请当天工时是否正确',
+            content: '一经通过无法修改，请确认当天工时是否正确',
             cancelText: '我再想想',
             success: function (res) {
                 if (res.confirm) {

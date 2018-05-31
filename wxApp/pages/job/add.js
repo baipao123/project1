@@ -144,7 +144,8 @@ Page({
             data = e.detail.value,
             url = that.data.isEdit ? "part/company/edit-job?jid=" + that.data.job.id : "part/company/add-job"
         data.formId = e.detail.formId;
-
+        console.log(data)
+        console.log(e.detail)
         request.post(url, data, function (res, response) {
             app.toast(response.msg, "success", function () {
                 wx.redirectTo({

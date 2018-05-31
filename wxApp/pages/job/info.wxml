@@ -1,13 +1,20 @@
 <view class="page full">
-    <view class="error" wx:if="{{!job}}">
-
+    <view class="error" wx:if="{{errMsg!=''}}">
+        <view class="weui-msg a-c">
+            <view class="weui-msg__icon-area">
+                <icon type="warn" size="93"></icon>
+            </view>
+            <view class="weui-msg__text-area">
+                <view class="weui-msg__desc">{{errMsg}}</view>
+            </view>
+        </view>
     </view>
     <view class="info" wx:else>
         <view class="topTips fixed a-c" wx:if="{{isOwner && job.status!=1}}">
             <view wx:if="{{job.status==2}}">岗位未发布</view>
             <view wx:if="{{job.status==3}}">岗位已删除</view>
             <view wx:if="{{job.status==4}}">岗位已结束</view>
-            <view wx:if="{{job.status==4}}">岗位已招满</view>
+            <view wx:if="{{job.status==5}}">岗位已招满</view>
         </view>
         <view style="margin-bottom:150rpx;{{isOwner && job.status!=1 ? 'margin-top:60rpx':''}}">
             <view class="header bg-white">

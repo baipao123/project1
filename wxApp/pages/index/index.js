@@ -5,7 +5,7 @@ Page({
     data: {
         user: {},
         domain: app.globalData.qiNiuDomain,
-        sec: 10,
+        sec: 6,
     },
     onLoad: function () {
         this.setData({

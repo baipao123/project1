@@ -3,9 +3,9 @@
         <icon type="warn" size="20" color="red"></icon>被拒绝：{{company.refuseReason}}
     </view>
     <view class="page__hd avatar">
-        <image class="cover bg" bindtap="uploadCover" src="{{domain+company.cover}}"></image>
+        <image class="cover bg" bindtap="uploadCover" src="{{domain+ (company.cover || 'company/cover.jpg')}}"></image>
         <view class="icon-view">
-            <image class="icon userAvatar" src="{{domain+company.icon}}" hover-stop-propagation="{{true}}"></image>
+            <image class="icon userAvatar" src="{{domain+(company.icon|| 'company/icon.jpg')}}" hover-stop-propagation="{{true}}"></image>
             <span class="myIcon icon-edit" bindtap="uploadIcon"></span>
         </view>
         <span class="cover-icon myIcon icon-edit" bindtap="uploadCover"></span>
@@ -64,7 +64,7 @@
                     <view class="weui-label">联系方式</view>
                 </view>
                 <view class="weui-cell__bd">
-                    <input class="weui-input" type="number" name="phone" value="{{user.phone}}"
+                    <input class="weui-input" type="number" name="phone" value="{{user.purePhone}}"
                            placeholder="请输入联系方式"/>
                 </view>
                 <view class="weui-cell__ft">

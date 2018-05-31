@@ -106,6 +106,7 @@ class Company extends \common\models\base\Company
             }
         }
         $record = new CompanyRecord;
+        $record->formId = ArrayHelper::getValue($data, "formId", "");
         $record->uid = $uid;
         $record->type = $type;
         $record->name = $name;
@@ -181,11 +182,11 @@ class Company extends \common\models\base\Company
     }
 
     public function icon() {
-        return empty($this->icon) ? "youzhun.jpeg" : $this->icon;
+        return empty($this->icon) ? "company/icon.jpg" : $this->icon;
     }
 
     public function cover() {
-        return $this->cover;
+        return empty($this->cover) ? "company/cover.jpg" : $this->cover;
     }
 
     public function refuseReason() {
