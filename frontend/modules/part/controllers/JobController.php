@@ -23,7 +23,7 @@ class JobController extends \frontend\controllers\BaseController
         $job = Job::findOne($id);
         if (!$job)
             return Tool::reJson(null, "岗位不存在", Tool::FAIL);
-        if ($this->getUser()->type > 1 && $this->user_id() != $job->uid)
+        if ($this->getUser()->isCompany() && $this->user_id() != $job->uid)
             return Tool::reJson(null, "您未发布此岗位", Tool::FAIL);
         $job->addViewNum();
         return Tool::reJson(["job" => $job->info($this->user_id()), "company" => $job->company->info()]);
@@ -76,12 +76,17 @@ class JobController extends \frontend\controllers\BaseController
 
     public function actionList($cid = -1, $aid = -1, $text = "", $page = 1, $limit = 10) {
         $user = $this->getUser();
-        // 默认与全部
-        if (empty($cid) && empty($aid)) {
-            $cid = $user->city_id;
-            $aid = $user->area_id;
+        if ($user->isCompany()) {
+            $list = $user->company ? $user->company->jobs(0, $page, $limit) : [];
+        } else {
+            // 默认与全部
+            if (empty($cid) && empty($aid)) {
+                $cid = $user->city_id;
+                $aid = $user->area_id;
+            }
+            $list = (array)Job::getList($this->user_id(), $text, $cid, $aid, $page, $limit);
         }
-        return Tool::reJson(["list" => (array)Job::getList($this->user_id(), $text, $cid, $aid, $page, $limit)]);
+        return Tool::reJson(["list" => $list]);
     }
 
     public function actionTimeUp() {

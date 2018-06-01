@@ -65,6 +65,9 @@ class User extends \common\models\base\User
         return false;
     }
 
+    public function isCompany() {
+        return $this->type > 1;
+    }
 
     public function cityStr() {
         $str = "";

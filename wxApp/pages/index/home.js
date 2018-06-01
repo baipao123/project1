@@ -133,6 +133,8 @@ Page({
     },
     getSlider: function () {
         let that = this
+        if (that.data.user.type && that.data.user.type > 1)
+            return false
         request.get("part/slider/index", {}, function (res) {
             that.setData({
                 slider: res.list
