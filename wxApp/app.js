@@ -24,6 +24,8 @@ App({
                 if (res.code) {
                     request.post("base/app-login", {code: res.code}, data => {
                         _this.globalData.user = data.user;
+                        if(data.user.type>1)
+                            _this.setCompanyStyle()
                         if (typeof(getCurrentPages) == "function" && getCurrentPages().length > 0)
                             getCurrentPages()[getCurrentPages().length - 1].onLoad();
                     })
@@ -40,9 +42,21 @@ App({
         let _this = this;
         request.post("base/app-user", res, function (data) {
             _this.globalData.user = data.user;
+            if(data.user.type>1)
+                _this.setCompanyStyle()
             if (typeof callBack == "function") {
                 callBack();
             }
+        })
+    },
+    setNavBarBackColor: function () {
+        if (this.globalData.user && this.globalData.user.type > 1)
+            this.setCompanyStyle()
+    },
+    setCompanyStyle: function () {
+        wx.setNavigationBarColor({
+            frontColor:"#ffffff",
+            backgroundColor:"#4395FF"
         })
     },
     resetRegion: function () {
@@ -166,5 +180,17 @@ App({
         wx.setNavigationBarTitle({
             title: title
         })
+    },
+    turnPage: function (url) {
+        if (!url)
+            return false
+        if (url == "index/home" || url == "user/user") {
+            wx.switchTab({
+                url: "/pages/" + url
+            })
+        } else
+            wx.navigateTo({
+                url: "/pages/" + url
+            })
     }
 })

@@ -12,6 +12,7 @@ Page({
         let that = this
         that.getList(true)
         wx.hideShareMenu()
+        app.setCompanyStyle()
     },
     getList: function () {
         let that = this,

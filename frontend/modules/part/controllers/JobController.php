@@ -141,17 +141,23 @@ class JobController extends \frontend\controllers\BaseController
         $daily->msg = '';
         $daily->save();
         $uJob = $daily->uJob;
-        if ($daily->type == 0)
+        if ($daily->type == 0) {
             $uJob->worktime_0 += $daily->num;
-        elseif ($daily->type == 1)
+            $job->worktime_0 += $daily->num;
+        } elseif ($daily->type == 1) {
             $uJob->worktime_1 += 1;
-        elseif ($daily->type == 2)
+            $job->worktime_1 += $daily->num;
+        } elseif ($daily->type == 2) {
             $uJob->worktime_2 += 1;
-        elseif ($daily->type == 3)
+            $job->worktime_2 += $daily->num;
+        } elseif ($daily->type == 3) {
             $uJob->worktime_3 += $daily->num;
+            $job->worktime_3 += $daily->num;
+        }
         if (!$uJob->save())
             Yii::warning($uJob->errors, "保存UserHasJob失败");
-
+        if (!$job->save())
+            Yii::warning($job->errors, "保存Job失败");
         return Tool::reJson(1, "已通过工时");
     }
 

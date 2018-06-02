@@ -30,6 +30,7 @@ Page({
                 company: app.globalData.company,
             })
         })
+        app.setNavBarBackColor()
     },
     onShow: function () {
         let region = app.globalData.region,
@@ -173,8 +174,6 @@ Page({
         let that = this,
             aid = that.data.user.area_id,
             cid = that.data.user.city_id
-        wx.navigateTo({
-            url: "/pages/districtSelect/districtSelect?aid=" + aid + "&cid=" + cid
-        })
+        app.turnPage("/districtSelect/districtSelect?aid=" + aid + "&cid=" + cid)
     }
 })

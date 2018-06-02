@@ -1,6 +1,6 @@
 <view class="page full {{isPrompt ? 'isPrompt' : ''}}" style="padding-bottom:100rpx;">
     <view hidden="{{isPrompt}}">
-        <image src="{{domain+company.cover}}" wx:if="{{isCompany}}" style="width:750rpx;height:375rpx;" bindtap="uploadCover"></image>
+        <image src="{{company.cover ? domain+company.cover : ''}}" wx:if="{{isCompany}}" style="width:750rpx;height:375rpx;" bindtap="uploadCover"></image>
         <view class="weui-cells__title">基本信息</view>
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap="prompt" data-name="name" data-title="企业名称" wx:if="{{isCompany}}">
@@ -9,7 +9,7 @@
             </view>
             <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" wx:if="{{isCompany}}" bindtap="uploadIcon">
                 <view class="weui-cell__bd">企业Logo</view>
-                <view class="weui-cell__ft weui-cell__ft_in-access"><image class="icon" src="{{domain+company.icon}}"></image></view>
+                <view class="weui-cell__ft weui-cell__ft_in-access"><image class="icon" src="{{company.icon ? domain+company.icon : ''}}"></image></view>
             </view>
             <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap="choseRegion">
                 <view class="weui-cell__bd">{{isCompany ? "招聘地区":"求职地区"}}</view>

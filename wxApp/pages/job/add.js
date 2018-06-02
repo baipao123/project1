@@ -44,6 +44,7 @@ Page({
                 })
             })
         }
+        app.setCompanyStyle()
     },
     onShow: function () {
         let region = app.globalData.region
@@ -62,9 +63,7 @@ Page({
         let that = this,
             cid = e.target.dataset.cid,
             aid = e.target.dataset.aid
-        wx.navigateTo({
-            url: "/pages/districtSelect/districtSelect?aid=" + aid + "&cid=" + cid
-        })
+        app.turnPage("districtSelect/districtSelect?aid=" + aid + "&cid=" + cid)
     },
     choseQuizPosition: function () {
         let that = this;

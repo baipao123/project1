@@ -36,7 +36,7 @@
               style="left: {{navBar.sliderLeft}}px; width:{{navBar.sliderWidth}}px; transform: translateX({{navBar.sliderOffset}}px); -webkit-transform: translateX({{navBar.sliderOffset}}px);"></view>
     </view>
     <view class="container bg-white" wx:if="{{page==1 && loading}}">
-        <view class="weui-loading big block-auto"></view>
+        <view class="weui-loading big"></view>
     </view>
     <view class="list">
         <view class="item" wx:for="{{list}}" wx:key="key-user">

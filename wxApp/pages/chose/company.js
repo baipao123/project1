@@ -37,6 +37,7 @@ Page({
             user: app.globalData.user,
         });
         wx.hideShareMenu()
+        app.setCompanyStyle()
     },
     onShow: function () {
         let region = app.globalData.region
@@ -72,9 +73,7 @@ Page({
         request.post(url, data, (res) => {
             app.globalData.company.status = 0
             app.globalData.company.refuseReason = ''
-            wx.switchTab({
-                url: "/pages/user/user"
-            })
+            app.turnPage("user/user")
         })
     },
     typeChange: function (e) {

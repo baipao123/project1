@@ -52,6 +52,18 @@ class Job extends \common\models\base\Job
         return $this->hasOne(User::className(), ["id" => "uid"]);
     }
 
+    public function workTimeStr() {
+        $str = "";
+        $day = $this->worktime_2 + $this->worktime_1 / 2;
+        if ($day > 0)
+            $str = $day . "天";
+        if ($this->worktime_0 > 0)
+            $str .= " " . $this->worktime_0 . "小时";
+        if ($this->worktime_3 > 0)
+            $str .= " " . $this->worktime_3 . "单";
+        return trim($str);
+    }
+
     /**
      * @param self[] $jobs
      * @param int $uid
@@ -84,6 +96,7 @@ class Job extends \common\models\base\Job
                 "num"          => $job->num,
                 "status"       => $job->status,
                 "pushAt"       => date("Y-m-d", $job->created_at),
+                "workStr"      => $job->workTimeStr(),
                 "user"         => [
                     "isOwner" => $uid == $job->uid,
                     "isLike"  => in_array($job->id, $likedJids),

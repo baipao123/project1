@@ -1,9 +1,5 @@
 {
-  "navigationBarBackgroundColor": "#ffffff",
-  "navigationBarTextStyle": "black",
   "navigationBarTitleText": "有准兼职",
-  "backgroundColor": "#eeeeee",
-  "backgroundTextStyle": "light",
   "enablePullDownRefresh": true,
   "onReachBottomDistance": 100
 }

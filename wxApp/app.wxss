@@ -194,6 +194,7 @@ button.low{
 }
 
 .weui-loading.big{
-    width: 300rpx;
-    height: 300rpx;
+    width: 200rpx;
+    height: 200rpx;
+    margin: 100rpx auto;
 }

@@ -38,40 +38,27 @@ Page({
             user: app.globalData.user,
             isCompany: app.globalData.user && app.globalData.user.type > 1
         })
-        if (app.globalData.user && app.globalData.user.type == 0) {
-            wx.navigateTo({
-                url: "/pages/index/index"
-            })
-        }
+        if (app.globalData.user && app.globalData.user.type == 0)
+            app.turnPage("index/index")
         wx.hideShareMenu()
+        app.setNavBarBackColor()
     },
     goIndex: function (e) {
         let that = this
         if (!that.check())
             return false
-        if (that.data.isCompany) {
-            wx.navigateTo({
-                url: "/pages/job/add"
-            })
-        } else {
-            wx.switchTab({
-                url: "/pages/index/home"
-            })
-        }
+        app.turnPage(that.data.isCompany ? "job/add" : "index/home")
     },
     goClock: function (e) {
         let that = this,
             uJid = that.data.uJid
-        if(!that.check())
+        if (!that.check())
             return false
         if (uJid == -1) {
             app.toast("您还没有工作，无需打卡", "none")
             return false
-        } else {
-            wx.navigateTo({
-                url: uJid == 0 ? "/pages/job/userList?status=1" : "/pages/job/getInfo?id=" + uJid
-            })
-        }
+        } else
+            app.turnPage(uJid == 0 ? "job/userList?status=1" : "job/getInfo?id=" + uJid)
     },
     goUsers: function (e) {
         let that = this,
@@ -81,22 +68,18 @@ Page({
         if (jid == -1) {
             app.toast("您还没有发布招聘岗位", "none")
             return false
-        } else {
-            wx.navigateTo({
-                url: jid == 0 ? "/pages/company/jobs" : "/pages/company/users?jid=" + jid
-            })
-        }
+        } else
+            app.turnPage(jid == 0 ? "company/jobs" : "company/users?jid=" + jid)
+
     },
     check: function (e) {
         let that = this,
             user = that.data.user,
             company = that.data.company,
             url = e ? e.currentTarget.dataset.url : ""
-        if(user && user.type==0){
+        if (user && user.type == 0) {
             app.toast("请先注册", "none")
-            wx.navigateTo({
-                url: "/pages/index/index"
-            })
+            app.turnPage("index/index")
             return false
         }
         if (user.type != 1 && (!company || company.status != 1)) {
@@ -104,9 +87,7 @@ Page({
             return false
         }
         if (e && url)
-            wx.navigateTo({
-                url: url
-            })
+            app.turnPage(url)
         return true
     }
 })

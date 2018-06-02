@@ -4,6 +4,7 @@ const request = require("./../../utils/request.js")
 Page({
     data: {
         user: {},
+        isCompany: false,
         domain: app.globalData.qiNiuDomain,
         jobs: [],
         slider: [],
@@ -17,8 +18,10 @@ Page({
     },
     onLoad: function () {
         let that = this
+        app.setNavBarBackColor()
         that.setData({
             user: app.globalData.user,
+            isCompany: app.globalData.user && app.globalData.user.type > 1,
             searchData: {
                 aid: app.globalData.user.area_id,
                 cid: app.globalData.user.city_id
@@ -29,19 +32,22 @@ Page({
                 windowWidth: res.hasOwnProperty("windowWidth") ? res.windowWidth : 375
             })
         })
-        that.getList(1, true)
         that.getSlider()
     },
     onShow: function () {
-        if (app.globalData.user != {} && app.globalData.user.type == 0)
-            wx.navigateTo({
-                url: "/pages/index/index"
-            })
+        if (app.globalData.user) {
+            if (app.globalData.user.type == 0)
+                app.turnPage("index/index")
+            else if (app.globalData.user.type > 1)
+                this.setData({
+                    isCompany: true
+                })
+        }
         let region = app.globalData.region,
             that = this
         console.log(region)
         if (region.isSelect) {
-            this.setData({
+            that.setData({
                 "user.city_id": region.cid,
                 "user.area_id": region.aid,
                 "user.cityStr": region.cityStr
@@ -51,6 +57,8 @@ Page({
             that.data.searchData.aid = region.aid
             that.getList(1, true)
         }
+        if (that.data.jobs.length == 0)
+            that.getList(1, true)
     },
     getList: function (page, refresh) {
         let that = this,
@@ -166,5 +174,8 @@ Page({
             default:
                 break;
         }
+    },
+    turnAddJob:function () {
+        app.turnPage("job/add")
     }
 })

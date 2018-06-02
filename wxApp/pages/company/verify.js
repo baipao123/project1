@@ -4,6 +4,7 @@ const request = require("./../../utils/request.js")
 Page({
     data: {
         list: [],
+        jid:0,
         page: 1,
         loading: false,
         refresh: false,
@@ -17,21 +18,25 @@ Page({
         isPrompt: false,
         prompt: {}
     },
-    onLoad: function () {
+    onLoad: function (options) {
         let that = this
+        if(options && options.hasOwnProperty("jid"))
+            that.data.jid = options.jid
         that.getList(true)
         wx.hideShareMenu()
+        app.setCompanyStyle()
     },
     getList: function (refresh) {
         let that = this,
-            page = refresh ? 1 : that.data.page
+            page = refresh ? 1 : that.data.page,
+            jid = that.data.jid
         that.data.loading = true
         that.setData({
             loading:true
         })
         if (refresh)
             that.data.refresh = true
-        request.get("part/company/time-verify-list", {page: page}, function (data) {
+        request.get("part/company/time-verify-list", {page: page, jid: jid}, function (data) {
             let list = that.data.list
             if (refresh) {
                 list = data.list

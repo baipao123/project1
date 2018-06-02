@@ -11,6 +11,7 @@ Page({
         let that = this
         that.scan()
         wx.hideShareMenu()
+        app.setCompanyStyle()
     },
     getInfo: function (text) {
         let that = this

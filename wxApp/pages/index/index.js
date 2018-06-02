@@ -28,9 +28,7 @@ Page({
         let that = this,
             sec = that.data.sec
         if (sec <= 0 && that.data.user.type > 0) {
-            wx.switchTab({
-                url: "/pages/index/home"
-            })
+            app.turnPage("index/home")
             return false;
         }
         that.setData({
@@ -41,17 +39,11 @@ Page({
     go: function (e) {
         let that = this,
             type = e ? e.currentTarget.dataset.type : 0
-        if (that.data.user.type && that.data.user.type > 0) {
-            wx.switchTab({
-                url: "/pages/index/home"
-            })
-        } else if (type == 2) {
-            wx.navigateTo({
-                url: "/pages/chose/company"
-            })
-        } else
-            wx.navigateTo({
-                url: "/pages/chose/user"
-            })
+        if (that.data.user.type && that.data.user.type > 0)
+            app.turnPage("index/home")
+        else if (type == 2)
+            app.turnPage("chose/company")
+        else
+            app.turnPage("chose/user")
     }
 })

@@ -40,9 +40,7 @@ Page({
         request.post("part/user/join-user",data,function(res){
             app.globalData.user = res.user;
             app.toast("注册成功")
-            wx.switchTab({
-                url: "/pages/user/user"
-            })
+            app.turnPage("user/user")
         })
     },
     onShow: function () {

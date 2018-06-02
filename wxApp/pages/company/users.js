@@ -18,13 +18,17 @@ Page({
         }
     },
     onLoad: function (options) {
-        let that = this
+        let that = this,
+            index = options && options.hasOwnProperty("apply") && options.apply > 0 ? 1 : 0
+        that.data.navBar.activeIndex = index
         that.setData({
-            jid: options && options.hasOwnProperty("jid") ? options.jid : 0
+            jid: options && options.hasOwnProperty("jid") ? options.jid : 0,
+            "navBar.activeIndex": index
         })
         that.setNavBarWidth()
         that.getList(true)
         wx.hideShareMenu()
+        app.setCompanyStyle()
     },
     setNavBarWidth: function () {
         let that = this,
@@ -36,7 +40,7 @@ Page({
             console.log(width)
             that.setData({
                 "navBar.sliderLeft": (width / length - sliderWidth) / 2,
-                "navBar.sliderOffset": width / length * that.data.navBar.activeIndex,
+                "navBar.sliderOffset": width / length * index,
                 "navBar.sliderWidth": sliderWidth
             });
         })
