@@ -64,6 +64,7 @@ Page({
             that.setData({
                 "job.userStatus": 1
             })
+            that.data.job.uJid = res.id
             that.goUJobInfo(res.id)
         })
     },
@@ -91,9 +92,7 @@ Page({
     },
     goUJobInfo: function (id) {
         id = typeof id == "object" ? this.data.job.uJid : id
-        wx.navigateTo({
-            url: "getInfo?id=" + id
-        })
+        app.turnPage("job/getInfo?id="+id)
     },
     companyAction: function (e) {
         let that = this,
