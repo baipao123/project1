@@ -7,7 +7,6 @@ page{
 }
 .myIcon{
     margin-right:20rpx;
-    color: #09bb07;
 }
 
 .page__bd > .tips.waiting{

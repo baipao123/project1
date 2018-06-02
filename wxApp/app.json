@@ -15,7 +15,8 @@
     "pages/company/verify",
     "pages/company/jobs",
     "pages/company/users",
-    "pages/common/webView"
+    "pages/common/webView",
+    "pages/common/note"
   ],
   "tabBar": {
     "list": [

@@ -31,14 +31,17 @@ Page({
             app.turnPage("index/home")
             return false;
         }
-        that.setData({
-            sec: --sec
-        })
+        if (sec > 0)
+            that.setData({
+                sec: --sec
+            })
         setTimeout(that.desc, 1000)
     },
     go: function (e) {
         let that = this,
             type = e ? e.currentTarget.dataset.type : 0
+        if(!that.data.user || !that.data.user.hasOwnProperty("type"))
+            return false
         if (that.data.user.type && that.data.user.type > 0)
             app.turnPage("index/home")
         else if (type == 2)

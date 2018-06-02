@@ -89,22 +89,23 @@
                             </view>
                         </view>
                     </view>
-                    <view class="weui-media-box__hd weui-media-box__bd_in-appmsg" style="padding:0 15px">
+                    <view class="weui-media-box__hd weui-media-box__bd_in-appmsg" style="padding:0 15px 15px 15px">
                         <view class="weui-media-box__desc" style="line-height:1.5;">
                             <view><span class="myIcon icon-No icon-13 margin-r2"></span><text space="ensp">岗位编号: {{item.jobNo}}</text></view>
                             <view><span class="myIcon icon-map_icon icon-13 margin-r2"></span><text>{{item.position}}</text></view>
                             <view><span class="myIcon icon-clock icon-13 margin-r2"></span><text space="ensp">{{item.date}} {{item.time}}</text></view>
                             <view style="margin-top:20rpx;" class="weui-flex" wx:if="{{item.user.isOwner}}">
-                                <text class="{{!item.user.workStr ? 'weui-flex__item':''}} a-l">{{item.view_num}}浏览</text>
-                                <text class="weui-flex__item a-c text-green" space="ensp" wx:if="{{item.user.workStr != ''}}">
-                                    工时:{{item.workStr}}
-                                </text>
-                                <text class="{{!item.user.workStr ? 'weui-flex__item':''}} a-r">{{item.follow_num}}人关注</text>
+                                <text class="{{!item.workStr ? 'weui-flex__item':''}} a-l">{{item.view_num}}浏览</text>
+                                <text class="weui-flex__item a-c text-green" space="ensp" wx:if="{{item.workStr != ''}}">工时:{{item.workStr}}</text>
+                                <text class="{{!item.workStr ? 'weui-flex__item':''}} a-r">{{item.follow_num}}人关注</text>
+                            </view>
+                            <view wx:elif="{{item.user.workStr}}">
+                                <span class="myIcon icon-clock icon-13 margin-r2"></span><text space="ensp">岗位工时: {{item.user.workStr}}</text>
                             </view>
                         </view>
                     </view>
                 </navigator>
-                <view class="weui-panel__hd weui-flex text" wx:if="{{item.user.isOwner}}" style="padding:10px 0">
+                <view class="weui-panel__hd weui-flex text" wx:if="{{item.user.isOwner}}" style="padding-bottom:10px">
                     <navigator url="/pages/company/users?jid={{item.id}}" class="weui-flex__item a-c">
                         <span class="myIcon icon-account"></span>
                         <view class="text-s">用户列表</view>
@@ -114,7 +115,7 @@
                         <view class="text-s">报名列表</view>
                     </navigator>
                     <navigator url="/pages/company/verify?jid={{item.id}}" class="weui-flex__item a-c">
-                        <span class="myIcon icon-pass-cycle"></span>
+                        <span class="myIcon icon-verify"></span>
                         <view class="text-s">工时审核</view>
                     </navigator>
                 </view>

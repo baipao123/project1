@@ -7,12 +7,12 @@
             <navigator url="/pages/chose/company?isEdit=1" wx:elif="{{company.status == 2}}">
                 <view class="tips warn icon_sp_area">
                     <icon type="warn" size="20" color="red"></icon>被拒绝：{{company.refuseReason}}
-                    <span class="myIcon icon-right"></span>
+                    <span class="myIcon text-orange {{isCompany ? 'text-blue' : ''}} icon-right"></span>
                 </view>
             </navigator>
         </block>
 
-        <view data-url="user/info" class="weui-flex top bg-green" bindtap="check">
+        <view data-url="user/info" class="weui-flex top bg-orange {{isCompany ? 'bg-blue':''}}" bindtap="check">
             <view class="weui-flex__item header">
                 <block wx:if="{{!isCompany}}">
                     <image src="{{user.avatar}}"></image>
@@ -35,42 +35,42 @@
         <view class="weui-cells__title">常用</view>
         <view class="weui-cells weui-cells_after-title">
             <view bindtap="goIndex" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                <view class="weui-cell__bd"><span class="myIcon icon-city"></span>{{isCompany ? "发布招聘":"去兼职"}}
+                <view class="weui-cell__bd"><span class="myIcon text-orange {{isCompany ? 'text-blue' : ''}} icon-city"></span>{{isCompany ? "发布招聘":"去兼职"}}
                 </view>
                 <view class="weui-cell__ft weui-cell__ft_in-access"></view>
             </view>
             <view data-url="job/userList" class="weui-cell weui-cell_access" hover-class="weui-cell_active"  bindtap="check">
-                <view class="weui-cell__bd"><span class="myIcon icon-job"></span>{{isCompany ? "我的招聘":"我的兼职"}}
+                <view class="weui-cell__bd"><span class="myIcon text-orange {{isCompany ? 'text-blue' : ''}} icon-job"></span>{{isCompany ? "我的招聘":"我的兼职"}}
                 </view>
                 <view class="weui-cell__ft weui-cell__ft_in-access"></view>
             </view>
             <block wx:if="{{!isCompany}}">
                 <view data-url="job/userList?isFollow=1" class="weui-cell weui-cell_access" hover-class="weui-cell_active"  bindtap="check">
-                    <view class="weui-cell__bd"><span class="myIcon icon-favorite"></span>我的关注
+                    <view class="weui-cell__bd"><span class="myIcon text-orange {{isCompany ? 'text-blue' : ''}} icon-favorite"></span>我的关注
                     </view>
                     <view class="weui-cell__ft weui-cell__ft_in-access"></view>
                 </view>
                 <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap="goClock">
-                    <view class="weui-cell__bd"><span class="myIcon icon-clock"></span>面试扫码
+                    <view class="weui-cell__bd"><span class="myIcon text-orange {{isCompany ? 'text-blue' : ''}} icon-clock"></span>面试扫码
                     </view>
                     <view class="weui-cell__ft weui-cell__ft_in-access"></view>
                 </view>
             </block>
             <block wx:else>
                 <view data-url="company/verify" class="weui-cell weui-cell_access" hover-class="weui-cell_active"  bindtap="check">
-                    <view class="weui-cell__bd"><span class="myIcon icon-verify"></span>工时审核
+                    <view class="weui-cell__bd"><span class="myIcon text-orange {{isCompany ? 'text-blue' : ''}} icon-verify"></span>工时审核
                     </view>
                     <view class="weui-cell__ft weui-cell__ft_in-access">
                         <view class="weui-badge" style="margin-left: 5px;margin-right: 5px;" wx:if="{{verifyNum>0}}">{{verifyNum}}</view>
                     </view>
                 </view>
                 <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap="goUsers">
-                    <view class="weui-cell__bd"><span class="myIcon icon-account"></span>员工列表
+                    <view class="weui-cell__bd"><span class="myIcon text-orange {{isCompany ? 'text-blue' : ''}} icon-account"></span>员工列表
                     </view>
                     <view class="weui-cell__ft weui-cell__ft_in-access"></view>
                 </view>
                 <view data-url="job/scan" class="weui-cell weui-cell_access" hover-class="weui-cell_active"  bindtap="check">
-                    <view class="weui-cell__bd"><span class="myIcon icon-scan"></span>扫码招聘
+                    <view class="weui-cell__bd"><span class="myIcon text-orange {{isCompany ? 'text-blue' : ''}} icon-scan"></span>扫码招聘
                     </view>
                     <view class="weui-cell__ft weui-cell__ft_in-access"></view>
                 </view>
@@ -79,17 +79,17 @@
         <view class="weui-cells__title">关于</view>
         <view class="weui-cells weui-cells_after-title">
             <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                <view class="weui-cell__bd"><span class="myIcon icon-phone"></span>联系我们
+                <view class="weui-cell__bd"><span class="myIcon text-orange {{isCompany ? 'text-blue' : ''}} icon-phone"></span>联系我们
+                </view>
+                <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+            </navigator>
+            <navigator url="/pages/common/note" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                <view class="weui-cell__bd"><span class="myIcon text-orange {{isCompany ? 'text-blue' : ''}} icon-form"></span>用户协议
                 </view>
                 <view class="weui-cell__ft weui-cell__ft_in-access"></view>
             </navigator>
             <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                <view class="weui-cell__bd"><span class="myIcon icon-form"></span>用户协议
-                </view>
-                <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-            </navigator>
-            <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                <view class="weui-cell__bd"><span class="myIcon icon-help"></span>常见问题
+                <view class="weui-cell__bd"><span class="myIcon text-orange {{isCompany ? 'text-blue' : ''}} icon-help"></span>常见问题
                 </view>
                 <view class="weui-cell__ft weui-cell__ft_in-access"></view>
             </navigator>

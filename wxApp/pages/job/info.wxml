@@ -101,7 +101,7 @@
             <view class="footer bg-white text text-m">
                 <view class="weui-flex">
                     <view class="weui-flex__item a-c">
-                        <image src="{{domain+company.icon}}"></image>
+                        <image src="{{company.icon ? domain+company.icon : ''}}"></image>
                     </view>
                     <view class="weui-flex__item-3">
                         <view>联系人:   {{job.contact_name}}</view>
