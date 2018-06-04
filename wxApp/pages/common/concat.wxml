@@ -12,9 +12,8 @@
         </view>
         <view class="weui-article__p">
             就业力公众号：
-            <image src="{{domain}}static/mpQrCode.png" class="logo block-auto"> </image>
         </view>
-
+        <image src="{{domain}}static/mpQrCode.png" data-url="{{domain}}static/mpQrCode.png" class="logo block-auto" bindtouchstart="preview"> </image>
 
     </view>
 </view>

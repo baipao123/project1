@@ -145,7 +145,7 @@ class UserController extends \frontend\controllers\BaseController
         if ($user->type == 0)
             return Tool::reJson($data);
         if ($user->type == User::TYPE_USER) {
-            $uJids = UserHasJob::find()->where(["uid" => $uid, "status" => UserHasJob::ON])->select("id")->limit(2)->column();
+            $uJids = UserHasJob::find()->where(["uid" => $uid, "status" => [UserHasJob::ON, UserHasJob::APPLY]])->select("id")->limit(2)->column();
             if (!empty($uJids))
                 $data['uJid'] = count($uJids) > 1 ? 0 : $uJids[0];
         } else {
