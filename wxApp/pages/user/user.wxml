@@ -78,7 +78,7 @@
         </view>
         <view class="weui-cells__title">关于</view>
         <view class="weui-cells weui-cells_after-title">
-            <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+            <navigator url="/pages/common/concat" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
                 <view class="weui-cell__bd"><span class="myIcon text-orange {{isCompany ? 'text-blue' : ''}} icon-phone"></span>联系我们
                 </view>
                 <view class="weui-cell__ft weui-cell__ft_in-access"></view>
@@ -88,7 +88,7 @@
                 </view>
                 <view class="weui-cell__ft weui-cell__ft_in-access"></view>
             </navigator>
-            <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+            <navigator url="/pages/common/question" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
                 <view class="weui-cell__bd"><span class="myIcon text-orange {{isCompany ? 'text-blue' : ''}} icon-help"></span>常见问题
                 </view>
                 <view class="weui-cell__ft weui-cell__ft_in-access"></view>

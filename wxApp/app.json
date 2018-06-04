@@ -16,7 +16,9 @@
     "pages/company/jobs",
     "pages/company/users",
     "pages/common/webView",
-    "pages/common/note"
+    "pages/common/note",
+    "pages/common/question",
+    "pages/common/concat"
   ],
   "tabBar": {
     "list": [
