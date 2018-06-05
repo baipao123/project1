@@ -177,6 +177,7 @@ class Job extends \common\models\base\Job
         $job->end_at = date("Ymd", strtotime($data['end_date']));
         $job->work_start = date("Hi", strtotime($data['start_time']));
         $job->work_end = date("Hi", strtotime($data['end_time']));
+        $job->timeTips = ArrayHelper::getValue($data, "timeTips", "");
         //        if (!$saveTmp && $data['age_start'] > $data['age_end'])
         //            return "年龄区间不正确";
         //        $job->age_start = $data['age_start'];
@@ -258,6 +259,7 @@ class Job extends \common\models\base\Job
             "end_date"          => date("Y-m-d", strtotime($this->end_at)),
             "start_time"        => $this->workTime(1),
             "end_time"          => $this->workTime(2),
+            'timeTips'          => $this->timeTips,
             "quiz"              => [
                 "longitude" => $this->quiz_longitude,
                 "latitude"  => $this->quiz_latitude,

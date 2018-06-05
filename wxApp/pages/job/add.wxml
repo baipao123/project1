@@ -120,6 +120,14 @@
                         </picker>
                     </view>
                 </view>
+                <view class="weui-cell weui-cell_input">
+                    <view class="weui-cell__hd">
+                        <view class="weui-label">补充说明</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                        <input type="text" class="weui-input" placeholder="" name="timeTips" value="{{job.timeTips}}"/>
+                    </view>
+                </view>
             </view>
             <view class="weui-cells__title">面试地址</view>
             <view class="weui-cells weui-cells_after-title">

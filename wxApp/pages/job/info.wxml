@@ -64,7 +64,7 @@
                 </view>
                 <view class="weui-flex">
                     <view class="weui-flex__item">工作时间:</view>
-                    <view class="weui-flex__item-2 text-grey">{{job.start_time+'  ——  '+job.end_time}}</view>
+                    <view class="weui-flex__item-2 text-grey">{{job.start_time+'  ——  '+job.end_time}} {{job.timeTips}}</view>
                 </view>
                 <view class="weui-flex">
                     <view class="weui-flex__item">面试{{job.work.useQuiz ? "及工作":""}}地址: <text class="text-grey">{{job.quiz.position}}</text><span class="myIcon icon-map_icon text-green" bindtap="showQuizPosition"></span></view>

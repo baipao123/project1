@@ -21,6 +21,7 @@ use Yii;
  * @property string $end_at
  * @property string $work_start
  * @property string $work_end
+ * @property string $timeTips
  * @property string $quiz_position
  * @property string $quiz_longitude
  * @property string $quiz_latitude
@@ -58,7 +59,7 @@ class Job extends \yii\db\ActiveRecord
         return [
             [['id', 'uid', 'city_id', 'area_id', 'prize', 'num', 'start_at', 'end_at', 'work_start', 'work_end', 'created_at', 'gender', 'prize_type', 'status', 'view_num', 'follow_num', 'worktime_0', 'worktime_1', 'worktime_2', 'worktime_3'], 'integer'],
             [['jobNo', 'description', 'require_desc', 'extra_desc', 'tips'], 'string'],
-            [['name', 'quiz_position', 'quiz_longitude', 'quiz_latitude', 'work_position', 'work_longitude', 'work_latitude', 'phone', 'contact_name'], 'string', 'max' => 255],
+            [['name', 'timeTips', 'quiz_position', 'quiz_longitude', 'quiz_latitude', 'work_position', 'work_longitude', 'work_latitude', 'phone', 'contact_name'], 'string', 'max' => 255],
             [['jobNo'], 'unique'],
         ];
     }
@@ -82,6 +83,7 @@ class Job extends \yii\db\ActiveRecord
             'end_at'         => 'End At',
             'work_start'     => 'Work Start',
             'work_end'       => 'Work End',
+            'timeTips'       => 'Time Tips',
             'quiz_position'  => 'Quiz Position',
             'quiz_longitude' => 'Quiz Longitude',
             'quiz_latitude'  => 'Quiz Latitude',
