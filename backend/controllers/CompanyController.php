@@ -9,6 +9,7 @@
 namespace backend\controllers;
 
 use backend\tools\Tool;
+use common\tools\WxApp;
 use Yii;
 use common\models\Company;
 use common\models\CompanyRecord;
@@ -73,6 +74,10 @@ class CompanyController extends BaseController
                 $company->status = Company::STATUS_FORBID;
                 $company->updated_at = time();
                 $company->save();
+                // 模板消息
+                $record->user->sendTpl(WxApp::TPL_Company_Result, [
+                    $record->name, $company->typeStr(), date("Y-m-d H:i:s", $record->created_at), date("Y-m-d H:i:s"), "被拒绝：" . $reason
+                ], $record->formId, "/pages/user/user");
                 Yii::$app->session->setFlash("danger", "已成功拒绝本条记录");
                 return $this->render("../layouts/none");
             }

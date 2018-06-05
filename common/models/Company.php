@@ -46,6 +46,11 @@ class Company extends \common\models\base\Company
         return $this->hasOne(CompanyRecord::className(), ["uid" => "uid"])->andWhere(["status" => self::STATUS_FORBID])->orderBy("created_at desc");
     }
 
+
+    public function typeStr(){
+        return $this->type == Company::TYPE_COMPANY ? "企业":"个人";
+    }
+
     public static function Bind($uid, $data, $isAdd = false) {
         $user = User::findOne($uid);
         if ($user->type == User::TYPE_USER)

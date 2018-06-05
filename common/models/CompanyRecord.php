@@ -9,6 +9,7 @@
 namespace common\models;
 
 use common\tools\Img;
+use common\tools\WxApp;
 use Yii;
 
 /**
@@ -66,7 +67,10 @@ class CompanyRecord extends \common\models\base\CompanyRecord
             Yii::warning($company->errors, "保存Company失败");
             return false;
         }
-        //TODO 模板消息通知
+        //模板消息通知
+        $this->user->sendTpl(WxApp::TPL_Company_Result, [
+            $this->name, $company->typeStr(), date("Y-m-d H:i:s", $this->created_at), date("Y-m-d H:i:s"), "审核通过"
+        ], $this->formId, "/pages/user/user");
         return true;
     }
 

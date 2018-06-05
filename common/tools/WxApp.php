@@ -18,6 +18,14 @@ class WxApp extends Wx
     const IllegalBuffer = -41003;
     const DecodeBase64Error = -41004;
 
+    const TPL_Company_Result = "XjOAc7PwgwFxUY_dEDMsvMW8GUKxpERBjUAUjporqog";
+    const TPL_Job_Apply = "phVe4CykUdwUF14V5ve0EruvA7FPNwCcuP7Fx_c1CBs";
+    const TPL_Job_Apply_Result = "VB8rOz5kb3citJ_GdfG7myGV6kkQjJOQOxFskGjM0Tc";
+    const TPL_Sign = "xNR0MgTSs4p9faalYtB5gMv6oW9Tl_cBxy9_AnMhKfQ";
+    const TPL_TimeUp = "oWrljOUmNcZzoDeyUIv3bR6RO-ubTEjeHdpcP90GkfU";
+    const TPL_TimeUp_Result = "Yz1Vfzur_cnRplA9g7zLcyZuUDxv1IMrAkSYlWcFBD0";
+
+
     protected static function getAppId() {
         return Yii::$app->params['wxApp']['appId'];
     }

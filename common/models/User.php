@@ -143,4 +143,13 @@ class User extends \common\models\base\User
         $jobs = Job::find()->where(["id" => $jids])->andWhere(["NOT IN", "status", [Job::OFF, Job::DEL]])->orderBy(["id" => $jids])->all();
         return Job::formatJobs($jobs, $this->id);
     }
+
+    public function sendTpl($type, $data, $formId, $page = "", $keyword = "") {
+        $tplData = [];
+        for ($j = 1; $j <= count($data); $j++) {
+            $tplData[ "keyword" . $j ] = $data[ $j - 1 ];
+        }
+        $accessToken = WxApp::getAccessToken();
+        WxApp::sendTpl($accessToken, $this->openId, $type, $tplData, $page, $formId, $keyword);
+    }
 }
