@@ -144,10 +144,14 @@ class User extends \common\models\base\User
         return Job::formatJobs($jobs, $this->id);
     }
 
-    public function sendTpl($type, $data, $formId, $page = "", $keyword = "") {
+    public function sendTpl($type, $data, $formId, $page = "", $color = [], $keyword = "") {
         $tplData = [];
         for ($j = 1; $j <= count($data); $j++) {
-            $tplData[ "keyword" . $j ] = $data[ $j - 1 ];
+            $tplData[ "keyword" . $j ] = [
+                "value" => $data[ $j - 1 ]
+            ];
+            if (isset($color[ $j ]))
+                $tplData[ "keyword" . $j ]['color'] = $color[ $j ];
         }
         $accessToken = WxApp::getAccessToken();
         WxApp::sendTpl($accessToken, $this->openId, $type, $tplData, $page, $formId, $keyword);
