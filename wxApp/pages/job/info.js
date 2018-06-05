@@ -94,6 +94,27 @@ Page({
         id = typeof id == "object" ? this.data.job.uJid : id
         app.turnPage("job/getInfo?id="+id)
     },
+    cancelUJob: function () {
+        let that = this
+        wx.showActionSheet({
+            itemList: ["面试扫码","取消报名"],
+            success: function (res) {
+                switch (res.tapIndex) {
+                    case 0:
+                        that.goUJobInfo()
+                        break
+                    case 1:
+                        request.post("part/job/cancel-apply", {uJid: that.data.job.uJid}, function (res) {
+                            that.setData({
+                                "job.userStatus": 0
+                            })
+                            that.data.job.uJid = 0
+                        })
+                        break
+                }
+            }
+        })
+    },
     companyAction: function (e) {
         let that = this,
             jid = that.data.jid,

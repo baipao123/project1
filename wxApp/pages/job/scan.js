@@ -20,6 +20,7 @@ Page({
                 uJob: data.uJob,
                 isDecrypt: false
             })
+            wx.navigateBack()
         })
     },
     refuse: function (e) {
@@ -81,7 +82,7 @@ Page({
                 }
             })
         }, function () {
-            app.toast("请开启相机权限")
+            app.toast("请开启相机权限","none")
         })
     }
 })

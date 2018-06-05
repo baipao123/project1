@@ -63,6 +63,19 @@ class JobController extends \frontend\controllers\BaseController
         return Tool::reJson(["id" => $record->attributes['id']]);
     }
 
+    public function actionCancelApply() {
+        if ($this->getuser()->type != User::TYPE_USER)
+            return Tool::reJson(null, "您无权取消报名", Tool::FAIL);
+        $uJid = $this->getPost("uJid");
+        $uJob = UserHasJob::findOne($uJid);
+        if (!$uJob || $uJob->uid != $this->user_id())
+            return Tool::reJson(null, "您无权取消报名", Tool::FAIL);
+        if ($uJob->status != UserHasJob::APPLY)
+            return Tool::reJson(null, "您的报名已被处理，无法取消报名", Tool::FAIL);
+        $uJob->delete();
+        return Tool::reJson(1, "取消报名成功");
+    }
+
     public function actionForbid() {
         $uJid = $this->getPost("uJid", 0);
         $userJob = UserHasJob::findOne($uJid);

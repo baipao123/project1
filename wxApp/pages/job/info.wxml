@@ -16,7 +16,7 @@
             <view wx:if="{{job.status==4}}">岗位已结束</view>
             <view wx:if="{{job.status==5}}">岗位已招满</view>
         </view>
-        <view style="margin-bottom:150rpx;{{isOwner && job.status!=1 ? 'margin-top:60rpx':''}}">
+        <view style="{{isOwner && job.status!=1 ? 'margin-top:60rpx':''}}">
             <view class="header bg-white">
                 <view class="name">{{job.name}}</view>
                 <view class="prize text text-m text-green">
@@ -112,6 +112,7 @@
                     </view>
                 </view>
             </view>
+            <view style="height:200rpx"></view>
         </view>
         <view class="bottom bg-white fixed">
             <view class="weui-flex">
@@ -137,9 +138,9 @@
                                 </form>
                             </block>
                             <block wx:elif="{{job.userStatus==1}}">
-                                <view class="right blue" bindtap="goUJobInfo">已报名</view>
+                                <view class="right blue" bindtap="cancelUJob">已报名</view>
                             </block>
-                            <block wx:elif="{{job.userStatus==2}}">
+                            <block wx:elif="{{job.userStatus==2}}"  bindtap="goUJobInfo">
                                 <view class="right orange">工作中</view>
                             </block>
                             <block wx:elif="{{job.userStatus==10}}">
