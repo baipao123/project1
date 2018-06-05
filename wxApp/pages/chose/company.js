@@ -68,11 +68,13 @@ Page({
             that = this,
             url = that.data.company ? "part/company/edit" : "part/company/join"
         data.formId = e.detail.formId;
-        data.phoneType = this.data.type;
+        data.phoneType = that.data.type;
         console.log(data)
         request.post(url, data, (res) => {
             app.globalData.company.status = 0
             app.globalData.company.refuseReason = ''
+            app.getCompanyInfo()
+            app.globalData.user.type = that.data.type
             app.turnPage("user/user")
         })
     },
@@ -111,7 +113,7 @@ Page({
         request.post("part/user/phone-decrypt", e.detail, function (response) {
             that.setData({
                 type: 1,
-                "user.phone": response.purePhoneNumber,
+                "user.purePhone": response.purePhoneNumber,
             });
         })
     },

@@ -75,10 +75,12 @@ class CompanyRecord extends \common\models\base\CompanyRecord
     }
 
     public function icon() {
-        return Img::format($this->icon, 0, 0, true);
+        $icon = empty($this->icon) ? "company/icon.jpg" : $this->icon;
+        return Img::format($icon, 0, 0, true);
     }
 
-    public function cover(){
-        return Img::format($this->cover, 0, 0, true);
+    public function cover() {
+        $cover = empty($this->cover) ? "company/cover.jpg" : $this->cover;
+        return Img::format($cover, 0, 0, true);
     }
 }
