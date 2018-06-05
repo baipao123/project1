@@ -62,8 +62,12 @@
                         <view class="weui-cell__ft">{{item.type==1 ? "上班" : "下班"}}</view>
                     </view>
                     <view class="weui-cell">
-                        <view class="clock-round text-white a-c {{uJob.status != 2 ? 'bg-grey' : ''}}" bindtap="clock">
-                            <view class="topText text-l">打卡</view>
+                        <view class="clock-round text-white a-c {{uJob.status != 2 ? 'bg-grey' : 'bg-blue'}}" bindtap="clockUp">
+                            <view class="topText text">打卡上班</view>
+                            <view class="time text-m">{{nowTime}}</view>
+                        </view>
+                        <view class="clock-round text-white a-c {{uJob.status != 2 ? 'bg-grey' : 'bg-orange'}}" bindtap="clockDown">
+                            <view class="topText text">打卡下班</view>
                             <view class="time text-m">{{nowTime}}</view>
                         </view>
                     </view>

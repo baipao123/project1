@@ -125,12 +125,26 @@ Page({
         })
         setTimeout(this.getNowTime, (60 - second) * 1000)
     },
-    clock: function () {
+    clockUp: function () {
+        let that = this,
+            todayClockItems = that.data.todayClock.items
+        if (todayClockItems.length > 0 && todayClockItems[todayClockItems.length - 1].type == 1) {
+            app.confirm("上次打卡为上班卡，确定仍打上班卡?",function () {
+                that.clock(1)
+            })
+        } else
+            that.clock(1)
+    },
+    clockDown: function () {
+        this.clock(3)
+    },
+    clock: function (type) {
         if (this.data.uJob.status != 2)
             return false;
         let that = this,
             data = {
-                uJid: that.data.uJob.id
+                uJid: that.data.uJob.id,
+                type: type
             },
             tmpClock = that.data.lastClock
         if (tmpClock > 0) {
@@ -150,15 +164,11 @@ Page({
                     todayClock: today
                 })
                 if (res.info.type == 3 && (that.data.todayClock.status == 0 || that.data.todayClock.status == 2 )) {
-                    wx.showModal({
-                        title: '上报工时',
-                        content: '每天只统计一次工时，审核通过后无法修改，请确认今天的工作已经完成！',
-                        cancelText: '还有工作',
-                        confirmText: '上报工时',
-                        success: function () {
-                            that.goTimeUp(null, today)
-                        }
-                    })
+                    app.confirm('每天只统计一次工时，审核通过后无法修改，请确认今天的工作已经完成！', function () {
+                        that.goTimeUp(null, today)
+                    }, function () {
+
+                    }, '上报工时', '上报工时', '还有工作')
                 }
             }, function () {
                 that.data.lastClock = tmpClock

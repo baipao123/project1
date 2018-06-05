@@ -49,7 +49,6 @@
     margin:0 auto;
     width: 200rpx;
     height:200rpx;
-    background-color: #1b42ff;
     border-radius:200rpx;
     line-height:185rpx;
 }
