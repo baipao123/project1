@@ -76,7 +76,7 @@ class Wx {
         if (!$refresh && Yii::$app->cache->exists($cacheKey))
             return Yii::$app->cache->get($cacheKey);
 
-        $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
+        $url = "https://api.weixin.qq.com/cgi-bin/token";
         $params = [
             "grant_type" => "client_credential",
             "appid"      => $appId,
