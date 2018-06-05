@@ -11,6 +11,7 @@ namespace frontend\modules\part\controllers;
 use common\models\UserClock;
 use common\models\UserHasJob;
 use common\tools\Tool;
+use common\tools\WxApp;
 use Yii;
 
 class ClockController extends \frontend\controllers\BaseController
@@ -48,6 +49,8 @@ class ClockController extends \frontend\controllers\BaseController
         $clock->msg = $this->getPost("msg", "");
         $clock->created_at = time();
         $clock->save();
+        $user = $this->getUser();
+        $user->sendTpl(WxApp::TPL_Sign, [$user->realname, date("Y年m月d日 H:i:s"), $uJob->job->name], $this->getPost("formId"), "/pages/job/getInfo?id=" . $uJid);
         return Tool::reJson(["info" => $clock->info()], "打卡成功");
     }
 

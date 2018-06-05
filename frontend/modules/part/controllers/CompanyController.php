@@ -14,6 +14,7 @@ use common\models\User;
 use common\models\UserHasJob;
 use common\models\UserJobDaily;
 use common\tools\Tool;
+use common\tools\WxApp;
 use Yii;
 
 class CompanyController extends \frontend\controllers\BaseController
@@ -162,6 +163,15 @@ class CompanyController extends \frontend\controllers\BaseController
             $text = "拒绝入职成功";
         }
         $uJob->save();
+        $user = $uJob->user;
+        $job = $uJob->job;
+        $user->sendTpl(WxApp::TPL_Job_Apply_Result, [
+            $uJob->user->realname,
+            date("Y年m月d日 H:i:s", $uJob->created_at),
+            $job->name,
+            $job->company->typeStr(),
+            $this->getPost("type", 0) == 1 ? "审核通过，已入职" : "被拒绝"
+        ], $this->getPost("formId"), "/pages/job/getInfo?id=" . $uJid);
         return Tool::reJson(1, $text);
     }
 

@@ -15,6 +15,7 @@ use common\models\UserHasJob;
 use common\models\UserJobDaily;
 use common\tools\StringHelper;
 use common\tools\Tool;
+use common\tools\WxApp;
 use Yii;
 
 class JobController extends \frontend\controllers\BaseController
@@ -49,7 +50,16 @@ class JobController extends \frontend\controllers\BaseController
             Yii::warning($record->errors, "添加UserHasJob失败");
             return Tool::reJson(null, "报名失败", Tool::FAIL);
         }
-        //TODO 模板消息
+        //模板消息
+        $user = User::findOne($job->uid);
+        $user->sendTpl(WxApp::TPL_Job_Apply, [
+            $job->name,
+            $job->jobNo,
+            $job->workDate(),
+            empty($job->work_position) ? $job->quiz_position : $job->work_position,
+            $this->getUser()->realname,
+            date("Y年m月d日 H:i:s")
+        ], $record->formId, "/pages/company/users");
         return Tool::reJson(["id" => $record->attributes['id']]);
     }
 
@@ -69,7 +79,15 @@ class JobController extends \frontend\controllers\BaseController
             Yii::warning($userJob->errors, "保存UserHasJob失败");
             return Tool::reJson(null, "拒绝失败", Tool::FAIL);
         }
-        //TODO 模板消息
+        //模板消息
+        $user = $userJob->user;
+        $user->sendTpl(WxApp::TPL_Job_Apply_Result, [
+            $userJob->user->realname,
+            date("Y年m月d日 H:i:s", $userJob->created_at),
+            $job->name,
+            $job->company->typeStr(),
+            $this->getPost("type", 0) == 1 ? "审核通过，已入职" : "被拒绝"
+        ], $this->getPost("formId"), "/pages/job/getInfo?id=" . $uJid);
         return Tool::reJson(1);
 
     }
@@ -117,10 +135,14 @@ class JobController extends \frontend\controllers\BaseController
         $daily->isNewRecord ? $daily->created_at = time() : $daily->updated_at = time();
         $msg = $this->getPost("msg");
         $daily->msg = $msg;
-        if ($daily->save())
-            //TODO 模板消息
+        if ($daily->save()) {
+            $toUser = User::findOne($daily->cid);
+            $toUser->sendTpl(WxApp::TPL_TimeUp, [
+                $uJob->job->name,
+                date("Y年m月d日 H:i:s"),
+            ], $this->getPost("formId"), "/pages/company/verify?jid=" . $uJob->jid);
             return Tool::reJson(["info" => $daily->info()]);
-        else {
+        } else {
             Yii::warning($daily->errors, "UserJobDaily 保存出错");
             return Tool::reJson(null, "工时上报失败", Tool::FAIL);
         }
@@ -158,6 +180,16 @@ class JobController extends \frontend\controllers\BaseController
             Yii::warning($uJob->errors, "保存UserHasJob失败");
         if (!$job->save())
             Yii::warning($job->errors, "保存Job失败");
+        $user = $daily->user;
+        $user->sendTpl(WxApp::TPL_TimeUp_Result, [
+            $job->name,
+            $daily->dateStr(),
+            "工时" . $daily->numStr(),
+            $user->realname,
+            date("Y年m月d日 H:i:s", $daily->created_at),
+            date("Y年m月d日 H:i:s"),
+            "审核通过"
+        ], $this->getPost("formId"), "/pages/job/getInfo?id=" . $daily->uJid);
         return Tool::reJson(1, "已通过工时");
     }
 
@@ -176,7 +208,16 @@ class JobController extends \frontend\controllers\BaseController
         $daily->updated_at = time();
         $daily->msg = $this->getPost("msg", '');
         $daily->save();
-        //TODO 模板消息
+        $user = $daily->user;
+        $user->sendTpl(WxApp::TPL_TimeUp_Result, [
+            $job->name,
+            $daily->dateStr(),
+            "工时" . $daily->numStr(),
+            $user->realname,
+            date("Y年m月d日 H:i:s", $daily->created_at),
+            date("Y年m月d日 H:i:s"),
+            "被拒绝:" . $daily->msg
+        ], $this->getPost("formId"), "/pages/job/getInfo?id=" . $daily->uJid);
         return Tool::reJson(1, "已拒绝工时");
     }
 
