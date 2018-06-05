@@ -104,11 +104,13 @@ Page({
                         that.goUJobInfo()
                         break
                     case 1:
-                        request.post("part/job/cancel-apply", {uJid: that.data.job.uJid}, function (res) {
-                            that.setData({
-                                "job.userStatus": 0
+                        app.confirm("确定取消报名吗?", function () {
+                            request.post("part/job/cancel-apply", {uJid: that.data.job.uJid}, function (res) {
+                                that.setData({
+                                    "job.userStatus": 0
+                                })
+                                that.data.job.uJid = 0
                             })
-                            that.data.job.uJid = 0
                         })
                         break
                 }

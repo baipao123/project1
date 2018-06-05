@@ -229,15 +229,25 @@ Page({
         let that = this,
             uJid = that.data.uJob.id
         wx.showActionSheet({
-            itemList: ["标记为已完成","保险购买"],
+            itemList: that.data.uJob.status == 1 ? ["取消报名"] : ["标记为已完成","保险购买"],
             success: function (res) {
                 switch (res.tapIndex) {
                     case 0:
-                        request.post("part/job/expire-user-job", {uJid: uJid}, function (res) {
-                            that.setData({
-                                "uJob.status": 10
+                        if (that.data.uJob.status == 1)
+                            app.confirm("确定取消报名吗?", function () {
+                                request.post("part/job/cancel-apply", {uJid: uJid}, function (res) {
+                                    app.toast("取消报名成功")
+                                    wx.navigateBack()
+                                })
                             })
-                        })
+                        else
+                            app.confirm("确定标记为已完成?将无法打卡", function () {
+                                request.post("part/job/expire-user-job", {uJid: uJid}, function (res) {
+                                    that.setData({
+                                        "uJob.status": 10
+                                    })
+                                })
+                            })
                         break
                     default:
                         break
