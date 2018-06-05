@@ -19,7 +19,7 @@ class JobFollow extends \common\models\base\JobFollow
         if (empty($uid) || empty($jid))
             return false;
         if (self::deleteAll(["uid" => $uid, "jid" => $jid]) > 0) {
-            Yii::$app->db->createCommand("UPDATE `job` SET `follow_num`=`follow_num`+1 WHERE `id`=:id", [":id" => $jid])->execute();
+            Yii::$app->db->createCommand("UPDATE `job` SET `follow_num`=`follow_num`-1 WHERE `id`=:id", [":id" => $jid])->execute();
             return 2;
         }
         $j = new self;
@@ -28,7 +28,7 @@ class JobFollow extends \common\models\base\JobFollow
         $j->created_at = time();
         $r =  $j->save() ? 1 : false;
         if ($r)
-            Yii::$app->db->createCommand("UPDATE `job` SET `follow_num`=`follow_num`-1 WHERE `id`=:id", [":id" => $jid])->execute();
+            Yii::$app->db->createCommand("UPDATE `job` SET `follow_num`=`follow_num`+1 WHERE `id`=:id", [":id" => $jid])->execute();
         return $r;
     }
 
