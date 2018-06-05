@@ -112,6 +112,21 @@
                     </view>
                 </view>
             </view>
+            <view class="weui-cells__title">招聘者信息</view>
+            <view class="company bg-white text text-m">
+                <view class="weui-flex">
+                    <view class="weui-flex__item">招聘类型:</view>
+                    <view class="weui-flex__item-2 text-grey">{{company.type == 2 ? "企业招聘" : "个人招聘"}}</view>
+                </view>
+                <view class="weui-flex">
+                    <view class="weui-flex__item">{{company.type == 2 ? "企业名称" : "姓名"}}:</view>
+                    <view class="weui-flex__item-2 text-grey">{{company.name}}</view>
+                </view>
+                <view class="weui-flex">
+                    <view class="weui-flex__item">{{company.type == 2 ? "企业简介" : "个人简介"}}:</view>
+                    <view class="weui-flex__item-2 text-grey">{{company.description}}</view>
+                </view>
+            </view>
             <view style="height:200rpx"></view>
         </view>
         <view class="bottom bg-white fixed">

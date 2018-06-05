@@ -115,7 +115,7 @@ Page({
                     data.position = nowPosition
                 that.setData({
                     tmpWorkPosition: nowPosition,
-                    "job.work": data.job,
+                    "job.work": data,
                 })
             }
         })

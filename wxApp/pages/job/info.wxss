@@ -63,7 +63,7 @@ map{
 }
 
 
-.header,.middle,.footer{
+.header,.middle,.footer,.company{
     padding:30rpx;
 }
 .footer{
