@@ -209,7 +209,7 @@ class JobController extends \frontend\controllers\BaseController
     }
 
     public function actionTimeRefuse() {
-        if ($this->getUser()->type != User::TYPE_COMPANY)
+        if ($this->getUser()->type <= User::TYPE_USER)
             return Tool::reJson(null, "无此操作权限", Tool::FAIL);
         $did = $this->getPost("did");
         $daily = UserJobDaily::findOne($did);
