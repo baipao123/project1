@@ -73,9 +73,10 @@ Page({
         request.post(url, data, (res) => {
             app.globalData.company.status = 0
             app.globalData.company.refuseReason = ''
-            app.getCompanyInfo()
-            app.globalData.user.type = that.data.type
-            app.turnPage("user/user")
+            app.globalData.user.type = data.type
+            app.getCompanyInfo(function () {
+                app.turnPage("user/user")
+            },true)
         })
     },
     typeChange: function (e) {

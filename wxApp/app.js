@@ -77,9 +77,9 @@ App({
         // 空Obj
         return Object.prototype.isPrototypeOf(obj) && Object.keys(obj).length === 0;
     },
-    getCompanyInfo: function (callBack) {
+    getCompanyInfo: function (callBack, refresh) {
         let that = this
-        if (that.isEmptyObj(that.globalData.company)) {
+        if (refresh || that.isEmptyObj(that.globalData.company)) {
             request.get("part/company/info", {}, function (data) {
                 data.company.positionStr = ""
                 that.globalData.company = data.company
@@ -181,16 +181,22 @@ App({
             title: title
         })
     },
-    turnPage: function (url) {
+    turnPage: function (url,success) {
         if (!url)
             return false
+        if(!success)
+            success = function () {
+                
+            }
         if (url == "index/home" || url == "user/user") {
             wx.switchTab({
-                url: "/pages/" + url
+                url: "/pages/" + url,
+                success: success
             })
         } else
             wx.navigateTo({
-                url: "/pages/" + url
+                url: "/pages/" + url,
+                success: success
             })
     }
 })

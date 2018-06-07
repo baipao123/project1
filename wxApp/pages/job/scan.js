@@ -20,7 +20,6 @@ Page({
                 uJob: data.uJob,
                 isDecrypt: false
             })
-            wx.navigateBack()
         })
     },
     refuse: function (e) {
@@ -56,6 +55,7 @@ Page({
                         that.setData({
                             "uJob.status": 2
                         })
+                        wx.navigateBack()
                     })
                 }
             }
