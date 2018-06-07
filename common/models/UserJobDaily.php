@@ -59,7 +59,13 @@ class UserJobDaily extends \common\models\base\UserJobDaily
             return "半天";
         if ($this->type == self::TYPE_HOUR && $this->num == 0)
             return "未工作";
-        return $this->num . "小时";
+        return $this->num() . "小时";
+    }
+
+    public function num() {
+        if ($this->type == self::TYPE_HOUR)
+            return (string)number_format($this->num, 2, ".", "");
+        return (int)$this->num;
     }
 
     public function info() {

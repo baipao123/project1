@@ -36,8 +36,9 @@ class UserJobDaily extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['uid', 'jid', 'cid', 'uJid', 'type', 'num', 'date', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['uid', 'jid', 'cid', 'uJid', 'type', 'date', 'status', 'created_at', 'updated_at'], 'integer'],
             [['msg'], 'string', 'max' => 2000],
+            [['num'], 'number'],
         ];
     }
 

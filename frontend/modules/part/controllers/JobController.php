@@ -123,8 +123,10 @@ class JobController extends \frontend\controllers\BaseController
     public function actionTimeUp() {
         $type = $this->getPost("type", 0);
         $num = $this->getPost("num", 0);
-        if (in_array($type, [UserJobDaily::TYPE_HOUR, UserJobDaily::TYPE_COUNT]) && intval($num) != $num)
+        if ($type == UserJobDaily::TYPE_COUNT && intval($num) != $num)
             return Tool::reJson(null, "工时应为整数", Tool::FAIL);
+        if ($type == UserJobDaily::TYPE_HOUR && number_format($num, 2, ".", "") != $num)
+            return Tool::reJson(null, "请输入正确的工时", Tool::FAIL);
         $uJid = $this->getPost("uJid", 0);
         $date = $this->getPost("date", date("Ymd"));
         $date = str_replace("-", "", $date);
