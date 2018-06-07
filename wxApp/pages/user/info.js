@@ -178,5 +178,11 @@ Page({
     },
     tipsName: function (e) {
         app.toast("企业名称无法修改", "none")
+    },
+    tipsUser: function (e) {
+        if (this.data.company.type == 3)
+            app.toast("个人招聘者无法修改联系人","none");
+        else
+            this.prompt(e)
     }
 })
