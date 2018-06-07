@@ -20,6 +20,17 @@ page {
     padding: 50rpx 0;
 }
 
+button.clear {
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+    display: initial;
+}
+
+button.clear::after {
+    border: none;
+}
+
 .userAvatar {
     -webkit-border-radius: 100%;
     -moz-border-radius: 100%;
@@ -143,16 +154,6 @@ page {
     background-color: transparent;
 }
 
-button.clear {
-    background-color: transparent;
-    margin: 0;
-    padding: 0;
-    display: initial;
-}
-
-button.clear::after {
-    border: none;
-}
 button.low{
     line-height:2;
 }

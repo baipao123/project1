@@ -147,7 +147,7 @@
                     <view class="weui-flex__item-2">
                         <block wx:if="{{job.status==1}}">
                             <block wx:if="{{job.userStatus==0}}">
-                                <form bindsubmit="sign">
+                                <form bindsubmit="sign" report-submit="true">
                                     <input name="jid" hidden="true" value="{{jid}}"/>
                                     <button class="right green" form-type="submit">我要报名</button>
                                 </form>

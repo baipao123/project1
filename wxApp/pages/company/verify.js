@@ -89,7 +89,8 @@ Page({
         let that = this,
             index = e.detail.value.index,
             data = {
-                did: that.data.list[index].info.id
+                did: that.data.list[index].info.id,
+                formId: e.detail.formId
             }
         wx.showModal({
             title: '确认通过?',

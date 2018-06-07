@@ -69,12 +69,12 @@
                 </view>
                 <view class="weui-form-preview__ft" wx:if="{{item.info.status==1}}">
                     <form bindsubmit="goPrompt" class="weui-form-preview__btn weui-form-preview__btn_default form-cancel"
-                          hover-class="weui-form-preview__btn_active">
+                          hover-class="weui-form-preview__btn_active" report-submit="true">
                         <input type="text" hidden="true" name="index" value="{{index}}"/>
                         <button class="bg-white text-grey-normal clear cancel"  form-type="submit" hover-class="weui-form-preview__btn_active">拒绝</button>
                     </form>
                     <form bindsubmit="pass" class="weui-form-preview__btn weui-form-preview__btn_primary"
-                          hover-class="weui-form-preview__btn_active">
+                          hover-class="weui-form-preview__btn_active" report-submit="true">
                         <input type="text" hidden="true" name="index" value="{{index}}"/>
                         <button form-type="submit" class="text-green bg-white clear pass" hover-class="weui-form-preview__btn_active"  data-id="{{index}}">通过</button>
                     </form>

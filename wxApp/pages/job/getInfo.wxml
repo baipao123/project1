@@ -62,14 +62,18 @@
                         <view class="weui-cell__ft">{{item.type==1 ? "上班" : "下班"}}</view>
                     </view>
                     <view class="weui-cell">
-                        <view class="clock-round text-white a-c {{uJob.status != 2 ? 'bg-grey' : 'bg-blue'}}" bindtap="clockUp">
-                            <view class="topText text">打卡上班</view>
-                            <view class="time text-m">{{nowTime}}</view>
-                        </view>
-                        <view class="clock-round text-white a-c {{uJob.status != 2 ? 'bg-grey' : 'bg-orange'}}" bindtap="clockDown">
-                            <view class="topText text">打卡下班</view>
-                            <view class="time text-m">{{nowTime}}</view>
-                        </view>
+                        <form bindsubmit="clockUp" report-submit="true" style="width:100%;">
+                            <button class="weui-flex__item clock-round text-white a-c {{uJob.status != 2 ? 'bg-grey' : 'bg-blue'}}" form-type="submit">
+                                <view class="topText text">打卡上班</view>
+                                <view class="time text-m">{{nowTime}}</view>
+                            </button>
+                        </form>
+                        <form bindsubmit="clockDown" report-submit="true" style="width:100%;">
+                            <button class="weui-flex__item clock-round text-white a-c {{uJob.status != 2 ? 'bg-grey' : 'bg-orange'}}" form-type="submit">
+                                <view class="topText text">打卡下班</view>
+                                <view class="time text-m">{{nowTime}}</view>
+                            </button>
+                        </form>
                     </view>
                 </view>
             </view>

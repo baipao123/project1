@@ -174,7 +174,7 @@ Page({
         let that = this,
             aid = that.data.user.area_id,
             cid = that.data.user.city_id
-        app.turnPage("/districtSelect/districtSelect?aid=" + aid + "&cid=" + cid)
+        app.turnPage("districtSelect/districtSelect?aid=" + aid + "&cid=" + cid)
     },
     tipsName: function (e) {
         app.toast("企业名称无法修改", "none")

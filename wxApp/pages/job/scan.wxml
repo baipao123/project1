@@ -37,14 +37,14 @@
             </view>
             <view class="weui-form-preview__ft" wx:if="{{uJob.status==1}}">
                 <form bindsubmit="refuse" class="weui-form-preview__btn weui-form-preview__btn_default"
-                      hover-class="weui-form-preview__btn_active">
+                      hover-class="weui-form-preview__btn_active" report-submit="true">
                     <input type="text" hidden="true" name="code" value="{{text}}"/>
                     <button class="weui-form-preview__btn weui-form-preview__btn_default" form-type="submit"
                             hover-class="weui-form-preview__btn_active">拒绝
                     </button>
                 </form>
                 <form bindsubmit="verify" class="weui-form-preview__btn weui-form-preview__btn_primary"
-                      hover-class="weui-form-preview__btn_active">
+                      hover-class="weui-form-preview__btn_active" report-submit="true">
                     <input type="text" hidden="true" name="code" value="{{text}}"/>
                     <button form-type="submit" class="text-green">通过</button>
                 </form>

@@ -125,26 +125,29 @@ Page({
         })
         setTimeout(this.getNowTime, (60 - second) * 1000)
     },
-    clockUp: function () {
+    clockUp: function (e) {
         let that = this,
-            todayClockItems = that.data.todayClock.items
+            todayClockItems = that.data.todayClock.items,
+            formId = e.detail.formId
         if (todayClockItems.length > 0 && todayClockItems[todayClockItems.length - 1].type == 1) {
-            app.confirm("上次打卡为上班卡，确定仍打上班卡?",function () {
-                that.clock(1)
+            app.confirm("上次打卡为上班卡，确定仍打上班卡?", function () {
+                that.clock(1, formId)
             })
         } else
-            that.clock(1)
+            that.clock(1, formId)
     },
-    clockDown: function () {
-        this.clock(3)
+    clockDown: function (e) {
+        let formId = e.detail.formId
+        this.clock(3, formId)
     },
-    clock: function (type) {
+    clock: function (type,formId) {
         if (this.data.uJob.status != 2)
             return false;
         let that = this,
             data = {
                 uJid: that.data.uJob.id,
-                type: type
+                type: type,
+                formId: formId
             },
             tmpClock = that.data.lastClock
         if (tmpClock > 0) {
