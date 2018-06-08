@@ -277,7 +277,7 @@ class Job extends \common\models\base\Job
             "useCompanyContact" => empty($this->contact_name),
             "contact_name"      => empty($this->contact_name) ? $this->owner->realname : $this->contact_name,
             "phone"             => empty($this->phone) ? $this->owner->phone : $this->phone,
-            "tips"              => $this->tips,
+            "tips"              => empty($this->tips) ? $this->company->tips : $this->phone,
             "status"            => $this->status,
             "isLike"            => empty($uid) ? false : JobFollow::find()->where(["uid" => $uid, "jid" => $this->id])->exists(),
             "userStatus"        => $uJob ? $uJob->status : 0,

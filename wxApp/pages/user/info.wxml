@@ -47,7 +47,7 @@
             <form bindsubmit="submitPrompt"  report-submit="true">
                 <view class="title a-c text-line">{{prompt.title}}</view>
                 <view class="body">
-                    <textarea style="height:3.3em" name="value" value="{{prompt.value}}"></textarea>
+                    <textarea style="height:3.3em" name="value" value="{{prompt.value}}" placeholder="{{prompt.name=='tips' ? '提示将显示在岗位详情页联系人下方' : ' '}}"></textarea>
                     <view wx:if="{{isPosition}}">
                         <map longitude="{{position.longitude || company.position.longitude}}" latitude="{{position.latitude || company.position.latitude}}" show-location="true"  bindtap="chosePosition" style="width:100%;">
                         </map>

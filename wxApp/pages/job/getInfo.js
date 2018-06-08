@@ -242,7 +242,7 @@ Page({
         let that = this,
             uJid = that.data.uJob.id
         wx.showActionSheet({
-            itemList: that.data.uJob.status == 1 ? ["取消报名"] : ["标记为已完成","保险购买"],
+            itemList: that.data.uJob.status == 1 ? ["取消报名"] : ["标记为已完成", "保险购买"],
             success: function (res) {
                 switch (res.tapIndex) {
                     case 0:
@@ -261,6 +261,9 @@ Page({
                                     })
                                 })
                             })
+                        break
+                    case 1:
+                        app.toast("此项目将于近期上线", "none")
                         break
                     default:
                         break

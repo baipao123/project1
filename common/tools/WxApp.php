@@ -89,7 +89,17 @@ class WxApp extends Wx
         $response = json_decode($res, true);
         if ($res && $response && isset($response['errcode']) && $response['errcode'] == 0 && isset($response['errmsg']) && $response['errmsg'] == "ok")
             return true;
-        elseif ($res && $response && isset($response['msg']))
+        else if($res && $response && isset($response['errcode']) && $response['errcode'] == 41028 ){
+            // 可能formId有延迟还没生效
+            $res = self::http($url, [], $tplData);
+            $response = json_decode($res, true);
+            if ($res && $response && isset($response['errcode']) && $response['errcode'] == 0 && isset($response['errmsg']) && $response['errmsg'] == "ok")
+                return true;
+            elseif ($res && $response && isset($response['msg']))
+                return $response['msg'];
+            else
+                return false;
+        } elseif ($res && $response && isset($response['msg']))
             return $response['msg'];
         else
             return false;

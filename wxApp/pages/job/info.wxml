@@ -31,7 +31,7 @@
                 </view>
             </view>
             <view class="weui-cells__title">岗位详情</view>
-            <view class="middle bg-white text text-m">
+            <view class="middle bg-white text text-m" style="padding-bottom:10rpx;">
                 <view class="weui-flex">
                     <view class="weui-flex__item">工作编码:</view>
                     <view class="weui-flex__item-2 text-grey">{{job.jobNo}}</view>
@@ -66,20 +66,14 @@
                     <view class="weui-flex__item">工作时间:</view>
                     <view class="weui-flex__item-2 text-grey">{{job.start_time+'  ——  '+job.end_time}} {{job.timeTips}}</view>
                 </view>
-                <view class="weui-flex">
-                    <view class="weui-flex__item">面试{{job.work.useQuiz ? "及工作":""}}地址: <text class="text-grey">{{job.quiz.position}}</text><span class="myIcon icon-map_icon text-green" bindtap="showQuizPosition"></span></view>
-                </view>
-                <view class="weui-flex">
-                    <map longitude="{{job.quiz.longitude}}" latitude="{{job.quiz.latitude}}" show-location="true"  bindtap="showQuizPosition">
-                    </map>
+                <view class="weui-flex" hover-class="weui-cell_active" bindtap="showQuizPosition" style="padding:20rpx 0;">
+                    <view class="weui-flex__item">面试{{job.work.useQuiz ? "及工作":""}}地址: </view>
+                    <view class="weui-flex__item-2 text-grey">{{job.quiz.position}}<span class="myIcon icon-map_icon text-green margin-l" > </span></view>
                 </view>
                 <block wx:if="{{!job.work.useQuiz}}">
-                    <view class="weui-flex">
-                        <view class="weui-flex__item">工作地址:<text class="text-grey">{{job.work.position}}</text><span class="myIcon icon-map_icon text-green" bindtap="showWorkPosition"></span></view>
-                    </view>
-                    <view class="weui-flex">
-                        <map longitude="{{job.work.longitude}}" latitude="{{job.work.latitude}}" show-location="true"  bindtap="showWorkPosition">
-                        </map>
+                    <view class="weui-flex" hover-class="weui-cell_active" bindtap="showWorkPosition"  style="padding:20rpx 0;">
+                        <view class="weui-flex__item">工作地址:</view>
+                        <view class="weui-flex__item-2 text-grey">{{job.work.position}}<span class="myIcon icon-map_icon text-green margin-l" > </span></view>
                     </view>
                 </block>
             </view>
