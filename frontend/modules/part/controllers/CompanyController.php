@@ -162,6 +162,7 @@ class CompanyController extends \frontend\controllers\BaseController
             $uJob->updated_at = time();
             $text = "拒绝入职成功";
         }
+        $uJob->cFormId = $this->getPost("formId");
         $uJob->save();
         $user = $uJob->user;
         $job = $uJob->job;
@@ -171,7 +172,7 @@ class CompanyController extends \frontend\controllers\BaseController
             $job->name,
             $job->company->typeStr(),
             $this->getPost("type", 0) == 1 ? "审核通过，已入职" : "被拒绝"
-        ], $this->getPost("formId"), "/pages/job/getInfo?id=" . $uJid);
+        ], $uJob->formId, "/pages/job/getInfo?id=" . $uJid);
         return Tool::reJson(1, $text);
     }
 
@@ -187,9 +188,18 @@ class CompanyController extends \frontend\controllers\BaseController
         if (!$uJob || $uJob->job->uid != $this->user_id())
             return Tool::reJson(null, "未找到入职申请", Tool::FAIL);
         $uJob->status = UserHasJob::REFUSE;
+        $uJob->cFormId = $this->getPost("formId");
         $uJob->updated_at = time();
         $text = "拒绝入职成功";
         $uJob->save();
+        $job = $uJob->job;
+        $user->sendTpl(WxApp::TPL_Job_Apply_Result, [
+            $uJob->user->realname,
+            date("Y年m月d日 H:i:s", $uJob->created_at),
+            $job->name,
+            $job->company->typeStr(),
+            "被拒绝"
+        ], $uJob->formId, "/pages/job/getInfo?id=" . $uJid);
         return Tool::reJson(1, $text);
     }
 

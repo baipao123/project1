@@ -9,6 +9,7 @@ use Yii;
  *
  * @property int $id
  * @property string $formId
+ * @property string $cFormId
  * @property int $jid
  * @property int $uid
  * @property string $auth_key
@@ -42,7 +43,7 @@ class UserHasJob extends \yii\db\ActiveRecord
             [['jid', 'uid', 'status', 'created_at', 'auth_at', 'end_at', 'worktime_1', 'worktime_2', 'worktime_3', 'updated_at'], 'integer'],
             [['content'], 'string'],
             [['worktime_0'], 'number'],
-            [['formId', 'auth_key'], 'string', 'max' => 255],
+            [['formId', 'cFormId', 'auth_key'], 'string', 'max' => 255],
         ];
     }
 
@@ -54,6 +55,7 @@ class UserHasJob extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'formId' => 'Form ID',
+            'cFormId' => 'Company Form Id',
             'jid' => 'Jid',
             'uid' => 'Uid',
             'auth_key' => 'Auth Key',

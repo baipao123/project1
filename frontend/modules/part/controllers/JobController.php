@@ -147,6 +147,7 @@ class JobController extends \frontend\controllers\BaseController
         $daily->date = $date;
         $daily->num = in_array($type, [UserJobDaily::TYPE_HOUR, UserJobDaily::TYPE_COUNT]) ? $num : 1;
         $daily->status = UserJobDaily::PROVIDE;
+        $daily->formId = $this->getPost("formId");
         $daily->isNewRecord ? $daily->created_at = time() : $daily->updated_at = time();
         $msg = $this->getPost("msg");
         $daily->msg = $msg;
@@ -155,7 +156,7 @@ class JobController extends \frontend\controllers\BaseController
             $toUser->sendTpl(WxApp::TPL_TimeUp, [
                 $uJob->job->name,
                 date("Y年m月d日 H:i:s"),
-            ], $this->getPost("formId"), "/pages/company/verify?jid=" . $uJob->jid);
+            ], $uJob->cFormId, "/pages/company/verify?jid=" . $uJob->jid);
             return Tool::reJson(["info" => $daily->info()]);
         } else {
             Yii::warning($daily->errors, "UserJobDaily 保存出错");
@@ -191,6 +192,7 @@ class JobController extends \frontend\controllers\BaseController
             $uJob->worktime_3 += $daily->num;
             $job->worktime_3 += $daily->num;
         }
+        $uJob->cFormId = $this->getPost("formId");
         if (!$uJob->save())
             Yii::warning($uJob->errors, "保存UserHasJob失败");
         if (!$job->save())
@@ -204,7 +206,7 @@ class JobController extends \frontend\controllers\BaseController
             date("Y年m月d日 H:i:s", $daily->created_at),
             date("Y年m月d日 H:i:s"),
             "审核通过"
-        ], $this->getPost("formId"), "/pages/job/getInfo?id=" . $daily->uJid);
+        ], $daily->formId, "/pages/job/getInfo?id=" . $daily->uJid);
         return Tool::reJson(1, "已通过工时");
     }
 
@@ -223,6 +225,9 @@ class JobController extends \frontend\controllers\BaseController
         $daily->updated_at = time();
         $daily->msg = $this->getPost("msg", '');
         $daily->save();
+        $uJob = $daily->uJob;
+        $uJob->cFormId = $this->getPost("formId");
+        $uJob->save();
         $user = $daily->user;
         $user->sendTpl(WxApp::TPL_TimeUp_Result, [
             $job->name,
@@ -232,7 +237,7 @@ class JobController extends \frontend\controllers\BaseController
             date("Y年m月d日 H:i:s", $daily->created_at),
             date("Y年m月d日 H:i:s"),
             "被拒绝:" . $daily->msg
-        ], $this->getPost("formId"), "/pages/job/getInfo?id=" . $daily->uJid);
+        ], $daily->formId, "/pages/job/getInfo?id=" . $daily->uJid);
         return Tool::reJson(1, "已拒绝工时");
     }
 

@@ -17,6 +17,7 @@ use Yii;
  * @property string $msg
  * @property int $date
  * @property int $status
+ * @property string $formId
  * @property int $created_at
  * @property int $updated_at
  */
@@ -38,6 +39,7 @@ class UserJobDaily extends \yii\db\ActiveRecord
         return [
             [['uid', 'jid', 'cid', 'uJid', 'type', 'date', 'status', 'created_at', 'updated_at'], 'integer'],
             [['msg'], 'string', 'max' => 2000],
+            [['formId'], 'string', 'max' => 255],
             [['num'], 'number'],
         ];
     }
@@ -58,6 +60,7 @@ class UserJobDaily extends \yii\db\ActiveRecord
             'msg' => 'Msg',
             'date' => 'Date',
             'status' => 'Status',
+            'formId' => 'Form Id',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
