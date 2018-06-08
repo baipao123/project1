@@ -329,7 +329,7 @@ class Job extends \common\models\base\Job
             "tStart"     => $this->workTime(1),
             "tEnd"       => $this->workTime(2),
             "date"       => $this->workDate(),
-            "icon"       => $this->company->icon,
+            "icon"       => $this->company->icon(),
             "prize"      => $this->prizeStr(),
             "follow_num" => $this->follow_num
         ];

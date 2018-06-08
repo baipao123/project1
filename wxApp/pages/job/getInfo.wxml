@@ -169,10 +169,10 @@
                         <view class="weui-cells__title weui-cells_after-title padding-0-x">结算时间</view>
                         <view class="weui-cell weui-cell_input">
                             <view class="weui-cell__bd">
-                                <input type="number" class="weui-input" placeholder="" name="num" value="{{prompt.num}}"/>
+                                <input type="{{prompt.type==3 ? 'number' : 'digit'}}" class="weui-input" placeholder="" name="num" value="{{prompt.num}}"/>
                             </view>
                             <view class="weui-cell__ft">
-                                小时
+                                {{prompt.type==3 ? "单" : "小时"}}
                             </view>
                         </view>
                     </block>

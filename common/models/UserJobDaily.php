@@ -52,7 +52,7 @@ class UserJobDaily extends \common\models\base\UserJobDaily
 
     public function numStr() {
         if ($this->type == self::TYPE_COUNT)
-            return $this->num . "单";
+            return intval($this->num) . "单";
         if ($this->type == self::TYPE_WHOLE_DAY)
             return "一天";
         if ($this->type == self::TYPE_HALF_DAY)
