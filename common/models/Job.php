@@ -155,6 +155,7 @@ class Job extends \common\models\base\Job
             $job = new self;
             $job->jobNo = $job->getJobNoFromRedis();
         }
+        $job->formId = $data['formId'];
         $job->uid = Yii::$app->user->id;
         if (!$saveTmp && empty($data['name']))
             return "岗位名称未填写";

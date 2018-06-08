@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "job".
  *
  * @property string $id
+ * @property string $formId
  * @property string $jobNo
  * @property string $uid
  * @property string $city_id
@@ -60,7 +61,7 @@ class Job extends \yii\db\ActiveRecord
             [['id', 'uid', 'city_id', 'area_id', 'prize', 'num', 'start_at', 'end_at', 'work_start', 'work_end', 'created_at', 'gender', 'prize_type', 'status', 'view_num', 'follow_num', 'worktime_1', 'worktime_2', 'worktime_3'], 'integer'],
             [['worktime_0'], 'number'],
             [['jobNo', 'description', 'require_desc', 'extra_desc', 'tips'], 'string'],
-            [['name', 'timeTips', 'quiz_position', 'quiz_longitude', 'quiz_latitude', 'work_position', 'work_longitude', 'work_latitude', 'phone', 'contact_name'], 'string', 'max' => 255],
+            [['formId', 'name', 'timeTips', 'quiz_position', 'quiz_longitude', 'quiz_latitude', 'work_position', 'work_longitude', 'work_latitude', 'phone', 'contact_name'], 'string', 'max' => 255],
             [['jobNo'], 'unique'],
         ];
     }
@@ -71,6 +72,7 @@ class Job extends \yii\db\ActiveRecord
     public function attributeLabels() {
         return [
             'id'             => 'ID',
+            'formId'         => 'Form Id',
             'jobNO'          => 'JobNo',
             'uid'            => 'Uid',
             'city_id'        => 'City ID',

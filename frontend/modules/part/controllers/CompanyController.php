@@ -153,6 +153,7 @@ class CompanyController extends \frontend\controllers\BaseController
         $uJob = UserHasJob::findOne($uJid);
         if (!$uJob || $uJob->auth_key != $key || $uJob->uid != $uid || $uJob->jid != $jid || $uJob->status != UserHasJob::APPLY || $uJob->job->uid != $this->user_id())
             return Tool::reJson(null, "二维码不正确或已过期", Tool::FAIL);
+        $job = $uJob->job;
         if ($this->getPost("type", 0) == 1) {
             $uJob->status = UserHasJob::ON;
             $uJob->auth_at = time();
@@ -161,11 +162,11 @@ class CompanyController extends \frontend\controllers\BaseController
             $uJob->status = UserHasJob::REFUSE;
             $uJob->updated_at = time();
             $text = "拒绝入职成功";
+            $job->formId = $this->getPost("formId");
         }
         $uJob->cFormId = $this->getPost("formId");
         $uJob->save();
         $user = $uJob->user;
-        $job = $uJob->job;
         $user->sendTpl(WxApp::TPL_Job_Apply_Result, [
             $uJob->user->realname,
             date("Y年m月d日 H:i:s", $uJob->created_at),
@@ -193,6 +194,7 @@ class CompanyController extends \frontend\controllers\BaseController
         $text = "拒绝入职成功";
         $uJob->save();
         $job = $uJob->job;
+        $job->formId = $this->getPost("formId");
         $user->sendTpl(WxApp::TPL_Job_Apply_Result, [
             $uJob->user->realname,
             date("Y年m月d日 H:i:s", $uJob->created_at),
