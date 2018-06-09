@@ -91,17 +91,16 @@ Page({
         })
     },
     goUJobInfo: function (id) {
-        id = typeof id == "object" ? this.data.job.uJid : id
-        app.turnPage("job/getInfo?id="+id)
+        app.turnPage("job/getInfo?id=" + id)
     },
-    cancelUJob: function () {
+    cancelUJob: function (e) {
         let that = this
         wx.showActionSheet({
             itemList: ["面试扫码","取消报名"],
             success: function (res) {
                 switch (res.tapIndex) {
                     case 0:
-                        that.goUJobInfo()
+                        that.goUJobInfo(that.data.job.uJid)
                         break
                     case 1:
                         app.confirm("确定取消报名吗?", function () {

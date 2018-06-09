@@ -270,5 +270,8 @@ Page({
                 }
             }
         })
-    }
+    },
+    seeIndex:function () {
+        app.turnPage("index/home")
+    },
 })

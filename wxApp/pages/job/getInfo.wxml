@@ -136,7 +136,7 @@
         </view>
     </block>
     <view style="height:150rpx;"></view>
-    <view class="bottom-btn bg-white">
+    <view class="bottom-btn bg-white" wx:if="{{uJob && uJob.status!=9}}">
         <button class="weui-btn" type="primary" bindtap="actions">操作</button>
     </view>
 
