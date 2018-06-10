@@ -37,6 +37,7 @@
         <th style="width: 100px;">联系人</th>
         <th style="width: 120px;">企业</th>
         <th style="width: 100px;">活跃度</th>
+        <th style="width: 100px;">当前状态</th>
         <th>操作</th>
     </tr>
     </thead>
@@ -61,6 +62,17 @@
                 浏览量: <?= $job->view_num ?><br>
                 关注数: <?= $job->follow_num ?><br>
                 已招聘: <?= $job->getPassNum() . "/" . $job->num ?><br>
+            </td>
+            <td>
+                <?php if ($job->status == \common\models\Job::ON) : ?>
+                    <span class="layui-btn layui-btn-sm layui-btn-normal">上架中</span>
+                <?php elseif ($job->status == \common\models\Job::FULL) : ?>
+                    <span class="layui-btn layui-btn-sm">已招满</span>
+                <?php elseif ($job->status == \common\models\Job::END) : ?>
+                    <span class="layui-btn layui-btn-sm layui-btn-warm">已结束</span>
+                <?php elseif ($job->status == \common\models\Job::OFF) : ?>
+                    <span class="layui-btn layui-btn-sm layui-btn-danger">已下架</span>
+                <?php endif; ?>
             </td>
             <td>
                 <span class="layui-btn layui-btn-sm layui-btn-normal"
