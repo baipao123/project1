@@ -43,7 +43,7 @@ class SiteController extends BaseController
             [
                 "color" => "cyan",
                 "title" => CompanyRecord::find()->where(["status" => Company::STATUS_VERIFY])->count(),
-                "icon"  => "icon-clock",
+                "icon"  => "my-icon-verify",
                 "desc"  => "未处理审核",
                 "href"  => "/company/verify-list",
             ],
@@ -57,7 +57,7 @@ class SiteController extends BaseController
             [
                 "color" => "green",
                 "title" => Job::find()->where(["NOT IN", "status", [Job::OFF, Job::DEL]])->count(),
-                "icon"  => "icon-clock",
+                "icon"  => "my-icon-job",
                 "desc"  => "岗位总数",
                 "href"  => "/job/list",
             ],
