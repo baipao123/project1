@@ -72,6 +72,7 @@
                 </view>
             </view>
 
+            <view class="weui-cells__tips">点击下方蓝色区域的地图获取{{company.type!=3 ? "公司":"个人"}}地址</view>
             <view class="weui-cell weui-cell_input">
                 <map longitude="{{company.position.longitude}}" latitude="{{company.position.latitude}}"
                      show-location="{{true}}"
@@ -87,7 +88,7 @@
                     <view class="weui-cell__bd">
                         <textarea class="weui-textarea" name="position" value="{{company.positionStr || company.position.address}}"
                                   bindblur="positionSave" style="height: 3.3em"
-                                  placeholder="请输入{{company.type!=3 ? '公司':'居住'}}地址"/>
+                                  placeholder="点击上方地图自动获取或手动更改获取的{{company.type!=3 ? '公司':'居住'}}地址"/>
                     </view>
                 </view>
             </view>

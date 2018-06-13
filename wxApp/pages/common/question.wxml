@@ -14,7 +14,7 @@
             “有准兼职”目前为试运行阶段，如您在使用过程中有任何疑问，请随时与我们联系。
         </view>
         <view class="weui-article__p">
-            您可以拨打江苏省大学生就业力发展中心的座机：<view class="weui-agree__link" bindtap="call" data-phone="0519—89591580">0519—89591580</view>
+            您可以拨打江苏省大学生就业力发展中心的客服电话：<view class="weui-agree__link" bindtap="call" data-phone="0519—89591580">0519—89591580</view>
         </view>
         <view class="weui-article__p">
             或与我们的客服联系：<view class="weui-agree__link" bindtap="call" data-phone="17351591580">17351591580</view>
