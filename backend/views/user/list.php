@@ -83,6 +83,8 @@
                       onclick="layerOpenIFrame('/user/info?id=<?= $user->id ?>')">岗位详情</span>
                 <span class="layui-btn layui-btn-sm layui-btn-normal"
                       onclick="globalOpenIFrame('/clock/list?uid=<?= $user->id ?>','打卡记录')">打卡记录</span>
+                <span class="layui-btn layui-btn-sm layui-btn-primary"
+                      onclick="layerConfirmUrl('/user/clear?uid=<?= $user->id ?>','确定清除用户的注册信息，让用户重新注册？')">清除注册信息</span>
             </td>
         </tr>
     <?php endforeach; ?>

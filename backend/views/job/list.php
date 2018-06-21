@@ -77,6 +77,13 @@
             <td>
                 <span class="layui-btn layui-btn-sm layui-btn-normal"
                       onclick="globalOpenIFrame('<?= Url::createLink("user/job-list", ["jid" => $job->id]) ?>','员工列表')">员工列表</span>
+                <?php if($job->status == \common\models\Job::ON):?>
+                    <span class="layui-btn layui-btn-sm layui-btn-primary"
+                          onclick="layerConfirmUrl('/job/off?jid=<?= $job->id ?>','确定下架岗位？')">下架</span>
+                <?php elseif($job->status == \common\models\Job::OFF):?>
+                    <span class="layui-btn layui-btn-sm layui-btn-danger"
+                          onclick="layerConfirmUrl('/job/del?jid=<?= $job->id ?>','确定删除岗位？删除后无法恢复')">删除</span>
+                <?php endif;?>
             </td>
         </tr>
     <?php endforeach; ?>

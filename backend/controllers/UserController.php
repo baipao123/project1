@@ -17,7 +17,7 @@ use yii\data\Pagination;
 
 class UserController extends BaseController
 {
-    public $basicActions = ["info"];
+    public $basicActions = ["info","clear"];
 
     public function actionList($name = "", $phone = "", $gender = -1, $cid = 0, $aid = 0) {
         $query = User::find()->where(["type" => User::TYPE_USER]);
@@ -120,4 +120,17 @@ class UserController extends BaseController
         ]);
     }
 
+    public function actionClear($uid){
+        $user = User::findOne($uid);
+        if (!$user)
+            Yii::$app->session->setFlash("danger", "用户不存在");
+        else if ($user->type != User::TYPE_USER)
+            Yii::$app->session->setFlash("danger", "用户不是学生，无法清除注册信息");
+        else {
+            $user->type = 0;
+            $user->save();
+            Yii::$app->session->setFlash("success", "清除信息成功，用户可以重新注册了");
+        }
+        return $this->render("../layouts/none");
+    }
 }

@@ -8,13 +8,15 @@
 
 namespace backend\controllers;
 
-
+use Yii;
 use common\models\Company;
 use common\models\Job;
 use yii\data\Pagination;
 
 class JobController extends BaseController
 {
+    public $basicActions = ["off","del"];
+
     public function actionList($cid = 0, $status = 0, $start_date = "", $end_date = "") {
         $query = Job::find()->where(["<>", "status", Job::DEL]);
         if ($cid > 0)
@@ -48,4 +50,38 @@ class JobController extends BaseController
         ]);
     }
 
+
+    public function actionOff($jid) {
+        $job = Job::findOne($jid);
+        Yii::warning($job->attributes);
+        if (!$job)
+            Yii::$app->session->setFlash("danger", "岗位不存在");
+        else if ($job->status == Job::DEL)
+            Yii::$app->session->setFlash("danger", "岗位已被删除");
+        else if ($job->status != Job::ON)
+            Yii::$app->session->setFlash("danger", "岗位不是上架状态，无需下架");
+        else {
+            $job->status = Job::OFF;
+            $job->save();
+            Yii::$app->session->setFlash("success", "岗位下架成功");
+        }
+        return $this->render("../layouts/none");
+    }
+
+    public function actionDel($jid){
+        $job = Job::findOne($jid);
+        Yii::warning($job->attributes);
+        if (!$job)
+            Yii::$app->session->setFlash("danger", "岗位不存在");
+        else if ($job->status == Job::DEL)
+            Yii::$app->session->setFlash("danger", "岗位已被删除");
+        else if ($job->status != Job::OFF)
+            Yii::$app->session->setFlash("danger", "岗位不是下架状态，请先下架");
+        else {
+            $job->status = Job::DEL;
+            $job->save();
+            Yii::$app->session->setFlash("success", "岗位删除成功");
+        }
+        return $this->render("../layouts/none");
+    }
 }
