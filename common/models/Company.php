@@ -170,7 +170,7 @@ class Company extends \common\models\base\Company
                 ->offset(($page - 1) * $limit)->limit($limit)
                 ->orderBy([
                     "status"     => [Job::ON, Job::FULL, Job::OFF, Job::END],
-                    "created_at" => SORT_DESC
+                    "updated_at" => SORT_DESC
                 ]);
             return $query->all();
         }, 10);
