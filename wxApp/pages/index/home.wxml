@@ -92,7 +92,7 @@
                     <view class="weui-media-box__hd weui-media-box__bd_in-appmsg" style="padding:0 15px 15px 15px">
                         <view class="weui-media-box__desc" style="line-height:1.5;">
                             <view><span class="myIcon icon-No icon-13 margin-r2"></span><text space="ensp">岗位编号: {{item.jobNo}}</text></view>
-                            <view><span class="myIcon icon-map_icon icon-13 margin-r2"></span><text>{{item.position}}</text></view>
+                            <view style="height:100%"><span class="myIcon icon-map_icon icon-13 margin-r2"></span><text>{{item.position}}</text></view>
                             <view><span class="myIcon icon-clock icon-13 margin-r2"></span><text space="ensp">{{item.date}} {{item.time}}</text></view>
                             <view style="margin-top:20rpx;" class="weui-flex" wx:if="{{item.user.isOwner}}">
                                 <text class="{{!item.workStr ? 'weui-flex__item':''}} a-l">{{item.view_num}}浏览</text>

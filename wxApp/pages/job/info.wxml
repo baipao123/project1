@@ -64,7 +64,11 @@
                 </view>
                 <view class="weui-flex">
                     <view class="weui-flex__item">工作时间:</view>
-                    <view class="weui-flex__item-2 text-grey">{{job.start_time+'  ——  '+job.end_time}} {{job.timeTips}}</view>
+                    <view class="weui-flex__item-2 text-grey">{{job.start_time+'  ——  '+job.end_time}}</view>
+                </view>
+                <view class="weui-flex">
+                    <view class="weui-flex__item">补充说明:</view>
+                    <view class="weui-flex__item-2 text-grey">{{job.timeTips}}</view>
                 </view>
                 <view class="weui-flex" hover-class="weui-cell_active" bindtap="showQuizPosition" style="padding:20rpx 0;">
                     <view class="weui-flex__item">面试{{job.work.useQuiz ? "及工作":""}}地址: </view>
@@ -120,6 +124,9 @@
                     <view class="weui-flex__item">{{company.type == 2 ? "企业简介" : "个人简介"}}:</view>
                     <view class="weui-flex__item-2 text-grey">{{company.description}}</view>
                 </view>
+            </view>
+            <view class="weui-footer" style="margin-top:50rpx;">
+                <view class="weui-footer__text text-red">平台提示：凡收取费用的或工作内容不符的兼职，请你提高警惕并第一时间向就业力中心举报</view>
             </view>
             <view style="height:200rpx"></view>
         </view>

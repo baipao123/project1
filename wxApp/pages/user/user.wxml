@@ -95,7 +95,7 @@
             </navigator>
         </view>
         <view class="weui-footer">
-            <view class="weui-footer__text">Copyright © 2008-2016 weui.io</view>
+            <view class="weui-footer__text">Copyright 江苏省大学生就业力发展中心版权所有</view>
         </view>
     </scroll-view>
 </view>

@@ -218,6 +218,7 @@ class Job extends \common\models\base\Job
             $job->contact_name = "";
         }
         $job->tips = $data['tips'];
+        $job->updated_at = time();
         if ($job->isNewRecord) {
             $job->created_at = time();
             $job->status = $saveTmp ? self::TMP : self::ON;

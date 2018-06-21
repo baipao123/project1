@@ -43,6 +43,7 @@ use Yii;
  * @property int $worktime_2
  * @property int $worktime_3
  * @property string $created_at
+ * @property string $updated_at
  */
 class Job extends \yii\db\ActiveRecord
 {
@@ -58,7 +59,7 @@ class Job extends \yii\db\ActiveRecord
      */
     public function rules() {
         return [
-            [['id', 'uid', 'city_id', 'area_id', 'prize', 'num', 'start_at', 'end_at', 'work_start', 'work_end', 'created_at', 'gender', 'prize_type', 'status', 'view_num', 'follow_num', 'worktime_1', 'worktime_2', 'worktime_3'], 'integer'],
+            [['id', 'uid', 'city_id', 'area_id', 'prize', 'num', 'start_at', 'end_at', 'work_start', 'work_end', 'created_at', 'gender', 'prize_type', 'status', 'view_num', 'follow_num', 'worktime_1', 'worktime_2', 'worktime_3', 'updated_at'], 'integer'],
             [['worktime_0'], 'number'],
             [['jobNo', 'description', 'require_desc', 'extra_desc', 'tips'], 'string'],
             [['formId', 'name', 'timeTips', 'quiz_position', 'quiz_longitude', 'quiz_latitude', 'work_position', 'work_longitude', 'work_latitude', 'phone', 'contact_name'], 'string', 'max' => 255],
@@ -107,6 +108,7 @@ class Job extends \yii\db\ActiveRecord
             'worktime_2'     => 'Worktime 2',
             'worktime_3'     => 'Worktime 3',
             'created_at'     => 'Created At',
+            'updated_at'     => 'Updated At'
         ];
     }
 }

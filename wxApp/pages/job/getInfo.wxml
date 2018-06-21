@@ -135,6 +135,9 @@
             </view>
         </view>
     </block>
+    <view class="weui-footer" style="margin-top:50rpx;">
+        <view class="weui-footer__text text-red">平台提示：凡收取费用的或工作内容不符的兼职，请你提高警惕并第一时间向就业力中心举报</view>
+    </view>
     <view style="height:150rpx;"></view>
     <view class="bottom-btn bg-white" wx:if="{{uJob && uJob.status!=9}}">
         <button class="weui-btn" type="primary" bindtap="actions">操作</button>
