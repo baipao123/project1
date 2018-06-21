@@ -126,7 +126,7 @@
                 </view>
             </view>
             <view class="weui-footer" style="margin-top:50rpx;">
-                <view class="weui-footer__text text-red">平台提示：凡收取费用的或工作内容不符的兼职，请你提高警惕并第一时间向就业力中心举报</view>
+                <view class="weui-footer__text text-red a-l">平台提示：凡收取费用的或工作内容不符的兼职，请你提高警惕并第一时间向就业力中心举报</view>
             </view>
             <view style="height:200rpx"></view>
         </view>
