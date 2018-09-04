@@ -50,6 +50,8 @@ class UserController extends \frontend\controllers\BaseController
         $user->area_id = $this->getPost("aid", 0);
         $user->real_at = time();
         $user->type = User::TYPE_USER;
+        $user->school_id = $this->getPost("school_id", 0);
+        $user->school_year = $this->getPost("school_year", 0);
         $user->save();
         return Tool::reJson(["user" => $user->info()]);
     }
