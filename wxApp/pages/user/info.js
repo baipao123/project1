@@ -17,7 +17,11 @@ Page({
             value: '',
             nameText: ''
         },
-        position: {}
+        position: {},
+        schools: [],
+        school_value: 0,
+        school_year: 0,
+        schoolYears: [],
     },
     onLoad: function () {
         let that = this
@@ -31,6 +35,8 @@ Page({
             })
         })
         app.setNavBarBackColor()
+        that.getSchools(app.globalData.user.city_id,app.globalData.user.school_id)
+        that.getYears(app.globalData.user.school_year)
     },
     onShow: function () {
         let region = app.globalData.region,
@@ -54,6 +60,7 @@ Page({
                             name: 'city'
                         }
                         that.edit(data)
+                        that.getSchools(region.cid,that.data.user.school_id)
                     }
                 }
             })
@@ -184,5 +191,69 @@ Page({
             app.toast("个人招聘者无法修改联系人","none");
         else
             this.prompt(e)
-    }
+    },
+    getSchools: function (city_id,school_id) {
+        let that = this
+        city_id = city_id == undefined ? 0 : city_id
+        school_id = school_id == undefined ? 0 : school_id
+        request.get("part/school/list", {city_id: city_id,school_id:school_id}, function (res) {
+            that.setData({
+                schools:res.schools,
+                school_value:res.index
+            })
+        })
+    },
+    getYears:function (year) {
+        let that = this,
+            thisYear = (new Date()).getFullYear(),
+            arr = [],
+            value = 0
+        arr.push("请选择学年")
+        if(year < thisYear - 4) {
+            arr.push(year)
+            value = 1
+        }
+        for (let index = thisYear - 4; index <= thisYear; index++) {
+            arr.push(index)
+            if(year == index)
+                value = index - thisYear + 4
+        }
+        that.setData({
+            schoolYears: arr,
+            school_year: value
+        })
+        console.log(arr)
+
+    },
+    choseSchool:function (e) {
+        let that = this,
+            index = e.detail.value,
+            school = that.data.schools[index],
+            school_id = school.id,
+            school_name = school.name
+        if (school_id == that.data.user.school_id)
+            return true
+        app.confirm(school_id == 0 ? '确定不选择学校？' : "确定选择学校:" + school_name + "?", function (e) {
+            let data = {
+                name: "school_id",
+                value: school_id
+            }
+            that.edit(data)
+        })
+    },
+    choseSchoolYear:function (e) {
+        let that = this,
+            index = e.detail.value,
+            year = that.data.schoolYears[index]
+        if (year == that.data.user.school_year)
+            return true
+        app.confirm(index == 0 ? "确定不选择学年？" : "确定选择学年:" + year + "?", function (e) {
+            let data = {
+                name: "school_year",
+                value: year
+            }
+            that.edit(data)
+        })
+    },
+
 })

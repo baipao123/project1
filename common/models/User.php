@@ -3,7 +3,6 @@
 namespace common\models;
 
 use common\tools\Img;
-use common\tools\Tool;
 use common\tools\WxApp;
 use Yii;
 
@@ -11,6 +10,7 @@ use Yii;
  * @property Company $company
  * @property District $city
  * @property District $area
+ * @property School $school
  * */
 class User extends \common\models\base\User
 {
@@ -28,6 +28,10 @@ class User extends \common\models\base\User
 
     public function getArea() {
         return $this->hasOne(District::className(), ["id" => "area_id"]);
+    }
+
+    public function getSchool(){
+        return $this->hasOne(School::className(), ["id" => "school_id"]);
     }
 
     /**
@@ -91,7 +95,10 @@ class User extends \common\models\base\User
             "gender"    => $this->gender,
             "city_id"   => $this->city_id,
             "area_id"   => $this->area_id,
-            "cityStr"   => $this->cityStr()
+            "cityStr"   => $this->cityStr(),
+            "school_id" => $this->school_id,
+            "school_name" => $this->school ? $this->school->name : "",
+            "school_year" => $this->school_year,
         ];
     }
 

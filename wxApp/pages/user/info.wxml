@@ -41,6 +41,23 @@
                 </map>
             </view>
         </view>
+        <block wx:if="{{!isCompany}}">
+            <view class="weui-cells__title">学校信息</view>
+            <view class="weui-cells weui-cells_after-title">
+                <picker range="{{schools}}" range-key="name" bindchange="choseSchool">
+                    <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" style="border-bottom:1rpx solid #ddd;margin:0 15px;padding:10px 0;">
+                        <view class="weui-cell__bd">学校</view>
+                        <view class="weui-cell__ft weui-cell__ft_in-access text-line r">{{user.school_name ? user.school_name : '请选择学校'}}</view>
+                    </view>
+                </picker>
+                <picker range="{{schoolYears}}" value="school_year" bindchange="choseSchoolYear">
+                    <view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                        <view class="weui-cell__bd">学年</view>
+                        <view class="weui-cell__ft weui-cell__ft_in-access text-line r">{{user.school_year > 0 ? user.school_year : '请选择学年'}}</view>
+                    </view>
+                </picker>
+            </view>
+        </block>
     </view>
     <view class="prompt-page" hidden="{{!isPrompt}}">
         <view class="prompt-contain" hover-stop-propagation="true">

@@ -96,6 +96,14 @@ class UserController extends \frontend\controllers\BaseController
             $user->area_id = $this->getPost('aid', 0);
             $user->save();
             return Tool::reJson(["user" => $user->info()]);
+        } else if ($name == 'school_id') {
+            $user->school_id = $value;
+            $user->save();
+            return Tool::reJson(["user" => $user->info()]);
+        } else if ($name == 'school_year') {
+            $user->school_year = $value;
+            $user->save();
+            return Tool::reJson(["user" => $user->info()]);
         } else {
             if ($user->type <= User::TYPE_USER || !$company = $user->company)
                 return Tool::reJson(null, "您还不是招聘者", Tool::FAIL);

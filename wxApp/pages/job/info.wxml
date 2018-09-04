@@ -37,6 +37,10 @@
                     <view class="weui-flex__item-2 text-grey">{{job.jobNo}}</view>
                 </view>
                 <view class="weui-flex">
+                    <view class="weui-flex__item">工作性质:</view>
+                    <view class="weui-flex__item-2 text-grey">{{job.type == 0 ? '兼职' : '全职'}}</view>
+                </view>
+                <view class="weui-flex">
                     <view class="weui-flex__item">招聘人数:</view>
                     <view class="weui-flex__item-2 text-grey">
                         <view class="weui-flex">
