@@ -2,6 +2,7 @@
   "pages": [
     "pages/index/index",
     "pages/index/home",
+    "pages/index/full",
     "pages/user/user",
     "pages/user/info",
     "pages/chose/user",
@@ -24,7 +25,13 @@
     "list": [
       {
         "pagePath": "pages/index/home",
-        "text": "首页",
+        "text": "兼职",
+        "selectedColor": "#09bb07",
+        "position": "top"
+      },
+      {
+        "pagePath": "pages/index/full",
+        "text": "全职",
         "selectedColor": "#09bb07",
         "position": "top"
       },

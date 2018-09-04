@@ -105,7 +105,7 @@ class JobController extends \frontend\controllers\BaseController
 
     }
 
-    public function actionList($cid = -1, $aid = -1, $text = "", $page = 1, $limit = 10) {
+    public function actionList($cid = -1, $aid = -1, $text = "", $type = 0, $page = 1, $limit = 10) {
         $user = $this->getUser();
         if ($user->isCompany()) {
             $list = $user->company ? $user->company->jobs(0, $page, $limit) : [];
@@ -115,7 +115,7 @@ class JobController extends \frontend\controllers\BaseController
                 $cid = $user->city_id;
                 $aid = $user->area_id;
             }
-            $list = (array)Job::getList($this->user_id(), $text, $cid, $aid, $page, $limit);
+            $list = (array)Job::getList($this->user_id(), $text, $cid, $aid, $type, $page, $limit);
         }
         return Tool::reJson(["list" => $list]);
     }

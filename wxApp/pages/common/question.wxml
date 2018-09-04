@@ -19,5 +19,8 @@
         <view class="weui-article__p">
             或与我们的客服联系：<view class="weui-agree__link" bindtap="call" data-phone="17351591580">17351591580</view>
         </view>
+        <view class="weui-article__p">
+            点击地图区域无法获取位置，需要手动打开位置权限：在小程序点右上角的三个点，关于有准兼职，点右上角，设置，然后打开位置权限
+        </view>
     </view>
 </view>

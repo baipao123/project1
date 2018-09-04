@@ -11,6 +11,7 @@ const get = (url, params, success, fail, complete) => {
 
 const request = (method, url, params, success, fail, complete) => {
     if (url.substr(0, 5) != "https")
+        // url = "https://demo.wx-dk.cn/" + url;
         url = "https://dev.jiuyeli.org/" + url;
     wx.request({
         url: url,

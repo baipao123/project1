@@ -85,6 +85,7 @@ class Job extends \common\models\base\Job
                 "id"           => $job->id,
                 "jobNo"        => $job->jobNo,
                 "name"         => $job->name,
+                "type"         => $job->type,
                 "company"      => $job->company->info(),
                 "prize"        => $job->prizeStr(),
                 "position"     => empty($job->work_position) ? $job->quiz_position : $job->work_position,
@@ -166,6 +167,7 @@ class Job extends \common\models\base\Job
         $job->area_id = $data['area_id'];
         if (!$saveTmp && empty($data['prize']))
             return "工资未填写";
+        $job->type = isset($data['type']) ? $data['type'] : 0;
         $job->prize = intval($data['prize'] * 100);
         $job->prize_type = $data['prize_type'];
         $job->num = (int)$data['num'];
@@ -253,6 +255,7 @@ class Job extends \common\models\base\Job
             "area_id"           => $this->area_id,
             "cityStr"           => $this->CityStr(),
             "name"              => $this->name,
+            "type"              => $this->type,
             "gender"            => $this->gender,
             "num"               => $this->num,
             "prize_type"        => $this->prize_type,
@@ -304,10 +307,10 @@ class Job extends \common\models\base\Job
         }, 10);
     }
 
-    public static function getList($uid = 0, $text = "", $cid = 0, $aid = 0, $page = 1, $limit = 10) {
-        $jobs = Yii::$app->db->cache(function () use ($text, $cid, $aid, $page, $limit) {
+    public static function getList($uid = 0, $text = "", $cid = 0, $aid = 0, $type = 0, $page = 1, $limit = 10) {
+        $jobs = Yii::$app->db->cache(function () use ($text, $cid, $aid, $type, $page, $limit) {
             $query = self::find()
-                ->where(["status" => self::ON])
+                ->where(["status" => self::ON, "type" => $type])
                 ->offset(($page - 1) * $limit)->limit($limit)
                 ->orderBy("created_at desc");
             if (!empty($text))

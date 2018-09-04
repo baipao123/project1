@@ -3,6 +3,21 @@
         <view class="body">
             <view class="weui-cells__title">基本信息</view>
             <view class="weui-cells weui-cells_after-title">
+                <view class="weui-cell">
+                    <view class="weui-cell__hd">
+                        <view class="weui-label">岗位类型</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                        <radio-group class="radio-group" name="type" bindchange="typeChange">
+                            <label class="radio gender">
+                                <radio value="0" checked="{{!job.type || job.type==0}}"/>兼职
+                            </label>
+                            <label class="radio gender">
+                                <radio value="1" checked="{{job.type==1}}"/>全职
+                            </label>
+                        </radio-group>
+                    </view>
+                </view>
                 <view class="weui-cell weui-cell_access">
                     <view class="weui-cell__hd">
                         <view class="weui-label">工作城市</view>

@@ -14,6 +14,7 @@ use Yii;
  * @property string $city_id
  * @property string $area_id
  * @property string $name
+ * @property int $type
  * @property string $prize
  * @property int $prize_type
  * @property string $num
@@ -59,7 +60,7 @@ class Job extends \yii\db\ActiveRecord
      */
     public function rules() {
         return [
-            [['id', 'uid', 'city_id', 'area_id', 'prize', 'num', 'start_at', 'end_at', 'work_start', 'work_end', 'created_at', 'gender', 'prize_type', 'status', 'view_num', 'follow_num', 'worktime_1', 'worktime_2', 'worktime_3', 'updated_at'], 'integer'],
+            [['id', 'uid', 'city_id', 'area_id', 'type', 'prize', 'num', 'start_at', 'end_at', 'work_start', 'work_end', 'created_at', 'gender', 'prize_type', 'status', 'view_num', 'follow_num', 'worktime_1', 'worktime_2', 'worktime_3', 'updated_at'], 'integer'],
             [['worktime_0'], 'number'],
             [['jobNo', 'description', 'require_desc', 'extra_desc', 'tips'], 'string'],
             [['formId', 'name', 'timeTips', 'quiz_position', 'quiz_longitude', 'quiz_latitude', 'work_position', 'work_longitude', 'work_latitude', 'phone', 'contact_name'], 'string', 'max' => 255],
@@ -79,6 +80,7 @@ class Job extends \yii\db\ActiveRecord
             'city_id'        => 'City ID',
             'area_id'        => 'Area ID',
             'name'           => 'Name',
+            'type'           => 'Type',
             'prize'          => 'Prize',
             'prize_type'     => 'Prize Type',
             'num'            => 'Num',
