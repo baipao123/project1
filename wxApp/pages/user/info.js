@@ -208,8 +208,9 @@ Page({
             thisYear = (new Date()).getFullYear(),
             arr = [],
             value = 0
+        year = year == undefined ? 0 : year
         arr.push("请选择学年")
-        if(year < thisYear - 4) {
+        if(year < thisYear - 4 && year > 0) {
             arr.push(year)
             value = 1
         }
