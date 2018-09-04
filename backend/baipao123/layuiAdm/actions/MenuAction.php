@@ -96,6 +96,20 @@ class MenuAction extends ApiAction
                 ]
             ],
             [
+                "title"    => "学校管理",
+                "icon"     => "icon-icon10",
+                "href"     => "",
+                "spread"   => false,
+                "children" => [
+                    [
+                        "title"  => "学校列表",
+                        "icon"   => "&#xe612;",
+                        "href"   => "/school/list",
+                        "spread" => false
+                    ]
+                ]
+            ],
+            [
                 "title"    => "账户管理",
                 "icon"     => "icon-icon10",
                 "href"     => "",
@@ -108,7 +122,7 @@ class MenuAction extends ApiAction
                         "spread" => false
                     ]
                 ]
-            ]
+            ],
         ];
 
         echo json_encode($menu);

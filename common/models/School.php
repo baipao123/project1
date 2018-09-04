@@ -10,10 +10,18 @@ namespace common\models;
 
 use Yii;
 
+/**
+ * @property District $city
+ */
 class School extends \common\models\base\School
 {
     const ON = 1;
     const OFF = 0;
+    const DEL = 2;
+
+    public function getCity() {
+        return $this->hasOne(District::className(), ["id" => "city_id"]);
+    }
 
     public static function getList($cid = 0) {
         return Yii::$app->db->cache(function () use ($cid) {
