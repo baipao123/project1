@@ -1,14 +1,14 @@
 <view class="page">
     <view class="tips warn icon_sp_area" wx:if="{{company.status == 2}}">
-        <icon type="warn" size="20" color="red"></icon>被拒绝：{{company.refuseReason}}
+        <icon type="warn" size="20" color="red"/>被拒绝：{{company.refuseReason}}
     </view>
     <view class="page__hd avatar">
-        <image class="cover bg" bindtap="uploadCover" src="{{domain+ (company.cover || 'company/cover.jpg')}}"></image>
+        <image class="cover bg" bindtap="uploadCover" src="{{domain+ (company.cover || 'company/cover.jpg')}}"/>
         <view class="icon-view">
-            <image class="icon userAvatar" src="{{domain+(company.icon|| 'company/icon.jpg')}}" hover-stop-propagation="{{true}}"></image>
-            <span class="myIcon icon-edit" bindtap="uploadIcon"></span>
+            <image class="icon userAvatar" src="{{domain+(company.icon|| 'company/icon.jpg')}}" hover-stop-propagation="{{true}}"/>
+            <span class="myIcon icon-edit" bindtap="uploadIcon"/>
         </view>
-        <span class="cover-icon myIcon icon-edit" bindtap="uploadCover"></span>
+        <span class="cover-icon myIcon icon-edit" bindtap="uploadCover"/>
     </view>
     <form bindsubmit="bindCompany" report-submit="true">
         <view class="weui-cells weui-cells_after-title">
@@ -115,7 +115,7 @@
                                               wx:if="{{deleteImage}}" bindtap="deleteImage" data-id="{{index}}"
                                               hover-stop-propagation="true">
                                             <image class="weui-uploader__img" src="{{item}}" mode="aspectFill"/>
-                                            <span class="myIcon icon-delete deleteImage"></span>
+                                            <span class="myIcon icon-delete deleteImage"/>
                                         </view>
                                         <view class="weui-uploader__file" bindtap="previewImage" data-id="{{index}}"
                                               wx:else>
@@ -127,11 +127,11 @@
 
                                 </view>
                                 <view class="weui-uploader__input-box" wx:if="{{images.length<3}}">
-                                    <view class="weui-uploader__input" bindtap="uploadImages"></view>
+                                    <view class="weui-uploader__input" bindtap="uploadImages"/>
                                 </view>
                                 <view class="weui-uploader__input-box delete"
                                       wx:if="{{images.length>0 && !deleteImage}}">
-                                    <view class="weui-uploader__input" bindtap="openDeleteImage"></view>
+                                    <view class="weui-uploader__input" bindtap="openDeleteImage"/>
                                 </view>
                             </view>
                         </view>
@@ -147,7 +147,7 @@
                     <checkbox class="weui-agree__checkbox" id="weuiAgree" value="agree" checked="{{isAgree}}"/>
                     <view class="weui-agree__checkbox-icon">
                         <icon class="weui-agree__checkbox-icon-check" type="success_no_circle" size="9"
-                              wx:if="{{isAgree}}"></icon>
+                              wx:if="{{isAgree}}"/>
                     </view>
                     阅读并同意
                     <navigator url="/pages/common/note" class="weui-agree__link">《用户协议》</navigator>

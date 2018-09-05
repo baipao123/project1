@@ -31,18 +31,19 @@
                 </view>
             </view>
             <view class="weui-cells__title">岗位详情</view>
-            <view class="middle bg-white text text-m" style="padding-bottom:10rpx;">
+            <view class="middle bg-white text text-m" style="padding-bottom:10rpx;position:relative;">
+                <image class="jobType" src="/images/{{job.type == 0 ? 'part' : 'full'}}.png"/>
                 <view class="weui-flex">
                     <view class="weui-flex__item">工作编码:</view>
-                    <view class="weui-flex__item-2 text-grey">{{job.jobNo}}</view>
+                    <view class="weui-flex__item-3 text-grey">{{job.jobNo}}</view>
                 </view>
                 <view class="weui-flex">
-                    <view class="weui-flex__item">工作性质:</view>
-                    <view class="weui-flex__item-2 text-grey">{{job.type == 0 ? '兼职' : '全职'}}</view>
+                    <view class="weui-flex__item">职能类别:</view>
+                    <view class="weui-flex__item-3 text-grey">{{job.type == 0 ? '兼职' : '全职'}}</view>
                 </view>
                 <view class="weui-flex">
                     <view class="weui-flex__item">招聘人数:</view>
-                    <view class="weui-flex__item-2 text-grey">
+                    <view class="weui-flex__item-3 text-grey">
                         <view class="weui-flex">
                             <view class="weui-flex__item">{{job.num > 0 ? job.num+"人" : "不限"}}</view>
                             <view class="weui-agree__text weui-flex__item">
@@ -64,22 +65,22 @@
                 </view>
                 <view class="weui-flex">
                     <view class="weui-flex__item">工作日期:</view>
-                    <view class="weui-flex__item-2 text-grey">{{job.start_date == job.end_date ? job.start_date : job.start_date+'  ——  '+job.end_date}}</view>
+                    <view class="weui-flex__item-3 text-grey">{{job.start_date == job.end_date ? job.start_date : job.start_date+'  ——  '+job.end_date}}</view>
                 </view>
                 <view class="weui-flex">
                     <view class="weui-flex__item">工作时间:</view>
-                    <view class="weui-flex__item-2 text-grey">{{job.start_time+'  ——  '+job.end_time}}</view>
+                    <view class="weui-flex__item-3 text-grey">{{job.start_time+'  ——  '+job.end_time}}</view>
                 </view>
-                <view class="weui-flex">
+                <view class="weui-flex" wx:if="{{job.timeTips}}">
                     <view class="weui-flex__item">补充说明:</view>
-                    <view class="weui-flex__item-2 text-grey">{{job.timeTips}}</view>
+                    <view class="weui-flex__item-3 text-grey">{{job.timeTips}}</view>
                 </view>
-                <view class="weui-flex" hover-class="weui-cell_active" bindtap="showQuizPosition" style="padding:20rpx 0;">
+                <view class="weui-flex" hover-class="weui-cell_active" bindtap="showQuizPosition">
                     <view class="weui-flex__item">面试{{job.work.useQuiz ? "及工作":""}}地址: </view>
                     <view class="weui-flex__item-2 text-grey">{{job.quiz.position}}<span class="myIcon icon-map_icon text-green margin-l" > </span></view>
                 </view>
                 <block wx:if="{{!job.work.useQuiz}}">
-                    <view class="weui-flex" hover-class="weui-cell_active" bindtap="showWorkPosition"  style="padding:20rpx 0;">
+                    <view class="weui-flex" hover-class="weui-cell_active" bindtap="showWorkPosition"  style="padding-top:15rpx;">
                         <view class="weui-flex__item">工作地址:</view>
                         <view class="weui-flex__item-2 text-grey">{{job.work.position}}<span class="myIcon icon-map_icon text-green margin-l" > </span></view>
                     </view>
@@ -118,15 +119,15 @@
             <view class="company bg-white text text-m">
                 <view class="weui-flex">
                     <view class="weui-flex__item">招聘类型:</view>
-                    <view class="weui-flex__item-2 text-grey">{{company.type == 2 ? "企业招聘" : "个人招聘"}}</view>
+                    <view class="weui-flex__item-3 text-grey">{{company.type == 2 ? "企业招聘" : "个人招聘"}}</view>
                 </view>
                 <view class="weui-flex">
                     <view class="weui-flex__item">{{company.type == 2 ? "企业名称" : "姓名"}}:</view>
-                    <view class="weui-flex__item-2 text-grey">{{company.name}}</view>
+                    <view class="weui-flex__item-3 text-grey">{{company.name}}</view>
                 </view>
                 <view class="weui-flex">
                     <view class="weui-flex__item">{{company.type == 2 ? "企业简介" : "个人简介"}}:</view>
-                    <view class="weui-flex__item-2 text-grey">{{company.description}}</view>
+                    <view class="weui-flex__item-3 text-grey">{{company.description}}</view>
                 </view>
             </view>
             <view class="weui-footer" style="margin-top:50rpx;">

@@ -11,6 +11,14 @@
     background-color: #f2dede;
     color: #a94442;
 }
+.jobType{
+    position: absolute;
+    right: 30rpx;
+    top: 30rpx;
+    width: 48rpx;
+    height: 48rpx;
+
+}
 .bottom{
     text-align: center;
     border-top: 1px solid #eee;
