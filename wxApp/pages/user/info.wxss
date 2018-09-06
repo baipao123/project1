@@ -12,9 +12,21 @@ image.icon{
     max-width: 450rpx;
 }
 
-.weui-uploader__input-box.delete:before{
+.weui-uploader__input-box.delete:before,.weui-uploader__input-box.saveCovers:before,.weui-uploader__input-box.saveCovers:after{
     background-color:#fff
 }
+.saveCovers>.saveCover{
+    position:absolute;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    text-align:center;
+    font-size:40px;
+    line-height:70px;
+    color:#ddd;
+}
+
 span.deleteImage{
     position: absolute;
     top:0;

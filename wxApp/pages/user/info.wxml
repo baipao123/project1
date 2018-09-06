@@ -1,43 +1,50 @@
 <view class="page full {{isPrompt ? 'isPrompt' : ''}}" style="padding-bottom:100rpx;">
     <view hidden="{{isPrompt}}">
-        <view class="weui-cells__title">封面图</view>
-        <view class="weui-cells weui-cells_after-title" wx:if="{{isCompany && changeCover}}">
-            <view class="weui-cell" style="width:750rpx;height:375rpx;"  >
-                <view class="weui-cell__bd">
-                    <view class="weui-uploader">
-                        <view class="weui-uploader__hd">
-                            <view class="weui-uploader__title">企业面貌</view>
-                        </view>
-                        <view class="weui-uploader__bd">
-                            <view class="weui-uploader__files">
-                                <block wx:for="{{company.covers}}" wx:key="key">
-                                    <view class="weui-uploader__file weui-uploader__file_status"
-                                          wx:if="{{deleteCover}}" bindtap="deleteImage" data-id="{{index}}"  data-target="cover"
-                                          hover-stop-propagation="true">
-                                        <image class="weui-uploader__img" src="{{domain+item}}" mode="aspectFill"/>
-                                        <span class="myIcon icon-delete deleteImage"/>
-                                    </view>
-                                    <view class="weui-uploader__file" bindtap="previewImage" data-id="{{index}}"  data-target="cover"
-                                          wx:else>
-                                        <image class="weui-uploader__img" src="{{domain+item}}" mode="aspectFill"/>
-                                    </view>
-                                </block>
-
-                                <input type="text" name="covers" value="{{coversJson}}" hidden="true"/>
-
+        <block wx:if="{{isCompany}}">
+            <block wx:if="{{!changeCover && company.covers.length>0}}">
+                <coverSlider sliders="{{company.covers}}"  bindlongtap="goChangeCovers"/>
+                <view class="weui-cells__tips" style="margin-bottom:40rpx;">长按修改企业面貌</view>
+            </block>
+            <view class="weui-cells weui-cells_after-title" wx:else>
+                <view class="weui-cell">
+                    <view class="weui-cell__bd">
+                        <view class="weui-uploader">
+                            <view class="weui-uploader__hd">
+                                <view class="weui-uploader__title">企业面貌</view>
                             </view>
-                            <view class="weui-uploader__input-box">
-                                <view class="weui-uploader__input" bindtap="uploadImages"  data-target="cover"/>
-                            </view>
-                            <view class="weui-uploader__input-box delete"
-                                  wx:if="{{company.covers.length>0 && !deleteCover}}">
-                                <view class="weui-uploader__input" bindtap="openDeleteImage"  data-target="cover"/>
+                            <view class="weui-uploader__bd">
+                                <view class="weui-uploader__files">
+                                    <block wx:for="{{company.covers}}" wx:key="key">
+                                        <view class="weui-uploader__file weui-uploader__file_status"
+                                              wx:if="{{deleteCover}}" bindtap="deleteImage" data-id="{{index}}"  data-target="cover"
+                                              hover-stop-propagation="true">
+                                            <image class="weui-uploader__img" src="{{domain+item}}" mode="aspectFill"/>
+                                            <span class="myIcon icon-delete deleteImage"/>
+                                        </view>
+                                        <view class="weui-uploader__file" bindtap="previewImage" data-id="{{index}}"  data-target="cover"
+                                              wx:else>
+                                            <image class="weui-uploader__img" src="{{domain+item}}" mode="aspectFill"/>
+                                        </view>
+                                    </block>
+
+                                    <input type="text" name="covers" value="{{coversJson}}" hidden="true"/>
+
+                                </view>
+                                <view class="weui-uploader__input-box">
+                                    <view class="weui-uploader__input" bindtap="uploadImages"  data-target="cover"/>
+                                </view>
+                                <view class="weui-uploader__input-box delete" wx:if="{{company.covers.length>0 && !deleteCover}}">
+                                    <view class="weui-uploader__input" bindtap="openDeleteImage"  data-target="cover"/>
+                                </view>
+                                <view class="weui-uploader__input-box saveCovers">
+                                    <view class="saveCover myIcon icon-edit" bindtap="saveCovers"  data-target="cover"/>
+                                </view>
                             </view>
                         </view>
                     </view>
                 </view>
             </view>
-        </view>
+        </block>
 
 
         <view class="weui-cells__title">基本信息</view>

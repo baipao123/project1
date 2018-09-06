@@ -23,7 +23,7 @@ Page({
         school_year: 0,
         schoolYears: [],
 
-        changeCover: true,
+        changeCover: false,
         deleteCover: false
     },
     onLoad: function () {
@@ -271,7 +271,6 @@ Page({
             images.push(info.key);
             that.setData({
                 "company.covers": images,
-                coversJson: JSON.stringify(images)
             })
         });
     },
@@ -296,13 +295,31 @@ Page({
         images.splice(index, 1);
         that.setData({
             "company.covers": images,
-            coversJson: JSON.stringify(images)
         })
         if (images.length == 0) {
             that.setData({
                 deleteCover: false,
             })
         }
+    },
+    goChangeCovers:function () {
+        this.setData({
+            changeCover: true
+        })
+    },
+    saveCovers: function () {
+        let that = this,
+            data = {
+                name: "cover",
+                value: JSON.stringify(that.data.company.covers)
+            }
+
+        app.confirm("确定修改企业面貌？",function () {
+            that.edit(data)
+            that.setData({
+                changeCover: false
+            })
+        })
     },
 
 })
