@@ -21,11 +21,16 @@ Component({
     methods: {
         sliderTap: function (e) {
             let that = this,
+                domain = that.data.domain,
                 index = e.currentTarget.dataset.index,
-                sliders = that.data.sliders
+                sliders = that.data.sliders,
+                urls = []
+            for (let i in sliders){
+                urls.push(domain+sliders[i])
+            }
             wx.previewImage({
-                current: sliders[index],
-                urls: sliders
+                current: urls[index],
+                urls: urls
             })
         }
     }
