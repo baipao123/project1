@@ -116,6 +116,7 @@
                 </view>
             </view>
             <view class="weui-cells__title">招聘者信息</view>
+            <coverSlider sliders="{{company.covers}}" wx:if="{{company.covers.length>0}}"/>
             <view class="company bg-white text text-m">
                 <view class="weui-flex">
                     <view class="weui-flex__item">招聘类型:</view>
