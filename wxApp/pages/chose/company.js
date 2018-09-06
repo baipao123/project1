@@ -13,12 +13,13 @@ Page({
             positionStr: "",
         },
         type: 0,
-        domain: app.globalData.qiNiuDomain,
+        domain: '',
         isAgree: false,
         images: [],
-        imageKeys: [],
-        imagekeysJson: "[]",
+        imagesJson: "[]",
+        coversJson:"[]",
         deleteImage: false,
+        deleteCover: false,
     },
     onLoad: function (options) {
         let that = this
@@ -27,6 +28,14 @@ Page({
             that.setData({
                 company: company
             });
+            if(company && company.covers)
+                that.setData({
+                    coversJson: JSON.stringify(company.covers)
+                })
+            else
+                that.setData({
+                    "company.covers":[]
+                })
             if (company && company.status == 1) {
                 app.toast("您已经是企业了")
                 wx.navigateBack()
@@ -35,6 +44,7 @@ Page({
         })
         that.setData({
             user: app.globalData.user,
+            domain: app.globalData.qiNiuDomain
         });
         wx.hideShareMenu()
         app.setCompanyStyle()
@@ -60,7 +70,7 @@ Page({
     uploadCover: function () {
         let that = this;
         qiNiu.choseImg(1, function (info) {
-            that.setData({"company.cover": info.key});
+            that.setData({"company.covers": info.key});
         });
     },
     bindCompany: function (e) {
@@ -123,55 +133,81 @@ Page({
             isAgree: !!e.detail.value.length,
         });
     },
-    uploadImages: function () {
+    uploadImages: function (e) {
         let that = this,
-            images = that.data.images,
-            imageKeys = that.data.imageKeys;
-        this.setData({
-            deleteImage: false,
-        })
-        if (images.length > 2)
-            return false;
-        qiNiu.choseImg(3 - images.length, function (info) {
-            images.push(that.data.domain + info.key);
-            imageKeys.push(info.key);
+            target = e.currentTarget.dataset.target,
+            images = target == "cover" ? that.data.company.covers : that.data.images
+        if (target == "cover")
             that.setData({
-                images: images,
-                imageKeys: imageKeys,
-                imagekeysJson: JSON.stringify(imageKeys)
+                deleteCover: false,
             })
+        else
+            that.setData({
+                deleteImage: false,
+            })
+        if (target != "cover" && images.length > 2)
+            return false;
+        qiNiu.choseImg(target != "cover" ? 3 - images.length : 9, function (info) {
+            images.push(info.key);
+            if (target == "cover")
+                that.setData({
+                    "company.covers": images,
+                    coversJson: JSON.stringify(images)
+                })
+            else
+                that.setData({
+                    images: images,
+                    imageJson: JSON.stringify(images)
+                })
         });
     },
     previewImage: function (e) {
         let that = this,
             index = e.currentTarget.dataset.id,
-            images = that.data.images;
+            target = e.currentTarget.dataset.target,
+            images = target == "cover" ? that.data.company.covers : that.data.images
         wx.previewImage({
             current: images[index], // 当前显示图片的http链接
             urls: images // 需要预览的图片http链接列表
         })
     },
     openDeleteImage: function (e) {
-        this.setData({
-            deleteImage: true
-        })
+        let target = e.currentTarget.dataset.target
+        if (target == "cover")
+            this.setData({
+                deleteCover: true
+            })
+        else
+            this.setData({
+                deleteImage: true
+            })
     },
     deleteImage: function (e) {
         let that = this,
-            index = e.currentTarget.dataset.id,
-            images = that.data.images,
-            imageKeys = that.data.imageKeys;
+            target = e.currentTarget.dataset.target,
+            images = target == "cover" ? that.data.company.covers : that.data.images,
+            index = e.currentTarget.dataset.id
         images.splice(index, 1);
-        imageKeys.splice(index, 1);
-        that.setData({
-            images: images,
-            imageKeys: imageKeys,
-            imagekeysJson: JSON.stringify(imageKeys)
-        })
-        if (images.length == 0)
+        if (target == "cover")
             that.setData({
-                deleteImage: false
+                "company.covers": images,
+                coversJson: JSON.stringify(images)
             })
+        else
+            that.setData({
+                images: images,
+                imageJson: JSON.stringify(images)
+            })
+        if (images.length == 0) {
+            if (target == "cover")
+                that.setData({
+                    deleteCover: false,
+                })
+            else
+                that.setData({
+                    deleteImage: false,
+                })
+        }
     },
     goSelectDistrict: function (e) {
         let that = this

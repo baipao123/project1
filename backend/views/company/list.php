@@ -45,7 +45,11 @@
             <td><?= $record->uid ?></td>
             <td><?= $record->name ?></td>
             <td class="icon-<?= $record->uid ?>"><img class="img" src="<?= \common\tools\Img::format($record->icon(), 0, 0, true) ?>"/></td>
-            <td class="cover-<?= $record->uid ?>"><img class="img" src="<?= \common\tools\Img::format($record->cover(), 0, 0, true) ?>"/></td>
+            <td class="cover-<?= $record->uid ?>">
+                <?php foreach ($record->covers() as $imgUrl):?>
+                <img class="img" src="<?= \common\tools\Img::format($imgUrl, 0, 0, true) ?>"/>
+                <?php endforeach;?>
+            </td>
             <td><?= $record->description ?></td>
             <td><?= $record->position ?></td>
             <td><?= $record->user->realname?> <br> <?= $record->user->phone?></td>

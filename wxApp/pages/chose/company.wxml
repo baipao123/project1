@@ -2,18 +2,57 @@
     <view class="tips warn icon_sp_area" wx:if="{{company.status == 2}}">
         <icon type="warn" size="20" color="red"/>被拒绝：{{company.refuseReason}}
     </view>
-    <view class="page__hd avatar">
-        <image class="cover bg" bindtap="uploadCover" src="{{domain+ (company.cover || 'company/cover.jpg')}}"/>
-        <view class="icon-view">
-            <image class="icon userAvatar" src="{{domain+(company.icon|| 'company/icon.jpg')}}" hover-stop-propagation="{{true}}"/>
-            <span class="myIcon icon-edit" bindtap="uploadIcon"/>
-        </view>
-        <span class="cover-icon myIcon icon-edit" bindtap="uploadCover"/>
-    </view>
     <form bindsubmit="bindCompany" report-submit="true">
+
         <view class="weui-cells weui-cells_after-title">
-            <input type="text" hidden="{{true}}" name="icon" value="{{company.icon}}"/>
-            <input type="text" hidden="{{true}}" name="cover" value="{{company.cover}}"/>
+            <view class="weui-cell" hover-class="weui-cell_active" bindtap="uploadIcon">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">招聘Logo</view>
+                </view>
+                <view class="weui-cell__ft weui-cell__ft_in-access" style="width:100%;">
+                    <input type="text" hidden="{{true}}" name="icon" value="{{company.icon}}"/>
+                    <image src="{{domain+(company.icon|| 'company/icon.jpg')}}" style="margin-right: 5px;vertical-align: middle;width:120rpx; height: 120rpx;"/>
+                </view>
+            </view>
+            <view class="weui-cell">
+                <view class="weui-cell__bd">
+                    <view class="weui-uploader">
+                        <view class="weui-uploader__hd">
+                            <view class="weui-uploader__title">企业面貌</view>
+                        </view>
+                        <view class="weui-uploader__bd">
+                            <view class="weui-uploader__files">
+                                <block wx:for="{{company.covers}}" wx:key="key">
+                                    <view class="weui-uploader__file weui-uploader__file_status"
+                                          wx:if="{{deleteCover}}" bindtap="deleteImage" data-id="{{index}}"  data-target="cover"
+                                          hover-stop-propagation="true">
+                                        <image class="weui-uploader__img" src="{{domain+item}}" mode="aspectFill"/>
+                                        <span class="myIcon icon-delete deleteImage"/>
+                                    </view>
+                                    <view class="weui-uploader__file" bindtap="previewImage" data-id="{{index}}"  data-target="cover"
+                                          wx:else>
+                                        <image class="weui-uploader__img" src="{{domain+item}}" mode="aspectFill"/>
+                                    </view>
+                                </block>
+
+                                <input type="text" name="covers" value="{{coversJson}}" hidden="true"/>
+
+                            </view>
+                            <view class="weui-uploader__input-box">
+                                <view class="weui-uploader__input" bindtap="uploadImages"  data-target="cover"/>
+                            </view>
+                            <view class="weui-uploader__input-box delete"
+                                  wx:if="{{company.covers.length>0 && !deleteCover}}">
+                                <view class="weui-uploader__input" bindtap="openDeleteImage"  data-target="cover"/>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="weui-cells__tips" style="margin-bottom:40rpx;">岗位详情页展示</view>
+
+        <view class="weui-cells weui-cells_after-title">
             <input type="text" hidden="{{true}}" name="latitude" value="{{company.position.latitude}}"/>
             <input type="text" hidden="{{true}}" name="longitude" value="{{company.position.longitude}}"/>
             <view class="weui-cell">
@@ -31,7 +70,7 @@
                     </radio-group>
                 </view>
             </view>
-            <view class="weui-cell weui-cell_access"  bindtap="goSelectDistrict">
+            <view class="weui-cell weui-cell_access" hover-class="weui-cell_active" bindtap="goSelectDistrict">
                 <view class="weui-cell__hd">
                     <view class="weui-label">所属城市</view>
                 </view>
@@ -101,6 +140,15 @@
                     </view>
                 </view>
             </view>
+            <view class="weui-cells__title">招聘提示</view>
+            <view class="weui-cells weui-cells_after-title">
+                <view class="weui-cell">
+                    <view class="weui-cell__bd">
+                        <textarea class="weui-textarea" name="tips" value="{{company.tips}}"
+                                  placeholder="请输入招聘提示"/>
+                    </view>
+                </view>
+            </view>
             <view class="weui-cells__title">
                 认证资料
             </view>
@@ -112,26 +160,26 @@
                                 <view class="weui-uploader__files">
                                     <block wx:for="{{images}}" wx:key="key">
                                         <view class="weui-uploader__file weui-uploader__file_status"
-                                              wx:if="{{deleteImage}}" bindtap="deleteImage" data-id="{{index}}"
+                                              wx:if="{{deleteImage}}" bindtap="deleteImage" data-id="{{index}}" data-target="image"
                                               hover-stop-propagation="true">
-                                            <image class="weui-uploader__img" src="{{item}}" mode="aspectFill"/>
+                                            <image class="weui-uploader__img" src="{{domain+item}}" mode="aspectFill"/>
                                             <span class="myIcon icon-delete deleteImage"/>
                                         </view>
-                                        <view class="weui-uploader__file" bindtap="previewImage" data-id="{{index}}"
+                                        <view class="weui-uploader__file" bindtap="previewImage" data-id="{{index}}"  data-target="image"
                                               wx:else>
-                                            <image class="weui-uploader__img" src="{{item}}" mode="aspectFill"/>
+                                            <image class="weui-uploader__img" src="{{domain+item}}" mode="aspectFill"/>
                                         </view>
                                     </block>
 
-                                    <input type="text" name="attaches" value="{{imagekeysJson}}" hidden="true"/>
+                                    <input type="text" name="attaches" value="{{imageJson}}" hidden="true"/>
 
                                 </view>
                                 <view class="weui-uploader__input-box" wx:if="{{images.length<3}}">
-                                    <view class="weui-uploader__input" bindtap="uploadImages"/>
+                                    <view class="weui-uploader__input" bindtap="uploadImages"  data-target="image"/>
                                 </view>
                                 <view class="weui-uploader__input-box delete"
                                       wx:if="{{images.length>0 && !deleteImage}}">
-                                    <view class="weui-uploader__input" bindtap="openDeleteImage"/>
+                                    <view class="weui-uploader__input" bindtap="openDeleteImage"  data-target="image"/>
                                 </view>
                             </view>
                         </view>

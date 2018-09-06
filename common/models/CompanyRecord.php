@@ -86,4 +86,12 @@ class CompanyRecord extends \common\models\base\CompanyRecord
         $cover = empty($this->cover) ? "company/cover.jpg" : $this->cover;
         return Img::format($cover, 0, 0, true);
     }
+
+    public function covers() {
+        if (empty($this->cover))
+            return [];
+        $arr = json_decode($this->cover, true);
+        return is_array($arr) ? $arr : [$this->cover];
+    }
+
 }

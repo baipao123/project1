@@ -65,13 +65,14 @@ class Company extends \common\models\base\Company
         $name = ArrayHelper::getValue($data, "name", "");
         $realName = ArrayHelper::getValue($data, "realName", "");
         $icon = ArrayHelper::getValue($data, "icon", "");
-        $cover = ArrayHelper::getValue($data, "cover", "");
+        $cover = ArrayHelper::getValue($data, "covers", ArrayHelper::getValue($data, "cover", ""));// 兼容老版本
         $position = ArrayHelper::getValue($data, "position", "");
         $description = ArrayHelper::getValue($data, "description", "");
         $latitude = ArrayHelper::getValue($data, "latitude", "");
         $longitude = ArrayHelper::getValue($data, "longitude", "");
         $attaches = ArrayHelper::getValue($data, "attaches", "");
         $phone = ArrayHelper::getValue($data, "phone", "");
+        $tips = ArrayHelper::getValue($data, "tips", "");
         if ($isAdd && !StringHelper::isMobile($phone))
             return "请输入真实的手机号";
         if (empty($type))
@@ -100,6 +101,7 @@ class Company extends \common\models\base\Company
             $company->latitude = $latitude;
             $company->longitude = $longitude;
             $company->description = $description;
+            $company->tips = $tips;
             $company->status = self::STATUS_VERIFY;
             if ($company->isNewRecord)
                 $company->created_at = time();
@@ -194,6 +196,13 @@ class Company extends \common\models\base\Company
         return empty($this->cover) ? "company/cover.jpg" : $this->cover;
     }
 
+    public function covers() {
+        if (empty($this->cover))
+            return [];
+        $arr = json_decode($this->cover, true);
+        return is_array($arr) ? $arr : [$this->cover];
+    }
+
     public function refuseReason() {
         if ($this->status != self::STATUS_FORBID)
             return "";
@@ -205,8 +214,9 @@ class Company extends \common\models\base\Company
         return [
             "name"         => $this->name,
             "type"         => $this->type,
-            "icon"         => Img::format($this->icon()),
-            "cover"        => Img::format($this->cover()),
+            "icon"         => $this->icon(),
+            "cover"        => $this->cover(),
+            "covers"        => $this->covers(),
             "status"       => $this->status,
             "description"  => $this->description,
             "tips"         => $this->tips,
