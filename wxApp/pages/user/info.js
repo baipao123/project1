@@ -22,6 +22,9 @@ Page({
         school_value: 0,
         school_year: 0,
         schoolYears: [],
+
+        changeCover: true,
+        deleteCover: false
     },
     onLoad: function () {
         let that = this
@@ -255,6 +258,51 @@ Page({
             }
             that.edit(data)
         })
+    },
+
+
+    uploadImages: function (e) {
+        let that = this,
+            images =  that.data.company.covers
+            that.setData({
+                deleteCover: false,
+            })
+        qiNiu.choseImg( 9, function (info) {
+            images.push(info.key);
+            that.setData({
+                "company.covers": images,
+                coversJson: JSON.stringify(images)
+            })
+        });
+    },
+    previewImage: function (e) {
+        let that = this,
+            index = e.currentTarget.dataset.id,
+            images = that.data.company.covers
+        wx.previewImage({
+            current: images[index], // 当前显示图片的http链接
+            urls: images // 需要预览的图片http链接列表
+        })
+    },
+    openDeleteImage: function (e) {
+        this.setData({
+            deleteCover: true
+        })
+    },
+    deleteImage: function (e) {
+        let that = this,
+            images = that.data.company.covers,
+            index = e.currentTarget.dataset.id
+        images.splice(index, 1);
+        that.setData({
+            "company.covers": images,
+            coversJson: JSON.stringify(images)
+        })
+        if (images.length == 0) {
+            that.setData({
+                deleteCover: false,
+            })
+        }
     },
 
 })
