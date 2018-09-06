@@ -149,7 +149,7 @@
                 <view class="weui-cells weui-cells_after-title">
                     <view class="weui-cell">
                         <view class="weui-cell__bd">
-                            <textarea class="weui-textarea" name="quiz_position"
+                            <textarea class="weui-textarea" name="quiz_position"  maxlength="-1" auto-height="true"
                                       value="{{job.quiz.position || company.position.address}}"
                                       bindblur="quizPositionSave" style="height: 3.3em" placeholder="请输入地址"/>
                         </view>
@@ -178,7 +178,7 @@
                     <view class="weui-cells weui-cells_after-title">
                         <view class="weui-cell">
                             <view class="weui-cell__bd">
-                                <textarea class="weui-textarea" name="work_position"
+                                <textarea class="weui-textarea" name="work_position"  maxlength="-1" auto-height="true"
                                           value="{{job.work.position || company.position.address}}"
                                           bindblur="workPositionSave" style="height: 3.3em" placeholder="请输入地址"/>
                             </view>
@@ -200,7 +200,7 @@
             <view class="weui-cells weui-cells_after-title">
                 <view class="weui-cell">
                     <view class="weui-cell__bd">
-                        <textarea class="weui-textarea" name="description" value="{{job.description}}"
+                        <textarea class="weui-textarea" name="description" value="{{job.description}}"  maxlength="-1" auto-height="true"
                                   style="height: 3.3em"/>
                     </view>
                 </view>
@@ -209,7 +209,7 @@
             <view class="weui-cells weui-cells_after-title">
                 <view class="weui-cell">
                     <view class="weui-cell__bd">
-                        <textarea class="weui-textarea" name="require_desc" value="{{job.require_desc}}"
+                        <textarea class="weui-textarea" name="require_desc" value="{{job.require_desc}}"  maxlength="-1" auto-height="true"
                                   style="height: 3.3em"/>
                     </view>
                 </view>
@@ -218,7 +218,7 @@
             <view class="weui-cells weui-cells_after-title">
                 <view class="weui-cell">
                     <view class="weui-cell__bd">
-                        <textarea class="weui-textarea" name="extra_desc" value="{{job.extra_desc}}"
+                        <textarea class="weui-textarea" name="extra_desc" value="{{job.extra_desc}}"  maxlength="-1" auto-height="true"
                                   style="height: 3.3em"/>
                     </view>
                 </view>

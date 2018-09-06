@@ -108,3 +108,7 @@ span.deleteImage{
 .weui-cells__tips{
     line-height: 60rpx;
 }
+
+.weui-textarea{
+    padding: 20rpx 0;
+}

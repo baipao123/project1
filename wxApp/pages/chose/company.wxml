@@ -125,8 +125,8 @@
             <view class="weui-cells weui-cells_after-title">
                 <view class="weui-cell">
                     <view class="weui-cell__bd">
-                        <textarea class="weui-textarea" name="position" value="{{company.positionStr || company.position.address}}"
-                                  bindblur="positionSave" style="height: 3.3em"
+                        <textarea class="weui-textarea" name="position" value="{{company.positionStr || company.position.address}}" maxlength="-1" auto-height="true"
+                                  bindblur="positionSave" style="min-height: 3.3em"
                                   placeholder="点击上方地图自动获取或手动更改获取的{{company.type!=3 ? '公司':'居住'}}地址"/>
                     </view>
                 </view>
@@ -135,7 +135,7 @@
             <view class="weui-cells weui-cells_after-title">
                 <view class="weui-cell">
                     <view class="weui-cell__bd">
-                        <textarea class="weui-textarea" name="description" value="{{company.description}}"
+                        <textarea class="weui-textarea" name="description" value="{{company.description}}" maxlength="-1" auto-height="true"
                                   placeholder="请输入{{company.type!=3 ? '公司':'个人'}}简介"/>
                     </view>
                 </view>
@@ -145,7 +145,7 @@
                 <view class="weui-cell">
                     <view class="weui-cell__bd">
                         <textarea class="weui-textarea" name="tips" value="{{company.tips}}"
-                                  placeholder="请输入招聘提示"/>
+                                  placeholder="请输入招聘提示" maxlength="-1" auto-height="true"/>
                     </view>
                 </view>
             </view>
